@@ -13,3 +13,4 @@
 - ver lo de la compra de entradas. Que compra el usuario?
 - separacion en carpetas
 - otro cambio
+- cambio 2
