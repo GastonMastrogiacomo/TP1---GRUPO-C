@@ -12,3 +12,4 @@
 - ver los metodos get de devolucion de listas.
 - ver lo de la compra de entradas. Que compra el usuario?
 - separacion en carpetas
+- otro cambio
