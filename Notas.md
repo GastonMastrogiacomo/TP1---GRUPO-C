@@ -11,3 +11,4 @@
 - supongamos que no tengo credito suficiente para comprar la entrada, entonces sale una advertencia que me da la opcion de cargarCreditos()
 - ver los metodos get de devolucion de listas.
 - ver lo de la compra de entradas. Que compra el usuario?
+- separacion en carpetas
