@@ -213,7 +213,6 @@ namespace TP1___GRUPO_C
             return false;
         }
 
-        //TODO
         public bool ComprarEntrada(int IDFuncion, int CantidadEntradas)
         {
             try
