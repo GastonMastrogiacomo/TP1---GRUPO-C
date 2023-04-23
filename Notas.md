@@ -15,3 +15,5 @@
 - otro cambio
 - cambio 2
 - cambio 3
+- Lucas 23/04: Se agrega un primer diseño de form's, totalmente a modificar... form 1->contenedor padre, form2-> pantalla princial, form3->pantalla de registro.
+  Se modifica iniciar sesion() en cine, se comenta metodo de mostrarfuncion para poder correr prog

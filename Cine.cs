@@ -29,7 +29,7 @@ namespace TP1___GRUPO_C
             {
                 if (u.ID != user.ID)
                 {
-                    Usuario otro = new Usuario(user.ID, user.DNI, user.Nombre, user.Apellido, user.Mail, user.Password, user.FechaNacimeinto, user.EsAdmin);
+                    Usuario otro = new Usuario(user.ID, user.DNI, user.Nombre, user.Apellido, user.Mail, user.Password, user.FechaNacimiento, user.EsAdmin);
                     Usuarios.Add(otro);
                     return true;
                 }
@@ -241,7 +241,7 @@ namespace TP1___GRUPO_C
                                 throw new InvalidOperationException("No hay la cantidad solicitada de asientos");
                             }
                         
-)                        
+                        
                         }
                         else
                         {
@@ -274,23 +274,38 @@ namespace TP1___GRUPO_C
 
         public bool IniciarSesion(string Mail, string Password)
         {
-            foreach (Usuario user in Usuarios)
+            try
             {
-                if (user.Mail.Equals(Mail) && user.IntentosFallidos > 3)
+                foreach (Usuario user in Usuarios)
                 {
-                    if (user.Password.Equals(Password))
-                    {
-                        UsuarioActual = user;
-                        user.IntentosFallidos = 0;
-                        return true;
-                    }
-                    else
-                    {
-                        user.IntentosFallidos += 1;
+                    if (user.Mail.Equals(Mail))
+                    { if (user.Bloqueado == false) {
+                            if (user.Password.Equals(Password))
+                            {
+                                UsuarioActual = user;
+                                user.IntentosFallidos = 0;
+                                return true;
+                            }
+                            else if (user.IntentosFallidos < 3)
+                            {
+                                user.IntentosFallidos += 1;
+                                throw new InvalidOperationException("Password incorrecta, intentolo nuevamente");
+                                
+                            }else {
+                                user.Bloqueado = true;
+                                throw new InvalidOperationException("Ha alcanzado la cantidad de intentos. Usuario bloqueado");
+                                
+                            }
+                        }
+                        else  { throw new InvalidOperationException("No se puede acceder, el usuario se encuentra bloqueado"); }
                     }
                 }
+                    
+                
+            }catch(Exception e)
+            { 
+                Console.WriteLine(e);
             }
-
             return false;
 
         }

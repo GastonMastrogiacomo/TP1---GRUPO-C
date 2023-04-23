@@ -33,12 +33,12 @@ namespace TP1___GRUPO_C
 
 
         }
-        public List<Funcion> ObtenerFunciones()
-        {
+        //public List<Funcion> ObtenerFunciones()
+        //{
             //Ver si esto esta bien o no
 
-            return MisFunciones.ToList();
-        }
+            //return MisFunciones.ToList();
+       // }
 
 
         //ABM Reserva
@@ -88,4 +88,4 @@ namespace TP1___GRUPO_C
     }
 
 }
-}
+
