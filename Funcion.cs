@@ -17,17 +17,19 @@ namespace TP1___GRUPO_C
         public DateTime Fecha { get; set; }
         public int CantidadClientes { get; set; }
         public Double Costo { get; set; }
+        public List<Reserva> MisReservas { get; set; }
 
         public Funcion(int ID, Sala MiSala, Pelicula MiPelicula, DateTime Fecha,
             int CantidadClientes, Double Costo)
         {
-            ID = ID;
-            MiSala = MiSala;
-            MiPelicula = MiPelicula;
+            this.ID = ID;
+            this.MiSala = MiSala;
+            this.MiPelicula = MiPelicula;
             Clientes = new List<Usuario>();
-            Fecha = Fecha;
-            CantidadClientes = CantidadClientes;
-            Costo = Costo;
+            this.Fecha = Fecha;
+            this.CantidadClientes = CantidadClientes;
+            this.Costo = Costo;
+            MisReservas = new List<Reserva>();
 
 
         }
