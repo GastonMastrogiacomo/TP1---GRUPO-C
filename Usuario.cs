@@ -18,27 +18,72 @@ namespace TP1___GRUPO_C
         public bool Bloqueado { get; set; }
         public List<Funcion> MisFunciones { get; set; }
         public Double Credito { get; set; }
-        public DateTime FechaNacimeinto { get; set; }
+        public DateTime FechaNacimiento { get; set; }
         public bool EsAdmin { get; set; }
-        //public List<int> CantidadEntradas { get; set; } 
+        public List<Reserva> MisReservas { get; set; }
 
         // Entrada
-    
+
         public Usuario(int ID, int DNI, string Nombre, String Apellido,
             String Mail, String Password, DateTime FechaNacimiento, bool EsAdmin)
         {
-            ID = ID;
-            DNI = DNI;
-            Nombre = Nombre;
-            Apellido = Apellido;
-            Mail = Mail;
-            Password = Password;
+            this.ID = ID;
+            this.DNI = DNI;
+            this.Nombre = Nombre;
+            this.Apellido = Apellido;
+            this.Mail = Mail;
+            this.Password = Password;
             IntentosFallidos = 0;
             Bloqueado = false;
             MisFunciones = new List<Funcion>();
             Credito = 0;
-            FechaNacimiento = FechaNacimiento;
-            EsAdmin = EsAdmin;
-          }
+            this.FechaNacimiento = FechaNacimiento;
+            this.EsAdmin = EsAdmin;
+            MisReservas = new List<Reserva>();
+        }
+
+        //ABM Reserva
+        public bool AgregarReserva(Reserva reserva)
+        {
+            try
+            {
+                Reserva NuevaReserva = new Reserva(reserva.ID, reserva.CantidadEntradas, reserva.IDFuncion, reserva.IDUsuario);
+                MisReservas.Add(NuevaReserva);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+        }
+
+        public bool EliminarReserva(int IDReserva)
+        {
+            foreach (Reserva res in MisReservas)
+            {
+                if (res.ID == IDReserva)
+                {
+                    MisReservas.Remove(res);
+                    return true;
+
+                }
+            }
+            return false;
+        }
+
+
+        public bool ModificarReserva(int IDReserva, Reserva reserva)
+        {
+            for (int i = 0; i < MisReservas.Count; i++)
+            {
+                if (MisReservas[i].ID == IDReserva)
+                {
+                    MisReservas[i] = reserva;
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }
