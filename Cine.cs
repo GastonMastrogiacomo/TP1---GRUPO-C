@@ -161,7 +161,7 @@ namespace TP1___GRUPO_C
         {
             try
             {
-                Pelicula NuevaPelicula = new Pelicula(pelicula.ID, pelicula.Name, pelicula.Descripcion, pelicula.Sinopsis, pelicula.Poster, pelicula.Duracion, pelicula.MisFunciones);
+                Pelicula NuevaPelicula = new Pelicula(pelicula.ID, pelicula.Nombre, pelicula.Descripcion, pelicula.Sinopsis, pelicula.Poster, pelicula.Duracion, pelicula.MisFunciones);
                 Peliculas.Add(NuevaPelicula);
                 return true;
             }
