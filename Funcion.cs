@@ -41,7 +41,51 @@ namespace TP1___GRUPO_C
         }
 
 
+        //ABM Reserva
+        public bool AgregarReserva(Reserva reserva)
+        {
+            try
+            {
+                MisReservas.Add(reserva);
+                CantidadClientes += reserva.CantidadEntradas;
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+        }
+
+        public bool EliminarReserva(int IDReserva)
+        {
+            foreach (Reserva res in MisReservas)
+            {
+                if (res.ID == IDReserva)
+                {
+                    MisReservas.Remove(res);
+                    CantidadClientes -= res.CantidadEntradas;
+                    return true;
+
+                }
+            }
+            return false;
+        }
 
 
+        public bool ModificarReserva(int IDReserva, Reserva reserva)
+        {
+            for (int i = 0; i < MisReservas.Count; i++)
+            {
+                if (MisReservas[i].ID == IDReserva)
+                {
+                    MisReservas[i] = reserva;
+                    return true;
+                }
+            }
+            return false;
+        }
     }
+
+}
 }

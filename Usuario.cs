@@ -47,8 +47,7 @@ namespace TP1___GRUPO_C
         {
             try
             {
-                Reserva NuevaReserva = new Reserva(reserva.ID, reserva.CantidadEntradas, reserva.IDFuncion, reserva.IDUsuario);
-                MisReservas.Add(NuevaReserva);
+                MisReservas.Add(reserva);
                 return true;
             }
             catch (Exception e)

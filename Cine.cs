@@ -230,19 +230,23 @@ namespace TP1___GRUPO_C
                         {
                             if (fun.MiSala.Capacidad <= CantidadEntradas)
                             {
-                                //UsuarioActual.MisFunciones.Add()
-                                // se pueden comprar las entradas
+                                //REVISAR HARDCODEO DE ID DE RESERVA
+                                Reserva reserva = new Reserva(1, CantidadEntradas, UsuarioActual.ID, fun.ID);
+
+                                UsuarioActual.AgregarReserva(reserva);
+                                fun.AgregarReserva(reserva);
 
                             }
                             else
                             {
-                                //hay menos asientos que los solicitados
+                                throw new InvalidOperationException("No hay la cantidad solicitada de asientos");
                             }
+                        
 )                        
                         }
                         else
                         {
-                            //credito insuficiente
+                            throw new InvalidOperationException("Créditos insuficientes");
                         }
                     }
                 }
