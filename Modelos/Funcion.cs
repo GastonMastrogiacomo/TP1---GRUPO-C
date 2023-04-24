@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP1___GRUPO_C
+namespace TP1___GRUPO_C.Model
 {
     internal class Funcion
     {
@@ -16,11 +16,11 @@ namespace TP1___GRUPO_C
         public List<Usuario> Clientes { get; set; }
         public DateTime Fecha { get; set; }
         public int CantidadClientes { get; set; }
-        public Double Costo { get; set; }
+        public double Costo { get; set; }
         public List<Reserva> MisReservas { get; set; }
 
         public Funcion(int ID, Sala MiSala, Pelicula MiPelicula, DateTime Fecha,
-            int CantidadClientes, Double Costo)
+            int CantidadClientes, double Costo)
         {
             this.ID = ID;
             this.MiSala = MiSala;
@@ -35,10 +35,10 @@ namespace TP1___GRUPO_C
         }
         //public List<Funcion> ObtenerFunciones()
         //{
-            //Ver si esto esta bien o no
+        //Ver si esto esta bien o no
 
-            //return MisFunciones.ToList();
-       // }
+        //return MisFunciones.ToList();
+        // }
 
 
         //ABM Reserva

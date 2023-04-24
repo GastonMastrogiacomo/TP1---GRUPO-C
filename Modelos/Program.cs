@@ -1,4 +1,4 @@
-namespace TP1___GRUPO_C
+namespace TP1___GRUPO_C.Model
 {
     internal static class Program
     {

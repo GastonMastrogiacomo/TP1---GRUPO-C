@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP1___GRUPO_C
+namespace TP1___GRUPO_C.Model
 {
     internal class Usuario
     {
@@ -17,15 +17,15 @@ namespace TP1___GRUPO_C
         public int IntentosFallidos { get; set; }
         public bool Bloqueado { get; set; }
         public List<Funcion> MisFunciones { get; set; }
-        public Double Credito { get; set; }
+        public double Credito { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public bool EsAdmin { get; set; }
         public List<Reserva> MisReservas { get; set; }
 
         // Entrada
 
-        public Usuario(int ID, int DNI, string Nombre, String Apellido,
-            String Mail, String Password, DateTime FechaNacimiento, bool EsAdmin)
+        public Usuario(int ID, int DNI, string Nombre, string Apellido,
+            string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin)
         {
             this.ID = ID;
             this.DNI = DNI;

@@ -1,3 +1,5 @@
+using TP1___GRUPO_C.Model;
+
 namespace TP1___GRUPO_C
 {
     public partial class Form1 : Form

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TP1___GRUPO_C
+namespace TP1___GRUPO_C.Model
 {
     internal class Cine
     {
@@ -240,8 +240,8 @@ namespace TP1___GRUPO_C
                             {
                                 throw new InvalidOperationException("No hay la cantidad solicitada de asientos");
                             }
-                        
-                        
+
+
                         }
                         else
                         {
@@ -279,7 +279,9 @@ namespace TP1___GRUPO_C
                 foreach (Usuario user in Usuarios)
                 {
                     if (user.Mail.Equals(Mail))
-                    { if (user.Bloqueado == false) {
+                    {
+                        if (user.Bloqueado == false)
+                        {
                             if (user.Password.Equals(Password))
                             {
                                 UsuarioActual = user;
@@ -290,20 +292,23 @@ namespace TP1___GRUPO_C
                             {
                                 user.IntentosFallidos += 1;
                                 throw new InvalidOperationException("Password incorrecta, intentolo nuevamente");
-                                
-                            }else {
+
+                            }
+                            else
+                            {
                                 user.Bloqueado = true;
                                 throw new InvalidOperationException("Ha alcanzado la cantidad de intentos. Usuario bloqueado");
-                                
+
                             }
                         }
-                        else  { throw new InvalidOperationException("No se puede acceder, el usuario se encuentra bloqueado"); }
+                        else { throw new InvalidOperationException("No se puede acceder, el usuario se encuentra bloqueado"); }
                     }
                 }
-                    
-                
-            }catch(Exception e)
-            { 
+
+
+            }
+            catch (Exception e)
+            {
                 Console.WriteLine(e);
             }
             return false;
