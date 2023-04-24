@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP1___GRUPO_C.Model
 {
-    internal class Sala
+    public class Sala
     {
 
         public int ID { get; set; }

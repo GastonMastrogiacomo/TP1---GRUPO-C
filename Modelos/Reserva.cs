@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP1___GRUPO_C.Model
 {
-    internal class Reserva
+    public class Reserva
     {
         public int ID { get; set; }
         public int CantidadEntradas { get; set; }

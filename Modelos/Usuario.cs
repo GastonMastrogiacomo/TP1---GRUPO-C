@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP1___GRUPO_C.Model
 {
-    internal class Usuario
+    public class Usuario
     {
         public int ID { get; }
         public int DNI { get; set; }

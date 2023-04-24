@@ -53,5 +53,10 @@ namespace TP1___GRUPO_C
         {
 
         }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

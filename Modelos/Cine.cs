@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TP1___GRUPO_C.Model
 {
-    internal class Cine
+    public class Cine
     {
         public List<Usuario> Usuarios;
         public List<Funcion> Funciones;
