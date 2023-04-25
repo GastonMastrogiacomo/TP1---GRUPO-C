@@ -34,13 +34,14 @@
             textBox1 = new TextBox();
             textBox2 = new TextBox();
             button2 = new Button();
+            checkBox1 = new CheckBox();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 15F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(350, 102);
+            label1.Location = new Point(350, 43);
             label1.Name = "label1";
             label1.Size = new Size(85, 28);
             label1.TabIndex = 0;
@@ -61,7 +62,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 15F, FontStyle.Regular, GraphicsUnit.Point);
-            label2.Location = new Point(339, 183);
+            label2.Location = new Point(339, 124);
             label2.Name = "label2";
             label2.Size = new Size(110, 28);
             label2.TabIndex = 2;
@@ -69,14 +70,14 @@
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(320, 133);
+            textBox1.Location = new Point(320, 74);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(152, 23);
             textBox1.TabIndex = 3;
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(320, 214);
+            textBox2.Location = new Point(320, 155);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(152, 23);
             textBox2.TabIndex = 4;
@@ -92,12 +93,24 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
+            // checkBox1
+            // 
+            checkBox1.AutoSize = true;
+            checkBox1.Location = new Point(339, 204);
+            checkBox1.Name = "checkBox1";
+            checkBox1.Size = new Size(102, 19);
+            checkBox1.TabIndex = 6;
+            checkBox1.Text = "Administrador";
+            checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
+            // 
             // Form4
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
             ClientSize = new Size(800, 450);
+            Controls.Add(checkBox1);
             Controls.Add(button2);
             Controls.Add(textBox2);
             Controls.Add(textBox1);
@@ -120,5 +133,6 @@
         private TextBox textBox1;
         private TextBox textBox2;
         private Button button2;
+        private CheckBox checkBox1;
     }
 }

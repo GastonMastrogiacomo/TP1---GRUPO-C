@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button1 = new Button();
             button2 = new Button();
             button3 = new Button();
             comboBox1 = new ComboBox();
@@ -45,29 +44,16 @@
             textBox3 = new TextBox();
             button4 = new Button();
             dataGridView1 = new DataGridView();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
-            // 
-            // button1
-            // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            button1.AutoSize = true;
-            button1.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(633, 10);
-            button1.Name = "button1";
-            button1.Size = new Size(155, 34);
-            button1.TabIndex = 0;
-            button1.Text = "Iniciar Sesion Admin";
-            button1.UseMnemonic = false;
-            button1.UseVisualStyleBackColor = true;
-            button1.Click += button1_Click;
             // 
             // button2
             // 
             button2.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            button2.Location = new Point(515, 9);
+            button2.Location = new Point(673, 15);
             button2.Name = "button2";
-            button2.Size = new Size(112, 34);
+            button2.Size = new Size(112, 31);
             button2.TabIndex = 1;
             button2.Text = "Registrarse";
             button2.UseVisualStyleBackColor = true;
@@ -76,11 +62,11 @@
             // button3
             // 
             button3.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            button3.Location = new Point(364, 12);
+            button3.Location = new Point(522, 15);
             button3.Name = "button3";
             button3.Size = new Size(145, 31);
             button3.TabIndex = 2;
-            button3.Text = "Iniciar Sesion User";
+            button3.Text = "Iniciar Sesion";
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
@@ -208,12 +194,24 @@
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(771, 272);
             dataGridView1.TabIndex = 17;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
+            // 
+            // button1
+            // 
+            button1.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            button1.Location = new Point(673, 15);
+            button1.Name = "button1";
+            button1.Size = new Size(112, 31);
+            button1.TabIndex = 18;
+            button1.Text = "Mi Perfil";
+            button1.UseVisualStyleBackColor = true;
             // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button1);
             Controls.Add(dataGridView1);
             Controls.Add(button4);
             Controls.Add(textBox3);
@@ -230,9 +228,9 @@
             Controls.Add(comboBox1);
             Controls.Add(button3);
             Controls.Add(button2);
-            Controls.Add(button1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Form2";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form2";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
@@ -240,8 +238,6 @@
         }
 
         #endregion
-
-        private Button button1;
         private Button button2;
         private Button button3;
         private ComboBox comboBox1;
@@ -258,5 +254,6 @@
         private TextBox textBox3;
         private Button button4;
         private DataGridView dataGridView1;
+        private Button button1;
     }
 }

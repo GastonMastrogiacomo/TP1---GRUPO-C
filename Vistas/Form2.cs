@@ -15,12 +15,18 @@ namespace TP1___GRUPO_C
     public partial class Form2 : Form
     {
         internal Cine cine;
-        public TransferenciaVentana TransfVen;
+        public IniciarVentanaLogin iniciarVentanaLogin;
+
+        // atributo = string / int / bool
+        // atributo = referencia funcion
 
         internal Form2(Cine c)
         {
             InitializeComponent();
             cine = c;
+            button1.Hide();
+
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -35,11 +41,14 @@ namespace TP1___GRUPO_C
 
         private void button3_Click(object sender, EventArgs e)
         {// boton iniciar sesion user
-            this.TransfVen();
+            button1.Show();
+            button2.Hide();
+            button3.Hide();
+            this.iniciarVentanaLogin();
 
         }
 
-        public delegate void TransferenciaVentana();
+        public delegate void IniciarVentanaLogin();
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -62,6 +71,11 @@ namespace TP1___GRUPO_C
         }
 
         private void label6_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
         }
