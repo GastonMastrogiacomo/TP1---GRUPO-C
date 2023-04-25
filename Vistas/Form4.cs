@@ -16,11 +16,11 @@ namespace TP1___GRUPO_C
 
         private Cine miCine;
 
-        public VolverLoggueado volverLoggeado;
+        public UsuarioComunLogueado usuarioComunLogueado;
+        public AbrirLoginAdmin abrirLoginAdmin;
 
         public Form4(Cine cine)
         {
-
 
             InitializeComponent();
             miCine = cine;
@@ -31,31 +31,39 @@ namespace TP1___GRUPO_C
         {
             //boton login
 
-            this.volverLoggeado();
+            string mail = this.textBox1.Text;
+            string pass = this.textBox2.Text;
 
+            bool esAdmin = this.checkBox1.Checked;
 
-            //string mail = this.textBox1.Text;
-            //string pass = this.textBox2.Text;
+            if (mail != null && mail != "" && pass != null & pass != "")
+            {
+                if (miCine.IniciarSesion(mail, pass,esAdmin))
+                {
+                    if(esAdmin)
+                    {
+                        this.abrirLoginAdmin();
+                    }
+                    else
+                    {
+                        this.usuarioComunLogueado();
 
-            //if (mail != null && mail != "" && pass != null & pass != "")
-            //{
-            //    if (miCine.IniciarSesion(mail, pass))
-            //    {
-            //        MessageBox.Show("Error, datos incorrectos!");
-            //        this.volverLoggeado();
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Error, datos incorrectos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //    }
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Ingrese los datos correctamente", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Error, datos incorrectos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ingrese los datos correctamente", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        public delegate void VolverLoggueado();
+        public delegate void UsuarioComunLogueado();
+
+        public delegate void AbrirLoginAdmin();
 
         private void button2_Click(object sender, EventArgs e)
         {

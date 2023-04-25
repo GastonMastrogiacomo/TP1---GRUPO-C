@@ -1,4 +1,5 @@
 using TP1___GRUPO_C.Model;
+using TP1___GRUPO_C.Vistas;
 
 namespace TP1___GRUPO_C
 {
@@ -7,6 +8,7 @@ namespace TP1___GRUPO_C
         private Cine cine;
         private Form2 pantallaPrincipal;
         private Form4 hijoLogin;
+        private Form6 pantallaAdmin;
 
         public Form1()
         {
@@ -27,16 +29,28 @@ namespace TP1___GRUPO_C
 
             hijoLogin = new Form4(cine);
             hijoLogin.MdiParent = this;
-            hijoLogin.volverLoggeado += Loggear;
+            hijoLogin.usuarioComunLogueado += UsuarioComunLogueado;
+            hijoLogin.abrirLoginAdmin += AbrirLoginAdmin;
             hijoLogin.Show();
 
         }
 
-        private void Loggear()
+        private void UsuarioComunLogueado()
         {
 
             hijoLogin.Close();
             pantallaPrincipal.Show();
+        }
+
+        private void AbrirLoginAdmin()
+        {
+            hijoLogin.Close();
+            pantallaAdmin = new Form6(cine);
+            pantallaAdmin.MdiParent = this;
+
+            pantallaAdmin.Show();
+            
+
         }
 
 

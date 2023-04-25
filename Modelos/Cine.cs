@@ -20,6 +20,15 @@ namespace TP1___GRUPO_C.Model
             Funciones = new List<Funcion>();
             Salas = new List<Sala>();
             Peliculas = new List<Pelicula>();
+
+            //andy: Agrego usuarios de prueba 
+
+            Usuario comun = new Usuario(1, 99999999, "Pepe", "Perez", "pepe@mail.com", "123", new DateTime(), false);
+            Usuarios.Add(comun);
+
+            Usuario admin = new Usuario(2, 99999998, "El", "Admin", "admin@mail.com", "123", new DateTime(), true);
+            Usuarios.Add(admin);
+        
         }
 
         //ABM Usuario
@@ -272,26 +281,38 @@ namespace TP1___GRUPO_C.Model
 
         }
 
-        public bool IniciarSesion(string Mail, string Password)
+        public bool IniciarSesion(string Mail, string Password, bool esAdmin)
         {
             try
             {
                 foreach (Usuario user in Usuarios)
                 {
-                    if (user.Mail.Equals(Mail))
+
+                 if (user.Mail.Equals(Mail))
                     {
                         if (user.Bloqueado == false)
                         {
                             if (user.Password.Equals(Password))
                             {
-                                UsuarioActual = user;
-                                user.IntentosFallidos = 0;
-                                return true;
+
+                                if (user.EsAdmin == esAdmin) {
+                                    UsuarioActual = user;
+                                    user.IntentosFallidos = 0;
+                                    return true;
+
+                                }
+                                else
+                                {
+                                    // el usuario seleccion "administrador" sin serlo
+                                    // o el administrador no puso el checkbox
+                                    throw new InvalidOperationException("Has seleccionado una opción incorrecta.");
+                                }
+                               
                             }
                             else if (user.IntentosFallidos < 3)
                             {
                                 user.IntentosFallidos += 1;
-                                throw new InvalidOperationException("Password incorrecta, intentolo nuevamente");
+                                throw new InvalidOperationException("Password incorrecta, intentalo nuevamente");
 
                             }
                             else
