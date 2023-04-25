@@ -15,9 +15,9 @@ namespace TP1___GRUPO_C.Model
 
         public Sala(int ID, string Ubicacion, int Capacidad)
         {
-            ID = ID;
-            Ubicacion = Ubicacion;
-            Capacidad = Capacidad;
+            this.ID = ID;
+            this.Ubicacion = Ubicacion;
+            this.Capacidad = Capacidad;
         }
 
         // obtenerUbicaciones

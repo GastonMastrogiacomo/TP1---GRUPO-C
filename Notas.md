@@ -1,8 +1,8 @@
 ﻿# TP1 - GRUPO C
 
-# En la vista no podes hacer nada sino estas logueado
+ En la vista no podes hacer nada sino estas logueado
 
-# La clase Cine la interpretaremos como Hoyts (dueño del cine completo)
+ La clase Cine la interpretaremos como Hoyts (dueño del cine completo)
 
 ## TODO
 

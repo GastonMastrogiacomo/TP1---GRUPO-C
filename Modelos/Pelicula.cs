@@ -18,13 +18,13 @@ namespace TP1___GRUPO_C.Model
 
         public Pelicula(int ID, string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion, List<Funcion> MisFunciones)
         {
-            ID = ID;
-            Nombre = Nombre;
-            Descripcion = Descripcion;
-            Sinopsis = Sinopsis;
-            Poster = Poster;
-            Duracion = Duracion;
-            MisFunciones = MisFunciones;
+            this.ID = ID;
+            this.Nombre = Nombre;
+            this.Descripcion = Descripcion;
+            this.Sinopsis = Sinopsis;
+            this.Poster = Poster;
+            this.Duracion = Duracion;
+            this.MisFunciones = MisFunciones;
         }
 
 

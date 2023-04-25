@@ -7,12 +7,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TP1___GRUPO_C.Model;
+using static TP1___GRUPO_C.Form4;
 
 namespace TP1___GRUPO_C
 {
     public partial class Form2 : Form
     {
         internal Cine cine;
+        public TransferenciaVentana TransfVen;
+
         internal Form2(Cine c)
         {
             InitializeComponent();
@@ -31,8 +35,11 @@ namespace TP1___GRUPO_C
 
         private void button3_Click(object sender, EventArgs e)
         {// boton iniciar sesion user
+            this.TransfVen();
 
         }
+
+        public delegate void TransferenciaVentana();
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
