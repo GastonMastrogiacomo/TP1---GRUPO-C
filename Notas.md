@@ -18,4 +18,17 @@
 - Andy 22/04: Se crea la clase Reserva para la compra de entradas. ver lo de la compra de entradas. Que compra el usuario? -> LISTO 22/04
 - Lucas 23/04: Se agrega un primer diseño de form's, totalmente a modificar... form 1->contenedor padre, form2-> pantalla princial, form3->pantalla de registro.
   Se modifica iniciar sesion() en cine, se comenta metodo de mostrarfuncion para poder correr prog
-- Andy 24/04: agrega separación en carpetas y reorganizaación de información en notas
+- Andy 24/04: 
+* agrega separación en carpetas y reorganizaación de información en notas
+* usuarios de prueba
+* validación de checkbox admin en IniciarSesion()
+* Renombra método de login a UsuarioComunLogueado()
+* agrega AbrirLoginAdmin() --> abre Form6
+* agrega validaciones al botón de Login en Form 4 para que inicie el componente correspondiente dependiendo si es admin o no
+* crea form6
+
+//TODO
+falta crear pantalla de admin (form 6)
+falta crear pantalla de "mi perfil"
+
+- 
