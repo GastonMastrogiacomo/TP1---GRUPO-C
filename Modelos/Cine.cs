@@ -23,10 +23,10 @@ namespace TP1___GRUPO_C.Model
 
             //andy: Agrego usuarios de prueba 
 
-            Usuario comun = new Usuario(1, 99999999, "Pepe", "Perez", "pepe@mail.com", "123", new DateTime(), false);
+            Usuario comun = new Usuario(99999999, "Pepe", "Perez", "pepe@mail.com", "123", new DateTime(), false);
             Usuarios.Add(comun);
 
-            Usuario admin = new Usuario(2, 99999998, "El", "Admin", "admin@mail.com", "123", new DateTime(), true);
+            Usuario admin = new Usuario(99999998, "El", "Admin", "admin@mail.com", "123", new DateTime(), true);
             Usuarios.Add(admin);
         
         }
@@ -38,7 +38,7 @@ namespace TP1___GRUPO_C.Model
             {
                 if (u.ID != user.ID)
                 {
-                    Usuario otro = new Usuario(user.ID, user.DNI, user.Nombre, user.Apellido, user.Mail, user.Password, user.FechaNacimiento, user.EsAdmin);
+                    Usuario otro = new Usuario(user.DNI, user.Nombre, user.Apellido, user.Mail, user.Password, user.FechaNacimiento, user.EsAdmin);
                     Usuarios.Add(otro);
                     return true;
                 }

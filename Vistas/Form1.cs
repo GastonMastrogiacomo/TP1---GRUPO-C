@@ -9,6 +9,7 @@ namespace TP1___GRUPO_C
         private Form2 pantallaPrincipal;
         private Form4 hijoLogin;
         private Form6 pantallaAdmin;
+        private Form3 pantallaRegistro;
 
         public Form1()
         {
@@ -18,6 +19,8 @@ namespace TP1___GRUPO_C
             pantallaPrincipal = new Form2(cine);
             pantallaPrincipal.MdiParent = this;
             pantallaPrincipal.iniciarVentanaLogin += IniciarLogin;
+            pantallaPrincipal.abrirRegistro += AbrirRegistro;
+           
             pantallaPrincipal.Show();
         
         }
@@ -53,6 +56,22 @@ namespace TP1___GRUPO_C
 
         }
 
+        private void AbrirRegistro()
+        {
+            
+            pantallaRegistro = new Form3(cine);
+            pantallaRegistro.MdiParent = this;
+            pantallaRegistro.pantallaPrincipal += volverPantallaPrincipal;
+            pantallaPrincipal.Hide();
+            pantallaRegistro.Show();
+
+        }
+
+        private void volverPantallaPrincipal()
+        {
+            pantallaRegistro.Close();
+            pantallaPrincipal.Show();      
+        }
 
     }
 }

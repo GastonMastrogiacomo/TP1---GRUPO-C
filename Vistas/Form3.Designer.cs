@@ -38,12 +38,13 @@
             label8 = new Label();
             dateTimePicker1 = new DateTimePicker();
             checkBox1 = new CheckBox();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
-            textBox4 = new TextBox();
-            textBox5 = new TextBox();
+            textBoxNombres = new TextBox();
+            textBoxApellidos = new TextBox();
+            textBoxDNI = new TextBox();
+            textBoxMail = new TextBox();
+            textBoxPass = new TextBox();
             button1 = new Button();
+            button2 = new Button();
             SuspendLayout();
             // 
             // label1
@@ -61,19 +62,19 @@
             label2.AutoSize = true;
             label2.Location = new Point(51, 74);
             label2.Name = "label2";
-            label2.Size = new Size(51, 15);
+            label2.Size = new Size(56, 15);
             label2.TabIndex = 1;
-            label2.Text = "Nombre";
+            label2.Text = "Nombres";
             label2.Click += label2_Click;
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(178, 74);
+            label3.Location = new Point(298, 74);
             label3.Name = "label3";
-            label3.Size = new Size(51, 15);
+            label3.Size = new Size(56, 15);
             label3.TabIndex = 2;
-            label3.Text = "Apellido";
+            label3.Text = "Apellidos";
             // 
             // label4
             // 
@@ -126,6 +127,7 @@
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(200, 23);
             dateTimePicker1.TabIndex = 8;
+            dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
             // 
             // checkBox1
             // 
@@ -136,41 +138,47 @@
             checkBox1.TabIndex = 9;
             checkBox1.Text = "Soy Administrador";
             checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
-            // textBox1
+            // textBoxNombres
             // 
-            textBox1.Location = new Point(51, 92);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(100, 23);
-            textBox1.TabIndex = 11;
+            textBoxNombres.Location = new Point(51, 92);
+            textBoxNombres.Name = "textBoxNombres";
+            textBoxNombres.Size = new Size(227, 23);
+            textBoxNombres.TabIndex = 11;
+            textBoxNombres.TextChanged += textBox1_TextChanged;
             // 
-            // textBox2
+            // textBoxApellidos
             // 
-            textBox2.Location = new Point(178, 92);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(100, 23);
-            textBox2.TabIndex = 12;
+            textBoxApellidos.Location = new Point(298, 92);
+            textBoxApellidos.Name = "textBoxApellidos";
+            textBoxApellidos.Size = new Size(227, 23);
+            textBoxApellidos.TabIndex = 12;
+            textBoxApellidos.TextChanged += textBoxApellidos_TextChanged;
             // 
-            // textBox3
+            // textBoxDNI
             // 
-            textBox3.Location = new Point(51, 147);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(100, 23);
-            textBox3.TabIndex = 13;
+            textBoxDNI.Location = new Point(51, 147);
+            textBoxDNI.Name = "textBoxDNI";
+            textBoxDNI.Size = new Size(100, 23);
+            textBoxDNI.TabIndex = 13;
+            textBoxDNI.TextChanged += textBoxDNI_TextChanged;
             // 
-            // textBox4
+            // textBoxMail
             // 
-            textBox4.Location = new Point(51, 202);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(100, 23);
-            textBox4.TabIndex = 14;
+            textBoxMail.Location = new Point(51, 202);
+            textBoxMail.Name = "textBoxMail";
+            textBoxMail.Size = new Size(100, 23);
+            textBoxMail.TabIndex = 14;
+            textBoxMail.TextChanged += textBox4_TextChanged;
             // 
-            // textBox5
+            // textBoxPass
             // 
-            textBox5.Location = new Point(178, 202);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(100, 23);
-            textBox5.TabIndex = 15;
+            textBoxPass.Location = new Point(178, 202);
+            textBoxPass.Name = "textBoxPass";
+            textBoxPass.Size = new Size(100, 23);
+            textBoxPass.TabIndex = 15;
+            textBoxPass.TextChanged += textBoxPass_TextChanged;
             // 
             // button1
             // 
@@ -180,18 +188,30 @@
             button1.TabIndex = 16;
             button1.Text = "Registrar";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(119, 378);
+            button2.Name = "button2";
+            button2.Size = new Size(75, 23);
+            button2.TabIndex = 17;
+            button2.Text = "Volver";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // Form3
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(button2);
             Controls.Add(button1);
-            Controls.Add(textBox5);
-            Controls.Add(textBox4);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(textBoxPass);
+            Controls.Add(textBoxMail);
+            Controls.Add(textBoxDNI);
+            Controls.Add(textBoxApellidos);
+            Controls.Add(textBoxNombres);
             Controls.Add(checkBox1);
             Controls.Add(dateTimePicker1);
             Controls.Add(label8);
@@ -204,7 +224,9 @@
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Form3";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Form3";
+            Load += Form3_Load;
             ResumeLayout(false);
             PerformLayout();
         }
@@ -221,11 +243,12 @@
         private Label label8;
         private DateTimePicker dateTimePicker1;
         private CheckBox checkBox1;
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private TextBox textBox4;
-        private TextBox textBox5;
+        private TextBox textBoxNombres;
+        private TextBox textBoxApellidos;
+        private TextBox textBoxDNI;
+        private TextBox textBoxMail;
+        private TextBox textBoxPass;
         private Button button1;
+        private Button button2;
     }
 }

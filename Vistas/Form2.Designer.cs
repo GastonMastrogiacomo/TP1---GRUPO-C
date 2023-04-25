@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            button2 = new Button();
+            btnRegistrarse = new Button();
             button3 = new Button();
             comboBox1 = new ComboBox();
             dateTimePicker1 = new DateTimePicker();
@@ -48,16 +48,16 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
-            // button2
+            // btnRegistrarse
             // 
-            button2.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            button2.Location = new Point(673, 15);
-            button2.Name = "button2";
-            button2.Size = new Size(112, 31);
-            button2.TabIndex = 1;
-            button2.Text = "Registrarse";
-            button2.UseVisualStyleBackColor = true;
-            button2.Click += button2_Click;
+            btnRegistrarse.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            btnRegistrarse.Location = new Point(673, 15);
+            btnRegistrarse.Name = "btnRegistrarse";
+            btnRegistrarse.Size = new Size(112, 31);
+            btnRegistrarse.TabIndex = 1;
+            btnRegistrarse.Text = "Registrarse";
+            btnRegistrarse.UseVisualStyleBackColor = true;
+            btnRegistrarse.Click += button2_Click;
             // 
             // button3
             // 
@@ -199,7 +199,7 @@
             // button1
             // 
             button1.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(673, 15);
+            button1.Location = new Point(673, 32);
             button1.Name = "button1";
             button1.Size = new Size(112, 31);
             button1.TabIndex = 18;
@@ -227,7 +227,7 @@
             Controls.Add(dateTimePicker1);
             Controls.Add(comboBox1);
             Controls.Add(button3);
-            Controls.Add(button2);
+            Controls.Add(btnRegistrarse);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Form2";
             StartPosition = FormStartPosition.CenterScreen;
@@ -238,7 +238,7 @@
         }
 
         #endregion
-        private Button button2;
+        private Button btnRegistrarse;
         private Button button3;
         private ComboBox comboBox1;
         private DateTimePicker dateTimePicker1;

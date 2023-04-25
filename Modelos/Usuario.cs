@@ -9,6 +9,9 @@ namespace TP1___GRUPO_C.Model
     public class Usuario
     {
         public int ID { get; }
+
+        public static int ultimoID = 0;
+
         public int DNI { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
@@ -24,10 +27,11 @@ namespace TP1___GRUPO_C.Model
 
         // Entrada
 
-        public Usuario(int ID, int DNI, string Nombre, string Apellido,
+        public Usuario(int DNI, string Nombre, string Apellido,
             string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin)
         {
-            this.ID = ID;
+            ultimoID++;
+            this.ID = ultimoID;
             this.DNI = DNI;
             this.Nombre = Nombre;
             this.Apellido = Apellido;

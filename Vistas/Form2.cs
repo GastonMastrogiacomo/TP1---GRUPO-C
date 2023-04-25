@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP1___GRUPO_C.Model;
 using static TP1___GRUPO_C.Form4;
+using static TP1___GRUPO_C.Form3;
 
 namespace TP1___GRUPO_C
 {
@@ -16,7 +17,8 @@ namespace TP1___GRUPO_C
     {
         internal Cine cine;
         public IniciarVentanaLogin iniciarVentanaLogin;
-
+        public AbrirRegistro abrirRegistro;
+        
         // atributo = string / int / bool
         // atributo = referencia funcion
 
@@ -26,7 +28,7 @@ namespace TP1___GRUPO_C
             cine = c;
             button1.Hide();
 
-            
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -36,19 +38,21 @@ namespace TP1___GRUPO_C
 
         private void button2_Click(object sender, EventArgs e)
         {//boton registrarse
-
+           this.abrirRegistro();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {// boton iniciar sesion user
             button1.Show();
-            button2.Hide();
+            btnRegistrarse.Hide();
             button3.Hide();
             this.iniciarVentanaLogin();
 
         }
 
         public delegate void IniciarVentanaLogin();
+        public delegate void AbrirRegistro();
+        
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {

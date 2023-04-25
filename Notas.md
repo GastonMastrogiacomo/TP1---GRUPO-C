@@ -26,6 +26,8 @@
 * agrega AbrirLoginAdmin() --> abre Form6
 * agrega validaciones al botón de Login en Form 4 para que inicie el componente correspondiente dependiendo si es admin o no
 * crea form6
+-Lucas 25/04 se implemento Form3 (pantalla de registro) al boton "Registro" de la pantalla principal.
+ Tambien se agrego boton "Volver "para regresar, y se modifico constructor y atributo ID de Usuario, agregando un autoincremental y para que este setee ID.
 
 //TODO
 falta crear pantalla de admin (form 6)
