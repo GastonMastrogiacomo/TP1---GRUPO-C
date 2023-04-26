@@ -341,6 +341,11 @@ namespace TP1___GRUPO_C.Model
             UsuarioActual = null;
         }
 
+        public List<Usuario> MostrarUsuarios()
+        {
+            return Usuarios.ToList();
+        }
+
         public List<Funcion> MostrarFunciones()
         {
             return Funciones.ToList();

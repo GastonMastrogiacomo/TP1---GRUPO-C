@@ -199,14 +199,15 @@
             // button1
             // 
             button1.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(673, 32);
+            button1.Location = new Point(673, 15);
             button1.Name = "button1";
             button1.Size = new Size(112, 31);
             button1.TabIndex = 18;
             button1.Text = "Mi Perfil";
             button1.UseVisualStyleBackColor = true;
+            //button1.Click += button1_Click_1;
             // 
-            // Form2
+            // PantallaPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -229,7 +230,7 @@
             Controls.Add(button3);
             Controls.Add(btnRegistrarse);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Form2";
+            Name = "PantallaPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form2";
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();

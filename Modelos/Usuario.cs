@@ -88,5 +88,13 @@ namespace TP1___GRUPO_C.Model
             }
             return false;
         }
+
+        
+        public string[] ToString()
+        {
+            return new string[] { ID.ToString(), DNI.ToString(), Nombre, Apellido, Mail, Password, IntentosFallidos.ToString(), Bloqueado.ToString(), MisFunciones.ToString(), Credito.ToString(), FechaNacimiento.ToString(), EsAdmin.ToString(), MisReservas.ToString() };
+        }
     }
 }
+
+   

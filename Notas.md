@@ -30,6 +30,7 @@
 	* crea form6
 - Lucas 25/04 se implemento Form3 (pantalla de registro) al boton "Registro" de la pantalla principal.
  Tambien se agrego boton "Volver "para regresar, y se modifico constructor y atributo ID de Usuario, agregando un autoincremental y para que este setee ID.
-
-
-- 
+- Andy 26/04:
+	* Clase cine: se agrega el metodo mostrarUsuarios()
+	* Clase usuari: se agrega metodo toString() que devuelve un string []
+	* PantallaABMAdmin se agrega las pestañas, el datagrid de usuarios y se carga el datagrid con informacion pre-cargada
