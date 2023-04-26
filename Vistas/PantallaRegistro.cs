@@ -11,14 +11,14 @@ using TP1___GRUPO_C.Model;
 
 namespace TP1___GRUPO_C
 {
-    public partial class Form3 : Form
+    public partial class PantallaRegistro : Form
     {
         private Cine cine;
         public volverPantallaPrincipal pantallaPrincipal;
 
         
 
-        public Form3(Cine c)
+        public PantallaRegistro(Cine c)
         {
             InitializeComponent();
             cine = c;

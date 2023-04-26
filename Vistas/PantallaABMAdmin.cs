@@ -11,12 +11,12 @@ using TP1___GRUPO_C.Model;
 
 namespace TP1___GRUPO_C.Vistas
 {
-    public partial class Form6 : Form
+    public partial class PantallaABMAdmin : Form
     {
 
         private Cine miCine;
 
-        public Form6(Cine cine)
+        public PantallaABMAdmin(Cine cine)
         {
             InitializeComponent();
              miCine = cine;

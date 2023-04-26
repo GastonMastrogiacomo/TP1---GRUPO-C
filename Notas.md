@@ -12,6 +12,8 @@
 - un admin no deberia ni que cargar credito
 - supongamos que no tengo credito suficiente para comprar la entrada, entonces sale una advertencia que me da la opcion de cargarCreditos()
 - ver los metodos get de devolucion de listas.
+- falta crear pantalla de admin (form 6)
+- falta crear pantalla de "mi perfil"
 
 ## Updates
 
@@ -19,18 +21,15 @@
 - Lucas 23/04: Se agrega un primer diseño de form's, totalmente a modificar... form 1->contenedor padre, form2-> pantalla princial, form3->pantalla de registro.
   Se modifica iniciar sesion() en cine, se comenta metodo de mostrarfuncion para poder correr prog
 - Andy 24/04: 
-* agrega separación en carpetas y reorganizaación de información en notas
-* usuarios de prueba
-* validación de checkbox admin en IniciarSesion()
-* Renombra método de login a UsuarioComunLogueado()
-* agrega AbrirLoginAdmin() --> abre Form6
-* agrega validaciones al botón de Login en Form 4 para que inicie el componente correspondiente dependiendo si es admin o no
-* crea form6
--Lucas 25/04 se implemento Form3 (pantalla de registro) al boton "Registro" de la pantalla principal.
+	* agrega separación en carpetas y reorganizaación de información en notas
+	* usuarios de prueba
+	* validación de checkbox admin en IniciarSesion()
+	* Renombra método de login a UsuarioComunLogueado()
+	* agrega AbrirLoginAdmin() --> abre Form6
+	* agrega validaciones al botón de Login en Form 4 para que inicie el componente correspondiente dependiendo si es admin o no
+	* crea form6
+- Lucas 25/04 se implemento Form3 (pantalla de registro) al boton "Registro" de la pantalla principal.
  Tambien se agrego boton "Volver "para regresar, y se modifico constructor y atributo ID de Usuario, agregando un autoincremental y para que este setee ID.
 
-//TODO
-falta crear pantalla de admin (form 6)
-falta crear pantalla de "mi perfil"
 
 - 

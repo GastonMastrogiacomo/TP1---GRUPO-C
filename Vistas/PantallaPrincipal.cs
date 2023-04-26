@@ -8,12 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP1___GRUPO_C.Model;
-using static TP1___GRUPO_C.Form4;
-using static TP1___GRUPO_C.Form3;
+using static TP1___GRUPO_C.PantallaLogin;
+using static TP1___GRUPO_C.PantallaRegistro;
 
 namespace TP1___GRUPO_C
 {
-    public partial class Form2 : Form
+    public partial class PantallaPrincipal : Form
     {
         internal Cine cine;
         public IniciarVentanaLogin iniciarVentanaLogin;
@@ -22,7 +22,7 @@ namespace TP1___GRUPO_C
         // atributo = string / int / bool
         // atributo = referencia funcion
 
-        internal Form2(Cine c)
+        internal PantallaPrincipal(Cine c)
         {
             InitializeComponent();
             cine = c;

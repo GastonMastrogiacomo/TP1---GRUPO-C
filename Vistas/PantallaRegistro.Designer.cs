@@ -1,6 +1,6 @@
 ﻿namespace TP1___GRUPO_C
 {
-    partial class Form3
+    partial class PantallaRegistro
     {
         /// <summary>
         /// Required designer variable.

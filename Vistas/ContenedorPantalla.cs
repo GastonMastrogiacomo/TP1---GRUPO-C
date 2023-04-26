@@ -3,20 +3,20 @@ using TP1___GRUPO_C.Vistas;
 
 namespace TP1___GRUPO_C
 {
-    public partial class Form1 : Form
+    public partial class ContenedorPantalla : Form
     {
         private Cine cine;
-        private Form2 pantallaPrincipal;
-        private Form4 hijoLogin;
-        private Form6 pantallaAdmin;
-        private Form3 pantallaRegistro;
+        private PantallaPrincipal pantallaPrincipal;
+        private PantallaLogin pantallaLogin;
+        private PantallaABMAdmin pantallaABMAdmin;
+        private PantallaRegistro pantallaRegistro;
 
-        public Form1()
+        public ContenedorPantalla()
         {
             InitializeComponent();
 
             cine = new Cine();
-            pantallaPrincipal = new Form2(cine);
+            pantallaPrincipal = new PantallaPrincipal(cine);
             pantallaPrincipal.MdiParent = this;
             pantallaPrincipal.iniciarVentanaLogin += IniciarLogin;
             pantallaPrincipal.abrirRegistro += AbrirRegistro;
@@ -30,28 +30,28 @@ namespace TP1___GRUPO_C
 
             pantallaPrincipal.Hide();
 
-            hijoLogin = new Form4(cine);
-            hijoLogin.MdiParent = this;
-            hijoLogin.usuarioComunLogueado += UsuarioComunLogueado;
-            hijoLogin.abrirLoginAdmin += AbrirLoginAdmin;
-            hijoLogin.Show();
+            pantallaLogin = new PantallaLogin(cine);
+            pantallaLogin.MdiParent = this;
+            pantallaLogin.usuarioComunLogueado += UsuarioComunLogueado;
+            pantallaLogin.usuarioAdminLogueado += UsuarioAdminLogueado;
+            pantallaLogin.Show();
 
         }
 
         private void UsuarioComunLogueado()
         {
 
-            hijoLogin.Close();
+            pantallaLogin.Close();
             pantallaPrincipal.Show();
         }
 
-        private void AbrirLoginAdmin()
+        private void UsuarioAdminLogueado()
         {
-            hijoLogin.Close();
-            pantallaAdmin = new Form6(cine);
-            pantallaAdmin.MdiParent = this;
+            pantallaLogin.Close();
+            pantallaABMAdmin = new PantallaABMAdmin(cine);
+            pantallaABMAdmin.MdiParent = this;
 
-            pantallaAdmin.Show();
+            pantallaABMAdmin.Show();
             
 
         }
@@ -59,7 +59,7 @@ namespace TP1___GRUPO_C
         private void AbrirRegistro()
         {
             
-            pantallaRegistro = new Form3(cine);
+            pantallaRegistro = new PantallaRegistro(cine);
             pantallaRegistro.MdiParent = this;
             pantallaRegistro.pantallaPrincipal += volverPantallaPrincipal;
             pantallaPrincipal.Hide();

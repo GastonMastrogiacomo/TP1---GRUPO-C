@@ -11,15 +11,15 @@ using TP1___GRUPO_C.Model;
 
 namespace TP1___GRUPO_C
 {
-    public partial class Form4 : Form
+    public partial class PantallaLogin : Form
     {
 
         private Cine miCine;
 
         public UsuarioComunLogueado usuarioComunLogueado;
-        public AbrirLoginAdmin abrirLoginAdmin;
+        public UsuarioAdminLogueado usuarioAdminLogueado;
 
-        public Form4(Cine cine)
+        public PantallaLogin(Cine cine)
         {
 
             InitializeComponent();
@@ -42,7 +42,7 @@ namespace TP1___GRUPO_C
                 {
                     if(esAdmin)
                     {
-                        this.abrirLoginAdmin();
+                        this.usuarioAdminLogueado();
                     }
                     else
                     {
@@ -63,7 +63,7 @@ namespace TP1___GRUPO_C
 
         public delegate void UsuarioComunLogueado();
 
-        public delegate void AbrirLoginAdmin();
+        public delegate void UsuarioAdminLogueado();
 
         private void button2_Click(object sender, EventArgs e)
         {
