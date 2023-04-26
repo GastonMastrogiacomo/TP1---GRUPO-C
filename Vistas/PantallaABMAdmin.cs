@@ -89,9 +89,30 @@ namespace TP1___GRUPO_C.Vistas
 
             foreach (Usuario user in miCine.MostrarUsuarios())
             {
-                //siempre necesito un arreglo
                 dataGridUsuarios.Rows.Add(user.ToString());
             }
+        }
+
+        private void Click_RefrescarUsuarios(object sender, EventArgs e)
+        {
+            refreshUsuarios();
+        }
+
+        private void dataGridUsuarios_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            string ID = dataGridUsuarios[0, e.RowIndex].Value.ToString();
+            this.Input_DNI.Text = dataGridUsuarios[1, e.RowIndex].Value.ToString();
+            this.Input_Nombre.Text = dataGridUsuarios[2, e.RowIndex].Value.ToString();
+            this.Input_Apellido.Text = dataGridUsuarios[3, e.RowIndex].Value.ToString();
+            this.Input_Mail.Text = dataGridUsuarios[4, e.RowIndex].Value.ToString();
+            this.Input_Password.Text = dataGridUsuarios[5, e.RowIndex].Value.ToString();
+            this.Input_IntentosFallidos.Text = dataGridUsuarios[6, e.RowIndex].Value.ToString();
+            this.Cb_Bloqueado.Checked = bool.Parse(dataGridUsuarios[7, e.RowIndex].Value.ToString());
+            string Funciones = dataGridUsuarios[8, e.RowIndex].Value.ToString();
+            this.Input_Credito.Text = dataGridUsuarios[9, e.RowIndex].Value.ToString();
+            string FechaNacimiento = dataGridUsuarios[10, e.RowIndex].Value.ToString();
+            this.Cb_EsAdmin.Checked =bool.Parse(dataGridUsuarios[11, e.RowIndex].Value.ToString());
+            string Reservas = dataGridUsuarios[12, e.RowIndex].Value.ToString();
         }
     }
 }

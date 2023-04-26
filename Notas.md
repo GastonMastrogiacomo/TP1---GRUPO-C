@@ -33,4 +33,10 @@
 - Andy 26/04:
 	* Clase cine: se agrega el metodo mostrarUsuarios()
 	* Clase usuari: se agrega metodo toString() que devuelve un string []
-	* PantallaABMAdmin se agrega las pestañas, el datagrid de usuarios y se carga el datagrid con informacion pre-cargada
+	* PantallaABMAdmin:
+		* se agrega las pestañas
+		* el datagrid de usuarios 
+		* se carga el datagrid con informacion pre-cargada
+		* Se modifica la visualizacion de datos
+		* se agrega funcionalidad de doble click en lista para que guarde el formulario
+	
