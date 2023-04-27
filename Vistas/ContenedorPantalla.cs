@@ -11,6 +11,7 @@ namespace TP1___GRUPO_C
         private PantallaABMAdmin pantallaABMAdmin;
         private PantallaRegistro pantallaRegistro;
         private PantallaCargaFunciones pantallaCargaFunciones;
+        private PantallaEdicionFunciones pantallaEdicionFunciones;
 
         public ContenedorPantalla()
         {

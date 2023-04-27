@@ -53,8 +53,12 @@
 		* se agrega UsuarioAuxiliar a la pantalla de ABM de admin para poder cargar la lsita en la nueva pantalla
 		* se codea toda la pantalla nueva entera y se agregan las funcionalidades.
 		* se agregan posiblidades de volver para atras en la pantalla nueva y todos los metodos delegados se linkean con el contendor de pantallas.
--Lucas 27/04:
-	*PantallaRegistro: Ya genera alta de usuario. Se agrega pop-up confirmacion de alta.
-	*PantallaLogin: Se modifica Label "Nombre" por "Email", se modifica boton "Registro" por "Volver", se agrega funcionalidad a
+- Lucas 27/04:
+	* PantallaRegistro: Ya genera alta de usuario. Se agrega pop-up confirmacion de alta.
+	* PantallaLogin: Se modifica Label "Nombre" por "Email", se modifica boton "Registro" por "Volver", se agrega funcionalidad a
 	                 este ultipo pero al ir y volver, en la pantalla principal desaparecen los botones y solo queda "Mi perfil" (Revisar hide de botones).
-	*ContenedorPantalla: Se integra sentencia para la funcionalidad de boton "Volver" de PantallaLogin.
+	* ContenedorPantalla: Se integra sentencia para la funcionalidad de boton "Volver" de PantallaLogin.
+
+- Andy 27/04:
+	* Corrige un bug en la modificacion de usuarios que pisaba al primero de la lista siempre.
+	* Crea PantallaEdicionFunciones para la edicion de las funciones xD

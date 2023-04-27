@@ -101,7 +101,9 @@ namespace TP1___GRUPO_C.Vistas
 
         private void dataGridUsuarios_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            MessageBox.Show("RowIndex: " + e.RowIndex.ToString());
+            //obtengo el id en dataGridUsuarios[0,e.RowIndex]
+            MessageBox.Show("ID: " + dataGridUsuarios[0, e.RowIndex].Value.ToString());
             string ID = dataGridUsuarios[0, e.RowIndex].Value.ToString();
             this.Input_DNI.Text = dataGridUsuarios[1, e.RowIndex].Value.ToString();
             this.Input_Nombre.Text = dataGridUsuarios[2, e.RowIndex].Value.ToString();
@@ -111,11 +113,8 @@ namespace TP1___GRUPO_C.Vistas
             this.Input_IntentosFallidos.Text = dataGridUsuarios[6, e.RowIndex].Value.ToString();
             this.Cb_Bloqueado.Checked = bool.Parse(dataGridUsuarios[7, e.RowIndex].Value.ToString());
 
-            //Error inconsistente
-            //MessageBox.Show("En data Grid");
             UsuarioAuxiliar = miCine.ObtenerUsuarioPorId(int.Parse(ID));
-            //MessageBox.Show("después data grid");
-   
+             
             this.Input_Credito.Text = dataGridUsuarios[9, e.RowIndex].Value.ToString();
             //DateTime FechaNacimiento = (DateTime) dataGridUsuarios[10, e.RowIndex].Value;
             this.Cb_EsAdmin.Checked = bool.Parse(dataGridUsuarios[11, e.RowIndex].Value.ToString());

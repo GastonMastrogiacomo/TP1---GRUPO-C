@@ -68,8 +68,8 @@ namespace TP1___GRUPO_C.Model
         {
             for (int i = 0; i < Usuarios.Count; i++)
             {
-                if (idUsuario == user.ID)
-                {
+                if (Usuarios[i].ID == idUsuario)
+                {                      
                     Usuarios[i] = user;
                     return true;
                 }
@@ -379,13 +379,14 @@ namespace TP1___GRUPO_C.Model
 
         public Usuario ObtenerUsuarioPorId(int ID)
         {
-            foreach (Usuario user in Usuarios) { 
-                if(user.ID == ID)
+             foreach (Usuario user in Usuarios) {
+            
+                if (user.ID == ID)
                 {
-                    return user;
+                  return user;
                 }
             }
-
+        
             throw new InvalidDataException("El ID no se encontró en la base de datos.");
         }
 

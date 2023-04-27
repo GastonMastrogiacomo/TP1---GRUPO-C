@@ -116,14 +116,13 @@ namespace TP1___GRUPO_C.Vistas
                     UsuarioAuxiliar.AgregarFuncion(func);
                 }
             }
-
                 if (!miCine.ModificarUsuario(UsuarioAuxiliar.ID, UsuarioAuxiliar))
                 {
                     MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    MessageBox.Show(UsuarioAuxiliar.ObtenerMisFunciones()[0].ToString());
+                    MessageBox.Show("Se actualizaron correctamente las funciones de " + UsuarioAuxiliar.Nombre);
                 }
             
            
