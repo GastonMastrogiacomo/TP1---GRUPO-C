@@ -41,11 +41,11 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 15F, FontStyle.Regular, GraphicsUnit.Point);
-            label1.Location = new Point(350, 43);
+            label1.Location = new Point(362, 43);
             label1.Name = "label1";
-            label1.Size = new Size(85, 28);
+            label1.Size = new Size(59, 28);
             label1.TabIndex = 0;
-            label1.Text = "Nombre";
+            label1.Text = "Email";
             // 
             // button1
             // 
@@ -89,7 +89,7 @@
             button2.Name = "button2";
             button2.Size = new Size(128, 40);
             button2.TabIndex = 5;
-            button2.Text = "Registrarse";
+            button2.Text = "Volver";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
@@ -104,7 +104,7 @@
             checkBox1.UseVisualStyleBackColor = true;
             checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
-            // Form4
+            // PantallaLogin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -118,7 +118,7 @@
             Controls.Add(button1);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Form4";
+            Name = "PantallaLogin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form4";
             ResumeLayout(false);

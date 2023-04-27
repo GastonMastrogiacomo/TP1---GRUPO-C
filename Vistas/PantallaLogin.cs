@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP1___GRUPO_C.Model;
+using static TP1___GRUPO_C.PantallaRegistro;
 
 namespace TP1___GRUPO_C
 {
@@ -18,6 +19,7 @@ namespace TP1___GRUPO_C
 
         public UsuarioComunLogueado usuarioComunLogueado;
         public UsuarioAdminLogueado usuarioAdminLogueado;
+        public volverPantallaPrincipal pantallaPrincipal;
 
         public PantallaLogin(Cine cine)
         {
@@ -26,6 +28,12 @@ namespace TP1___GRUPO_C
             miCine = cine;
 
         }
+
+        public delegate void UsuarioComunLogueado();
+
+        public delegate void UsuarioAdminLogueado();
+
+        public delegate void volverPantallaPrincipal();
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -38,9 +46,9 @@ namespace TP1___GRUPO_C
 
             if (mail != null && mail != "" && pass != null & pass != "")
             {
-                if (miCine.IniciarSesion(mail, pass,esAdmin))
+                if (miCine.IniciarSesion(mail, pass, esAdmin))
                 {
-                    if(esAdmin)
+                    if (esAdmin)
                     {
                         this.usuarioAdminLogueado();
                     }
@@ -61,13 +69,11 @@ namespace TP1___GRUPO_C
             }
         }
 
-        public delegate void UsuarioComunLogueado();
-
-        public delegate void UsuarioAdminLogueado();
+        
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            this.pantallaPrincipal();
 
 
         }

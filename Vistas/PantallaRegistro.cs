@@ -15,7 +15,7 @@ namespace TP1___GRUPO_C
     {
         private Cine cine;
         public volverPantallaPrincipal pantallaPrincipal;
-
+        
         
 
         public PantallaRegistro(Cine c)
@@ -25,7 +25,31 @@ namespace TP1___GRUPO_C
         }
 
         public delegate void volverPantallaPrincipal();
+        
 
+        private void button1_Click(object sender, EventArgs e)
+        {//registrar
+            string Nombres = this.textBoxNombres.Text;
+            string Apellidos = this.textBoxApellidos.Text;
+            int.TryParse(textBoxDNI.Text, out int DNI);
+            string Mail = this.textBoxMail.Text;
+            string Pass = this.textBoxPass.Text;
+            DateTime FechaNacimiento = dateTimePicker1.Value.Date;
+            bool esAdmin = checkBox1.Checked;
+
+            Usuario nuevo = new Usuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin);
+            bool confirmacion= cine.AgregarUsuario(nuevo); 
+            if (confirmacion)
+            {
+                MessageBox.Show("Usuario Registrado con exito! Revise su email para validar cuenta", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.pantallaPrincipal();
+            }
+            else
+            {
+                MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
         private void label2_Click(object sender, EventArgs e)
         {
 
@@ -76,9 +100,6 @@ namespace TP1___GRUPO_C
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {//registrar
-
-        }
+        
     }
 }

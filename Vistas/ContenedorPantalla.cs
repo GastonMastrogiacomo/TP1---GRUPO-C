@@ -33,9 +33,11 @@ namespace TP1___GRUPO_C
 
             pantallaLogin = new PantallaLogin(cine);
             pantallaLogin.MdiParent = this;
+            pantallaLogin.pantallaPrincipal += volverPantallaPrincipal;
             pantallaLogin.usuarioComunLogueado += UsuarioComunLogueado;
             pantallaLogin.usuarioAdminLogueado += UsuarioAdminLogueado;
             pantallaLogin.Show();
+            
 
         }
 
@@ -70,7 +72,14 @@ namespace TP1___GRUPO_C
 
         private void volverPantallaPrincipal()
         {
-            pantallaRegistro.Close();
+            if (pantallaRegistro !=null)
+            {
+                pantallaRegistro.Close();
+            }
+            if (pantallaLogin != null)
+            { 
+            pantallaLogin.Close();
+            }
             pantallaPrincipal.Show();      
         }
 
