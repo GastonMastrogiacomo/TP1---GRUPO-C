@@ -26,7 +26,6 @@ namespace TP1___GRUPO_C.Vistas
         {
             InitializeComponent();
             miCine = cine;
-            //this.FuncionesUsuario = FuncionesUsuario;
             this.UsuarioAuxiliar = UsuarioAuxiliar;
             CargarListaFuncionesUsuario();
             CargarListaFuncionesCine();
@@ -82,9 +81,15 @@ namespace TP1___GRUPO_C.Vistas
                     if (!Clb_FuncionesUsuario.Items.Contains(Clb_FuncionesCine.Items[i]))
                     {
                        Clb_FuncionesUsuario.Items.Add(Clb_FuncionesCine.Items[i]);
+                        Funcion func = miCine.ObtenerFuncionPorId(i);
+                       UsuarioAuxiliar.AgregarFuncion(func);
+                       
                     }
                 }
             }
+            GuardarDatosUsuarioAuxiliar();
+            abrirPantallaEdicionFunciones(UsuarioAuxiliar);
+
         }
 
         private void Btn_SacarDeLista_Click(object sender, EventArgs e)
@@ -118,21 +123,24 @@ namespace TP1___GRUPO_C.Vistas
                     UsuarioAuxiliar.AgregarFuncion(func);
                 }
             }
-                if (!miCine.ModificarUsuario(UsuarioAuxiliar.ID, UsuarioAuxiliar))
-                {
-                    MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                else
-                {
-                    MessageBox.Show("Se actualizaron correctamente las funciones de " + UsuarioAuxiliar.Nombre);
-                }
-            
-           
+
+            GuardarDatosUsuarioAuxiliar();
             Clb_FuncionesUsuario.Items.Clear();
-            abrirPantallaEdicionFunciones(UsuarioAuxiliar);
-            //cerrarYGuardarPantallaCargaFunciones();
-         
-          
+            cerrarYGuardarPantallaCargaFunciones();
+
+
+        }
+
+        private void GuardarDatosUsuarioAuxiliar()
+        {
+            if (!miCine.ModificarUsuario(UsuarioAuxiliar.ID, UsuarioAuxiliar))
+            {
+                MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show("Se actualizaron correctamente las funciones de " + UsuarioAuxiliar.Nombre);
+            }
         }
 
 

@@ -101,9 +101,6 @@ namespace TP1___GRUPO_C.Vistas
 
         private void dataGridUsuarios_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            MessageBox.Show("RowIndex: " + e.RowIndex.ToString());
-            //obtengo el id en dataGridUsuarios[0,e.RowIndex]
-            MessageBox.Show("ID: " + dataGridUsuarios[0, e.RowIndex].Value.ToString());
             string ID = dataGridUsuarios[0, e.RowIndex].Value.ToString();
             this.Input_DNI.Text = dataGridUsuarios[1, e.RowIndex].Value.ToString();
             this.Input_Nombre.Text = dataGridUsuarios[2, e.RowIndex].Value.ToString();

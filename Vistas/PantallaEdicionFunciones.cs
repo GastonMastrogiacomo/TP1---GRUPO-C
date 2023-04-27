@@ -19,24 +19,27 @@ namespace TP1___GRUPO_C.Vistas
         public PantallaEdicionFunciones(Cine cine, Usuario usuarioAuxiliar) 
         {
             InitializeComponent();
-            miCine = cine; 
+            miCine = cine;
             this.usuarioAuxiliar = usuarioAuxiliar;
-            createLabels();
+            CreateLabels();
         }
 
-        private void createLabels()
+        private void CreateLabels()
         {
             List<Funcion> funciones = this.usuarioAuxiliar.ObtenerMisFunciones();
-          for (int i = 1; i<= funciones.Count; i++)
+          for (int i = 0; i< funciones.Count; i++)
                 {
                     Label actual = new Label();
                     actual.AutoSize = true;
-                    actual.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point);
-                    actual.Location = new Point(12, 30*i);
-                    actual.Name = "funcion-" + funciones[i-1].ID;
+                    actual.Font = new Font("Segoe UI", 15F, FontStyle.Regular, GraphicsUnit.Point);
+                int y = (i+1) * 30;
+                    actual.Location = new Point(12,y);
+                    actual.Name = "funcion-" + funciones[i].ID;
                     actual.Size = new Size(129, 28);
-                    actual.TabIndex = 28;
-                    actual.Text = "Pelicula: " + funciones[i-1].MiPelicula.Nombre;
+                    actual.TabIndex = i;
+                    actual.Text = "Pelicula: " + funciones[i].MiPelicula.Nombre;
+
+                this.Controls.Add(actual);
                 }
         }
     }
