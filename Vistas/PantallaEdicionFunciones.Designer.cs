@@ -1,6 +1,6 @@
 ﻿namespace TP1___GRUPO_C.Vistas
 {
-    partial class PantallaEdicionFuncion
+    partial class PantallaEdicionFunciones
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "PantallaEdicionFuncion";
+            SuspendLayout();
+            // 
+            // PantallaEdicionFuncion
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(800, 450);
+            FormBorderStyle = FormBorderStyle.None;
+            Name = "PantallaEdicionFuncion";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "PantallaEdicionFuncion";
+            ResumeLayout(false);
         }
 
         #endregion

@@ -18,6 +18,7 @@ namespace TP1___GRUPO_C.Vistas
         private Usuario UsuarioAuxiliar;
         public CerrarPantallaCargaFunciones cerrarPantallaCargaFunciones;
         public CerrarYGuardarPantallaCargaFunciones cerrarYGuardarPantallaCargaFunciones;
+        public AbrirPantallaEdicionFunciones abrirPantallaEdicionFunciones;
 
 
 
@@ -34,6 +35,7 @@ namespace TP1___GRUPO_C.Vistas
 
         public delegate void CerrarPantallaCargaFunciones();
         public delegate void CerrarYGuardarPantallaCargaFunciones();
+        public delegate void AbrirPantallaEdicionFunciones(Usuario UsuarioAuxiliar);
 
         private void CargarListaFuncionesUsuario()
         {
@@ -127,7 +129,8 @@ namespace TP1___GRUPO_C.Vistas
             
            
             Clb_FuncionesUsuario.Items.Clear();
-            cerrarYGuardarPantallaCargaFunciones();
+            abrirPantallaEdicionFunciones(UsuarioAuxiliar);
+            //cerrarYGuardarPantallaCargaFunciones();
          
           
         }
