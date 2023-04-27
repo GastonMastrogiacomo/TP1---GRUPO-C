@@ -12,7 +12,10 @@
 - un admin no deberia ni que cargar credito
 - supongamos que no tengo credito suficiente para comprar la entrada, entonces sale una advertencia que me da la opcion de cargarCreditos()
 - ver los metodos get de devolucion de listas.
-- falta crear pantalla de admin (form 6)
+- falta finalizar pantalla ABM Admin
+- Importante -> en la pantalla ABM Admin hasta que no se haga click en "modificar" no se va a guardar la nueva lsita de funciones
+- falta implementar los metodos ABM en pantalla Admin
+- falta actualizar la funcion con el usuario
 - falta crear pantalla de "mi perfil"
 
 ## Updates
@@ -30,7 +33,7 @@
 	* crea form6
 - Lucas 25/04 se implemento Form3 (pantalla de registro) al boton "Registro" de la pantalla principal.
  Tambien se agrego boton "Volver "para regresar, y se modifico constructor y atributo ID de Usuario, agregando un autoincremental y para que este setee ID.
-- Andy 26/04:
+- Andy 26/04 Parte 1:
 	* Clase cine: se agrega el metodo mostrarUsuarios()
 	* Clase usuari: se agrega metodo toString() que devuelve un string []
 	* PantallaABMAdmin:
@@ -39,4 +42,14 @@
 		* se carga el datagrid con informacion pre-cargada
 		* Se modifica la visualizacion de datos
 		* se agrega funcionalidad de doble click en lista para que guarde el formulario
-	
+- Andy 26/04 Parte 2:
+	* Clase Usuario: se agrega ABM de funcion y se modifica Alta de Reserva
+	* Clase Sala: se le agrega UltimoID
+	* Clase Pelicula: se le agrega UltimoID
+	* Clase Funcion: se le agrega UltimoID
+	* Clase Cine: Se agregan objetos de prueba y se agregan metodos para obtener Funcion y Usuario por ID
+	* Front: 
+		* se agrega una pantalla nueva para cargar las funciones al usuario
+		* se agrega UsuarioAuxiliar a la pantalla de ABM de admin para poder cargar la lsita en la nueva pantalla
+		* se codea toda la pantalla nueva entera y se agregan las funcionalidades.
+		* se agregan posiblidades de volver para atras en la pantalla nueva y todos los metodos delegados se linkean con el contendor de pantallas.

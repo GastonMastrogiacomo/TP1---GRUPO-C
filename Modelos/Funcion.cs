@@ -11,6 +11,8 @@ namespace TP1___GRUPO_C.Model
 
 
         public int ID { get; set; }
+
+        public static int ultimoID = 0;
         public Sala MiSala { get; set; }
         public Pelicula MiPelicula { get; set; }
         public List<Usuario> Clientes { get; set; }
@@ -19,10 +21,11 @@ namespace TP1___GRUPO_C.Model
         public double Costo { get; set; }
         public List<Reserva> MisReservas { get; set; }
 
-        public Funcion(int ID, Sala MiSala, Pelicula MiPelicula, DateTime Fecha,
+        public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha,
             int CantidadClientes, double Costo)
         {
-            this.ID = ID;
+            ultimoID++;
+            this.ID = ultimoID;
             this.MiSala = MiSala;
             this.MiPelicula = MiPelicula;
             Clientes = new List<Usuario>();

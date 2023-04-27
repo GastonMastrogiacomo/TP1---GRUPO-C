@@ -51,8 +51,16 @@ namespace TP1___GRUPO_C.Model
         {
             try
             {
-                MisReservas.Add(reserva);
-                return true;
+                if (!MisReservas.Contains(reserva))
+                {
+                    MisReservas.Add(reserva);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                   
             }
             catch (Exception e)
             {
@@ -87,6 +95,64 @@ namespace TP1___GRUPO_C.Model
                 }
             }
             return false;
+        }
+
+        //ABM Funcion
+
+
+        public bool AgregarFuncion(Funcion funcion)
+        {
+            try
+            {
+                if (!MisFunciones.Contains(funcion))
+                {
+                    MisFunciones.Add(funcion);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+                
+              
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.ToString());
+                return false;
+            }
+        }
+
+        public bool EliminarFuncion(int IDFuncion)
+        {
+            foreach (Funcion func in MisFunciones)
+            {
+                if (func.ID == IDFuncion)
+                {
+                    MisFunciones.Remove(func);
+                    return true;
+
+                }
+            }
+            return false;
+        }
+
+
+        public bool ModificarFuncion(int IDFuncion, Funcion funcion)
+        {
+            for (int i = 0; i < MisFunciones.Count; i++)
+            {
+                if (MisFunciones[i].ID == IDFuncion)
+                {
+                    MisFunciones[i] = funcion;
+                    return true;
+                }
+            }
+            return false;
+        }
+        public List<Funcion> ObtenerMisFunciones()
+        {
+            return MisFunciones.ToList();
         }
 
         

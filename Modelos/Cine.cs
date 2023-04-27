@@ -13,7 +13,7 @@ namespace TP1___GRUPO_C.Model
         public List<Sala> Salas;
         public List<Pelicula> Peliculas;
         public Usuario UsuarioActual;
-
+   
         public Cine()
         {
             Usuarios = new List<Usuario>();
@@ -21,14 +21,30 @@ namespace TP1___GRUPO_C.Model
             Salas = new List<Sala>();
             Peliculas = new List<Pelicula>();
 
-            //andy: Agrego usuarios de prueba 
+            //andy: Agrego objetos prueba 
 
             Usuario comun = new Usuario(99999999, "Pepe", "Perez", "pepe@mail.com", "123", new DateTime(), false);
             Usuarios.Add(comun);
-
             Usuario admin = new Usuario(99999998, "El", "Admin", "admin@mail.com", "123", new DateTime(), true);
             Usuarios.Add(admin);
-        
+
+            Sala sala1 = new Sala("Olivos",10);
+            Salas.Add(sala1);
+            Sala sala2 = new Sala("San Isidro", 20);
+            Salas.Add(sala2);
+
+            Pelicula toyStory = new Pelicula("Toy Story", "Pelicula de juguetes.", "Juguetes", "", 120);
+            Peliculas.Add(toyStory);
+            Pelicula marioBros = new Pelicula("Mario Bros.", "It's me Mario!", "Nintendo", "", 100);
+            Peliculas.Add(marioBros);
+
+            Funcion funcion1 = new Funcion(sala1, toyStory, new DateTime(), 5, 10);
+            Funciones.Add(funcion1);
+            Funcion funcion2 = new Funcion(sala1, marioBros, new DateTime(), 8, 15);
+            Funciones.Add(funcion2);
+            Funcion funcion3 = new Funcion(sala2, marioBros, new DateTime(), 3, 15);
+            Funciones.Add(funcion3);
+
         }
 
         //ABM Usuario
@@ -79,7 +95,7 @@ namespace TP1___GRUPO_C.Model
         {
             try
             {
-                Funcion NuevaFuncion = new Funcion(funcion.ID, funcion.MiSala, funcion.MiPelicula, funcion.Fecha, funcion.CantidadClientes, funcion.Costo);
+                Funcion NuevaFuncion = new Funcion(funcion.MiSala, funcion.MiPelicula, funcion.Fecha, funcion.CantidadClientes, funcion.Costo);
                 Funciones.Add(NuevaFuncion);
                 return true;
             }
@@ -122,7 +138,7 @@ namespace TP1___GRUPO_C.Model
         {
             try
             {
-                Sala nuevaSala = new Sala(sala.ID, sala.Ubicacion, sala.Capacidad);
+                Sala nuevaSala = new Sala(sala.Ubicacion, sala.Capacidad);
                 Salas.Add(nuevaSala);
             }
             catch (Exception e)
@@ -170,7 +186,7 @@ namespace TP1___GRUPO_C.Model
         {
             try
             {
-                Pelicula NuevaPelicula = new Pelicula(pelicula.ID, pelicula.Nombre, pelicula.Descripcion, pelicula.Sinopsis, pelicula.Poster, pelicula.Duracion, pelicula.MisFunciones);
+                Pelicula NuevaPelicula = new Pelicula(pelicula.Nombre, pelicula.Descripcion, pelicula.Sinopsis, pelicula.Poster, pelicula.Duracion);
                 Peliculas.Add(NuevaPelicula);
                 return true;
             }
@@ -361,6 +377,32 @@ namespace TP1___GRUPO_C.Model
             return Peliculas.ToList();
         }
 
+        public Usuario ObtenerUsuarioPorId(int ID)
+        {
+            foreach (Usuario user in Usuarios) { 
+                if(user.ID == ID)
+                {
+                    return user;
+                }
+            }
+
+            throw new InvalidDataException("El ID no se encontró en la base de datos.");
+        }
+
+        public Funcion ObtenerFuncionPorId(int ID)
+        {
+            foreach (Funcion func in Funciones) { 
+            if(func.ID == ID)
+                {
+                    return func;
+                }
+            }
+           
+            throw new InvalidDataException("El ID no se encontró en la base de datos.");
+
+        }
+
+
         //TODO
         public List<Funcion> BuscarFuncion(string Ubicacion, DateTime Fecha, double Costo, string NombrePelicula)
         {
@@ -374,7 +416,7 @@ namespace TP1___GRUPO_C.Model
 
                     if (funcion.MiSala.Ubicacion == Ubicacion && funcion.Fecha.Date == Fecha.Date && funcion.Costo == Costo)
                     {
-                        funcionEncontradas.Add(new Funcion(funcion.ID, funcion.MiSala, funcion.MiPelicula, funcion.Fecha, funcion.CantidadClientes, funcion.Costo));
+                        funcionEncontradas.Add(new Funcion(funcion.MiSala, funcion.MiPelicula, funcion.Fecha, funcion.CantidadClientes, funcion.Costo));
                     }
                 }
                 else

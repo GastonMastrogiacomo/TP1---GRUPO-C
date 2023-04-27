@@ -39,7 +39,6 @@
             Usuarios = new TabPage();
             button4 = new Button();
             button3 = new Button();
-            checkedListBox1 = new CheckedListBox();
             label10 = new Label();
             comboBox2 = new ComboBox();
             Cb_EsAdmin = new CheckBox();
@@ -79,6 +78,7 @@
             Reservas = new DataGridViewTextBoxColumn();
             LabelBienvenida = new Label();
             CerrarSesion = new Button();
+            Btn_VerFunciones = new Button();
             Pestañas.SuspendLayout();
             Salas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridSalas).BeginInit();
@@ -161,9 +161,9 @@
             // 
             // Usuarios
             // 
+            Usuarios.Controls.Add(Btn_VerFunciones);
             Usuarios.Controls.Add(button4);
             Usuarios.Controls.Add(button3);
-            Usuarios.Controls.Add(checkedListBox1);
             Usuarios.Controls.Add(label10);
             Usuarios.Controls.Add(comboBox2);
             Usuarios.Controls.Add(Cb_EsAdmin);
@@ -212,15 +212,6 @@
             button3.TabIndex = 27;
             button3.Text = "Modificar";
             button3.UseVisualStyleBackColor = true;
-            // 
-            // checkedListBox1
-            // 
-            checkedListBox1.FormattingEnabled = true;
-            checkedListBox1.Items.AddRange(new object[] { "a", "b", "c", "d", "e", "f", "g", "h", "i" });
-            checkedListBox1.Location = new Point(464, 86);
-            checkedListBox1.Name = "checkedListBox1";
-            checkedListBox1.Size = new Size(102, 22);
-            checkedListBox1.TabIndex = 26;
             // 
             // label10
             // 
@@ -343,7 +334,7 @@
             button2.TabIndex = 10;
             button2.Text = "Refrescar";
             button2.UseVisualStyleBackColor = true;
-            button2.Click += Click_RefrescarUsuarios;
+            button2.Click += Btn_RefrescarUsuarios;
             // 
             // label3
             // 
@@ -530,6 +521,17 @@
             CerrarSesion.UseVisualStyleBackColor = true;
             CerrarSesion.Click += Btn_CerrarSesion;
             // 
+            // Btn_VerFunciones
+            // 
+            Btn_VerFunciones.BackColor = Color.White;
+            Btn_VerFunciones.Location = new Point(464, 86);
+            Btn_VerFunciones.Name = "Btn_VerFunciones";
+            Btn_VerFunciones.Size = new Size(102, 23);
+            Btn_VerFunciones.TabIndex = 29;
+            Btn_VerFunciones.Text = "Ver Funciones";
+            Btn_VerFunciones.UseVisualStyleBackColor = false;
+            Btn_VerFunciones.Click += Btn_VerFunciones_Click;
+            // 
             // PantallaABMAdmin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -601,11 +603,11 @@
         private DataGridViewTextBoxColumn FechaNacimiento;
         private DataGridViewTextBoxColumn EsAdmin;
         private DataGridViewTextBoxColumn Reservas;
-        private CheckedListBox checkedListBox1;
         private Label label10;
         private ComboBox comboBox2;
         private CheckBox Cb_EsAdmin;
         private Button button4;
         private Button button3;
+        private Button Btn_VerFunciones;
     }
 }

@@ -10,6 +10,7 @@ namespace TP1___GRUPO_C
         private PantallaLogin pantallaLogin;
         private PantallaABMAdmin pantallaABMAdmin;
         private PantallaRegistro pantallaRegistro;
+        private PantallaCargaFunciones pantallaCargaFunciones;
 
         public ContenedorPantalla()
         {
@@ -50,7 +51,7 @@ namespace TP1___GRUPO_C
             pantallaLogin.Close();
             pantallaABMAdmin = new PantallaABMAdmin(cine);
             pantallaABMAdmin.MdiParent = this;
-
+            pantallaABMAdmin.abrirPantallaCargaFunciones += AbrirPantallaCargaFunciones;
             pantallaABMAdmin.Show();
             
 
@@ -71,6 +72,30 @@ namespace TP1___GRUPO_C
         {
             pantallaRegistro.Close();
             pantallaPrincipal.Show();      
+        }
+
+        private void AbrirPantallaCargaFunciones(Usuario UsuarioAuxiliar)
+        {
+            pantallaABMAdmin.Hide();
+            pantallaCargaFunciones = new PantallaCargaFunciones(cine, UsuarioAuxiliar);
+            pantallaCargaFunciones.MdiParent = this;
+            pantallaCargaFunciones.cerrarPantallaCargaFunciones += CerrarPantallaCargaFunciones;
+            pantallaCargaFunciones.cerrarYGuardarPantallaCargaFunciones += CerrarYGuardarPantallaCargaFunciones;
+            pantallaCargaFunciones.Show();
+        }
+
+        private void CerrarPantallaCargaFunciones()
+        {
+            pantallaABMAdmin.Show();
+            pantallaCargaFunciones.Close();
+            
+        }
+
+        private void CerrarYGuardarPantallaCargaFunciones()
+        {
+            pantallaABMAdmin.Show();
+            pantallaCargaFunciones.Close();
+
         }
 
     }

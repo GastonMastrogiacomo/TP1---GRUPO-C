@@ -10,12 +10,16 @@ namespace TP1___GRUPO_C.Model
     {
 
         public int ID { get; set; }
+
+        public static int ultimoID = 0;
+
         public string Ubicacion { get; set; }
         public int Capacidad { get; set; }
 
-        public Sala(int ID, string Ubicacion, int Capacidad)
+        public Sala(string Ubicacion, int Capacidad)
         {
-            this.ID = ID;
+            ultimoID++;
+            this.ID = ultimoID;
             this.Ubicacion = Ubicacion;
             this.Capacidad = Capacidad;
         }
