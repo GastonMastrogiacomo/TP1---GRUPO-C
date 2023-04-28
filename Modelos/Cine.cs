@@ -54,57 +54,116 @@ namespace TP1___GRUPO_C.Model
         public bool AgregarUsuario(Usuario user)
         {
             bool flagDni = false;
-        if((user.DNI !=null && user.Nombre != null&& user.Apellido != null&& user.Mail != null&& user.Password != null&& user.FechaNacimiento != null&& user.EsAdmin != null)) { 
-            foreach (Usuario u in Usuarios)
-            {
-                if (user.DNI == u.DNI || user.Mail == u.Mail)
-                {
-                    flagDni = true;
-                }
-            }
 
-            if (!flagDni)
+
+            try
             {
-                Usuario otro = new Usuario(user.DNI, user.Nombre, user.Apellido, user.Mail, user.Password, user.FechaNacimiento, user.EsAdmin);
-                Usuarios.Add(otro);
-                MessageBox.Show("Usuario Registrado con exito! Revise su email para validar cuenta", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return true;
+
+                if (user.DNI != 0)
+                {
+                    if (user.Nombre != null && user.Nombre != "")
+                    {
+                        if (user.Apellido != null && user.Apellido != "")
+                        {
+                            if (user.Mail != null && user.Mail != "")
+                            {
+                                if (user.Password != null && user.Password != "")
+                                {
+
+
+                                    foreach (Usuario u in Usuarios)
+                                    {
+                                        if (user.DNI == u.DNI || user.Mail == u.Mail)
+                                        {
+                                            flagDni = true;
+                                        }
+                                    }
+
+                                    if (!flagDni)
+                                    {
+                                        Usuario otro = new Usuario(user.DNI, user.Nombre, user.Apellido, user.Mail, user.Password, user.FechaNacimiento, user.EsAdmin);
+                                        Usuarios.Add(otro);
+                                        MessageBox.Show("Usuario Registrado con exito! Revise su email para validar cuenta", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        return true;
+                                    }
+
+
+                                    MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                                }
+                                else
+                                {
+                                    throw new InvalidOperationException("Password incorrecta")
+    ;
+                                }
+                            }
+                            else
+                            {
+                                throw new InvalidOperationException("Mail Incorrecto");
+                            }
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("Apellido Incorrecto");
+                        }
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Nombre Incorrecto");
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("DNI Incorrecto");
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                MessageBox.Show("Complete todos los campos" + e.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
 
             return false;
-            MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                MessageBox.Show("Complete todos los campos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
-
         }
 
         public bool ModificarUsuario(int idUsuario, Usuario user)
         {
-            if ((user.DNI != null && user.Nombre != null && user.Apellido != null && user.Mail != null && user.Password != null && user.FechaNacimiento != null && user.EsAdmin != null))
+            if (user.DNI != 0 && user.Nombre != null && user.Nombre != "" && user.Apellido != null && user.Apellido != "" && user.Mail != null && user.Mail != "" && user.Password != null && user.Password != "")
             {
                 for (int i = 0; i < Usuarios.Count; i++)
                 {
                     if (Usuarios[i].ID == idUsuario)
                     {
 
-                        Usuarios[i] = user;
-                        MessageBox.Show("Usuario Registrado con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        Usuarios[i].Nombre = user.Nombre;
+                        Usuarios[i].Apellido = user.Apellido;
+                        Usuarios[i].Mail = user.Mail;
+                        Usuarios[i].Password = user.Nombre;
+                        Usuarios[i].IntentosFallidos = user.IntentosFallidos;
+                        Usuarios[i].Bloqueado = user.Bloqueado;
+                        Usuarios[i].MisFunciones = user.MisFunciones;
+                        Usuarios[i].Credito = user.Credito;
+                        Usuarios[i].FechaNacimiento = user.FechaNacimiento;
+                        Usuarios[i].EsAdmin = user.EsAdmin;
+                        MessageBox.Show("Usuario modificado con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return true;
                     }
+
                 }
-                return false;
+
                 MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+
             }
             else
             {
                 MessageBox.Show("Complete todos los campos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
             }
+
+            return false;
         }
 
         public bool EliminarUsuario(int idUsuario)
@@ -166,17 +225,47 @@ namespace TP1___GRUPO_C.Model
         }
 
         //ABM Sala 
-        public void AgregarSala(Sala sala)
+        public bool AgregarSala(Sala sala)
         {
             try
             {
-                Sala nuevaSala = new Sala(sala.Ubicacion, sala.Capacidad);
-                Salas.Add(nuevaSala);
+                if (sala.ID != null && sala.ID != 0)
+                {
+                    if (sala.Capacidad != null && sala.Capacidad >= 0)
+                    {
+                        if (sala.Ubicacion != null && sala.Ubicacion != "")
+                        {
+                            Sala nuevaSala = new Sala(sala.Ubicacion, sala.Capacidad);
+                            Salas.Add(nuevaSala);
+                            MessageBox.Show("Sala agregada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                            return true;
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("Ubicacion Incorrecta");
+
+                        }
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Capacidad Incorrecta");
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("DNI Incorrecto");
+
+                }
+
             }
             catch (Exception e)
             {
-                Console.WriteLine($"Error: {e.ToString()}");
+                Console.WriteLine(e.Message);
+                MessageBox.Show("Complete todos los campos" + e.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            return false;
+
 
         }
 
@@ -188,27 +277,41 @@ namespace TP1___GRUPO_C.Model
                 if (sal.ID == IDSala)
                 {
                     Salas.Remove(sal);
+                    MessageBox.Show("La Sala fue eliminada", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
 
             }
             return false;
+            MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public bool ModificarSala(int IDSala, Sala sala)
         {
-
-            for (int i = 0; i < Salas.Count; i++)
+            if (sala.ID != null && sala.ID != 0 && sala.Capacidad != null && sala.Capacidad >= 0 && sala.Ubicacion != null && sala.Ubicacion != "")
             {
 
-                if (Salas[i].ID == IDSala)
+                for (int i = 0; i < Salas.Count; i++)
                 {
+                    if (Salas[i].ID == IDSala)
+                    {
 
-                    Salas[i] = sala;
-                    return true;
+                        Salas[i].Capacidad = sala.Capacidad;
+                        Salas[i].Ubicacion = sala.Ubicacion;
+                        Salas[i].MisFunciones = sala.MisFunciones;
+                        return true;
+                    }
+
                 }
-
             }
+            else
+            {
+                MessageBox.Show("Complete todos los campos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
+
+
 
             return false;
         }
@@ -218,16 +321,66 @@ namespace TP1___GRUPO_C.Model
         {
             try
             {
-                Pelicula NuevaPelicula = new Pelicula(pelicula.Nombre, pelicula.Descripcion, pelicula.Sinopsis, pelicula.Poster, pelicula.Duracion);
-                Peliculas.Add(NuevaPelicula);
-                return true;
+
+                if (pelicula.ID != null && pelicula.ID != 0)
+                {
+                    if (pelicula.Nombre != null && pelicula.Nombre != "")
+                    {
+
+                        if (pelicula.Descripcion != null && pelicula.Descripcion != "")
+                        {
+                            if (pelicula.Sinopsis != null && pelicula.Sinopsis != "")
+                            {
+                                if (pelicula.Poster != null && pelicula.Poster != "")
+                                {
+
+                                    if (pelicula.Duracion != null && pelicula.Duracion >= 0)
+                                    {
+
+                                        Pelicula NuevaPelicula = new Pelicula(pelicula.Nombre, pelicula.Descripcion, pelicula.Sinopsis, pelicula.Poster, pelicula.Duracion);
+                                        Peliculas.Add(NuevaPelicula);
+                                        MessageBox.Show("Pelicula agregada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                        return true;
+                                    }
+                                    else
+                                    {
+                                        throw new InvalidOperationException("Duracion Incorrecta");
+                                    }
+
+                                }
+                                else
+                                {
+                                    throw new InvalidOperationException("Poster Incorrecto");
+                                }
+                            }
+                            else
+                            {
+                                throw new InvalidOperationException("Sinopsis Incorrecta");
+                            }
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("Descripcion Incorrecta");
+                        }
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Nombre Incorrecto");
+                    }
+
+                }
+                else
+                {
+                    throw new InvalidOperationException("ID Incorrecto");
+                }
+
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
-                return false;
             }
-
+            return false;
         }
 
         public bool EliminarPelicula(int IDPelicula)
@@ -237,24 +390,44 @@ namespace TP1___GRUPO_C.Model
                 if (pel.ID == IDPelicula)
                 {
                     Peliculas.Remove(pel);
+                    MessageBox.Show("La Pelicula fue eliminada", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
 
                 }
             }
             return false;
+            MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         public bool ModificarPelicula(int IDPelicula, Pelicula pelicula)
         {
-            for (int i = 0; i < Peliculas.Count; i++)
+
+            if (pelicula.ID != null && pelicula.ID != 0 && pelicula.Nombre != null && pelicula.Nombre != "" && pelicula.Descripcion != null && pelicula.Descripcion != "" && pelicula.Sinopsis != null && pelicula.Sinopsis != "" && pelicula.Poster != null && pelicula.Poster != "" && pelicula.Duracion != null && pelicula.Duracion >= 0)
             {
-                if (Peliculas[i].ID == IDPelicula)
+                for (int i = 0; i < Peliculas.Count; i++)
                 {
-                    Peliculas[i] = pelicula;
-                    return true;
+                    if (Peliculas[i].ID == IDPelicula)
+                    {
+                        Peliculas[i].Nombre = pelicula.Nombre;
+                        Peliculas[i].Descripcion = pelicula.Descripcion;
+                        Peliculas[i].Sinopsis = pelicula.Sinopsis;
+                        Peliculas[i].Poster = pelicula.Poster;
+                        Peliculas[i].Duracion = pelicula.Duracion;
+
+                        MessageBox.Show("Pelicula modificada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return true;
+                    }
                 }
+                MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+            }
+            else
+            {
+                MessageBox.Show("Complete todos los campos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             }
             return false;
+
         }
 
         public bool CargarCredito(int idUsuario, double importe)

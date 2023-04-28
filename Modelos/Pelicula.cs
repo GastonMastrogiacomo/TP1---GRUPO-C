@@ -32,10 +32,7 @@ namespace TP1___GRUPO_C.Model
 
         public string[] PeliculaToString()
         {
-            return new string[] { ID.ToString(),Nombre.ToString(),Descripcion.ToString(),Sinopsis.ToString(),Poster.ToString(),Duracion.ToString(),MisFunciones.ToString()};
+            return new string[] { ID.ToString(), Nombre.ToString(), Descripcion.ToString(), Sinopsis.ToString(), Poster.ToString(), Duracion.ToString(), MisFunciones.ToString() };
         }
-
-
-
     }
 }

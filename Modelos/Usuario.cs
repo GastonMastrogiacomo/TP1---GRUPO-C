@@ -25,6 +25,7 @@ namespace TP1___GRUPO_C.Model
 
 
         // Entrada
+       
 
         public Usuario(int DNI, string Nombre, string Apellido,
             string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin)
@@ -44,6 +45,7 @@ namespace TP1___GRUPO_C.Model
             this.EsAdmin = EsAdmin;
 
         }
+        
 
         //ABM Funcion
 

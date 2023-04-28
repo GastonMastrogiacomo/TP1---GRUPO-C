@@ -12,6 +12,7 @@ namespace TP1___GRUPO_C
         private PantallaRegistro pantallaRegistro;
         private PantallaCargaFunciones pantallaCargaFunciones;
         private PantallaEdicionFunciones pantallaEdicionFunciones;
+        private PantallaMiPerfil PantallaMIPerfil;
 
         public ContenedorPantalla()
         {
@@ -126,6 +127,17 @@ namespace TP1___GRUPO_C
         {
             pantallaABMAdmin.Show();
             pantallaCargaFunciones.Close();
+
+        }
+        private void AbrirMiPerfil()
+        {
+            pantallaPrincipal.Hide();
+            PantallaMIPerfil = new PantallaMiPerfil(cine);
+            PantallaMIPerfil.MdiParent = this;
+
+            //PantallaMiPerfil.pantallaPrincipal += volverPantallaPrincipal;
+            PantallaMIPerfil.Show();
+            
 
         }
 
