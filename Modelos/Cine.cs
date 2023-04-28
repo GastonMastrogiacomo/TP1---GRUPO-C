@@ -40,12 +40,25 @@ namespace TP1___GRUPO_C.Model
             Pelicula marioBros = new Pelicula("Mario Bros.", "It's me Mario!", "Nintendo", "", 100);
             Peliculas.Add(marioBros);
 
-            Funcion funcion1 = new Funcion(sala1, toyStory, new DateTime(), 0, 10);
+            Funcion funcion1 = new Funcion(sala1, toyStory, fecha, 0, 10);
             Funciones.Add(funcion1);
-            Funcion funcion2 = new Funcion(sala1, marioBros, new DateTime(), 0, 15);
+            toyStory.AgregarFuncion(funcion1);
+            sala1.AgregarFuncion(funcion1);
+            comun.AgregarFuncion(funcion1);
+            funcion1.AgregarCliente(comun);
+
+            Funcion funcion2 = new Funcion(sala1, marioBros, fecha, 0, 15);
             Funciones.Add(funcion2);
-            Funcion funcion3 = new Funcion(sala2, marioBros, new DateTime(), 0, 15);
+            marioBros.AgregarFuncion(funcion2);
+            sala1.AgregarFuncion(funcion2);
+            comun.AgregarFuncion(funcion2);
+            funcion2.AgregarCliente(comun);
+
+            Funcion funcion3 = new Funcion(sala2, marioBros, fecha, 0, 15);
             Funciones.Add(funcion3);
+            marioBros.AgregarFuncion(funcion3);
+            sala2.AgregarFuncion(funcion3);
+
 
         }
 
@@ -127,7 +140,6 @@ namespace TP1___GRUPO_C.Model
 
             return false;
         }
-
         public bool ModificarUsuario(int idUsuario, Usuario user)
         {
             if (user.DNI != 0 && user.Nombre != null && user.Nombre != "" && user.Apellido != null && user.Apellido != "" && user.Mail != null && user.Mail != "" && user.Password != null && user.Password != "")
@@ -165,7 +177,6 @@ namespace TP1___GRUPO_C.Model
 
             return false;
         }
-
         public bool EliminarUsuario(int idUsuario)
         {
             foreach (Usuario u in Usuarios)
@@ -196,7 +207,6 @@ namespace TP1___GRUPO_C.Model
                 return false;
             }
         }
-
         public bool EliminarFuncion(int IDFuncion)
         {
             foreach (Funcion fun in Funciones)
@@ -210,14 +220,19 @@ namespace TP1___GRUPO_C.Model
             }
             return false;
         }
-
         public bool ModificarFuncion(int IDFuncion, Funcion funcion)
         {
             for (int i = 0; i < Funciones.Count; i++)
             {
                 if (Funciones[i].ID == IDFuncion)
                 {
-                    Funciones[i] = funcion;
+                    Funciones[i].MiSala = funcion.MiSala;
+                    Funciones[i].MiPelicula = funcion.MiPelicula;
+                    Funciones[i].Clientes = funcion.Clientes;
+                    Funciones[i].Fecha = funcion.Fecha;
+                    Funciones[i].CantidadClientes = funcion.CantidadClientes;
+                    Funciones[i].Costo = funcion.Costo;
+
                     return true;
                 }
             }
@@ -268,7 +283,6 @@ namespace TP1___GRUPO_C.Model
 
 
         }
-
         public bool EliminarSala(int IDSala)
         {
             foreach (Sala sal in Salas)
@@ -285,7 +299,6 @@ namespace TP1___GRUPO_C.Model
             return false;
             MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-
         public bool ModificarSala(int IDSala, Sala sala)
         {
             if (sala.ID != null && sala.ID != 0 && sala.Capacidad != null && sala.Capacidad >= 0 && sala.Ubicacion != null && sala.Ubicacion != "")
@@ -382,7 +395,6 @@ namespace TP1___GRUPO_C.Model
             }
             return false;
         }
-
         public bool EliminarPelicula(int IDPelicula)
         {
             foreach (Pelicula pel in Peliculas)
@@ -398,7 +410,6 @@ namespace TP1___GRUPO_C.Model
             return false;
             MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-
         public bool ModificarPelicula(int IDPelicula, Pelicula pelicula)
         {
 
@@ -430,6 +441,7 @@ namespace TP1___GRUPO_C.Model
 
         }
 
+        // METODOS
         public bool CargarCredito(int idUsuario, double importe)
         {
             foreach (Usuario user in Usuarios)
@@ -442,7 +454,6 @@ namespace TP1___GRUPO_C.Model
             }
             return false;
         }
-
         public bool ComprarEntrada(int IDFuncion, int CantidadEntradas)
         {
             try
@@ -493,8 +504,6 @@ namespace TP1___GRUPO_C.Model
 
 
         }
-
-
         public bool DevolverEntrada(int IDFuncion, int CantidadEntradas)
         {
 
@@ -534,9 +543,6 @@ namespace TP1___GRUPO_C.Model
             return false;
 
         }
-
-
-
         public bool IniciarSesion(string Mail, string Password, bool esAdmin)
         {
             try
@@ -593,33 +599,31 @@ namespace TP1___GRUPO_C.Model
             return false;
 
         }
-
         public void CerrarSesion()
         {
             UsuarioActual = null;
 
         }
 
+        //MOSTRAR
         public List<Usuario> MostrarUsuarios()
         {
             return Usuarios.ToList();
         }
-
         public List<Funcion> MostrarFunciones()
         {
             return Funciones.ToList();
         }
-
         public List<Sala> MostrarSalas()
         {
             return Salas.ToList();
         }
-
         public List<Pelicula> MostrarPeliculas() // en diagrama decia List<Post>
         {
             return Peliculas.ToList();
         }
 
+        //MOSTRAR POR ID
         public Usuario ObtenerUsuarioPorId(int ID)
         {
             foreach (Usuario user in Usuarios)
@@ -633,7 +637,6 @@ namespace TP1___GRUPO_C.Model
 
             throw new InvalidDataException("El ID no se encontró en la base de datos.");
         }
-
         public Sala ObtenerSalaPorId(int ID)
         {
             foreach (Sala sal in Salas)
@@ -647,7 +650,6 @@ namespace TP1___GRUPO_C.Model
 
             throw new InvalidDataException("El ID no se encontró en la base de datos.");
         }
-
         public Funcion ObtenerFuncionPorId(int ID)
         {
             foreach (Funcion func in Funciones)
@@ -662,36 +664,35 @@ namespace TP1___GRUPO_C.Model
 
         }
 
-
         //TODO
-        public List<Funcion> BuscarFuncion(string Ubicacion, DateTime Fecha, double Costo, string NombrePelicula)
-        {
+        //public List<Funcion> BuscarFuncion(string Ubicacion, DateTime Fecha, double Costo, string NombrePelicula)
+        //{
 
-            List<Funcion> funcionEncontradas = new List<Funcion>();
+        //    List<Funcion> funcionEncontradas = new List<Funcion>();
 
-            foreach (Funcion funcion in Funciones)
-            {
-                if (funcion.MiPelicula.Nombre == NombrePelicula)
-                {
+        //    foreach (Funcion funcion in Funciones)
+        //    {
+        //        if (funcion.MiPelicula.Nombre == NombrePelicula)
+        //        {
 
-                    if (funcion.MiSala.Ubicacion == Ubicacion && funcion.Fecha.Date == Fecha.Date && funcion.Costo == Costo)
-                    {
-                        funcionEncontradas.Add(new Funcion(funcion.MiSala, funcion.MiPelicula, funcion.Fecha, funcion.CantidadClientes, funcion.Costo));
-                    }
-                    else
-                    {
-                        Console.WriteLine("No se encuentra Funcion con los datos ingresados");
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("No se encuentra Funcion con ese nombre");
-                }
+        //            if (funcion.MiSala.Ubicacion == Ubicacion && funcion.Fecha.Date == Fecha.Date && funcion.Costo == Costo)
+        //            {
+        //                funcionEncontradas.Add(new Funcion(funcion.MiSala, funcion.MiPelicula, funcion.Fecha, funcion.CantidadClientes, funcion.Costo));
+        //            }
+        //            else
+        //            {
+        //                Console.WriteLine("No se encuentra Funcion con los datos ingresados");
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("No se encuentra Funcion con ese nombre");
+        //        }
 
-            }
+        //    }
 
-            return funcionEncontradas;
-        }
+        //    return funcionEncontradas;
+        //}
 
 
     }

@@ -45,7 +45,26 @@ namespace TP1___GRUPO_C.Model
             this.EsAdmin = EsAdmin;
 
         }
-        
+
+        public Usuario(int DNI, string Nombre, string Apellido,
+          string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int ID)
+        {
+            
+            this.ID = ID;
+            this.DNI = DNI;
+            this.Nombre = Nombre;
+            this.Apellido = Apellido;
+            this.Mail = Mail;
+            this.Password = Password;
+            IntentosFallidos = 0;
+            Bloqueado = false;
+            MisFunciones = new List<Funcion>();
+            Credito = 0;
+            this.FechaNacimiento = FechaNacimiento;
+            this.EsAdmin = EsAdmin;
+
+        }
+
 
         //ABM Funcion
 
@@ -105,10 +124,29 @@ namespace TP1___GRUPO_C.Model
             return MisFunciones.ToList();
         }
 
+        private string ExtraerIDFunciones()
+        {
+            string IDFunciones = "";
+            foreach (Funcion func in MisFunciones)
+            {
+                if (IDFunciones == "")
+                {
+                    IDFunciones += func.ID;
+                }
+                else
+                {
+                    IDFunciones += ", " + func.ID;
+                }
+            }
+
+            return IDFunciones;
+        }
+
 
         public string[] ToString()
         {
-            return new string[] { ID.ToString(), DNI.ToString(), Nombre, Apellido, Mail, Password, IntentosFallidos.ToString(), Bloqueado.ToString(), MisFunciones.ToString(), Credito.ToString(), FechaNacimiento.ToString("dd/MM/yyyy"), EsAdmin.ToString() };
+            string FuncionesIDs = ExtraerIDFunciones(); ;
+            return new string[] { ID.ToString(), DNI.ToString(), Nombre, Apellido, Mail, Password, IntentosFallidos.ToString(), Bloqueado.ToString(), FuncionesIDs, Credito.ToString(), FechaNacimiento.ToString("dd/MM/yyyy"), EsAdmin.ToString() };
         }
     }
 }

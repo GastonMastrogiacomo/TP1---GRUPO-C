@@ -37,7 +37,21 @@ namespace TP1___GRUPO_C.Model
 
 
         }
-  
+
+        public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha,
+           int CantidadClientes, double Costo, int ID)
+        {
+            this.ID = ID;
+            this.MiSala = MiSala;
+            this.MiPelicula = MiPelicula;
+            Clientes = new List<Usuario>();
+            this.Fecha = Fecha;
+            this.CantidadClientes = CantidadClientes;
+            this.Costo = Costo;
+
+
+
+        }
 
         // ABM Clientes
 
@@ -87,10 +101,28 @@ namespace TP1___GRUPO_C.Model
             return false;
         }
 
+        private string ExtraerIdClientes()
+        {
+            string IDClientes = "";
+            foreach (Usuario cli in Clientes)
+            {
+                if (IDClientes == "")
+                {
+                    IDClientes += cli.ID;
+                }
+                else
+                {
+                    IDClientes += ", " + cli.ID;
+                }
+            }
+
+            return IDClientes;
+        }
 
         public string[] ToString()
         {
-            return new string[] { ID.ToString(), MiSala.ToString(), MiPelicula.ToString(),  Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString()};
+            string IdClientes = ExtraerIdClientes();
+            return new string[] { ID.ToString(),  Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), IdClientes };
         }
 
 
