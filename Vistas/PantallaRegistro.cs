@@ -38,16 +38,10 @@ namespace TP1___GRUPO_C
             bool esAdmin = checkBox1.Checked;
 
             Usuario nuevo = new Usuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin);
-            bool confirmacion= cine.AgregarUsuario(nuevo); 
-            if (confirmacion)
-            {
-                MessageBox.Show("Usuario Registrado con exito! Revise su email para validar cuenta", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.pantallaPrincipal();
+            if (cine.AgregarUsuario(nuevo)) { 
+            this.pantallaPrincipal();
             }
-            else
-            {
-                MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+
 
         }
         private void label2_Click(object sender, EventArgs e)

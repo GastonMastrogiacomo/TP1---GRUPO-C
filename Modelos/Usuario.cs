@@ -11,7 +11,6 @@ namespace TP1___GRUPO_C.Model
         public int ID { get; }
 
         public static int ultimoID = 0;
-
         public int DNI { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
@@ -23,8 +22,8 @@ namespace TP1___GRUPO_C.Model
         public double Credito { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public bool EsAdmin { get; set; }
-        public List<Reserva> MisReservas { get; set; }
-        
+
+
         // Entrada
 
         public Usuario(int DNI, string Nombre, string Apellido,
@@ -43,58 +42,7 @@ namespace TP1___GRUPO_C.Model
             Credito = 0;
             this.FechaNacimiento = FechaNacimiento;
             this.EsAdmin = EsAdmin;
-            MisReservas = new List<Reserva>();
-        }
 
-        //ABM Reserva
-        public bool AgregarReserva(Reserva reserva)
-        {
-            try
-            {
-                if (!MisReservas.Contains(reserva))
-                {
-                    MisReservas.Add(reserva);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-                   
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                return false;
-            }
-        }
-
-        public bool EliminarReserva(int IDReserva)
-        {
-            foreach (Reserva res in MisReservas)
-            {
-                if (res.ID == IDReserva)
-                {
-                    MisReservas.Remove(res);
-                    return true;
-
-                }
-            }
-            return false;
-        }
-
-
-        public bool ModificarReserva(int IDReserva, Reserva reserva)
-        {
-            for (int i = 0; i < MisReservas.Count; i++)
-            {
-                if (MisReservas[i].ID == IDReserva)
-                {
-                    MisReservas[i] = reserva;
-                    return true;
-                }
-            }
-            return false;
         }
 
         //ABM Funcion
@@ -113,8 +61,8 @@ namespace TP1___GRUPO_C.Model
                 {
                     return false;
                 }
-                
-              
+
+
             }
             catch (Exception e)
             {
@@ -155,12 +103,11 @@ namespace TP1___GRUPO_C.Model
             return MisFunciones.ToList();
         }
 
-        
+
         public string[] ToString()
         {
-            return new string[] { ID.ToString(), DNI.ToString(), Nombre, Apellido, Mail, Password, IntentosFallidos.ToString(), Bloqueado.ToString(), MisFunciones.ToString(), Credito.ToString(), FechaNacimiento.ToString("dd/MM/yyyy"), EsAdmin.ToString(), MisReservas.ToString() };
+            return new string[] { ID.ToString(), DNI.ToString(), Nombre, Apellido, Mail, Password, IntentosFallidos.ToString(), Bloqueado.ToString(), MisFunciones.ToString(), Credito.ToString(), FechaNacimiento.ToString("dd/MM/yyyy"), EsAdmin.ToString() };
         }
     }
 }
 
-   

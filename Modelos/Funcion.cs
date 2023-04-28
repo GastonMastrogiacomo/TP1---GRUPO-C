@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +20,6 @@ namespace TP1___GRUPO_C.Model
         public DateTime Fecha { get; set; }
         public int CantidadClientes { get; set; } //CantidadEntradasCompradas
         public double Costo { get; set; }
-        public List<Reserva> MisReservas { get; set; }
 
         public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha,
             int CantidadClientes, double Costo)
@@ -32,7 +32,7 @@ namespace TP1___GRUPO_C.Model
             this.Fecha = Fecha;
             this.CantidadClientes = CantidadClientes;
             this.Costo = Costo;
-            MisReservas = new List<Reserva>();
+            
 
 
         }
@@ -43,7 +43,7 @@ namespace TP1___GRUPO_C.Model
         public bool AgregarCliente(Usuario usuario)
         {
 
-            //faltaria corroborar que el cliente no exista ya
+            //faltaria corroborar que el cliente no exista ya o quizas no dado que un cliente puede comprar mas entradas
             try
             {
                 Clientes.Add(usuario);
@@ -86,50 +86,13 @@ namespace TP1___GRUPO_C.Model
             return false;
         }
 
-        //ABM Reserva
-        public bool AgregarReserva(Reserva reserva)
-        {
-            try
-            {
-                MisReservas.Add(reserva);
-                CantidadClientes += reserva.CantidadEntradas;
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                return false;
-            }
-        }
 
-        public bool EliminarReserva(int IDReserva)
+        public string[] ToString()
         {
-            foreach (Reserva res in MisReservas)
-            {
-                if (res.ID == IDReserva)
-                {
-                    MisReservas.Remove(res);
-                    CantidadClientes -= res.CantidadEntradas;
-                    return true;
-
-                }
-            }
-            return false;
+            return new string[] { ID.ToString(), MiSala.ToString(), MiPelicula.ToString(),  Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString()};
         }
 
 
-        public bool ModificarReserva(int IDReserva, Reserva reserva)
-        {
-            for (int i = 0; i < MisReservas.Count; i++)
-            {
-                if (MisReservas[i].ID == IDReserva)
-                {
-                    MisReservas[i] = reserva;
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 
 }

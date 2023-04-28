@@ -54,7 +54,7 @@ namespace TP1___GRUPO_C.Model
         public bool AgregarUsuario(Usuario user)
         {
             bool flagDni = false;
-
+        if((user.DNI !=null && user.Nombre != null&& user.Apellido != null&& user.Mail != null&& user.Password != null&& user.FechaNacimiento != null&& user.EsAdmin != null)) { 
             foreach (Usuario u in Usuarios)
             {
                 if (user.DNI == u.DNI || user.Mail == u.Mail)
@@ -67,24 +67,44 @@ namespace TP1___GRUPO_C.Model
             {
                 Usuario otro = new Usuario(user.DNI, user.Nombre, user.Apellido, user.Mail, user.Password, user.FechaNacimiento, user.EsAdmin);
                 Usuarios.Add(otro);
+                MessageBox.Show("Usuario Registrado con exito! Revise su email para validar cuenta", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return true;
             }
 
             return false;
+            MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                MessageBox.Show("Complete todos los campos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
 
         }
 
         public bool ModificarUsuario(int idUsuario, Usuario user)
         {
-            for (int i = 0; i < Usuarios.Count; i++)
+            if ((user.DNI != null && user.Nombre != null && user.Apellido != null && user.Mail != null && user.Password != null && user.FechaNacimiento != null && user.EsAdmin != null))
             {
-                if (Usuarios[i].ID == idUsuario)
+                for (int i = 0; i < Usuarios.Count; i++)
                 {
-                    Usuarios[i] = user;
-                    return true;
+                    if (Usuarios[i].ID == idUsuario)
+                    {
+
+                        Usuarios[i] = user;
+                        MessageBox.Show("Usuario Registrado con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return true;
+                    }
                 }
+                return false;
+                MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            return false;
+            else
+            {
+                MessageBox.Show("Complete todos los campos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
         }
 
         public bool EliminarUsuario(int idUsuario)
@@ -94,10 +114,12 @@ namespace TP1___GRUPO_C.Model
                 if (u.ID == idUsuario)
                 {
                     Usuarios.Remove(u);
+                    MessageBox.Show("El usuario fue eliminado", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return true;
                 }
             }
             return false;
+            MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         // ABM Funcion
@@ -264,10 +286,10 @@ namespace TP1___GRUPO_C.Model
                         {
                             if (fun.MiSala.Capacidad <= CantidadEntradas)
                             {
-                                Reserva reserva = new Reserva(CantidadEntradas, UsuarioActual.ID, fun.ID);
-
-                                UsuarioActual.AgregarReserva(reserva);
-                                fun.AgregarReserva(reserva);
+                                UsuarioActual.MisFunciones.Add(fun);
+                                fun.CantidadClientes += CantidadEntradas;
+                                fun.AgregarCliente(UsuarioActual);
+                                return true;
 
                             }
                             else
@@ -300,32 +322,39 @@ namespace TP1___GRUPO_C.Model
         }
 
 
-        public bool DevolverEntrada(int idUsuario, int cant, int idReserva)
+        public bool DevolverEntrada(int IDFuncion, int CantidadEntradas)
         {
-            List<Usuario> usuarios = MostrarUsuarios();
-            Usuario usuario = usuarios.FirstOrDefault(u => u.ID == idUsuario);
-
-            List<Reserva> reservas = ObtenerReservasPorId(idUsuario);
-            Reserva reserva = reservas.FirstOrDefault(r => r.ID == idUsuario);
 
             List<Funcion> funciones = MostrarFunciones();
-            Funcion funcion = funciones.FirstOrDefault(u => u.ID == idUsuario);
+            Funcion funcion = funciones.FirstOrDefault(u => u.ID == IDFuncion);
 
-            if (reserva != null && funcion !=null && usuario !=null)
+            if (funcion != null)
             {
-                if (funcion.Fecha > DateTime.Now)
+                foreach (Funcion fun in funciones)
                 {
-                    //Revierto el proceso de compra
-                    usuario.Credito += funcion.Costo * cant;
-                    funcion.CantidadClientes -= cant;
-                    usuario.EliminarReserva(reserva.ID);
-                    return true;
+                    if (fun.ID == IDFuncion)
+
+                    {
+                        if (fun.Fecha > DateTime.Now)
+                        {
+
+                            UsuarioActual.MisFunciones.Remove(fun);
+                            fun.CantidadClientes -= CantidadEntradas;
+                            fun.EliminarCliente(UsuarioActual.ID);
+                            return true;
+
+
+
+                        }
+                        else if (fun.Fecha < DateTime.Now)
+                        {
+                            Console.WriteLine("No es posible devolver entrada de una fecha que ya ocurrio.");
+                            return false;
+                        }
+                    }
+
                 }
-                else if (funcion.Fecha < DateTime.Now)
-                {
-                    Console.WriteLine("No es posible devolver entrada de una fecha que ya ocurrio.");
-                    return false;
-                }
+
 
             }
 

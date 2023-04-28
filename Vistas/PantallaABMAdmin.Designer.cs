@@ -30,18 +30,70 @@
         {
             Pestañas = new TabControl();
             Salas = new TabPage();
+            Btn_EliminarSala = new Button();
+            Btn_ModificarSala = new Button();
+            Btn_RefrescarSalas = new Button();
+            Btn_NuevoSala = new Button();
+            label11 = new Label();
+            Input_Capacidad = new TextBox();
+            Label_UbicacionSala = new Label();
+            Input_Ubicacion = new TextBox();
             dataGridSalas = new DataGridView();
             ID = new DataGridViewTextBoxColumn();
             Ubicacion = new DataGridViewTextBoxColumn();
             Capacidad = new DataGridViewTextBoxColumn();
             Funciones = new TabPage();
+            Input_Costo = new TextBox();
+            label14 = new Label();
+            Input_CantidadClientes = new TextBox();
+            Selec_Fecha = new DateTimePicker();
+            Cb_Peliculas = new ComboBox();
+            label13 = new Label();
+            Cb_Salas = new ComboBox();
+            Btn_EliminarFuncion = new Button();
+            Btn_ModificarFuncion = new Button();
+            Btn_RefrescarFunciones = new Button();
+            Btn_NuevoFuncion = new Button();
+            Label_Fecha = new Label();
+            label12 = new Label();
+            Input_MiSala = new Label();
+            dataGridFunciones = new DataGridView();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            Sala = new DataGridViewTextBoxColumn();
+            Pelicula = new DataGridViewTextBoxColumn();
+            Fecha = new DataGridViewTextBoxColumn();
+            Cant_Clientes = new DataGridViewTextBoxColumn();
+            Costo = new DataGridViewTextBoxColumn();
             Películas = new TabPage();
-            Usuarios = new TabPage();
-            Btn_VerFunciones = new Button();
-            button4 = new Button();
-            button3 = new Button();
+            Input_Sinopsis = new TextBox();
+            Input_Descripcion = new TextBox();
+            label19 = new Label();
+            Input_Nombre_Pelicula = new TextBox();
+            Input_Duracion = new TextBox();
             label10 = new Label();
-            comboBox2 = new ComboBox();
+            Input_Poster = new TextBox();
+            Cb_Funciones = new ComboBox();
+            label15 = new Label();
+            button1 = new Button();
+            button3 = new Button();
+            button4 = new Button();
+            button5 = new Button();
+            label16 = new Label();
+            label17 = new Label();
+            label18 = new Label();
+            dataGridPeliculas = new DataGridView();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
+            Descripcion = new DataGridViewTextBoxColumn();
+            Sinopsis = new DataGridViewTextBoxColumn();
+            Poster = new DataGridViewTextBoxColumn();
+            Duracion = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
+            Usuarios = new TabPage();
+            Label_IdUsuario = new Label();
+            Btn_VerFunciones = new Button();
+            Btn_EliminarUsuario = new Button();
+            Btn_ModificarUsuario = new Button();
             Cb_EsAdmin = new CheckBox();
             label9 = new Label();
             Cb_Bloqueado = new CheckBox();
@@ -62,7 +114,7 @@
             Input_Apellido = new TextBox();
             label1 = new Label();
             Input_Nombre = new TextBox();
-            button1 = new Button();
+            Btn_NuevoUsuario = new Button();
             dataGridUsuarios = new DataGridView();
             dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
             DNI = new DataGridViewTextBoxColumn();
@@ -76,12 +128,15 @@
             Credito = new DataGridViewTextBoxColumn();
             FechaNacimiento = new DataGridViewTextBoxColumn();
             EsAdmin = new DataGridViewTextBoxColumn();
-            Reservas = new DataGridViewTextBoxColumn();
             LabelBienvenida = new Label();
             Btn_CerrarSesionAdmin = new Button();
             Pestañas.SuspendLayout();
             Salas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridSalas).BeginInit();
+            Funciones.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridFunciones).BeginInit();
+            Películas.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridPeliculas).BeginInit();
             Usuarios.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridUsuarios).BeginInit();
             SuspendLayout();
@@ -98,10 +153,19 @@
             Pestañas.SelectedIndex = 0;
             Pestañas.Size = new Size(782, 354);
             Pestañas.TabIndex = 0;
+            Pestañas.SelectedIndexChanged += Pestañas_SelectedIndexChanged;
             Pestañas.Selected += Pestañas_Selected;
             // 
             // Salas
             // 
+            Salas.Controls.Add(Btn_EliminarSala);
+            Salas.Controls.Add(Btn_ModificarSala);
+            Salas.Controls.Add(Btn_RefrescarSalas);
+            Salas.Controls.Add(Btn_NuevoSala);
+            Salas.Controls.Add(label11);
+            Salas.Controls.Add(Input_Capacidad);
+            Salas.Controls.Add(Label_UbicacionSala);
+            Salas.Controls.Add(Input_Ubicacion);
             Salas.Controls.Add(dataGridSalas);
             Salas.Location = new Point(4, 24);
             Salas.Name = "Salas";
@@ -112,15 +176,86 @@
             Salas.UseVisualStyleBackColor = true;
             Salas.Click += Salas_Click;
             // 
+            // Btn_EliminarSala
+            // 
+            Btn_EliminarSala.Location = new Point(687, 6);
+            Btn_EliminarSala.Name = "Btn_EliminarSala";
+            Btn_EliminarSala.Size = new Size(72, 23);
+            Btn_EliminarSala.TabIndex = 32;
+            Btn_EliminarSala.Text = "Eliminar";
+            Btn_EliminarSala.UseVisualStyleBackColor = true;
+            Btn_EliminarSala.Click += Btn_EliminarSala_Click;
+            // 
+            // Btn_ModificarSala
+            // 
+            Btn_ModificarSala.Location = new Point(609, 6);
+            Btn_ModificarSala.Name = "Btn_ModificarSala";
+            Btn_ModificarSala.Size = new Size(72, 23);
+            Btn_ModificarSala.TabIndex = 31;
+            Btn_ModificarSala.Text = "Modificar";
+            Btn_ModificarSala.UseVisualStyleBackColor = true;
+            Btn_ModificarSala.Click += Btn_ModificarSala_Click;
+            // 
+            // Btn_RefrescarSalas
+            // 
+            Btn_RefrescarSalas.Location = new Point(8, 6);
+            Btn_RefrescarSalas.Name = "Btn_RefrescarSalas";
+            Btn_RefrescarSalas.Size = new Size(67, 23);
+            Btn_RefrescarSalas.TabIndex = 30;
+            Btn_RefrescarSalas.Text = "Refrescar";
+            Btn_RefrescarSalas.UseVisualStyleBackColor = true;
+            Btn_RefrescarSalas.Click += Btn_RefrescarSalas_Click;
+            // 
+            // Btn_NuevoSala
+            // 
+            Btn_NuevoSala.Location = new Point(531, 6);
+            Btn_NuevoSala.Name = "Btn_NuevoSala";
+            Btn_NuevoSala.Size = new Size(72, 23);
+            Btn_NuevoSala.TabIndex = 29;
+            Btn_NuevoSala.Text = "Nuevo";
+            Btn_NuevoSala.UseVisualStyleBackColor = true;
+            Btn_NuevoSala.Click += Btn_NuevoSala_Click;
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(6, 92);
+            label11.Name = "label11";
+            label11.Size = new Size(69, 15);
+            label11.TabIndex = 4;
+            label11.Text = "Capacidad: ";
+            // 
+            // Input_Capacidad
+            // 
+            Input_Capacidad.Location = new Point(96, 89);
+            Input_Capacidad.Name = "Input_Capacidad";
+            Input_Capacidad.Size = new Size(100, 23);
+            Input_Capacidad.TabIndex = 3;
+            // 
+            // Label_UbicacionSala
+            // 
+            Label_UbicacionSala.AutoSize = true;
+            Label_UbicacionSala.Location = new Point(6, 50);
+            Label_UbicacionSala.Name = "Label_UbicacionSala";
+            Label_UbicacionSala.Size = new Size(90, 15);
+            Label_UbicacionSala.TabIndex = 2;
+            Label_UbicacionSala.Text = "Ubicacion Sala: ";
+            // 
+            // Input_Ubicacion
+            // 
+            Input_Ubicacion.Location = new Point(96, 47);
+            Input_Ubicacion.Name = "Input_Ubicacion";
+            Input_Ubicacion.Size = new Size(100, 23);
+            Input_Ubicacion.TabIndex = 1;
+            // 
             // dataGridSalas
             // 
             dataGridSalas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridSalas.Columns.AddRange(new DataGridViewColumn[] { ID, Ubicacion, Capacidad });
-            dataGridSalas.Dock = DockStyle.Fill;
-            dataGridSalas.Location = new Point(3, 3);
+            dataGridSalas.Location = new Point(3, 129);
             dataGridSalas.Name = "dataGridSalas";
             dataGridSalas.RowTemplate.Height = 25;
-            dataGridSalas.Size = new Size(768, 320);
+            dataGridSalas.Size = new Size(768, 194);
             dataGridSalas.TabIndex = 0;
             dataGridSalas.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -128,19 +263,37 @@
             // 
             ID.HeaderText = "ID";
             ID.Name = "ID";
+            ID.ReadOnly = true;
             // 
             // Ubicacion
             // 
             Ubicacion.HeaderText = "Ubicacion";
             Ubicacion.Name = "Ubicacion";
+            Ubicacion.ReadOnly = true;
             // 
             // Capacidad
             // 
             Capacidad.HeaderText = "Capacidad";
             Capacidad.Name = "Capacidad";
+            Capacidad.ReadOnly = true;
             // 
             // Funciones
             // 
+            Funciones.Controls.Add(Input_Costo);
+            Funciones.Controls.Add(label14);
+            Funciones.Controls.Add(Input_CantidadClientes);
+            Funciones.Controls.Add(Selec_Fecha);
+            Funciones.Controls.Add(Cb_Peliculas);
+            Funciones.Controls.Add(label13);
+            Funciones.Controls.Add(Cb_Salas);
+            Funciones.Controls.Add(Btn_EliminarFuncion);
+            Funciones.Controls.Add(Btn_ModificarFuncion);
+            Funciones.Controls.Add(Btn_RefrescarFunciones);
+            Funciones.Controls.Add(Btn_NuevoFuncion);
+            Funciones.Controls.Add(Label_Fecha);
+            Funciones.Controls.Add(label12);
+            Funciones.Controls.Add(Input_MiSala);
+            Funciones.Controls.Add(dataGridFunciones);
             Funciones.Location = new Point(4, 24);
             Funciones.Name = "Funciones";
             Funciones.Padding = new Padding(3);
@@ -148,9 +301,202 @@
             Funciones.TabIndex = 1;
             Funciones.Text = "Funciones";
             Funciones.UseVisualStyleBackColor = true;
+            Funciones.Click += Funciones_Click;
+            // 
+            // Input_Costo
+            // 
+            Input_Costo.Location = new Point(516, 46);
+            Input_Costo.Name = "Input_Costo";
+            Input_Costo.Size = new Size(100, 23);
+            Input_Costo.TabIndex = 48;
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(466, 52);
+            label14.Name = "label14";
+            label14.Size = new Size(44, 15);
+            label14.TabIndex = 47;
+            label14.Text = "Costo: ";
+            // 
+            // Input_CantidadClientes
+            // 
+            Input_CantidadClientes.Location = new Point(333, 78);
+            Input_CantidadClientes.Name = "Input_CantidadClientes";
+            Input_CantidadClientes.Size = new Size(100, 23);
+            Input_CantidadClientes.TabIndex = 46;
+            // 
+            // Selec_Fecha
+            // 
+            Selec_Fecha.Location = new Point(333, 49);
+            Selec_Fecha.Name = "Selec_Fecha";
+            Selec_Fecha.Size = new Size(100, 23);
+            Selec_Fecha.TabIndex = 45;
+            // 
+            // Cb_Peliculas
+            // 
+            Cb_Peliculas.FormattingEnabled = true;
+            Cb_Peliculas.Location = new Point(96, 78);
+            Cb_Peliculas.Name = "Cb_Peliculas";
+            Cb_Peliculas.Size = new Size(100, 23);
+            Cb_Peliculas.TabIndex = 44;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(8, 78);
+            label13.Name = "label13";
+            label13.Size = new Size(51, 15);
+            label13.TabIndex = 43;
+            label13.Text = "Pelicula:";
+            // 
+            // Cb_Salas
+            // 
+            Cb_Salas.FormattingEnabled = true;
+            Cb_Salas.Location = new Point(96, 49);
+            Cb_Salas.Name = "Cb_Salas";
+            Cb_Salas.Size = new Size(100, 23);
+            Cb_Salas.TabIndex = 42;
+            // 
+            // Btn_EliminarFuncion
+            // 
+            Btn_EliminarFuncion.Location = new Point(687, 5);
+            Btn_EliminarFuncion.Name = "Btn_EliminarFuncion";
+            Btn_EliminarFuncion.Size = new Size(72, 23);
+            Btn_EliminarFuncion.TabIndex = 41;
+            Btn_EliminarFuncion.Text = "Eliminar";
+            Btn_EliminarFuncion.UseVisualStyleBackColor = true;
+            // 
+            // Btn_ModificarFuncion
+            // 
+            Btn_ModificarFuncion.Location = new Point(609, 5);
+            Btn_ModificarFuncion.Name = "Btn_ModificarFuncion";
+            Btn_ModificarFuncion.Size = new Size(72, 23);
+            Btn_ModificarFuncion.TabIndex = 40;
+            Btn_ModificarFuncion.Text = "Modificar";
+            Btn_ModificarFuncion.UseVisualStyleBackColor = true;
+            // 
+            // Btn_RefrescarFunciones
+            // 
+            Btn_RefrescarFunciones.Location = new Point(8, 5);
+            Btn_RefrescarFunciones.Name = "Btn_RefrescarFunciones";
+            Btn_RefrescarFunciones.Size = new Size(67, 23);
+            Btn_RefrescarFunciones.TabIndex = 39;
+            Btn_RefrescarFunciones.Text = "Refrescar";
+            Btn_RefrescarFunciones.UseVisualStyleBackColor = true;
+            Btn_RefrescarFunciones.Click += Btn_RefrescarFunciones_Click;
+            // 
+            // Btn_NuevoFuncion
+            // 
+            Btn_NuevoFuncion.Location = new Point(531, 5);
+            Btn_NuevoFuncion.Name = "Btn_NuevoFuncion";
+            Btn_NuevoFuncion.Size = new Size(72, 23);
+            Btn_NuevoFuncion.TabIndex = 38;
+            Btn_NuevoFuncion.Text = "Nuevo";
+            Btn_NuevoFuncion.UseVisualStyleBackColor = true;
+            // 
+            // Label_Fecha
+            // 
+            Label_Fecha.AutoSize = true;
+            Label_Fecha.Location = new Point(244, 52);
+            Label_Fecha.Name = "Label_Fecha";
+            Label_Fecha.Size = new Size(44, 15);
+            Label_Fecha.TabIndex = 37;
+            Label_Fecha.Text = "Fecha: ";
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(244, 81);
+            label12.Name = "label12";
+            label12.Size = new Size(83, 15);
+            label12.TabIndex = 37;
+            label12.Text = "Cant. Clientes ";
+            label12.Click += label12_Click;
+            // 
+            // Input_MiSala
+            // 
+            Input_MiSala.AutoSize = true;
+            Input_MiSala.Location = new Point(8, 49);
+            Input_MiSala.Name = "Input_MiSala";
+            Input_MiSala.Size = new Size(34, 15);
+            Input_MiSala.TabIndex = 35;
+            Input_MiSala.Text = "Sala: ";
+            Input_MiSala.Click += label13_Click;
+            // 
+            // dataGridFunciones
+            // 
+            dataGridFunciones.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridFunciones.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn3, Sala, Pelicula, Fecha, Cant_Clientes, Costo });
+            dataGridFunciones.Location = new Point(3, 128);
+            dataGridFunciones.Name = "dataGridFunciones";
+            dataGridFunciones.RowTemplate.Height = 25;
+            dataGridFunciones.Size = new Size(768, 194);
+            dataGridFunciones.TabIndex = 33;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.Frozen = true;
+            dataGridViewTextBoxColumn3.HeaderText = "ID";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // Sala
+            // 
+            Sala.Frozen = true;
+            Sala.HeaderText = "Sala";
+            Sala.Name = "Sala";
+            Sala.ReadOnly = true;
+            Sala.Visible = false;
+            // 
+            // Pelicula
+            // 
+            Pelicula.Frozen = true;
+            Pelicula.HeaderText = "Pelicula";
+            Pelicula.Name = "Pelicula";
+            Pelicula.ReadOnly = true;
+            Pelicula.Visible = false;
+            // 
+            // Fecha
+            // 
+            Fecha.Frozen = true;
+            Fecha.HeaderText = "Fecha";
+            Fecha.Name = "Fecha";
+            Fecha.ReadOnly = true;
+            // 
+            // Cant_Clientes
+            // 
+            Cant_Clientes.Frozen = true;
+            Cant_Clientes.HeaderText = "Cant_Clientes";
+            Cant_Clientes.Name = "Cant_Clientes";
+            Cant_Clientes.ReadOnly = true;
+            // 
+            // Costo
+            // 
+            Costo.Frozen = true;
+            Costo.HeaderText = "Costo";
+            Costo.Name = "Costo";
+            Costo.ReadOnly = true;
             // 
             // Películas
             // 
+            Películas.Controls.Add(Input_Sinopsis);
+            Películas.Controls.Add(Input_Descripcion);
+            Películas.Controls.Add(label19);
+            Películas.Controls.Add(Input_Nombre_Pelicula);
+            Películas.Controls.Add(Input_Duracion);
+            Películas.Controls.Add(label10);
+            Películas.Controls.Add(Input_Poster);
+            Películas.Controls.Add(Cb_Funciones);
+            Películas.Controls.Add(label15);
+            Películas.Controls.Add(button1);
+            Películas.Controls.Add(button3);
+            Películas.Controls.Add(button4);
+            Películas.Controls.Add(button5);
+            Películas.Controls.Add(label16);
+            Películas.Controls.Add(label17);
+            Películas.Controls.Add(label18);
+            Películas.Controls.Add(dataGridPeliculas);
             Películas.Location = new Point(4, 24);
             Películas.Name = "Películas";
             Películas.Padding = new Padding(3);
@@ -159,13 +505,205 @@
             Películas.Text = "Películas";
             Películas.UseVisualStyleBackColor = true;
             // 
+            // Input_Sinopsis
+            // 
+            Input_Sinopsis.Location = new Point(296, 46);
+            Input_Sinopsis.Name = "Input_Sinopsis";
+            Input_Sinopsis.Size = new Size(100, 23);
+            Input_Sinopsis.TabIndex = 67;
+            // 
+            // Input_Descripcion
+            // 
+            Input_Descripcion.Location = new Point(96, 81);
+            Input_Descripcion.Name = "Input_Descripcion";
+            Input_Descripcion.Size = new Size(100, 23);
+            Input_Descripcion.TabIndex = 66;
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Location = new Point(8, 86);
+            label19.Name = "label19";
+            label19.Size = new Size(75, 15);
+            label19.TabIndex = 65;
+            label19.Text = "Descripcion: ";
+            // 
+            // Input_Nombre_Pelicula
+            // 
+            Input_Nombre_Pelicula.Location = new Point(96, 44);
+            Input_Nombre_Pelicula.Name = "Input_Nombre_Pelicula";
+            Input_Nombre_Pelicula.Size = new Size(100, 23);
+            Input_Nombre_Pelicula.TabIndex = 64;
+            // 
+            // Input_Duracion
+            // 
+            Input_Duracion.Location = new Point(493, 46);
+            Input_Duracion.Name = "Input_Duracion";
+            Input_Duracion.Size = new Size(100, 23);
+            Input_Duracion.TabIndex = 63;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(420, 52);
+            label10.Name = "label10";
+            label10.Size = new Size(61, 15);
+            label10.TabIndex = 62;
+            label10.Text = "Duracion: ";
+            // 
+            // Input_Poster
+            // 
+            Input_Poster.Location = new Point(296, 75);
+            Input_Poster.Name = "Input_Poster";
+            Input_Poster.Size = new Size(100, 23);
+            Input_Poster.TabIndex = 61;
+            // 
+            // Cb_Funciones
+            // 
+            Cb_Funciones.FormattingEnabled = true;
+            Cb_Funciones.Location = new Point(493, 75);
+            Cb_Funciones.Name = "Cb_Funciones";
+            Cb_Funciones.Size = new Size(100, 23);
+            Cb_Funciones.TabIndex = 59;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(420, 78);
+            label15.Name = "label15";
+            label15.Size = new Size(67, 15);
+            label15.TabIndex = 58;
+            label15.Text = "Funciones: ";
+            // 
+            // button1
+            // 
+            button1.Location = new Point(687, 5);
+            button1.Name = "button1";
+            button1.Size = new Size(72, 23);
+            button1.TabIndex = 56;
+            button1.Text = "Eliminar";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(609, 5);
+            button3.Name = "button3";
+            button3.Size = new Size(72, 23);
+            button3.TabIndex = 55;
+            button3.Text = "Modificar";
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            button4.Location = new Point(8, 5);
+            button4.Name = "button4";
+            button4.Size = new Size(67, 23);
+            button4.TabIndex = 54;
+            button4.Text = "Refrescar";
+            button4.UseVisualStyleBackColor = true;
+            // 
+            // button5
+            // 
+            button5.Location = new Point(531, 5);
+            button5.Name = "button5";
+            button5.Size = new Size(72, 23);
+            button5.TabIndex = 53;
+            button5.Text = "Nuevo";
+            button5.UseVisualStyleBackColor = true;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(244, 52);
+            label16.Name = "label16";
+            label16.Size = new Size(56, 15);
+            label16.TabIndex = 51;
+            label16.Text = "Sinopsis: ";
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(244, 81);
+            label17.Name = "label17";
+            label17.Size = new Size(46, 15);
+            label17.TabIndex = 52;
+            label17.Text = "Poster: ";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(8, 49);
+            label18.Name = "label18";
+            label18.Size = new Size(57, 15);
+            label18.TabIndex = 50;
+            label18.Text = "Nombre: ";
+            // 
+            // dataGridPeliculas
+            // 
+            dataGridPeliculas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridPeliculas.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, Descripcion, Sinopsis, Poster, Duracion, dataGridViewTextBoxColumn6 });
+            dataGridPeliculas.Location = new Point(3, 128);
+            dataGridPeliculas.Name = "dataGridPeliculas";
+            dataGridPeliculas.RowTemplate.Height = 25;
+            dataGridPeliculas.Size = new Size(768, 194);
+            dataGridPeliculas.TabIndex = 49;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.Frozen = true;
+            dataGridViewTextBoxColumn4.HeaderText = "ID";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewTextBoxColumn5.Frozen = true;
+            dataGridViewTextBoxColumn5.HeaderText = "Nombre";
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            dataGridViewTextBoxColumn5.ReadOnly = true;
+            // 
+            // Descripcion
+            // 
+            Descripcion.Frozen = true;
+            Descripcion.HeaderText = "Descripcion";
+            Descripcion.Name = "Descripcion";
+            Descripcion.ReadOnly = true;
+            // 
+            // Sinopsis
+            // 
+            Sinopsis.Frozen = true;
+            Sinopsis.HeaderText = "Sinopsis";
+            Sinopsis.Name = "Sinopsis";
+            Sinopsis.ReadOnly = true;
+            // 
+            // Poster
+            // 
+            Poster.Frozen = true;
+            Poster.HeaderText = "Poster";
+            Poster.Name = "Poster";
+            Poster.ReadOnly = true;
+            // 
+            // Duracion
+            // 
+            Duracion.Frozen = true;
+            Duracion.HeaderText = "Duracion";
+            Duracion.Name = "Duracion";
+            Duracion.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn6
+            // 
+            dataGridViewTextBoxColumn6.Frozen = true;
+            dataGridViewTextBoxColumn6.HeaderText = "Funciones";
+            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            dataGridViewTextBoxColumn6.ReadOnly = true;
+            dataGridViewTextBoxColumn6.Visible = false;
+            // 
             // Usuarios
             // 
+            Usuarios.Controls.Add(Label_IdUsuario);
             Usuarios.Controls.Add(Btn_VerFunciones);
-            Usuarios.Controls.Add(button4);
-            Usuarios.Controls.Add(button3);
-            Usuarios.Controls.Add(label10);
-            Usuarios.Controls.Add(comboBox2);
+            Usuarios.Controls.Add(Btn_EliminarUsuario);
+            Usuarios.Controls.Add(Btn_ModificarUsuario);
             Usuarios.Controls.Add(Cb_EsAdmin);
             Usuarios.Controls.Add(label9);
             Usuarios.Controls.Add(Cb_Bloqueado);
@@ -186,7 +724,7 @@
             Usuarios.Controls.Add(Input_Apellido);
             Usuarios.Controls.Add(label1);
             Usuarios.Controls.Add(Input_Nombre);
-            Usuarios.Controls.Add(button1);
+            Usuarios.Controls.Add(Btn_NuevoUsuario);
             Usuarios.Controls.Add(dataGridUsuarios);
             Usuarios.Location = new Point(4, 24);
             Usuarios.Name = "Usuarios";
@@ -194,6 +732,15 @@
             Usuarios.TabIndex = 3;
             Usuarios.Text = "Usuarios";
             Usuarios.UseVisualStyleBackColor = true;
+            // 
+            // Label_IdUsuario
+            // 
+            Label_IdUsuario.AutoSize = true;
+            Label_IdUsuario.Location = new Point(78, 16);
+            Label_IdUsuario.Name = "Label_IdUsuario";
+            Label_IdUsuario.Size = new Size(0, 15);
+            Label_IdUsuario.TabIndex = 30;
+            Label_IdUsuario.Visible = false;
             // 
             // Btn_VerFunciones
             // 
@@ -206,46 +753,31 @@
             Btn_VerFunciones.UseVisualStyleBackColor = false;
             Btn_VerFunciones.Click += Btn_VerFunciones_Click;
             // 
-            // button4
+            // Btn_EliminarUsuario
             // 
-            button4.Location = new Point(683, 12);
-            button4.Name = "button4";
-            button4.Size = new Size(72, 23);
-            button4.TabIndex = 28;
-            button4.Text = "Eliminar";
-            button4.UseVisualStyleBackColor = true;
+            Btn_EliminarUsuario.Location = new Point(683, 12);
+            Btn_EliminarUsuario.Name = "Btn_EliminarUsuario";
+            Btn_EliminarUsuario.Size = new Size(72, 23);
+            Btn_EliminarUsuario.TabIndex = 28;
+            Btn_EliminarUsuario.Text = "Eliminar";
+            Btn_EliminarUsuario.UseVisualStyleBackColor = true;
+            Btn_EliminarUsuario.Click += Btn_EliminarUsuario_Click;
             // 
-            // button3
+            // Btn_ModificarUsuario
             // 
-            button3.Location = new Point(605, 12);
-            button3.Name = "button3";
-            button3.Size = new Size(72, 23);
-            button3.TabIndex = 27;
-            button3.Text = "Modificar";
-            button3.UseVisualStyleBackColor = true;
-            // 
-            // label10
-            // 
-            label10.AutoSize = true;
-            label10.Location = new Point(583, 116);
-            label10.Name = "label10";
-            label10.Size = new Size(55, 15);
-            label10.TabIndex = 25;
-            label10.Text = "Reservas:";
-            // 
-            // comboBox2
-            // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(653, 111);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(102, 23);
-            comboBox2.TabIndex = 24;
+            Btn_ModificarUsuario.Location = new Point(605, 12);
+            Btn_ModificarUsuario.Name = "Btn_ModificarUsuario";
+            Btn_ModificarUsuario.Size = new Size(72, 23);
+            Btn_ModificarUsuario.TabIndex = 27;
+            Btn_ModificarUsuario.Text = "Modificar";
+            Btn_ModificarUsuario.UseVisualStyleBackColor = true;
+            Btn_ModificarUsuario.Click += Btn_Modificar_Click;
             // 
             // Cb_EsAdmin
             // 
             Cb_EsAdmin.AutoSize = true;
             Cb_EsAdmin.CheckAlign = ContentAlignment.MiddleRight;
-            Cb_EsAdmin.Location = new Point(583, 84);
+            Cb_EsAdmin.Location = new Point(582, 115);
             Cb_EsAdmin.Name = "Cb_EsAdmin";
             Cb_EsAdmin.Size = new Size(62, 19);
             Cb_EsAdmin.TabIndex = 23;
@@ -275,7 +807,7 @@
             // 
             // Selec_FechaDeNacimiento
             // 
-            Selec_FechaDeNacimiento.Location = new Point(653, 55);
+            Selec_FechaDeNacimiento.Location = new Point(652, 86);
             Selec_FechaDeNacimiento.Name = "Selec_FechaDeNacimiento";
             Selec_FechaDeNacimiento.Size = new Size(102, 23);
             Selec_FechaDeNacimiento.TabIndex = 19;
@@ -315,7 +847,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(583, 58);
+            label7.Location = new Point(582, 89);
             label7.Name = "label7";
             label7.Size = new Size(68, 15);
             label7.TabIndex = 14;
@@ -411,19 +943,20 @@
             Input_Nombre.Size = new Size(102, 23);
             Input_Nombre.TabIndex = 2;
             // 
-            // button1
+            // Btn_NuevoUsuario
             // 
-            button1.Location = new Point(527, 12);
-            button1.Name = "button1";
-            button1.Size = new Size(72, 23);
-            button1.TabIndex = 1;
-            button1.Text = "Nuevo";
-            button1.UseVisualStyleBackColor = true;
+            Btn_NuevoUsuario.Location = new Point(527, 12);
+            Btn_NuevoUsuario.Name = "Btn_NuevoUsuario";
+            Btn_NuevoUsuario.Size = new Size(72, 23);
+            Btn_NuevoUsuario.TabIndex = 1;
+            Btn_NuevoUsuario.Text = "Nuevo";
+            Btn_NuevoUsuario.UseVisualStyleBackColor = true;
+            Btn_NuevoUsuario.Click += Btn_NuevoUsuario_Click;
             // 
             // dataGridUsuarios
             // 
             dataGridUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridUsuarios.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, DNI, Nombre, Apellido, Mail, Password, IntentosFallidos, Bloquedo, dataGridViewTextBoxColumn2, Credito, FechaNacimiento, EsAdmin, Reservas });
+            dataGridUsuarios.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, DNI, Nombre, Apellido, Mail, Password, IntentosFallidos, Bloquedo, dataGridViewTextBoxColumn2, Credito, FechaNacimiento, EsAdmin });
             dataGridUsuarios.Location = new Point(4, 152);
             dataGridUsuarios.Name = "dataGridUsuarios";
             dataGridUsuarios.RowTemplate.Height = 25;
@@ -485,7 +1018,6 @@
             dataGridViewTextBoxColumn2.HeaderText = "Funciones";
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
-            dataGridViewTextBoxColumn2.Visible = false;
             // 
             // Credito
             // 
@@ -504,12 +1036,6 @@
             EsAdmin.HeaderText = "Es_Admin";
             EsAdmin.Name = "EsAdmin";
             EsAdmin.ReadOnly = true;
-            // 
-            // Reservas
-            // 
-            Reservas.HeaderText = "Reservas";
-            Reservas.Name = "Reservas";
-            Reservas.ReadOnly = true;
             // 
             // LabelBienvenida
             // 
@@ -548,7 +1074,14 @@
             Load += PantallaABMAdmin_Load;
             Pestañas.ResumeLayout(false);
             Salas.ResumeLayout(false);
+            Salas.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridSalas).EndInit();
+            Funciones.ResumeLayout(false);
+            Funciones.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridFunciones).EndInit();
+            Películas.ResumeLayout(false);
+            Películas.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridPeliculas).EndInit();
             Usuarios.ResumeLayout(false);
             Usuarios.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridUsuarios).EndInit();
@@ -566,12 +1099,9 @@
         private Label LabelBienvenida;
         private Button Btn_CerrarSesionAdmin;
         private DataGridView dataGridSalas;
-        private DataGridViewTextBoxColumn ID;
-        private DataGridViewTextBoxColumn Ubicacion;
-        private DataGridViewTextBoxColumn Capacidad;
         private DataGridView dataGridUsuarios;
         private TextBox Input_Nombre;
-        private Button button1;
+        private Button Btn_NuevoUsuario;
         private Label label1;
         private Label label2;
         private TextBox Input_Apellido;
@@ -591,12 +1121,32 @@
         private DateTimePicker Selec_FechaDeNacimiento;
         private CheckBox Cb_Bloqueado;
         private Label label9;
-        private Label label10;
-        private ComboBox comboBox2;
         private CheckBox Cb_EsAdmin;
-        private Button button4;
-        private Button button3;
+        private Button Btn_EliminarUsuario;
+        private Button Btn_ModificarUsuario;
         private Button Btn_VerFunciones;
+        private Label label11;
+        private TextBox Input_Capacidad;
+        private Label Label_UbicacionSala;
+        private TextBox Input_Ubicacion;
+        private DataGridViewTextBoxColumn ID;
+        private DataGridViewTextBoxColumn Ubicacion;
+        private DataGridViewTextBoxColumn Capacidad;
+        private Button Btn_EliminarSala;
+        private Button Btn_ModificarSala;
+        private Button Btn_RefrescarSalas;
+        private Button Btn_NuevoSala;
+        private Button Btn_EliminarFuncion;
+        private Button Btn_ModificarFuncion;
+        private Button Btn_RefrescarFunciones;
+        private Button Btn_NuevoFuncion;
+        private Label label12;
+        private Label Input_MiSala;
+        private DataGridView dataGridFunciones;
+        private ComboBox Cb_Salas;
+        private Label label13;
+        private ComboBox Cb_Pelicula;
+        private ComboBox Cb_Peliculas;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn DNI;
         private DataGridViewTextBoxColumn Nombre;
@@ -609,6 +1159,41 @@
         private DataGridViewTextBoxColumn Credito;
         private DataGridViewTextBoxColumn FechaNacimiento;
         private DataGridViewTextBoxColumn EsAdmin;
-        private DataGridViewTextBoxColumn Reservas;
+        private Label Label_Fecha;
+        private DateTimePicker Selec_Fecha;
+        private TextBox Input_CantidadClientes;
+        private TextBox Input_Costo;
+        private Label label14;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn Sala;
+        private DataGridViewTextBoxColumn Pelicula;
+        private DataGridViewTextBoxColumn Fecha;
+        private DataGridViewTextBoxColumn Cant_Clientes;
+        private DataGridViewTextBoxColumn Costo;
+        private Label Label_IdUsuario;
+        private TextBox Input_Duracion;
+        private Label label10;
+        private TextBox Input_Poster;
+        private ComboBox Cb_Funciones;
+        private Label label15;
+        private Button button1;
+        private Button button3;
+        private Button button4;
+        private Button button5;
+        private Label label16;
+        private Label label17;
+        private Label label18;
+        private DataGridView dataGridPeliculas;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private DataGridViewTextBoxColumn Descripcion;
+        private DataGridViewTextBoxColumn Sinopsis;
+        private DataGridViewTextBoxColumn Poster;
+        private DataGridViewTextBoxColumn Duracion;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
+        private TextBox Input_Sinopsis;
+        private TextBox Input_Descripcion;
+        private Label label19;
+        private TextBox Input_Nombre_Pelicula;
     }
 }

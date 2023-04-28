@@ -95,6 +95,8 @@ namespace TP1___GRUPO_C.Vistas
                         if (entradasDisponibles >= entradasUsuario)
                         {
                             costoEntradas += Funcion.Costo * entradasUsuario;
+                            //tengo que vender las entradas de la funcion y sumarlas a la cantidad de clientes.
+                            //miCine.
                         }
                         else
                         {

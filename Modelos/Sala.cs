@@ -25,7 +25,10 @@ namespace TP1___GRUPO_C.Model
         }
 
         // obtenerUbicaciones
-
+        public string[] SalaToString()
+        {
+            return new string[] { ID.ToString(), Ubicacion.ToString(), Capacidad.ToString(), MisFunciones.ToString() };
+        }
 
     }
 }

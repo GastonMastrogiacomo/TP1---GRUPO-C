@@ -35,11 +35,7 @@ namespace TP1___GRUPO_C
             Btn_CerrarSesion.Hide();
             btnRegistrarse.Show();
             button3.Show();
-            //InitializeComponent();
-            //Btn_MiPerfil.Hide();
-            //Btn_CerrarSesion.Hide();
-
-
+      
         }
 
         private void button1_Click(object sender, EventArgs e)
