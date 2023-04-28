@@ -30,8 +30,8 @@
         {
             btnRegistrarse = new Button();
             button3 = new Button();
-            comboBox1 = new ComboBox();
-            dateTimePicker1 = new DateTimePicker();
+            ubicacionBox = new ComboBox();
+            FechaPicker = new DateTimePicker();
             textBox1 = new TextBox();
             textBox2 = new TextBox();
             label1 = new Label();
@@ -46,6 +46,10 @@
             dataGridView1 = new DataGridView();
             Btn_MiPerfil = new Button();
             Btn_CerrarSesion = new Button();
+            ID = new DataGridViewTextBoxColumn();
+            Imagen = new DataGridViewImageColumn();
+            Pelicula = new DataGridViewTextBoxColumn();
+            Comprar = new DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -71,21 +75,21 @@
             button3.UseVisualStyleBackColor = true;
             button3.Click += button3_Click;
             // 
-            // comboBox1
+            // ubicacionBox
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(14, 97);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(163, 23);
-            comboBox1.TabIndex = 3;
-            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            ubicacionBox.FormattingEnabled = true;
+            ubicacionBox.Location = new Point(14, 97);
+            ubicacionBox.Name = "ubicacionBox";
+            ubicacionBox.Size = new Size(163, 23);
+            ubicacionBox.TabIndex = 3;
+            ubicacionBox.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
-            // dateTimePicker1
+            // FechaPicker
             // 
-            dateTimePicker1.Location = new Point(183, 97);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(200, 23);
-            dateTimePicker1.TabIndex = 4;
+            FechaPicker.Location = new Point(183, 97);
+            FechaPicker.Name = "FechaPicker";
+            FechaPicker.Size = new Size(200, 23);
+            FechaPicker.TabIndex = 4;
             // 
             // textBox1
             // 
@@ -190,6 +194,7 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { ID, Imagen, Pelicula, Comprar });
             dataGridView1.Location = new Point(14, 140);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
@@ -219,6 +224,31 @@
             Btn_CerrarSesion.UseVisualStyleBackColor = true;
             Btn_CerrarSesion.Click += Btn_CerrarSesion_Click;
             // 
+            // ID
+            // 
+            ID.HeaderText = "ID";
+            ID.Name = "ID";
+            ID.Visible = false;
+            // 
+            // Imagen
+            // 
+            Imagen.HeaderText = "Imagen";
+            Imagen.Name = "Imagen";
+            Imagen.ReadOnly = true;
+            // 
+            // Pelicula
+            // 
+            Pelicula.HeaderText = "Pelicula";
+            Pelicula.Name = "Pelicula";
+            Pelicula.ReadOnly = true;
+            Pelicula.Resizable = DataGridViewTriState.True;
+            Pelicula.SortMode = DataGridViewColumnSortMode.NotSortable;
+            // 
+            // Comprar
+            // 
+            Comprar.HeaderText = "Comprar";
+            Comprar.Name = "Comprar";
+            // 
             // PantallaPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -238,8 +268,8 @@
             Controls.Add(label1);
             Controls.Add(textBox2);
             Controls.Add(textBox1);
-            Controls.Add(dateTimePicker1);
-            Controls.Add(comboBox1);
+            Controls.Add(FechaPicker);
+            Controls.Add(ubicacionBox);
             Controls.Add(button3);
             Controls.Add(btnRegistrarse);
             FormBorderStyle = FormBorderStyle.None;
@@ -254,8 +284,8 @@
         #endregion
         private Button btnRegistrarse;
         private Button button3;
-        private ComboBox comboBox1;
-        private DateTimePicker dateTimePicker1;
+        private ComboBox ubicacionBox;
+        private DateTimePicker FechaPicker;
         private TextBox textBox1;
         private TextBox textBox2;
         private Label label1;
@@ -270,5 +300,9 @@
         private DataGridView dataGridView1;
         private Button Btn_MiPerfil;
         private Button Btn_CerrarSesion;
+        private DataGridViewTextBoxColumn ID;
+        private DataGridViewImageColumn Imagen;
+        private DataGridViewTextBoxColumn Pelicula;
+        private DataGridViewButtonColumn Comprar;
     }
 }

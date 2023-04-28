@@ -72,8 +72,26 @@ namespace TP1___GRUPO_C.Vistas
             string Pass = this.Input_PasswordPerfil.Text;
             DateTime FechaNacimiento = this.DateTime_MiPerfil.Value;
             bool esAdmin = false;
+            double Credito=double.Parse(this.Label_MiCredito.Text);
 
-            Usuario nuevo = new Usuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, ID);
+            //Usuario nuevo = new Usuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, ID);
+
+            Usuario nuevo = miCine.ObtenerUsuarioPorId(ID);
+            nuevo.Nombre= Nombres;  
+            nuevo.Apellido= Apellidos;  
+            nuevo.DNI= DNI; 
+            nuevo.Mail= Mail;
+            nuevo.Password= Pass;
+            nuevo.FechaNacimiento= FechaNacimiento;
+            nuevo.Credito = Credito;
+            nuevo.EsAdmin= esAdmin;
+
+            for (int i=0; i<dataGridProximasFunciones.Rows.Count; i++)
+            {
+               Funcion fun = miCine.ObtenerFuncionPorId(int.Parse(dataGridProximasFunciones[0,i].Value.ToString()));
+                nuevo.AgregarFuncion(fun);
+            }
+
             if (miCine.ModificarUsuario(ID, nuevo))
             {
 
@@ -88,6 +106,7 @@ namespace TP1___GRUPO_C.Vistas
                 DateTime_MiPerfil.Value = nuevo.FechaNacimiento;
 
                 MostrarDatosUsuario();
+
             }
 
         }
@@ -115,14 +134,12 @@ namespace TP1___GRUPO_C.Vistas
             double cantidadCreditos;
             double.TryParse(Input_NuevoCreditoPerfil.Text, out cantidadCreditos);
 
-            
 
             if (miCine.CargarCredito(usuarioActual.ID, cantidadCreditos))
             {
                 Label_MiCredito.Text = usuarioActual.Credito.ToString();
 
             }
-
 
 
         }
@@ -159,22 +176,30 @@ namespace TP1___GRUPO_C.Vistas
 
         private void Btn_DevolverEntradas_Click(object sender, EventArgs e)
         {
-            //ver porque creo que devovler entrada no elimina la funcion del usuario
-            if (miCine.DevolverEntrada(idFuncionSeleccionada,cantidadEntradasSeleccionadas)) {
 
-                MostrarFuncionesProximas();
+            Usuario usuarioActual = miCine.UsuarioActual;
+
+            if (usuarioActual.EntradasCompradas.ContainsKey(idFuncionSeleccionada))
+            {
+                int cantidadEntradas = usuarioActual.EntradasCompradas[idFuncionSeleccionada];
+                if (miCine.DevolverEntrada(idFuncionSeleccionada, cantidadEntradas))
+                {
+                    MostrarFuncionesProximas();
+
+                }
+
             }
+
 
         }
 
         private int idFuncionSeleccionada;
-        private int cantidadEntradasSeleccionadas;
 
         private void dataGridProximasFunciones_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // dataGridFunciones[0, e.RowIndex].Value.ToString();
             idFuncionSeleccionada = int.Parse(dataGridProximasFunciones[0, e.RowIndex].Value.ToString());
-            cantidadEntradasSeleccionadas = int.Parse(dataGridProximasFunciones[2, e.RowIndex].Value.ToString()); 
+
 
         }
     }
