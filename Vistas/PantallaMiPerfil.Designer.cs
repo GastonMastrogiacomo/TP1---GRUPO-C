@@ -56,14 +56,17 @@
             label14 = new Label();
             label15 = new Label();
             Input_ = new Label();
-            Label_UserDNI = new Label();
-            Label_UserNombre = new Label();
-            Label_UserApellido = new Label();
-            Label_UserMail = new Label();
-            Label_UserPassword = new Label();
-            Label_UserFechaNac = new Label();
-            Label_UserCredito = new Label();
-            Input_NuevoCredito = new TextBox();
+            Input_NuevoCreditoPerfil = new TextBox();
+            Btn_ModificarPerfil = new Button();
+            Input_DNIPerfil = new TextBox();
+            Input_NombrePerfil = new TextBox();
+            Input_ApellidoPerfil = new TextBox();
+            Input_PasswordPerfil = new TextBox();
+            Input_MailPerfil = new TextBox();
+            Label_MiCredito = new Label();
+            Label_IDPerfil = new Label();
+            DateTime_MiPerfil = new DateTimePicker();
+            Btn_VolverAtrasPerfil = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridPasadasFunciones).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridProximasFunciones).BeginInit();
             SuspendLayout();
@@ -84,7 +87,7 @@
             // 
             Label_BienvenidaPerfil.AutoSize = true;
             Label_BienvenidaPerfil.Font = new Font("Segoe UI", 15F, FontStyle.Bold, GraphicsUnit.Point);
-            Label_BienvenidaPerfil.Location = new Point(22, 15);
+            Label_BienvenidaPerfil.Location = new Point(12, 9);
             Label_BienvenidaPerfil.Name = "Label_BienvenidaPerfil";
             Label_BienvenidaPerfil.Size = new Size(118, 28);
             Label_BienvenidaPerfil.TabIndex = 23;
@@ -95,7 +98,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(605, 92);
+            label1.Location = new Point(551, 100);
             label1.Name = "label1";
             label1.Size = new Size(69, 15);
             label1.TabIndex = 26;
@@ -104,13 +107,14 @@
             // 
             // Btn_ComprarCreditos
             // 
-            Btn_ComprarCreditos.Location = new Point(605, 162);
+            Btn_ComprarCreditos.Location = new Point(550, 169);
             Btn_ComprarCreditos.Name = "Btn_ComprarCreditos";
             Btn_ComprarCreditos.Size = new Size(127, 23);
             Btn_ComprarCreditos.TabIndex = 28;
             Btn_ComprarCreditos.Text = "Comprar Creditos";
             Btn_ComprarCreditos.UseVisualStyleBackColor = true;
             Btn_ComprarCreditos.UseWaitCursor = true;
+            Btn_ComprarCreditos.Click += Btn_ComprarCreditos_Click;
             // 
             // label3
             // 
@@ -132,6 +136,7 @@
             dataGridPasadasFunciones.RowTemplate.Height = 25;
             dataGridPasadasFunciones.Size = new Size(643, 93);
             dataGridPasadasFunciones.TabIndex = 32;
+            dataGridPasadasFunciones.UseWaitCursor = true;
             // 
             // ID
             // 
@@ -184,6 +189,7 @@
             dataGridProximasFunciones.RowTemplate.Height = 25;
             dataGridProximasFunciones.Size = new Size(643, 98);
             dataGridProximasFunciones.TabIndex = 35;
+            dataGridProximasFunciones.UseWaitCursor = true;
             // 
             // dataGridViewTextBoxColumn1
             // 
@@ -249,7 +255,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(89, 127);
+            label7.Location = new Point(89, 135);
             label7.Name = "label7";
             label7.Size = new Size(57, 15);
             label7.TabIndex = 36;
@@ -259,7 +265,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(89, 166);
+            label8.Location = new Point(89, 174);
             label8.Name = "label8";
             label8.Size = new Size(51, 15);
             label8.TabIndex = 38;
@@ -269,7 +275,7 @@
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(347, 92);
+            label10.Location = new Point(322, 100);
             label10.Name = "label10";
             label10.Size = new Size(36, 15);
             label10.TabIndex = 42;
@@ -279,7 +285,7 @@
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(89, 92);
+            label11.Location = new Point(89, 100);
             label11.Name = "label11";
             label11.Size = new Size(33, 15);
             label11.TabIndex = 41;
@@ -289,7 +295,7 @@
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new Point(347, 166);
+            label14.Location = new Point(322, 174);
             label14.Name = "label14";
             label14.Size = new Size(49, 15);
             label14.TabIndex = 46;
@@ -299,7 +305,7 @@
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(347, 127);
+            label15.Location = new Point(322, 135);
             label15.Name = "label15";
             label15.Size = new Size(63, 15);
             label15.TabIndex = 45;
@@ -309,103 +315,127 @@
             // Input_
             // 
             Input_.AutoSize = true;
-            Input_.Location = new Point(605, 127);
+            Input_.Location = new Point(551, 135);
             Input_.Name = "Input_";
             Input_.Size = new Size(55, 15);
             Input_.TabIndex = 50;
             Input_.Text = "Agregar: ";
             Input_.UseWaitCursor = true;
             // 
-            // Label_UserDNI
+            // Input_NuevoCreditoPerfil
             // 
-            Label_UserDNI.AutoSize = true;
-            Label_UserDNI.Location = new Point(149, 92);
-            Label_UserDNI.Name = "Label_UserDNI";
-            Label_UserDNI.Size = new Size(55, 15);
-            Label_UserDNI.TabIndex = 52;
-            Label_UserDNI.Text = "AAAAAA";
-            Label_UserDNI.UseWaitCursor = true;
+            Input_NuevoCreditoPerfil.Location = new Point(612, 132);
+            Input_NuevoCreditoPerfil.Name = "Input_NuevoCreditoPerfil";
+            Input_NuevoCreditoPerfil.Size = new Size(65, 23);
+            Input_NuevoCreditoPerfil.TabIndex = 59;
+            Input_NuevoCreditoPerfil.UseWaitCursor = true;
             // 
-            // Label_UserNombre
+            // Btn_ModificarPerfil
             // 
-            Label_UserNombre.AutoSize = true;
-            Label_UserNombre.Location = new Point(149, 127);
-            Label_UserNombre.Name = "Label_UserNombre";
-            Label_UserNombre.Size = new Size(55, 15);
-            Label_UserNombre.TabIndex = 53;
-            Label_UserNombre.Text = "AAAAAA";
-            Label_UserNombre.UseWaitCursor = true;
+            Btn_ModificarPerfil.Location = new Point(89, 58);
+            Btn_ModificarPerfil.Name = "Btn_ModificarPerfil";
+            Btn_ModificarPerfil.Size = new Size(112, 23);
+            Btn_ModificarPerfil.TabIndex = 60;
+            Btn_ModificarPerfil.Text = "Modificar Datos";
+            Btn_ModificarPerfil.UseVisualStyleBackColor = true;
+            Btn_ModificarPerfil.UseWaitCursor = true;
+            Btn_ModificarPerfil.Click += Btn_ModificarPerfil_Click;
             // 
-            // Label_UserApellido
+            // Input_DNIPerfil
             // 
-            Label_UserApellido.AutoSize = true;
-            Label_UserApellido.Location = new Point(149, 168);
-            Label_UserApellido.Name = "Label_UserApellido";
-            Label_UserApellido.Size = new Size(55, 15);
-            Label_UserApellido.TabIndex = 54;
-            Label_UserApellido.Text = "AAAAAA";
-            Label_UserApellido.UseWaitCursor = true;
+            Input_DNIPerfil.Location = new Point(146, 97);
+            Input_DNIPerfil.Name = "Input_DNIPerfil";
+            Input_DNIPerfil.Size = new Size(100, 23);
+            Input_DNIPerfil.TabIndex = 61;
+            Input_DNIPerfil.UseWaitCursor = true;
             // 
-            // Label_UserMail
+            // Input_NombrePerfil
             // 
-            Label_UserMail.AutoSize = true;
-            Label_UserMail.Location = new Point(416, 92);
-            Label_UserMail.Name = "Label_UserMail";
-            Label_UserMail.Size = new Size(55, 15);
-            Label_UserMail.TabIndex = 55;
-            Label_UserMail.Text = "AAAAAA";
-            Label_UserMail.UseWaitCursor = true;
+            Input_NombrePerfil.Location = new Point(146, 135);
+            Input_NombrePerfil.Name = "Input_NombrePerfil";
+            Input_NombrePerfil.Size = new Size(100, 23);
+            Input_NombrePerfil.TabIndex = 62;
+            Input_NombrePerfil.UseWaitCursor = true;
             // 
-            // Label_UserPassword
+            // Input_ApellidoPerfil
             // 
-            Label_UserPassword.AutoSize = true;
-            Label_UserPassword.Location = new Point(416, 127);
-            Label_UserPassword.Name = "Label_UserPassword";
-            Label_UserPassword.Size = new Size(55, 15);
-            Label_UserPassword.TabIndex = 56;
-            Label_UserPassword.Text = "AAAAAA";
-            Label_UserPassword.UseWaitCursor = true;
+            Input_ApellidoPerfil.Location = new Point(146, 170);
+            Input_ApellidoPerfil.Name = "Input_ApellidoPerfil";
+            Input_ApellidoPerfil.Size = new Size(100, 23);
+            Input_ApellidoPerfil.TabIndex = 63;
+            Input_ApellidoPerfil.UseWaitCursor = true;
             // 
-            // Label_UserFechaNac
+            // Input_PasswordPerfil
             // 
-            Label_UserFechaNac.AutoSize = true;
-            Label_UserFechaNac.Location = new Point(416, 166);
-            Label_UserFechaNac.Name = "Label_UserFechaNac";
-            Label_UserFechaNac.Size = new Size(55, 15);
-            Label_UserFechaNac.TabIndex = 57;
-            Label_UserFechaNac.Text = "AAAAAA";
-            Label_UserFechaNac.UseWaitCursor = true;
+            Input_PasswordPerfil.Location = new Point(389, 135);
+            Input_PasswordPerfil.Name = "Input_PasswordPerfil";
+            Input_PasswordPerfil.Size = new Size(100, 23);
+            Input_PasswordPerfil.TabIndex = 65;
+            Input_PasswordPerfil.UseWaitCursor = true;
             // 
-            // Label_UserCredito
+            // Input_MailPerfil
             // 
-            Label_UserCredito.AutoSize = true;
-            Label_UserCredito.Location = new Point(677, 92);
-            Label_UserCredito.Name = "Label_UserCredito";
-            Label_UserCredito.Size = new Size(55, 15);
-            Label_UserCredito.TabIndex = 58;
-            Label_UserCredito.Text = "AAAAAA";
-            Label_UserCredito.UseWaitCursor = true;
+            Input_MailPerfil.Location = new Point(389, 97);
+            Input_MailPerfil.Name = "Input_MailPerfil";
+            Input_MailPerfil.Size = new Size(100, 23);
+            Input_MailPerfil.TabIndex = 64;
+            Input_MailPerfil.UseWaitCursor = true;
             // 
-            // Input_NuevoCredito
+            // Label_MiCredito
             // 
-            Input_NuevoCredito.Location = new Point(667, 124);
-            Input_NuevoCredito.Name = "Input_NuevoCredito";
-            Input_NuevoCredito.Size = new Size(65, 23);
-            Input_NuevoCredito.TabIndex = 59;
+            Label_MiCredito.AutoSize = true;
+            Label_MiCredito.Location = new Point(626, 100);
+            Label_MiCredito.Name = "Label_MiCredito";
+            Label_MiCredito.Size = new Size(47, 15);
+            Label_MiCredito.TabIndex = 67;
+            Label_MiCredito.Text = "AAAAA";
+            Label_MiCredito.UseWaitCursor = true;
+            // 
+            // Label_IDPerfil
+            // 
+            Label_IDPerfil.AutoSize = true;
+            Label_IDPerfil.Location = new Point(222, 62);
+            Label_IDPerfil.Name = "Label_IDPerfil";
+            Label_IDPerfil.Size = new Size(47, 15);
+            Label_IDPerfil.TabIndex = 68;
+            Label_IDPerfil.Text = "AAAAA";
+            Label_IDPerfil.UseWaitCursor = true;
+            Label_IDPerfil.Visible = false;
+            // 
+            // DateTime_MiPerfil
+            // 
+            DateTime_MiPerfil.Location = new Point(389, 174);
+            DateTime_MiPerfil.Name = "DateTime_MiPerfil";
+            DateTime_MiPerfil.Size = new Size(100, 23);
+            DateTime_MiPerfil.TabIndex = 69;
+            DateTime_MiPerfil.UseWaitCursor = true;
+            // 
+            // Btn_VolverAtrasPerfil
+            // 
+            Btn_VolverAtrasPerfil.Location = new Point(512, 16);
+            Btn_VolverAtrasPerfil.Name = "Btn_VolverAtrasPerfil";
+            Btn_VolverAtrasPerfil.Size = new Size(121, 32);
+            Btn_VolverAtrasPerfil.TabIndex = 70;
+            Btn_VolverAtrasPerfil.Text = "Volver";
+            Btn_VolverAtrasPerfil.UseVisualStyleBackColor = true;
+            Btn_VolverAtrasPerfil.Click += Btn_VolverAtrasPerfil_Click;
             // 
             // PantallaMiPerfil
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(Input_NuevoCredito);
-            Controls.Add(Label_UserCredito);
-            Controls.Add(Label_UserFechaNac);
-            Controls.Add(Label_UserPassword);
-            Controls.Add(Label_UserMail);
-            Controls.Add(Label_UserApellido);
-            Controls.Add(Label_UserNombre);
-            Controls.Add(Label_UserDNI);
+            Controls.Add(Btn_VolverAtrasPerfil);
+            Controls.Add(DateTime_MiPerfil);
+            Controls.Add(Label_IDPerfil);
+            Controls.Add(Label_MiCredito);
+            Controls.Add(Input_PasswordPerfil);
+            Controls.Add(Input_MailPerfil);
+            Controls.Add(Input_ApellidoPerfil);
+            Controls.Add(Input_NombrePerfil);
+            Controls.Add(Input_DNIPerfil);
+            Controls.Add(Btn_ModificarPerfil);
+            Controls.Add(Input_NuevoCreditoPerfil);
             Controls.Add(Input_);
             Controls.Add(label14);
             Controls.Add(label15);
@@ -427,7 +457,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MiPerfil";
             UseWaitCursor = true;
-            WindowState = FormWindowState.Minimized;
             Load += PantallaMiPerfil_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridPasadasFunciones).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridProximasFunciones).EndInit();
@@ -465,13 +494,16 @@
         private Label label14;
         private Label label15;
         private Label Input_;
-        private Label Label_UserDNI;
-        private Label Label_UserNombre;
-        private Label Label_UserApellido;
-        private Label Label_UserMail;
-        private Label Label_UserPassword;
-        private Label Label_UserFechaNac;
-        private Label Label_UserCredito;
-        private TextBox Input_NuevoCredito;
+        private TextBox Input_NuevoCreditoPerfil;
+        private Button Btn_ModificarPerfil;
+        private TextBox Input_DNIPerfil;
+        private TextBox Input_NombrePerfil;
+        private TextBox Input_ApellidoPerfil;
+        private TextBox Input_PasswordPerfil;
+        private TextBox Input_MailPerfil;
+        private Label Label_MiCredito;
+        private Label Label_IDPerfil;
+        private DateTimePicker DateTime_MiPerfil;
+        private Button Btn_VolverAtrasPerfil;
     }
 }

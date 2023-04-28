@@ -197,15 +197,16 @@
             dataGridView1.TabIndex = 17;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
-            // button1
+            // Btn_MiPerfil
             // 
             Btn_MiPerfil.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
             Btn_MiPerfil.Location = new Point(522, 15);
-            Btn_MiPerfil.Name = "button1";
+            Btn_MiPerfil.Name = "Btn_MiPerfil";
             Btn_MiPerfil.Size = new Size(121, 31);
             Btn_MiPerfil.TabIndex = 18;
             Btn_MiPerfil.Text = "Mi Perfil";
             Btn_MiPerfil.UseVisualStyleBackColor = true;
+            Btn_MiPerfil.Click += Btn_MiPerfil_Click;
             // 
             // Btn_CerrarSesion
             // 

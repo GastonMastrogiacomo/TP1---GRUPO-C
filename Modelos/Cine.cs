@@ -153,7 +153,8 @@ namespace TP1___GRUPO_C.Model
                         Usuarios[i].Nombre = user.Nombre;
                         Usuarios[i].Apellido = user.Apellido;
                         Usuarios[i].Mail = user.Mail;
-                        Usuarios[i].Password = user.Nombre;
+                        Usuarios[i].DNI = user.DNI; 
+                        Usuarios[i].Password = user.Password;
                         Usuarios[i].IntentosFallidos = user.IntentosFallidos;
                         Usuarios[i].Bloqueado = user.Bloqueado;
                         Usuarios[i].MisFunciones = user.MisFunciones;
@@ -448,11 +449,23 @@ namespace TP1___GRUPO_C.Model
             {
                 if (user.ID == idUsuario)
                 {
-                    user.Credito = importe;
-                    return true;
+                    if (importe > 0)
+                    {
+                        user.Credito += importe;
+                        MessageBox.Show("Creditos cargados con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Por favor, ingrese una cantidad de créditos válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                    }
+
                 }
             }
             return false;
+            MessageBox.Show("Error al cargar los créditos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
         }
         public bool ComprarEntrada(int IDFuncion, int CantidadEntradas)
         {
@@ -612,7 +625,27 @@ namespace TP1___GRUPO_C.Model
         }
         public List<Funcion> MostrarFunciones()
         {
+            
             return Funciones.ToList();
+        }
+
+        public List<Funcion> MostrarFuncionesProximas()
+        {
+
+            List<Funcion> proximasFunciones = new List<Funcion>();
+
+            DateTime fechaActual = DateTime.Now;
+
+            foreach (Funcion funcion in UsuarioActual.ObtenerMisFunciones())
+            {
+                if (funcion.Fecha > fechaActual)
+                {
+                    proximasFunciones.Add(funcion);
+                }
+            }
+
+            return proximasFunciones;
+
         }
         public List<Sala> MostrarSalas()
         {

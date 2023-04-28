@@ -165,6 +165,17 @@ namespace TP1___GRUPO_C.Vistas
         private void Btn_EliminarSala_Click(object sender, EventArgs e)
         {
             int.TryParse(Label_SalaId.Text, out int ID);
+
+            Sala sala = miCine.ObtenerSalaPorId(ID);
+
+            for (int i = 0; i < sala.MisFunciones.Count; i++)
+            {
+                Funcion funcionActual = sala.MisFunciones[i];
+                funcionActual.MiSala = null;
+                miCine.ModificarFuncion(funcionActual.ID, funcionActual);
+
+            }
+
             if (miCine.EliminarSala(ID))
             {
                 RefreshSalas();
@@ -235,7 +246,7 @@ namespace TP1___GRUPO_C.Vistas
             string poster = this.Input_Poster.Text;
             int.TryParse(this.Input_Duracion.Text, out int duracion);
 
-            Pelicula nuevo = new Pelicula(nombre, descripcion, sinopsis, poster, duracion,ID);
+            Pelicula nuevo = new Pelicula(nombre, descripcion, sinopsis, poster, duracion, ID);
 
             if (miCine.ModificarPelicula(ID, nuevo))
             {
@@ -301,7 +312,6 @@ namespace TP1___GRUPO_C.Vistas
         private void DataGridFunciones_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
 
-            MessageBox.Show("Hola");
             this.Label_FuncionId.Text = dataGridFunciones[0, e.RowIndex].Value.ToString();
             //para cargar estos tendria que tomar el indice del nombre del valor
 
@@ -416,7 +426,7 @@ namespace TP1___GRUPO_C.Vistas
                             int.TryParse(this.Input_CantidadClientes.Text, out int CantidadClientes);
                             double.TryParse(this.Input_Costo.Text, out double Costo);
 
-                            Funcion nuevo = new Funcion(salaElegida, peliElegida, Fecha, CantidadClientes, Costo,ID);
+                            Funcion nuevo = new Funcion(salaElegida, peliElegida, Fecha, CantidadClientes, Costo, ID);
 
                             if (miCine.ModificarFuncion(ID, nuevo))
                             {

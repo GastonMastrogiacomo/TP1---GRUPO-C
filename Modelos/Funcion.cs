@@ -122,7 +122,16 @@ namespace TP1___GRUPO_C.Model
         public string[] ToString()
         {
             string IdClientes = ExtraerIdClientes();
-            return new string[] { ID.ToString(),  Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), IdClientes };
+            if(MiSala != null)
+            {
+                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), IdClientes };
+
+            }
+            else
+            {
+                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), "", "", MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), IdClientes };
+
+            }
         }
 
 

@@ -18,6 +18,8 @@ namespace TP1___GRUPO_C
         internal Cine cine;
         public IniciarVentanaLogin iniciarVentanaLogin;
         public AbrirRegistro abrirRegistro;
+        public AbrirMiPerfil abrirMiPerfil;
+
 
         internal PantallaPrincipal(Cine c)
         {
@@ -35,7 +37,7 @@ namespace TP1___GRUPO_C
             Btn_CerrarSesion.Hide();
             btnRegistrarse.Show();
             button3.Show();
-      
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -60,6 +62,7 @@ namespace TP1___GRUPO_C
 
         public delegate void IniciarVentanaLogin();
         public delegate void AbrirRegistro();
+        public delegate void AbrirMiPerfil();
 
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -97,6 +100,11 @@ namespace TP1___GRUPO_C
             cine.CerrarSesion();
             Refresh();
 
+        }
+
+        private void Btn_MiPerfil_Click(object sender, EventArgs e)
+        {
+            abrirMiPerfil();
         }
     }
 }

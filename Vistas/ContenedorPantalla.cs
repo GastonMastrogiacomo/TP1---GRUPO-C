@@ -23,9 +23,10 @@ namespace TP1___GRUPO_C
             pantallaPrincipal.MdiParent = this;
             pantallaPrincipal.iniciarVentanaLogin += IniciarLogin;
             pantallaPrincipal.abrirRegistro += AbrirRegistro;
-           
+            pantallaPrincipal.abrirMiPerfil += AbrirMiPerfil;
+
             pantallaPrincipal.Show();
-        
+
         }
 
         private void IniciarLogin()
@@ -35,11 +36,11 @@ namespace TP1___GRUPO_C
 
             pantallaLogin = new PantallaLogin(cine);
             pantallaLogin.MdiParent = this;
-            pantallaLogin.pantallaPrincipal += volverPantallaPrincipal;
+            pantallaLogin.pantallaPrincipal += VolverPantallaPrincipal;
             pantallaLogin.usuarioComunLogueado += UsuarioComunLogueado;
             pantallaLogin.usuarioAdminLogueado += UsuarioAdminLogueado;
             pantallaLogin.Show();
-            
+
 
         }
 
@@ -56,42 +57,49 @@ namespace TP1___GRUPO_C
             pantallaABMAdmin = new PantallaABMAdmin(cine);
             pantallaABMAdmin.MdiParent = this;
             pantallaABMAdmin.abrirPantallaCargaFunciones += AbrirPantallaCargaFunciones;
-            pantallaABMAdmin.pantallaPrincipal += volverPantallaPrincipal;
+            pantallaABMAdmin.pantallaPrincipal += VolverPantallaPrincipal;
             pantallaABMAdmin.Show();
-            
+
 
         }
 
         private void AbrirRegistro()
         {
-            
+
             pantallaRegistro = new PantallaRegistro(cine);
             pantallaRegistro.MdiParent = this;
-            pantallaRegistro.pantallaPrincipal += volverPantallaPrincipal;
+            pantallaRegistro.pantallaPrincipal += VolverPantallaPrincipal;
             pantallaPrincipal.Hide();
             pantallaRegistro.Show();
 
         }
 
-        private void volverPantallaPrincipal()
-        {   if (pantallaABMAdmin != null) 
+        private void VolverPantallaPrincipal()
+        {
+            if (pantallaABMAdmin != null)
             {
                 pantallaABMAdmin.Close();
             }
-            if (pantallaRegistro !=null)
+            if (pantallaRegistro != null)
             {
                 pantallaRegistro.Close();
             }
             if (pantallaLogin != null)
-            { 
-            pantallaLogin.Close();
+            {
+                pantallaLogin.Close();
             }
             if (PantallaMIPerfil != null)
             {
                 PantallaMIPerfil.Close();
             }
             pantallaPrincipal.Refresh();
-            pantallaPrincipal.Show();      
+            pantallaPrincipal.Show();
+        }
+
+        private void VolverAtrasPantallaPerfil()
+        {
+            PantallaMIPerfil.Close();
+            pantallaPrincipal.Show();
         }
 
         private void AbrirPantallaCargaFunciones(Usuario UsuarioAuxiliar)
@@ -124,7 +132,7 @@ namespace TP1___GRUPO_C
         {
             pantallaABMAdmin.Show();
             pantallaCargaFunciones.Close();
-            
+
         }
 
         private void CerrarYGuardarPantallaCargaFunciones()
@@ -138,10 +146,10 @@ namespace TP1___GRUPO_C
             pantallaPrincipal.Hide();
             PantallaMIPerfil = new PantallaMiPerfil(cine);
             PantallaMIPerfil.MdiParent = this;
-
-            //PantallaMiPerfil.pantallaPrincipal += volverPantallaPrincipal;
+            PantallaMIPerfil.volverPantallaPrincipal += VolverPantallaPrincipal;
+            PantallaMIPerfil.volverAtras += VolverAtrasPantallaPerfil;
             PantallaMIPerfil.Show();
-            
+
 
         }
 
