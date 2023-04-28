@@ -10,11 +10,10 @@ namespace TP1___GRUPO_C.Model
     {
 
         public int ID { get; set; }
-
         public static int ultimoID = 0;
-
         public string Ubicacion { get; set; }
         public int Capacidad { get; set; }
+        public List<Funcion> MisFunciones { get; set; }
 
         public Sala(string Ubicacion, int Capacidad)
         {
@@ -22,6 +21,7 @@ namespace TP1___GRUPO_C.Model
             this.ID = ultimoID;
             this.Ubicacion = Ubicacion;
             this.Capacidad = Capacidad;
+            MisFunciones = new List<Funcion>();
         }
 
         // obtenerUbicaciones

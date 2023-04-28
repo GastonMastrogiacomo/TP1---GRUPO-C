@@ -9,13 +9,16 @@ namespace TP1___GRUPO_C.Model
     public class Reserva
     {
         public int ID { get; set; }
+
+        public static int ultimoID = 0;
         public int CantidadEntradas { get; set; }
         public int IDUsuario { get; set; }
         public int IDFuncion { get; set; }
 
-        public Reserva(int ID, int CantidadEntradas, int IDUsuario, int IDFuncion)
+        public Reserva (int CantidadEntradas, int IDUsuario, int IDFuncion)
         {
-            this.ID = ID;
+            ultimoID++;
+            this.ID = ultimoID;
             this.CantidadEntradas = CantidadEntradas;
             this.IDUsuario = IDUsuario;
             this.IDFuncion = IDFuncion;

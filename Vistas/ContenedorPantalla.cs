@@ -55,6 +55,7 @@ namespace TP1___GRUPO_C
             pantallaABMAdmin = new PantallaABMAdmin(cine);
             pantallaABMAdmin.MdiParent = this;
             pantallaABMAdmin.abrirPantallaCargaFunciones += AbrirPantallaCargaFunciones;
+            pantallaABMAdmin.pantallaPrincipal += volverPantallaPrincipal;
             pantallaABMAdmin.Show();
             
 
@@ -72,7 +73,10 @@ namespace TP1___GRUPO_C
         }
 
         private void volverPantallaPrincipal()
-        {
+        {   if (pantallaABMAdmin != null) 
+            {
+                pantallaABMAdmin.Close();
+            }
             if (pantallaRegistro !=null)
             {
                 pantallaRegistro.Close();
@@ -81,6 +85,7 @@ namespace TP1___GRUPO_C
             { 
             pantallaLogin.Close();
             }
+            pantallaPrincipal.Refresh();
             pantallaPrincipal.Show();      
         }
 
@@ -100,7 +105,14 @@ namespace TP1___GRUPO_C
             pantallaCargaFunciones.Hide();
             pantallaEdicionFunciones = new PantallaEdicionFunciones(cine, UsuarioAuxiliar);
             pantallaEdicionFunciones.MdiParent = this;
+            pantallaEdicionFunciones.cerrarYGuardarPantallaEdicionFunciones += CerrarPantallaEdicionFunciones;
             pantallaEdicionFunciones.Show();
+        }
+
+        private void CerrarPantallaEdicionFunciones()
+        {
+            pantallaEdicionFunciones.Close();
+            pantallaCargaFunciones.Show();
         }
 
         private void CerrarPantallaCargaFunciones()

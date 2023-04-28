@@ -37,6 +37,7 @@
             Funciones = new TabPage();
             Películas = new TabPage();
             Usuarios = new TabPage();
+            Btn_VerFunciones = new Button();
             button4 = new Button();
             button3 = new Button();
             label10 = new Label();
@@ -44,7 +45,7 @@
             Cb_EsAdmin = new CheckBox();
             label9 = new Label();
             Cb_Bloqueado = new CheckBox();
-            Selecc_FechaDeNacimiento = new DateTimePicker();
+            Selec_FechaDeNacimiento = new DateTimePicker();
             label5 = new Label();
             Input_Credito = new TextBox();
             label6 = new Label();
@@ -77,8 +78,7 @@
             EsAdmin = new DataGridViewTextBoxColumn();
             Reservas = new DataGridViewTextBoxColumn();
             LabelBienvenida = new Label();
-            CerrarSesion = new Button();
-            Btn_VerFunciones = new Button();
+            Btn_CerrarSesionAdmin = new Button();
             Pestañas.SuspendLayout();
             Salas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridSalas).BeginInit();
@@ -169,7 +169,7 @@
             Usuarios.Controls.Add(Cb_EsAdmin);
             Usuarios.Controls.Add(label9);
             Usuarios.Controls.Add(Cb_Bloqueado);
-            Usuarios.Controls.Add(Selecc_FechaDeNacimiento);
+            Usuarios.Controls.Add(Selec_FechaDeNacimiento);
             Usuarios.Controls.Add(label5);
             Usuarios.Controls.Add(Input_Credito);
             Usuarios.Controls.Add(label6);
@@ -194,6 +194,17 @@
             Usuarios.TabIndex = 3;
             Usuarios.Text = "Usuarios";
             Usuarios.UseVisualStyleBackColor = true;
+            // 
+            // Btn_VerFunciones
+            // 
+            Btn_VerFunciones.BackColor = Color.White;
+            Btn_VerFunciones.Location = new Point(464, 86);
+            Btn_VerFunciones.Name = "Btn_VerFunciones";
+            Btn_VerFunciones.Size = new Size(102, 23);
+            Btn_VerFunciones.TabIndex = 29;
+            Btn_VerFunciones.Text = "Ver Funciones";
+            Btn_VerFunciones.UseVisualStyleBackColor = false;
+            Btn_VerFunciones.Click += Btn_VerFunciones_Click;
             // 
             // button4
             // 
@@ -262,12 +273,12 @@
             Cb_Bloqueado.Text = "Bloqueado";
             Cb_Bloqueado.UseVisualStyleBackColor = true;
             // 
-            // Selecc_FechaDeNacimiento
+            // Selec_FechaDeNacimiento
             // 
-            Selecc_FechaDeNacimiento.Location = new Point(653, 55);
-            Selecc_FechaDeNacimiento.Name = "Selecc_FechaDeNacimiento";
-            Selecc_FechaDeNacimiento.Size = new Size(102, 23);
-            Selecc_FechaDeNacimiento.TabIndex = 19;
+            Selec_FechaDeNacimiento.Location = new Point(653, 55);
+            Selec_FechaDeNacimiento.Name = "Selec_FechaDeNacimiento";
+            Selec_FechaDeNacimiento.Size = new Size(102, 23);
+            Selec_FechaDeNacimiento.TabIndex = 19;
             // 
             // label5
             // 
@@ -474,6 +485,7 @@
             dataGridViewTextBoxColumn2.HeaderText = "Funciones";
             dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
             dataGridViewTextBoxColumn2.ReadOnly = true;
+            dataGridViewTextBoxColumn2.Visible = false;
             // 
             // Credito
             // 
@@ -509,28 +521,17 @@
             LabelBienvenida.TabIndex = 28;
             LabelBienvenida.Text = "Bienvenido, ";
             // 
-            // CerrarSesion
+            // Btn_CerrarSesionAdmin
             // 
-            CerrarSesion.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            CerrarSesion.Location = new Point(627, 32);
-            CerrarSesion.Name = "CerrarSesion";
-            CerrarSesion.Size = new Size(145, 31);
-            CerrarSesion.TabIndex = 18;
-            CerrarSesion.Tag = "btn";
-            CerrarSesion.Text = "Cerrar Sesión";
-            CerrarSesion.UseVisualStyleBackColor = true;
-            CerrarSesion.Click += Btn_CerrarSesion;
-            // 
-            // Btn_VerFunciones
-            // 
-            Btn_VerFunciones.BackColor = Color.White;
-            Btn_VerFunciones.Location = new Point(464, 86);
-            Btn_VerFunciones.Name = "Btn_VerFunciones";
-            Btn_VerFunciones.Size = new Size(102, 23);
-            Btn_VerFunciones.TabIndex = 29;
-            Btn_VerFunciones.Text = "Ver Funciones";
-            Btn_VerFunciones.UseVisualStyleBackColor = false;
-            Btn_VerFunciones.Click += Btn_VerFunciones_Click;
+            Btn_CerrarSesionAdmin.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            Btn_CerrarSesionAdmin.Location = new Point(627, 32);
+            Btn_CerrarSesionAdmin.Name = "Btn_CerrarSesionAdmin";
+            Btn_CerrarSesionAdmin.Size = new Size(145, 31);
+            Btn_CerrarSesionAdmin.TabIndex = 18;
+            Btn_CerrarSesionAdmin.Tag = "btn";
+            Btn_CerrarSesionAdmin.Text = "Cerrar Sesión";
+            Btn_CerrarSesionAdmin.UseVisualStyleBackColor = true;
+            Btn_CerrarSesionAdmin.Click += Btn_CerrarSesion;
             // 
             // PantallaABMAdmin
             // 
@@ -538,7 +539,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(801, 480);
             Controls.Add(LabelBienvenida);
-            Controls.Add(CerrarSesion);
+            Controls.Add(Btn_CerrarSesionAdmin);
             Controls.Add(Pestañas);
             FormBorderStyle = FormBorderStyle.None;
             Name = "PantallaABMAdmin";
@@ -563,7 +564,7 @@
         private TabPage Películas;
         private TabPage Usuarios;
         private Label LabelBienvenida;
-        private Button CerrarSesion;
+        private Button Btn_CerrarSesionAdmin;
         private DataGridView dataGridSalas;
         private DataGridViewTextBoxColumn ID;
         private DataGridViewTextBoxColumn Ubicacion;
@@ -587,9 +588,15 @@
         private TextBox Input_Credito;
         private Label label6;
         private TextBox Input_IntentosFallidos;
-        private DateTimePicker Selecc_FechaDeNacimiento;
+        private DateTimePicker Selec_FechaDeNacimiento;
         private CheckBox Cb_Bloqueado;
         private Label label9;
+        private Label label10;
+        private ComboBox comboBox2;
+        private CheckBox Cb_EsAdmin;
+        private Button button4;
+        private Button button3;
+        private Button Btn_VerFunciones;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn DNI;
         private DataGridViewTextBoxColumn Nombre;
@@ -603,11 +610,5 @@
         private DataGridViewTextBoxColumn FechaNacimiento;
         private DataGridViewTextBoxColumn EsAdmin;
         private DataGridViewTextBoxColumn Reservas;
-        private Label label10;
-        private ComboBox comboBox2;
-        private CheckBox Cb_EsAdmin;
-        private Button button4;
-        private Button button3;
-        private Button Btn_VerFunciones;
     }
 }

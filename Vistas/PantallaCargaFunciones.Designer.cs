@@ -34,11 +34,13 @@
             Btn_GuardarYSalir = new Button();
             Clb_FuncionesCine = new CheckedListBox();
             Clb_FuncionesUsuario = new CheckedListBox();
+            label1 = new Label();
+            label2 = new Label();
             SuspendLayout();
             // 
             // Btn_SacarDeLista
             // 
-            Btn_SacarDeLista.Location = new Point(376, 188);
+            Btn_SacarDeLista.Location = new Point(376, 207);
             Btn_SacarDeLista.Name = "Btn_SacarDeLista";
             Btn_SacarDeLista.Size = new Size(53, 25);
             Btn_SacarDeLista.TabIndex = 1;
@@ -48,7 +50,7 @@
             // 
             // Btn_AgregarALista
             // 
-            Btn_AgregarALista.Location = new Point(376, 265);
+            Btn_AgregarALista.Location = new Point(376, 284);
             Btn_AgregarALista.Name = "Btn_AgregarALista";
             Btn_AgregarALista.Size = new Size(53, 26);
             Btn_AgregarALista.TabIndex = 2;
@@ -79,24 +81,44 @@
             // Clb_FuncionesCine
             // 
             Clb_FuncionesCine.FormattingEnabled = true;
-            Clb_FuncionesCine.Location = new Point(435, 58);
+            Clb_FuncionesCine.Location = new Point(435, 94);
             Clb_FuncionesCine.Name = "Clb_FuncionesCine";
-            Clb_FuncionesCine.Size = new Size(343, 364);
+            Clb_FuncionesCine.Size = new Size(343, 328);
             Clb_FuncionesCine.TabIndex = 8;
             // 
             // Clb_FuncionesUsuario
             // 
             Clb_FuncionesUsuario.FormattingEnabled = true;
-            Clb_FuncionesUsuario.Location = new Point(27, 58);
+            Clb_FuncionesUsuario.Location = new Point(27, 94);
             Clb_FuncionesUsuario.Name = "Clb_FuncionesUsuario";
-            Clb_FuncionesUsuario.Size = new Size(343, 364);
+            Clb_FuncionesUsuario.Size = new Size(343, 328);
             Clb_FuncionesUsuario.TabIndex = 9;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(27, 76);
+            label1.Name = "label1";
+            label1.Size = new Size(123, 15);
+            label1.TabIndex = 10;
+            label1.Text = "Funciones del Usuario";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(435, 76);
+            label2.Name = "label2";
+            label2.Size = new Size(125, 15);
+            label2.TabIndex = 11;
+            label2.Text = "Funciones Disponibles";
             // 
             // PantallaCargaFunciones
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(Clb_FuncionesUsuario);
             Controls.Add(Clb_FuncionesCine);
             Controls.Add(Btn_GuardarYSalir);
@@ -108,6 +130,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "PantallaCargaListas";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -117,5 +140,7 @@
         private Button Btn_GuardarYSalir;
         private CheckedListBox Clb_FuncionesCine;
         private CheckedListBox Clb_FuncionesUsuario;
+        private Label label1;
+        private Label label2;
     }
 }

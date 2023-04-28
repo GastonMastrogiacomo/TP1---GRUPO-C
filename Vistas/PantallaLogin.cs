@@ -55,17 +55,14 @@ namespace TP1___GRUPO_C
                     else
                     {
                         this.usuarioComunLogueado();
-
+                        
                     }
                 }
-                else
-                {
-                    MessageBox.Show("Error, datos incorrectos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                
             }
             else
             {
-                MessageBox.Show("Ingrese los datos correctamente", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Complete todos los campos", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

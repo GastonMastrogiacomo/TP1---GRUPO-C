@@ -29,7 +29,7 @@ namespace TP1___GRUPO_C.Vistas
             this.UsuarioAuxiliar = UsuarioAuxiliar;
             CargarListaFuncionesUsuario();
             CargarListaFuncionesCine();
-           
+
         }
 
         public delegate void CerrarPantallaCargaFunciones();
@@ -51,7 +51,6 @@ namespace TP1___GRUPO_C.Vistas
                     string Sala = func.MiSala.Ubicacion.ToString();
 
                     string Linea = NombrePelicula + " en " + Sala + ". Fecha: " + FechaFuncion;
-                    // -1 porque los Id arrancan en 1 y el array en la pos 0
                     this.Clb_FuncionesUsuario.Items.Insert(i, Linea);
                 }
             }
@@ -80,10 +79,8 @@ namespace TP1___GRUPO_C.Vistas
                 {
                     if (!Clb_FuncionesUsuario.Items.Contains(Clb_FuncionesCine.Items[i]))
                     {
-                       Clb_FuncionesUsuario.Items.Add(Clb_FuncionesCine.Items[i]);
-                        Funcion func = miCine.ObtenerFuncionPorId(i);
-                       UsuarioAuxiliar.AgregarFuncion(func);
-                       
+                        Clb_FuncionesUsuario.Items.Add(Clb_FuncionesCine.Items[i]);
+
                     }
                 }
             }
@@ -99,7 +96,7 @@ namespace TP1___GRUPO_C.Vistas
                 CheckState st = Clb_FuncionesUsuario.GetItemCheckState(i);
                 if (st.ToString() == "Checked")
                 {
-                    Clb_FuncionesUsuario.Items.RemoveAt(i);   
+                    Clb_FuncionesUsuario.Items.RemoveAt(i);
                 }
             }
         }
@@ -118,7 +115,7 @@ namespace TP1___GRUPO_C.Vistas
             {
                 for (int i = 0; i < Clb_FuncionesUsuario.Items.Count; i++)
                 {
-                     //le sumo 1 xq antes lo reste en el indice del item.
+                    //le sumo 1 xq antes lo reste en el indice del item.
                     Funcion func = miCine.ObtenerFuncionPorId(i + 1);
                     UsuarioAuxiliar.AgregarFuncion(func);
                 }
@@ -133,6 +130,13 @@ namespace TP1___GRUPO_C.Vistas
 
         private void GuardarDatosUsuarioAuxiliar()
         {
+
+            for (int i = 0; i < Clb_FuncionesUsuario.Items.Count; i++)
+            {
+                Funcion func = miCine.ObtenerFuncionPorId(i + 1);
+                UsuarioAuxiliar.AgregarFuncion(func);
+            }
+
             if (!miCine.ModificarUsuario(UsuarioAuxiliar.ID, UsuarioAuxiliar))
             {
                 MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

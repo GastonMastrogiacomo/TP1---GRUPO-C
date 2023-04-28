@@ -18,15 +18,26 @@ namespace TP1___GRUPO_C
         internal Cine cine;
         public IniciarVentanaLogin iniciarVentanaLogin;
         public AbrirRegistro abrirRegistro;
-        
-        // atributo = string / int / bool
-        // atributo = referencia funcion
 
         internal PantallaPrincipal(Cine c)
         {
             InitializeComponent();
             cine = c;
-            button1.Hide();
+            Btn_MiPerfil.Hide();
+            Btn_CerrarSesion.Hide();
+
+
+        }
+
+        public void Refresh()
+        {
+            Btn_MiPerfil.Hide();
+            Btn_CerrarSesion.Hide();
+            btnRegistrarse.Show();
+            button3.Show();
+            //InitializeComponent();
+            //Btn_MiPerfil.Hide();
+            //Btn_CerrarSesion.Hide();
 
 
         }
@@ -38,12 +49,13 @@ namespace TP1___GRUPO_C
 
         private void button2_Click(object sender, EventArgs e)
         {//boton registrarse
-           this.abrirRegistro();
+            this.abrirRegistro();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {// boton iniciar sesion user
-            button1.Show();
+            Btn_MiPerfil.Show();
+            Btn_CerrarSesion.Show();
             btnRegistrarse.Hide();
             button3.Hide();
             this.iniciarVentanaLogin();
@@ -52,7 +64,7 @@ namespace TP1___GRUPO_C
 
         public delegate void IniciarVentanaLogin();
         public delegate void AbrirRegistro();
-        
+
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -81,6 +93,13 @@ namespace TP1___GRUPO_C
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+
+        }
+
+        private void Btn_CerrarSesion_Click(object sender, EventArgs e)
+        {
+            cine.CerrarSesion();
+            Refresh();
 
         }
     }

@@ -44,7 +44,8 @@
             textBox3 = new TextBox();
             button4 = new Button();
             dataGridView1 = new DataGridView();
-            button1 = new Button();
+            Btn_MiPerfil = new Button();
+            Btn_CerrarSesion = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -198,21 +199,32 @@
             // 
             // button1
             // 
-            button1.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
-            button1.Location = new Point(673, 15);
-            button1.Name = "button1";
-            button1.Size = new Size(112, 31);
-            button1.TabIndex = 18;
-            button1.Text = "Mi Perfil";
-            button1.UseVisualStyleBackColor = true;
-            //button1.Click += button1_Click_1;
+            Btn_MiPerfil.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            Btn_MiPerfil.Location = new Point(522, 15);
+            Btn_MiPerfil.Name = "button1";
+            Btn_MiPerfil.Size = new Size(121, 31);
+            Btn_MiPerfil.TabIndex = 18;
+            Btn_MiPerfil.Text = "Mi Perfil";
+            Btn_MiPerfil.UseVisualStyleBackColor = true;
+            // 
+            // Btn_CerrarSesion
+            // 
+            Btn_CerrarSesion.Font = new Font("Segoe UI", 10F, FontStyle.Bold, GraphicsUnit.Point);
+            Btn_CerrarSesion.Location = new Point(664, 15);
+            Btn_CerrarSesion.Name = "Btn_CerrarSesion";
+            Btn_CerrarSesion.Size = new Size(121, 31);
+            Btn_CerrarSesion.TabIndex = 19;
+            Btn_CerrarSesion.Text = "Cerrar Sesión";
+            Btn_CerrarSesion.UseVisualStyleBackColor = true;
+            Btn_CerrarSesion.Click += Btn_CerrarSesion_Click;
             // 
             // PantallaPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(button1);
+            Controls.Add(Btn_CerrarSesion);
+            Controls.Add(Btn_MiPerfil);
             Controls.Add(dataGridView1);
             Controls.Add(button4);
             Controls.Add(textBox3);
@@ -255,6 +267,7 @@
         private TextBox textBox3;
         private Button button4;
         private DataGridView dataGridView1;
-        private Button button1;
+        private Button Btn_MiPerfil;
+        private Button Btn_CerrarSesion;
     }
 }

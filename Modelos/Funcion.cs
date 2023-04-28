@@ -17,7 +17,7 @@ namespace TP1___GRUPO_C.Model
         public Pelicula MiPelicula { get; set; }
         public List<Usuario> Clientes { get; set; }
         public DateTime Fecha { get; set; }
-        public int CantidadClientes { get; set; }
+        public int CantidadClientes { get; set; } //CantidadEntradasCompradas
         public double Costo { get; set; }
         public List<Reserva> MisReservas { get; set; }
 
@@ -36,17 +36,14 @@ namespace TP1___GRUPO_C.Model
 
 
         }
-        //public List<Funcion> ObtenerFunciones()
-        //{
-        //Ver si esto esta bien o no
-
-        //return MisFunciones.ToList();
-        // }
+  
 
         // ABM Clientes
 
         public bool AgregarCliente(Usuario usuario)
         {
+
+            //faltaria corroborar que el cliente no exista ya
             try
             {
                 Clientes.Add(usuario);

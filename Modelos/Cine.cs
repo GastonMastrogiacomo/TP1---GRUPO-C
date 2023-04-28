@@ -13,7 +13,7 @@ namespace TP1___GRUPO_C.Model
         public List<Sala> Salas;
         public List<Pelicula> Peliculas;
         public Usuario UsuarioActual;
-   
+
         public Cine()
         {
             Usuarios = new List<Usuario>();
@@ -23,14 +23,16 @@ namespace TP1___GRUPO_C.Model
 
             //andy: Agrego objetos prueba 
 
-            Usuario comun = new Usuario(99999999, "Pepe", "Perez", "pepe@mail.com", "123", new DateTime(), false);
+            DateTime fecha = new DateTime(1986, 05, 12);
+            Usuario comun = new Usuario(99999999, "Pepe", "Perez", "pepe@mail.com", "123", fecha, false);
+            comun.Credito = 1000;
             Usuarios.Add(comun);
-            Usuario admin = new Usuario(99999998, "El", "Admin", "admin@mail.com", "123", new DateTime(), true);
+            Usuario admin = new Usuario(99999998, "El", "Admin", "admin@mail.com", "123", fecha, true);
             Usuarios.Add(admin);
 
-            Sala sala1 = new Sala("Olivos",10);
+            Sala sala1 = new Sala("Olivos", 100);
             Salas.Add(sala1);
-            Sala sala2 = new Sala("San Isidro", 20);
+            Sala sala2 = new Sala("San Isidro", 200);
             Salas.Add(sala2);
 
             Pelicula toyStory = new Pelicula("Toy Story", "Pelicula de juguetes.", "Juguetes", "", 120);
@@ -38,28 +40,36 @@ namespace TP1___GRUPO_C.Model
             Pelicula marioBros = new Pelicula("Mario Bros.", "It's me Mario!", "Nintendo", "", 100);
             Peliculas.Add(marioBros);
 
-            Funcion funcion1 = new Funcion(sala1, toyStory, new DateTime(), 5, 10);
+            Funcion funcion1 = new Funcion(sala1, toyStory, new DateTime(), 0, 10);
             Funciones.Add(funcion1);
-            Funcion funcion2 = new Funcion(sala1, marioBros, new DateTime(), 8, 15);
+            Funcion funcion2 = new Funcion(sala1, marioBros, new DateTime(), 0, 15);
             Funciones.Add(funcion2);
-            Funcion funcion3 = new Funcion(sala2, marioBros, new DateTime(), 3, 15);
+            Funcion funcion3 = new Funcion(sala2, marioBros, new DateTime(), 0, 15);
             Funciones.Add(funcion3);
 
         }
 
         //ABM Usuario
+
         public bool AgregarUsuario(Usuario user)
         {
+            bool flagDni = false;
+
             foreach (Usuario u in Usuarios)
             {
-                if (u.ID != user.ID)
+                if (user.DNI == u.DNI || user.Mail == u.Mail)
                 {
-                    Usuario otro = new Usuario(user.DNI, user.Nombre, user.Apellido, user.Mail, user.Password, user.FechaNacimiento, user.EsAdmin);
-                    Usuarios.Add(otro);
-                    return true;
+                    flagDni = true;
                 }
-
             }
+
+            if (!flagDni)
+            {
+                Usuario otro = new Usuario(user.DNI, user.Nombre, user.Apellido, user.Mail, user.Password, user.FechaNacimiento, user.EsAdmin);
+                Usuarios.Add(otro);
+                return true;
+            }
+
             return false;
 
         }
@@ -69,7 +79,7 @@ namespace TP1___GRUPO_C.Model
             for (int i = 0; i < Usuarios.Count; i++)
             {
                 if (Usuarios[i].ID == idUsuario)
-                {                      
+                {
                     Usuarios[i] = user;
                     return true;
                 }
@@ -254,8 +264,7 @@ namespace TP1___GRUPO_C.Model
                         {
                             if (fun.MiSala.Capacidad <= CantidadEntradas)
                             {
-                                //REVISAR HARDCODEO DE ID DE RESERVA
-                                Reserva reserva = new Reserva(1, CantidadEntradas, UsuarioActual.ID, fun.ID);
+                                Reserva reserva = new Reserva(CantidadEntradas, UsuarioActual.ID, fun.ID);
 
                                 UsuarioActual.AgregarReserva(reserva);
                                 fun.AgregarReserva(reserva);
@@ -265,7 +274,6 @@ namespace TP1___GRUPO_C.Model
                             {
                                 throw new InvalidOperationException("No hay la cantidad solicitada de asientos");
                             }
-
 
                         }
                         else
@@ -283,7 +291,7 @@ namespace TP1___GRUPO_C.Model
             }
             catch (Exception e)
             {
-                Console.WriteLine(e.ToString());
+                MessageBox.Show(e.Message);
                 return false;
             }
 
@@ -291,11 +299,41 @@ namespace TP1___GRUPO_C.Model
 
         }
 
-        //TODO
-        public void DevolverEntrada(int idUsuario, int cant)
+
+        public bool DevolverEntrada(int idUsuario, int cant, int idReserva)
         {
+            List<Usuario> usuarios = MostrarUsuarios();
+            Usuario usuario = usuarios.FirstOrDefault(u => u.ID == idUsuario);
+
+            List<Reserva> reservas = ObtenerReservasPorId(idUsuario);
+            Reserva reserva = reservas.FirstOrDefault(r => r.ID == idUsuario);
+
+            List<Funcion> funciones = MostrarFunciones();
+            Funcion funcion = funciones.FirstOrDefault(u => u.ID == idUsuario);
+
+            if (reserva != null && funcion !=null && usuario !=null)
+            {
+                if (funcion.Fecha > DateTime.Now)
+                {
+                    //Revierto el proceso de compra
+                    usuario.Credito += funcion.Costo * cant;
+                    funcion.CantidadClientes -= cant;
+                    usuario.EliminarReserva(reserva.ID);
+                    return true;
+                }
+                else if (funcion.Fecha < DateTime.Now)
+                {
+                    Console.WriteLine("No es posible devolver entrada de una fecha que ya ocurrio.");
+                    return false;
+                }
+
+            }
+
+            return false;
 
         }
+
+
 
         public bool IniciarSesion(string Mail, string Password, bool esAdmin)
         {
@@ -304,14 +342,16 @@ namespace TP1___GRUPO_C.Model
                 foreach (Usuario user in Usuarios)
                 {
 
-                 if (user.Mail.Equals(Mail))
+                    if (user.Mail.Equals(Mail))
+
                     {
                         if (user.Bloqueado == false)
                         {
                             if (user.Password.Equals(Password))
                             {
 
-                                if (user.EsAdmin == esAdmin) {
+                                if (user.EsAdmin == esAdmin)
+                                {
                                     UsuarioActual = user;
                                     user.IntentosFallidos = 0;
                                     return true;
@@ -323,7 +363,7 @@ namespace TP1___GRUPO_C.Model
                                     // o el administrador no puso el checkbox
                                     throw new InvalidOperationException("Has seleccionado una opción incorrecta.");
                                 }
-                               
+
                             }
                             else if (user.IntentosFallidos < 3)
                             {
@@ -346,7 +386,7 @@ namespace TP1___GRUPO_C.Model
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                MessageBox.Show(e.Message);
             }
             return false;
 
@@ -355,6 +395,7 @@ namespace TP1___GRUPO_C.Model
         public void CerrarSesion()
         {
             UsuarioActual = null;
+
         }
 
         public List<Usuario> MostrarUsuarios()
@@ -379,26 +420,42 @@ namespace TP1___GRUPO_C.Model
 
         public Usuario ObtenerUsuarioPorId(int ID)
         {
-             foreach (Usuario user in Usuarios) {
-            
+            foreach (Usuario user in Usuarios)
+            {
+
                 if (user.ID == ID)
                 {
-                  return user;
+                    return user;
                 }
             }
-        
+
+            throw new InvalidDataException("El ID no se encontró en la base de datos.");
+        }
+
+        public Sala ObtenerSalaPorId(int ID)
+        {
+            foreach (Sala sal in Salas)
+            {
+
+                if (sal.ID == ID)
+                {
+                    return sal;
+                }
+            }
+
             throw new InvalidDataException("El ID no se encontró en la base de datos.");
         }
 
         public Funcion ObtenerFuncionPorId(int ID)
         {
-            foreach (Funcion func in Funciones) { 
-            if(func.ID == ID)
+            foreach (Funcion func in Funciones)
+            {
+                if (func.ID == ID)
                 {
                     return func;
                 }
             }
-           
+
             throw new InvalidDataException("El ID no se encontró en la base de datos.");
 
         }
@@ -418,6 +475,10 @@ namespace TP1___GRUPO_C.Model
                     if (funcion.MiSala.Ubicacion == Ubicacion && funcion.Fecha.Date == Fecha.Date && funcion.Costo == Costo)
                     {
                         funcionEncontradas.Add(new Funcion(funcion.MiSala, funcion.MiPelicula, funcion.Fecha, funcion.CantidadClientes, funcion.Costo));
+                    }
+                    else
+                    {
+                        Console.WriteLine("No se encuentra Funcion con los datos ingresados");
                     }
                 }
                 else

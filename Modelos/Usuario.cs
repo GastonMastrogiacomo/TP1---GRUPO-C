@@ -24,7 +24,7 @@ namespace TP1___GRUPO_C.Model
         public DateTime FechaNacimiento { get; set; }
         public bool EsAdmin { get; set; }
         public List<Reserva> MisReservas { get; set; }
-
+        
         // Entrada
 
         public Usuario(int DNI, string Nombre, string Apellido,
@@ -158,7 +158,7 @@ namespace TP1___GRUPO_C.Model
         
         public string[] ToString()
         {
-            return new string[] { ID.ToString(), DNI.ToString(), Nombre, Apellido, Mail, Password, IntentosFallidos.ToString(), Bloqueado.ToString(), MisFunciones.ToString(), Credito.ToString(), FechaNacimiento.ToString(), EsAdmin.ToString(), MisReservas.ToString() };
+            return new string[] { ID.ToString(), DNI.ToString(), Nombre, Apellido, Mail, Password, IntentosFallidos.ToString(), Bloqueado.ToString(), MisFunciones.ToString(), Credito.ToString(), FechaNacimiento.ToString("dd/MM/yyyy"), EsAdmin.ToString(), MisReservas.ToString() };
         }
     }
 }
