@@ -521,7 +521,7 @@ namespace TP1___GRUPO_C.Model
                         throw new InvalidOperationException("Créditos insuficientes");
                     }
                 }
-            }
+            
 
                 if (!FuncionExiste) { throw new FileNotFoundException("No se econtró la función."); }
 
