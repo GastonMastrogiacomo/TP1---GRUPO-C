@@ -86,6 +86,10 @@ namespace TP1___GRUPO_C
             { 
             pantallaLogin.Close();
             }
+            if (PantallaMIPerfil != null)
+            {
+                PantallaMIPerfil.Close();
+            }
             pantallaPrincipal.Refresh();
             pantallaPrincipal.Show();      
         }

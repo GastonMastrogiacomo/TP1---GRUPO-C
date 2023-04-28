@@ -14,12 +14,22 @@ namespace TP1___GRUPO_C.Vistas
     public partial class PantallaMiPerfil : Form
     {
         private Cine miCine;
+        public volverPantallaPrincipal pantallaPrincipal;
+
         public PantallaMiPerfil(Cine cine)
         {
             InitializeComponent();
             miCine = cine;
+            double a = miCine.UsuarioActual.Credito;
         }
 
+        public delegate void volverPantallaPrincipal();
+
+        //Label_UserCredito.Text= miCine.UsuarioActual.Credito.ToString()
+        
+        
+            
+        
         private void label6_Click(object sender, EventArgs e)
         {
 

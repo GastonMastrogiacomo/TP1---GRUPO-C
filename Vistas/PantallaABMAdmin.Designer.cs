@@ -417,6 +417,7 @@
             Btn_NuevoFuncion.TabIndex = 38;
             Btn_NuevoFuncion.Text = "Nuevo";
             Btn_NuevoFuncion.UseVisualStyleBackColor = true;
+            Btn_NuevoFuncion.Click += Btn_NuevaFuncion_Click;
             // 
             // Label_Fecha
             // 

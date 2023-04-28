@@ -213,6 +213,7 @@ namespace TP1___GRUPO_C.Vistas
                 this.dataGridPeliculas.Rows.Add(pel.PeliculaToString());
             }
 
+            Cb_Funciones.Items.Clear();
             foreach (Funcion f in miCine.MostrarFunciones())
             {
                 this.Cb_Funciones.Items.Add(f.MiPelicula.Nombre);
@@ -228,15 +229,21 @@ namespace TP1___GRUPO_C.Vistas
                 dataGridFunciones.Rows.Add(fun.ToString());
             }
 
+            this.Cb_Salas.Items.Clear();
+
             foreach (Sala s in miCine.MostrarSalas())
             {
                 string salaDatos = s.ID.ToString() + ", " + s.Ubicacion.ToString();
                 this.Cb_Salas.Items.Add(salaDatos);
             }
 
+            this.Cb_Peliculas.Items.Clear();
+
+
             foreach (Pelicula pel in miCine.MostrarPeliculas())
             {
-                this.Cb_Peliculas.Items.Add(pel.Nombre);
+                string peliDatos = pel.ID.ToString() + ", " + pel.Nombre;
+                this.Cb_Peliculas.Items.Add(peliDatos);
             }
 
 
@@ -491,18 +498,27 @@ namespace TP1___GRUPO_C.Vistas
         private void Btn_NuevaFuncion_Click(object sender, EventArgs e)
         {
 
-            int.TryParse(this.Cb_Peliculas.SelectedValue.ToString(),out int idPelicula);
-            int.TryParse(this.Cb_Salas.SelectedValue.ToString(), out int idSala);
+            //int.TryParse(this.Cb_Salas.SelectedValue.ToString(), out int idSala);
+
+            string salaSelected = this.Cb_Salas.SelectedItem.ToString();
+            string salaSelectedID = salaSelected.Split(",")[0];
+            List<Sala> salas = miCine.MostrarSalas();
+            Sala salaElegida = salas.FirstOrDefault(s => s.ID == int.Parse(salaSelectedID));
+
+
+            //int.TryParse(this.Cb_Peliculas.SelectedValue.ToString(), out int idPelicula);
+
+            string peliSelected = this.Cb_Peliculas.SelectedItem.ToString();
+            string peliSelectedID = peliSelected.Split(",")[0];
+            List<Pelicula> peliculas = miCine.MostrarPeliculas();
+            Pelicula peliElegida = peliculas.FirstOrDefault(p => p.ID == int.Parse(peliSelectedID));
+
+
             int.TryParse(this.Input_CantidadClientes.Text, out int CantidadClientes);
             int.TryParse(this.Input_Costo.Text, out int Costo);
             DateTime Fecha = this.Selec_Fecha.Value;
 
-      
-
-            
-
-            Funcion nuevo = new Funcion(MiSala, MiPelicula, Fecha, CantidadClientes, Costo);
-
+            Funcion nuevo = new Funcion(salaElegida, peliElegida, Fecha, CantidadClientes, Costo);
             if (miCine.AgregarFuncion(nuevo))
             {
                 refreshFunciones();
@@ -517,11 +533,11 @@ namespace TP1___GRUPO_C.Vistas
         {
             string ID = dataGridFunciones[0, e.RowIndex].Value.ToString();
 
-        
-            if (miCine.EliminarPeliculaEli(ID))
-            {
-                refreshFunciones();
-            }
+
+            //if (miCine.EliminarPeliculaEli(ID))
+            //{
+            //    refreshFunciones();
+            //}
         }
 
 
