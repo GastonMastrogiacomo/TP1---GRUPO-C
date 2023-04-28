@@ -22,8 +22,11 @@ namespace TP1___GRUPO_C.Model
         public double Credito { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public bool EsAdmin { get; set; }
-
-
+        //seria un map con el Id de la funcion entonces cada vez que agrego entradas, las agrego al key que va a
+        //hacer el Id de la funcion y tiene un value que es incremental / decremental que serian las entradas.
+        //el int primero (key) seria el ID de la funcion en la que compre la entrada
+        // el int segundo (value) es la cantidad de entradas compradas para esa funcion
+        public Dictionary<int, int> EntradasCompradas { get; set; }
         // Entrada
        
 
@@ -43,7 +46,7 @@ namespace TP1___GRUPO_C.Model
             Credito = 0;
             this.FechaNacimiento = FechaNacimiento;
             this.EsAdmin = EsAdmin;
-
+            EntradasCompradas = new Dictionary<int, int>();
         }
 
         public Usuario(int DNI, string Nombre, string Apellido,
@@ -62,6 +65,7 @@ namespace TP1___GRUPO_C.Model
             Credito = 0;
             this.FechaNacimiento = FechaNacimiento;
             this.EsAdmin = EsAdmin;
+            EntradasCompradas = new Dictionary<int, int>();
 
         }
 

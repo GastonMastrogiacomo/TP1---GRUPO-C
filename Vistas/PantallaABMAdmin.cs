@@ -231,6 +231,16 @@ namespace TP1___GRUPO_C.Vistas
         private void Btn_EliminarPelicula_Click(object sender, EventArgs e)
         {
             int.TryParse(Label_PeliculaId.Text, out int ID);
+
+            Pelicula peli = miCine.ObtenerPeliculaPorId(ID);
+
+            for (int i = 0; i < peli.MisFunciones.Count; i++)
+            {
+                Funcion funcionActual = peli.MisFunciones[i];
+                funcionActual.MiPelicula = null;
+                miCine.ModificarFuncion(funcionActual.ID, funcionActual);
+
+            }
             if (miCine.EliminarPelicula(ID))
             {
                 RefreshPeliculas();

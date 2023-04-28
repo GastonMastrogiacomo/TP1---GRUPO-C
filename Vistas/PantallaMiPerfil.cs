@@ -23,7 +23,7 @@ namespace TP1___GRUPO_C.Vistas
             miCine = cine;
             MostrarDatosUsuario();
             MostrarFuncionesProximas();
-            MostrarFuncionesProximas();
+            MostrarFuncionesPasadas();
         }
 
         public delegate void VolverPantallaPrincipal();
@@ -115,7 +115,7 @@ namespace TP1___GRUPO_C.Vistas
             double cantidadCreditos;
             double.TryParse(Input_NuevoCreditoPerfil.Text, out cantidadCreditos);
 
-
+            
 
             if (miCine.CargarCredito(usuarioActual.ID, cantidadCreditos))
             {
@@ -132,7 +132,6 @@ namespace TP1___GRUPO_C.Vistas
         {
 
             dataGridPasadasFunciones.Rows.Clear();
-            Usuario usuarioActual = miCine.UsuarioActual;
 
             List<Funcion> funcionesProximas = miCine.MostrarFuncionesProximas();
             foreach (Funcion fun in funcionesProximas)
@@ -142,16 +141,41 @@ namespace TP1___GRUPO_C.Vistas
 
         }
 
-
-
         private void MostrarFuncionesPasadas()
         {
+            dataGridPasadasFunciones.Rows.Clear();
 
+            List<Funcion> pasadasFunciones = miCine.MostrarFuncionesPasadas();
+            foreach (Funcion fun in pasadasFunciones)
+            {
+                this.dataGridPasadasFunciones.Rows.Add(fun.ToString());
+            }
         }
 
         private void Btn_VolverAtrasPerfil_Click(object sender, EventArgs e)
         {
             volverAtras();
+        }
+
+        private void Btn_DevolverEntradas_Click(object sender, EventArgs e)
+        {
+            //ver porque creo que devovler entrada no elimina la funcion del usuario
+            if (miCine.DevolverEntrada(idFuncionSeleccionada,cantidadEntradasSeleccionadas)) {
+
+                MostrarFuncionesProximas();
+            }
+
+        }
+
+        private int idFuncionSeleccionada;
+        private int cantidadEntradasSeleccionadas;
+
+        private void dataGridProximasFunciones_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // dataGridFunciones[0, e.RowIndex].Value.ToString();
+            idFuncionSeleccionada = int.Parse(dataGridProximasFunciones[0, e.RowIndex].Value.ToString());
+            cantidadEntradasSeleccionadas = int.Parse(dataGridProximasFunciones[2, e.RowIndex].Value.ToString()); 
+
         }
     }
 }

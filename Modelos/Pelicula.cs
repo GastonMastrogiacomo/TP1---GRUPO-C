@@ -108,7 +108,7 @@ namespace TP1___GRUPO_C.Model
 
         public string[] PeliculaToString()
         {
-            string FuncionesIDs = ExtraerIDFunciones(); ;
+            string FuncionesIDs = ExtraerIDFunciones(); 
             return new string[] { ID.ToString(), Nombre.ToString(), Descripcion.ToString(), Sinopsis.ToString(), Poster.ToString(), Duracion.ToString(), FuncionesIDs };
         }
     }
