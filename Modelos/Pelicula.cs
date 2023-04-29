@@ -88,6 +88,11 @@ namespace TP1___GRUPO_C.Model
             return false;
         }
 
+        public List<Funcion> ObtenerMisFunciones()
+        {
+            return MisFunciones.ToList();
+        }
+
         private string ExtraerIDFunciones()
         {
             string IDFunciones = "";

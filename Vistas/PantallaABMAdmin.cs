@@ -507,6 +507,18 @@ namespace TP1___GRUPO_C.Vistas
                 break;
             }
 
+            Pelicula peli = miCine.ObtenerPeliculaPorId(func.MiPelicula.ID);
+
+
+            for (int i = 0; i < peli.ObtenerMisFunciones().Count; i++)
+            {
+                if (peli.ObtenerMisFunciones()[i].ID == ID)
+                {
+                    peli.EliminarFuncion(peli.ObtenerMisFunciones()[i].ID);
+                    //miCine.Modifi
+                }
+            }
+
             if (miCine.EliminarFuncion(ID))
             {
                 RefreshFunciones();

@@ -753,6 +753,11 @@ namespace TP1___GRUPO_C.Model
             foreach (Pelicula p in Peliculas)
             {
                 
+                if (p.Nombre == Pelicula)
+                {
+
+                }
+                i++;
             }
 
 

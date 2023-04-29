@@ -164,6 +164,8 @@ namespace TP1___GRUPO_C.Vistas
         private void Btn_DevolverEntradas_Click(object sender, EventArgs e)
         {
             Usuario usuarioActual = miCine.UsuarioActual;
+            int cantidadEntradasSeleccionadas = usuarioActual.EntradasCompradas[idFuncionSeleccionada];
+
             //ver porque creo que devovler entrada no elimina la funcion del usuario
             if (miCine.DevolverEntrada(idFuncionSeleccionada,cantidadEntradasSeleccionadas)) {
 

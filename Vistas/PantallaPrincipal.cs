@@ -108,14 +108,6 @@ namespace TP1___GRUPO_C
             abrirMiPerfil();
         }
 
-
-
-
-
-
-
-
-
         private void MostrarPeliculasEnDataGridView()
         {
 
@@ -147,10 +139,15 @@ namespace TP1___GRUPO_C
             // Agregar las películas al DataGridView
             foreach (Funcion funcion in funciones)
             {
-                // Agregar una nueva fila al DataGridView con los datos de la película
-                dataGridFuncionesPpal.Rows.Add(funcion.ToString());
-            }
+                DateTime fechaActual = DateTime.Now;
 
+                if (funcion.Fecha >=  fechaActual)
+                {
+                    // Agregar una nueva fila al DataGridView con los datos de la película
+                    dataGridFuncionesPpal.Rows.Add(funcion.ToString());
+                }
+
+            }
 
         }
 
@@ -187,17 +184,20 @@ namespace TP1___GRUPO_C
             {
                 if (f.MiPelicula.ID == idPeliculaSeleccionada)
                 {
-                    string fecha = f.Fecha.ToString("dd/MM/yyyy");
-                    string cantidadClientes = f.CantidadClientes.ToString();
-                    string costo = f.Costo.ToString();
-                    string idMiSala = f.MiSala.ID.ToString();
-                    string capacidadMiSala = f.MiSala.Capacidad.ToString();
-                    string idPelicula = f.MiPelicula.ID.ToString();
-                    string nombrePelicula = f.MiPelicula.Nombre.ToString();
-                    string idsClientesArr = ObtenerIdsClientes(f);
+                    //string fecha = f.Fecha.ToString("dd/MM/yyyy");
+                    //string cantidadClientes = f.CantidadClientes.ToString();
+                    //string costo = f.Costo.ToString();
+                    //string idMiSala = f.MiSala.ID.ToString();
+                    //string capacidadMiSala = f.MiSala.Capacidad.ToString();
+                    //string idPelicula = f.MiPelicula.ID.ToString();
+                    //string nombrePelicula = f.MiPelicula.Nombre.ToString();
+                    //string idsClientesArr = ObtenerIdsClientes(f);
 
 
-                    dataGridFuncionesPpal.Rows.Add(fecha, cantidadClientes, costo, idMiSala, capacidadMiSala, idPelicula, nombrePelicula, idsClientesArr);
+                    //dataGridFuncionesPpal.Rows.Add(fecha, cantidadClientes, costo, idMiSala, capacidadMiSala, idPelicula, nombrePelicula, idsClientesArr);
+
+                    dataGridFuncionesPpal.Rows.Add(f.ToString());
+
 
                     // dataGridViewTextBoxColumn3, Fecha, Cant_Clientes, Costo, Id_MiSala, Capacidad_MiSala, Id_Pelicula, Nombre_Pelicula, IDS_Clientes_Arr }
                 }
@@ -206,21 +206,27 @@ namespace TP1___GRUPO_C
 
         }
 
-        private string ObtenerIdsClientes(Funcion funcion)
-        {
-            StringBuilder sb = new StringBuilder();
+        private int idSalaSeleccionada;
 
-            foreach (Usuario u in funcion.Clientes)
+        private void dataGridSalas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            idSalaSeleccionada = int.Parse(dataGridSalasPpal[0, e.RowIndex].Value.ToString());
+
+
+
+            dataGridFuncionesPpal.Rows.Clear();
+
+            foreach (Funcion f in cine.MostrarFunciones())
             {
-                if (sb.Length > 0)
+                if (f.MiSala.ID == idSalaSeleccionada)
                 {
-                    sb.Append(", ");
-                    sb.Append(u.ID);
+
+                    dataGridFuncionesPpal.Rows.Add(f.ToString());
+
                 }
 
             }
 
-            return sb.ToString();
         }
 
         private void Btn_BuscarPpal_Click(object sender, EventArgs e)
@@ -268,63 +274,14 @@ namespace TP1___GRUPO_C
                        
                         break;
                     }
-
             }
-
-
 
         }
       
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
 
-
-
-
-
-        /*
-
-                Voy poniendo lo que se me ocurre del codigo para filtrar en pantalla principal
-
-                //obtener los valores de los inputs
-
-
-                List<Funcion> funciones = ObtenerFuncionesDisponibles();
-                List<Funcion> funcionesFiltradas = funciones.Where(f => (string.IsNullOrEmpty(ACA INPUT UBICACION) || f.Ubicacion == INPUT) && (fecha == default || f.Fecha.Date == fecha.Date)
-                && (INPUTCOSTO == 0 || f.Costo == INPUT) && (string.IsNullOrEmpty(INPUT NOMBRE) || f.Nombre.ToLower.Contains(INPUT.ToLower()))).ToList();
-
-                foreach (FUncion funcion in funcionesFiltradas){
-                    aca lo va poniendo en la datagrid
-
-                }
-
-
-
-                METODOS PARA VER TODAS LAS FUNCIONES
-
-                    List<Funcion> funciones = miCine.MostrarFunciones();
-
-                    dataGridFunciones.Rows.Clear();
-
-                    foreach (Funcion funcion in funciones)
-                    {
-                        Agregar al data grid view 
-                    }
-
-
-
-
-
-
-             */
-
-
-
-
-
-
-
-
-
-
+        }
     }
 }
