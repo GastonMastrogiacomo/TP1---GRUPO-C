@@ -521,243 +521,239 @@ namespace TP1___GRUPO_C.Model
                         throw new InvalidOperationException("Créditos insuficientes");
                     }
                 }
-            
+
 
                 if (!FuncionExiste) { throw new FileNotFoundException("No se econtró la función."); }
 
 
 
-            return true;
-        }
+                return true;
+            }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                MessageBox.Show(e.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
 
 
 
-}
-public bool DevolverEntrada(int IDFuncion, int CantidadEntradas)
-{
-
-    List<Funcion> funciones = MostrarFunciones();
-    Funcion funcion = funciones.FirstOrDefault(u => u.ID == IDFuncion);
-
-    if (funcion != null)
-    {
-        foreach (Funcion fun in funciones)
-        {
-            if (fun.ID == IDFuncion)
-
-            {
-                if (fun.Fecha > DateTime.Now)
-                {
-
-                    UsuarioActual.MisFunciones.Remove(fun);
-                    fun.CantidadClientes -= CantidadEntradas;
-                    fun.EliminarCliente(UsuarioActual.ID);
-                    return true;
-
-
-
-                }
-                else if (fun.Fecha < DateTime.Now)
-                {
-                    Console.WriteLine("No es posible devolver entrada de una fecha que ya ocurrio.");
-                    return false;
-                }
-            }
-
         }
-
-
-    }
-
-    return false;
-
-}
-
-
-public bool IniciarSesion(string Mail, string Password, bool esAdmin)
-{
-    try
-    {
-        foreach (Usuario user in Usuarios)
+        public bool DevolverEntrada(int IDFuncion, int CantidadEntradas)
         {
 
-            if (user.Mail.Equals(Mail))
+            List<Funcion> funciones = MostrarFunciones();
+            Funcion funcion = funciones.FirstOrDefault(u => u.ID == IDFuncion);
 
+            if (funcion != null)
             {
-                if (user.Bloqueado == false)
+                foreach (Funcion fun in funciones)
                 {
-                    if (user.Password.Equals(Password))
-                    {
+                    if (fun.ID == IDFuncion)
 
-                        if (user.EsAdmin == esAdmin)
+                    {
+                        if (fun.Fecha > DateTime.Now)
                         {
-                            UsuarioActual = user;
-                            user.IntentosFallidos = 0;
+
+                            UsuarioActual.MisFunciones.Remove(fun);
+                            fun.CantidadClientes -= CantidadEntradas;
+                            fun.EliminarCliente(UsuarioActual.ID);
+
+
+
+                            if (UsuarioActual.EntradasCompradas.ContainsKey(IDFuncion))
+                            {
+                                UsuarioActual.EntradasCompradas[IDFuncion] -= CantidadEntradas;
+
+                                UsuarioActual.Credito += CantidadEntradas * (fun.Costo);
+
+
+
+                            }
+                            if (UsuarioActual.EntradasCompradas[IDFuncion] <= 0)
+                            {
+                                UsuarioActual.EntradasCompradas.Remove(IDFuncion);
+                            }
+
                             return true;
 
+
+
                         }
-                        else
+                        else if (fun.Fecha < DateTime.Now)
                         {
-                            // el usuario seleccion "administrador" sin serlo
-                            // o el administrador no puso el checkbox
-                            throw new InvalidOperationException("Has seleccionado una opción incorrecta.");
+                            Console.WriteLine("No es posible devolver entrada de una fecha que ya ocurrio.");
+                            return false;
                         }
-
                     }
-                    else if (user.IntentosFallidos < 3)
-                    {
-                        user.IntentosFallidos += 1;
-                        throw new InvalidOperationException("Password incorrecta, intentalo nuevamente");
 
-                    }
-                    else
-                    {
-                        user.Bloqueado = true;
-                        throw new InvalidOperationException("Ha alcanzado la cantidad de intentos. Usuario bloqueado");
-
-                    }
                 }
-                else { throw new InvalidOperationException("No se puede acceder, el usuario se encuentra bloqueado"); }
+
+
             }
+
+            return false;
+
         }
 
 
-    }
-    catch (Exception e)
-    {
-        MessageBox.Show(e.Message);
-    }
-    return false;
-
-}
-public void CerrarSesion()
-{
-    UsuarioActual = null;
-
-}
-
-//MOSTRAR
-public List<Usuario> MostrarUsuarios()
-{
-    return Usuarios.ToList();
-}
-public List<Funcion> MostrarFunciones()
-{
-
-    return Funciones.ToList();
-}
-
-public List<Funcion> MostrarFuncionesProximas()
-{
-
-    List<Funcion> proximasFunciones = new List<Funcion>();
-
-    DateTime fechaActual = DateTime.Now;
-
-
-    foreach (Funcion funcion in UsuarioActual.ObtenerMisFunciones())
-    {
-
-        if (funcion.Fecha > fechaActual)
+        public bool IniciarSesion(string Mail, string Password, bool esAdmin)
         {
-            proximasFunciones.Add(funcion);
+            try
+            {
+                foreach (Usuario user in Usuarios)
+                {
+
+                    if (user.Mail.Equals(Mail))
+
+                    {
+                        if (user.Bloqueado == false)
+                        {
+                            if (user.Password.Equals(Password))
+                            {
+
+                                if (user.EsAdmin == esAdmin)
+                                {
+                                    UsuarioActual = user;
+                                    user.IntentosFallidos = 0;
+                                    return true;
+
+                                }
+                                else
+                                {
+                                    // el usuario seleccion "administrador" sin serlo
+                                    // o el administrador no puso el checkbox
+                                    throw new InvalidOperationException("Has seleccionado una opción incorrecta.");
+                                }
+
+                            }
+                            else if (user.IntentosFallidos < 3)
+                            {
+                                user.IntentosFallidos += 1;
+                                throw new InvalidOperationException("Email o contraseña incorrecta, intentalo nuevamente");
+
+                            }
+                            else
+                            {
+                                user.Bloqueado = true;
+                                throw new InvalidOperationException("Ha alcanzado la cantidad de intentos. Usuario bloqueado");
+
+                            }
+                        }
+                        else { throw new InvalidOperationException("No se puede acceder, el usuario se encuentra bloqueado"); }
+                    }
+                  
+                }
+                throw new InvalidOperationException("Email o contraseña incorrecta, intentalo nuevamente");
+
+            }
+
+
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+            return false;
+
         }
-    }
-
-    return proximasFunciones;
-
-}
-
-public List<Funcion> MostrarFuncionesPasadas()
-{
-
-    List<Funcion> pasadasFunciones = new List<Funcion>();
-
-    DateTime fechaActual = DateTime.Now;
-
-
-    foreach (Funcion funcion in UsuarioActual.ObtenerMisFunciones())
-    {
-
-        if (funcion.Fecha < fechaActual)
+        public void CerrarSesion()
         {
-            pasadasFunciones.Add(funcion);
+            UsuarioActual = null;
+
         }
-    }
 
-    return pasadasFunciones;
-
-}
-
-
-public List<Sala> MostrarSalas()
-{
-    return Salas.ToList();
-}
-public List<Pelicula> MostrarPeliculas() // en diagrama decia List<Post>
-{
-    return Peliculas.ToList();
-}
-
-//MOSTRAR POR ID
-public Usuario ObtenerUsuarioPorId(int ID)
-{
-    foreach (Usuario user in Usuarios)
-    {
-
-        if (user.ID == ID)
+        //MOSTRAR
+        public List<Usuario> MostrarUsuarios()
         {
-            return user;
+            return Usuarios.ToList();
         }
-    }
-
-    throw new InvalidDataException("El ID no se encontró en la base de datos.");
-}
-public Sala ObtenerSalaPorId(int ID)
-{
-    foreach (Sala sal in Salas)
-    {
-
-        if (sal.ID == ID)
+        public List<Funcion> MostrarFunciones()
         {
-            return sal;
-        }
-    }
 
-    throw new InvalidDataException("El ID no se encontró en la base de datos.");
-}
-public Funcion ObtenerFuncionPorId(int ID)
-{
-    foreach (Funcion func in Funciones)
-    {
-        if (func.ID == ID)
+            return Funciones.ToList();
+        }
+
+
+        public List<Sala> MostrarSalas()
         {
-            return func;
+            return Salas.ToList();
         }
-    }
-
-    throw new InvalidDataException("El ID no se encontró en la base de datos.");
-
-}
-
-public Pelicula ObtenerPeliculaPorId(int ID)
-{
-    foreach (Pelicula pel in Peliculas)
-    {
-
-        if (pel.ID == ID)
+        public List<Pelicula> MostrarPeliculas() // en diagrama decia List<Post>
         {
-            return pel;
+            return Peliculas.ToList();
         }
-    }
 
-    throw new InvalidDataException("El ID no se encontró en la base de datos.");
-}
+        //MOSTRAR POR ID
+        public Usuario ObtenerUsuarioPorId(int ID)
+        {
+            foreach (Usuario user in Usuarios)
+            {
+
+                if (user.ID == ID)
+                {
+                    return user;
+                }
+            }
+
+            throw new InvalidDataException("El ID no se encontró en la base de datos.");
+        }
+        public Sala ObtenerSalaPorId(int ID)
+        {
+            foreach (Sala sal in Salas)
+            {
+
+                if (sal.ID == ID)
+                {
+                    return sal;
+                }
+            }
+
+            throw new InvalidDataException("El ID no se encontró en la base de datos.");
+        }
+        public Funcion ObtenerFuncionPorId(int ID)
+        {
+            foreach (Funcion func in Funciones)
+            {
+                if (func.ID == ID)
+                {
+                    return func;
+                }
+            }
+
+            throw new InvalidDataException("El ID no se encontró en la base de datos.");
+
+        }
+
+        public Pelicula ObtenerPeliculaPorId(int ID)
+        {
+            foreach (Pelicula pel in Peliculas)
+            {
+
+                if (pel.ID == ID)
+                {
+                    return pel;
+                }
+            }
+
+            throw new InvalidDataException("El ID no se encontró en la base de datos.");
+        }
+
+        public void Busqueda (string  Pelicula, DateTime Fecha, int PrecioMax, int PrecioMin, string Ubicacion)
+        {
+            //pelicula>nombre MostrarPelicula();
+            // funcion> fecha, Costo  MostrarFunciones();
+            //sala>ubicacion MostrarSala();
+            List <Pelicula> Peliculas = MostrarPeliculas();
+            List<Funcion> Funciones = MostrarFunciones();
+            List<Sala> Salas = MostrarSalas();
+            List<Pelicula> PeliculaFiltrada = new List<Pelicula>();
+
+            foreach (Pelicula p in Peliculas)
+            {
+                
+            }
+
+
+        }
         //TODO
         //public List<Funcion> BuscarFuncion(string Ubicacion, DateTime Fecha, double Costo, string NombrePelicula)
         //{

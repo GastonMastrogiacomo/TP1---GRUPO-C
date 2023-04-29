@@ -151,7 +151,6 @@ namespace TP1___GRUPO_C.Vistas
         private void Btn_ModificarSala_Click(object sender, EventArgs e)
         {
             int.TryParse(Label_SalaId.Text, out int ID);
-            MessageBox.Show("ID: " + ID.ToString());
             string Ubicacion = this.Input_Ubicacion.Text;
             int Capacidad = int.Parse(this.Input_Capacidad.Text);
 
@@ -207,7 +206,7 @@ namespace TP1___GRUPO_C.Vistas
             Cb_Funciones.Items.Clear();
             foreach (Funcion f in miCine.MostrarFunciones())
             {
-                string stringFuncion = f.ID + ", " + f.MiPelicula.Nombre + ". " + f.Fecha;
+                string stringFuncion = f.ID.ToString() + ", " + f.MiPelicula.Nombre + ". " + f.Fecha.ToString();
                 this.Cb_Funciones.Items.Add(stringFuncion);
             }
         }
@@ -249,7 +248,6 @@ namespace TP1___GRUPO_C.Vistas
         private void Btn_ModificarPelicula_Click(object sender, EventArgs e)
         {
             int.TryParse(Label_PeliculaId.Text, out int ID);
-            MessageBox.Show("ID: " + ID.ToString());
             string nombre = this.Input_Nombre_Pelicula.Text;
             string descripcion = this.Input_Descripcion.Text;
             string sinopsis = this.Input_Sinopsis.Text;
@@ -323,7 +321,6 @@ namespace TP1___GRUPO_C.Vistas
         {
 
             this.Label_FuncionId.Text = dataGridFunciones[0, e.RowIndex].Value.ToString();
-            //para cargar estos tendria que tomar el indice del nombre del valor
 
             string fecha1 = dataGridFunciones[1, e.RowIndex].Value.ToString();
             DateTime fecha = DateTime.Parse(fecha1);
@@ -331,8 +328,28 @@ namespace TP1___GRUPO_C.Vistas
             this.Input_CantidadClientes.Text = dataGridFunciones[2, e.RowIndex].Value.ToString();
             this.Input_Costo.Text = dataGridFunciones[3, e.RowIndex].Value.ToString();
 
-            this.Cb_Salas.SelectedIndex = int.Parse(dataGridFunciones[4, e.RowIndex].Value.ToString()) - 1;
-            this.Cb_Peliculas.SelectedIndex = int.Parse(dataGridFunciones[6, e.RowIndex].Value.ToString()) - 1;
+            string salaId = (string)dataGridFunciones[4, e.RowIndex].Value;
+            if (salaId == "" || salaId == null)
+            {
+                this.Cb_Salas.SelectedIndex = 0;
+            }
+            else
+            {
+                this.Cb_Salas.SelectedIndex = int.Parse(dataGridFunciones[4, e.RowIndex].Value.ToString()) - 1;
+
+            }
+
+            string peliId = (string)dataGridFunciones[6, e.RowIndex].Value;
+
+            if (peliId == "" || peliId == null)
+            {
+                this.Cb_Peliculas.SelectedIndex = 0;
+            }
+            else
+            {
+                this.Cb_Peliculas.SelectedIndex = int.Parse(dataGridFunciones[6, e.RowIndex].Value.ToString()) - 1;
+
+            }
 
             List<Funcion> funciones = miCine.MostrarFunciones();
             this.FuncionAuxiliar = funciones.FirstOrDefault(f => f.ID == int.Parse(this.Label_FuncionId.Text));
@@ -470,13 +487,30 @@ namespace TP1___GRUPO_C.Vistas
         }
         private void Btn_EliminarFuncion_Click(object sender, EventArgs e)
         {
-            //string ID = dataGridFunciones[0, e.RowIndex].Value.ToString();
+            int.TryParse(Label_FuncionId.Text, out int ID);
 
+            Funcion func = miCine.ObtenerFuncionPorId(ID);
 
-            //if (miCine.EliminarPeliculaEli(ID))
-            //{
-            //    refreshFunciones();
-            //}
+            for (int i = 0; i < func.Clientes.Count; i++)
+            {
+                Usuario user = func.Clientes[i];
+
+                for (int j = 0; j < user.ObtenerMisFunciones().Count; j++)
+                {
+                    if (user.ObtenerMisFunciones()[j].ID == ID)
+                    {
+                        user.EliminarFuncion(user.ObtenerMisFunciones()[j].ID);
+                        miCine.ModificarFuncion(func.ID, func);
+                        break;
+                    }
+                }
+                break;
+            }
+
+            if (miCine.EliminarFuncion(ID))
+            {
+                RefreshFunciones();
+            }
         }
         private void Funciones_Click(object sender, EventArgs e)
         {
@@ -559,7 +593,19 @@ namespace TP1___GRUPO_C.Vistas
         }
         private void Btn_EliminarUsuario_Click(object sender, EventArgs e)
         {
+
             int.TryParse(Label_IdUsuario.Text, out int ID);
+
+            Usuario user = miCine.ObtenerUsuarioPorId(ID);
+
+            for (int i = 0; i < user.MisFunciones.Count; i++)
+            {
+                Funcion funcionActual = user.MisFunciones[i];
+                funcionActual.EliminarCliente(ID);
+                miCine.ModificarFuncion(funcionActual.ID, funcionActual);
+
+            }
+
             if (miCine.EliminarUsuario(ID))
             {
                 RefreshUsuarios();

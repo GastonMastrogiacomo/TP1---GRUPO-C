@@ -22,13 +22,10 @@ namespace TP1___GRUPO_C.Model
         public double Credito { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public bool EsAdmin { get; set; }
-        //seria un map con el Id de la funcion entonces cada vez que agrego entradas, las agrego al key que va a
-        //hacer el Id de la funcion y tiene un value que es incremental / decremental que serian las entradas.
-        //el int primero (key) seria el ID de la funcion en la que compre la entrada
-        // el int segundo (value) es la cantidad de entradas compradas para esa funcion
+
         public Dictionary<int, int> EntradasCompradas { get; set; }
         // Entrada
-       
+
 
         public Usuario(int DNI, string Nombre, string Apellido,
             string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin)
@@ -52,7 +49,7 @@ namespace TP1___GRUPO_C.Model
         public Usuario(int DNI, string Nombre, string Apellido,
           string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int ID)
         {
-            
+
             this.ID = ID;
             this.DNI = DNI;
             this.Nombre = Nombre;
@@ -127,6 +124,50 @@ namespace TP1___GRUPO_C.Model
         {
             return MisFunciones.ToList();
         }
+
+        public List<Funcion> MostrarFuncionesProximas()
+        {
+
+            List<Funcion> proximasFunciones = new List<Funcion>();
+
+            DateTime fechaActual = DateTime.Now;
+
+
+            foreach (Funcion funcion in MisFunciones)
+            {
+
+                if (funcion.Fecha > fechaActual)
+                {
+                    proximasFunciones.Add(funcion);
+                }
+            }
+
+            return proximasFunciones;
+
+        }
+
+
+        public List<Funcion> MostrarFuncionesPasadas()
+        {
+
+            List<Funcion> pasadasFunciones = new List<Funcion>();
+
+            DateTime fechaActual = DateTime.Now;
+
+
+            foreach (Funcion funcion in MisFunciones)
+            {
+
+                if (funcion.Fecha < fechaActual)
+                {
+                    pasadasFunciones.Add(funcion);
+                }
+            }
+
+            return pasadasFunciones;
+
+        }
+
 
         private string ExtraerIDFunciones()
         {

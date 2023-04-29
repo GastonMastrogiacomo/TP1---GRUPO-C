@@ -64,7 +64,6 @@ namespace TP1___GRUPO_C.Vistas
         {
 
             int.TryParse(Label_IDPerfil.Text, out int ID);
-            MessageBox.Show("ID: " + ID.ToString());
             string Nombres = this.Input_NombrePerfil.Text;
             string Apellidos = this.Input_ApellidoPerfil.Text;
             int.TryParse(this.Input_DNIPerfil.Text, out int DNI);
@@ -74,6 +73,11 @@ namespace TP1___GRUPO_C.Vistas
             bool esAdmin = false;
 
             Usuario nuevo = new Usuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, ID);
+            nuevo.Credito = miCine.UsuarioActual.Credito;
+            foreach(Funcion fun in miCine.UsuarioActual.ObtenerMisFunciones())
+            {
+                nuevo.AgregarFuncion(fun);
+            }
             if (miCine.ModificarUsuario(ID, nuevo))
             {
 
@@ -133,7 +137,7 @@ namespace TP1___GRUPO_C.Vistas
 
             dataGridPasadasFunciones.Rows.Clear();
 
-            List<Funcion> funcionesProximas = miCine.MostrarFuncionesProximas();
+            List<Funcion> funcionesProximas = miCine.UsuarioActual.MostrarFuncionesProximas();
             foreach (Funcion fun in funcionesProximas)
             {
                 this.dataGridProximasFunciones.Rows.Add(fun.ToString());
@@ -145,7 +149,7 @@ namespace TP1___GRUPO_C.Vistas
         {
             dataGridPasadasFunciones.Rows.Clear();
 
-            List<Funcion> pasadasFunciones = miCine.MostrarFuncionesPasadas();
+            List<Funcion> pasadasFunciones = miCine.UsuarioActual.MostrarFuncionesPasadas();
             foreach (Funcion fun in pasadasFunciones)
             {
                 this.dataGridPasadasFunciones.Rows.Add(fun.ToString());
@@ -159,6 +163,7 @@ namespace TP1___GRUPO_C.Vistas
 
         private void Btn_DevolverEntradas_Click(object sender, EventArgs e)
         {
+            Usuario usuarioActual = miCine.UsuarioActual;
             //ver porque creo que devovler entrada no elimina la funcion del usuario
             if (miCine.DevolverEntrada(idFuncionSeleccionada,cantidadEntradasSeleccionadas)) {
 

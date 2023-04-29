@@ -27,8 +27,9 @@ namespace TP1___GRUPO_C
             cine = c;
             Btn_MiPerfil.Hide();
             Btn_CerrarSesion.Hide();
-
-
+            MostrarPeliculasEnDataGridView();
+            MostrarSalasEnDataGridView();
+            MostrarFuncionesEnDataGridView();
         }
 
         public void Refresh()
@@ -106,5 +107,224 @@ namespace TP1___GRUPO_C
         {
             abrirMiPerfil();
         }
+
+
+
+
+
+
+
+
+
+        private void MostrarPeliculasEnDataGridView()
+        {
+
+
+            List<Pelicula> peliculas = cine.MostrarPeliculas();
+
+            // Limpiar el DataGridView
+            dataGridPeliculasPpal.Rows.Clear();
+
+            // Agregar las películas al DataGridView
+            foreach (Pelicula pelicula in peliculas)
+            {
+                // Agregar una nueva fila al DataGridView con los datos de la película
+                dataGridPeliculasPpal.Rows.Add(pelicula.PeliculaToString());
+            }
+
+
+        }
+
+        private void MostrarFuncionesEnDataGridView()
+        {
+
+
+            List<Funcion> funciones = cine.MostrarFunciones();
+
+            // Limpiar el DataGridView
+            dataGridFuncionesPpal.Rows.Clear();
+
+            // Agregar las películas al DataGridView
+            foreach (Funcion funcion in funciones)
+            {
+                // Agregar una nueva fila al DataGridView con los datos de la película
+                dataGridFuncionesPpal.Rows.Add(funcion.ToString());
+            }
+
+
+        }
+
+        private void MostrarSalasEnDataGridView()
+        {
+
+
+            List<Sala> salas = cine.MostrarSalas();
+
+            // Limpiar el DataGridView
+            dataGridSalasPpal.Rows.Clear();
+
+            // Agregar las películas al DataGridView
+            foreach (Sala sala in salas)
+            {
+                // Agregar una nueva fila al DataGridView con los datos de la película
+                dataGridSalasPpal.Rows.Add(sala.SalaToString());
+            }
+
+
+        }
+
+        private int idPeliculaSeleccionada;
+
+        private void dataGridPeliculas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            idPeliculaSeleccionada = int.Parse(dataGridPeliculasPpal[0, e.RowIndex].Value.ToString());
+
+
+
+            dataGridFuncionesPpal.Rows.Clear();
+
+            foreach (Funcion f in cine.MostrarFunciones())
+            {
+                if (f.MiPelicula.ID == idPeliculaSeleccionada)
+                {
+                    string fecha = f.Fecha.ToString("dd/MM/yyyy");
+                    string cantidadClientes = f.CantidadClientes.ToString();
+                    string costo = f.Costo.ToString();
+                    string idMiSala = f.MiSala.ID.ToString();
+                    string capacidadMiSala = f.MiSala.Capacidad.ToString();
+                    string idPelicula = f.MiPelicula.ID.ToString();
+                    string nombrePelicula = f.MiPelicula.Nombre.ToString();
+                    string idsClientesArr = ObtenerIdsClientes(f);
+
+
+                    dataGridFuncionesPpal.Rows.Add(fecha, cantidadClientes, costo, idMiSala, capacidadMiSala, idPelicula, nombrePelicula, idsClientesArr);
+
+                    // dataGridViewTextBoxColumn3, Fecha, Cant_Clientes, Costo, Id_MiSala, Capacidad_MiSala, Id_Pelicula, Nombre_Pelicula, IDS_Clientes_Arr }
+                }
+
+            }
+
+        }
+
+        private string ObtenerIdsClientes(Funcion funcion)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            foreach (Usuario u in funcion.Clientes)
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append(", ");
+                    sb.Append(u.ID);
+                }
+
+            }
+
+            return sb.ToString();
+        }
+
+        private void Btn_BuscarPpal_Click(object sender, EventArgs e)
+        {
+            string Ubicacion = Input_UbicacionPpal.Text;
+            DateTime Fecha = Input_FechaPpal.Value;
+            int.TryParse(Input_PrecioMinimoPpal.Text, out int PrecioMin);
+            int.TryParse(Input_PrecioMaximoPpal.Text, out int PrecioMax);
+            string Pelicula = Input_PeliculaPpal.Text;
+
+            cine.Busqueda(Pelicula, Fecha, PrecioMax, PrecioMin, Ubicacion);
+
+
+
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void tabControl1_Selected(object sender, TabControlEventArgs e)
+        {
+
+            switch (tabControl1.SelectedIndex)
+            {
+
+                case 0:
+                    {
+                        //peliculas
+                        MostrarPeliculasEnDataGridView();
+                        break;
+                    }
+                case 1:
+                    {
+                        //salas
+                        MostrarSalasEnDataGridView();
+                        break;
+                    }
+                case 2:
+                    {
+                        //funciones
+                        MostrarFuncionesEnDataGridView();
+                       
+                        break;
+                    }
+
+            }
+
+
+
+        }
+      
+
+
+
+
+
+
+        /*
+
+                Voy poniendo lo que se me ocurre del codigo para filtrar en pantalla principal
+
+                //obtener los valores de los inputs
+
+
+                List<Funcion> funciones = ObtenerFuncionesDisponibles();
+                List<Funcion> funcionesFiltradas = funciones.Where(f => (string.IsNullOrEmpty(ACA INPUT UBICACION) || f.Ubicacion == INPUT) && (fecha == default || f.Fecha.Date == fecha.Date)
+                && (INPUTCOSTO == 0 || f.Costo == INPUT) && (string.IsNullOrEmpty(INPUT NOMBRE) || f.Nombre.ToLower.Contains(INPUT.ToLower()))).ToList();
+
+                foreach (FUncion funcion in funcionesFiltradas){
+                    aca lo va poniendo en la datagrid
+
+                }
+
+
+
+                METODOS PARA VER TODAS LAS FUNCIONES
+
+                    List<Funcion> funciones = miCine.MostrarFunciones();
+
+                    dataGridFunciones.Rows.Clear();
+
+                    foreach (Funcion funcion in funciones)
+                    {
+                        Agregar al data grid view 
+                    }
+
+
+
+
+
+
+             */
+
+
+
+
+
+
+
+
+
+
     }
 }
