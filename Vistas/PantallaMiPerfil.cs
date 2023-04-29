@@ -71,6 +71,7 @@ namespace TP1___GRUPO_C.Vistas
             string Pass = this.Input_PasswordPerfil.Text;
             DateTime FechaNacimiento = this.DateTime_MiPerfil.Value;
             bool esAdmin = false;
+            double Credito=double.Parse(this.Label_MiCredito.Text);
 
             Usuario nuevo = new Usuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, ID);
             nuevo.Credito = miCine.UsuarioActual.Credito;
@@ -92,6 +93,7 @@ namespace TP1___GRUPO_C.Vistas
                 DateTime_MiPerfil.Value = nuevo.FechaNacimiento;
 
                 MostrarDatosUsuario();
+
             }
 
         }
@@ -119,14 +121,12 @@ namespace TP1___GRUPO_C.Vistas
             double cantidadCreditos;
             double.TryParse(Input_NuevoCreditoPerfil.Text, out cantidadCreditos);
 
-            
 
             if (miCine.CargarCredito(usuarioActual.ID, cantidadCreditos))
             {
                 Label_MiCredito.Text = usuarioActual.Credito.ToString();
 
             }
-
 
 
         }
@@ -173,13 +173,12 @@ namespace TP1___GRUPO_C.Vistas
         }
 
         private int idFuncionSeleccionada;
-        private int cantidadEntradasSeleccionadas;
 
         private void dataGridProximasFunciones_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             // dataGridFunciones[0, e.RowIndex].Value.ToString();
             idFuncionSeleccionada = int.Parse(dataGridProximasFunciones[0, e.RowIndex].Value.ToString());
-            cantidadEntradasSeleccionadas = int.Parse(dataGridProximasFunciones[2, e.RowIndex].Value.ToString()); 
+
 
         }
     }

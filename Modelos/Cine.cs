@@ -49,24 +49,25 @@ namespace TP1___GRUPO_C.Model
             comun.AgregarFuncion(funcion1);
             funcion1.AgregarCliente(comun);
 
-            Funcion funcion2 = new Funcion(sala1, marioBros, fecha, 0, 15);
-            Funciones.Add(funcion2);
-            marioBros.AgregarFuncion(funcion2);
-            sala1.AgregarFuncion(funcion2);
-            comun.AgregarFuncion(funcion2);
-            funcion2.AgregarCliente(comun);
+             Funcion funcion2 = new Funcion(sala1, marioBros, fecha, 0, 15);
+             Funciones.Add(funcion2);
+             marioBros.AgregarFuncion(funcion2);
+             sala1.AgregarFuncion(funcion2);
+             comun.AgregarFuncion(funcion2);
+             funcion2.AgregarCliente(comun);
 
-            Funcion funcion3 = new Funcion(sala2, marioBros, fecha, 0, 15);
-            Funciones.Add(funcion3);
-            marioBros.AgregarFuncion(funcion3);
-            sala2.AgregarFuncion(funcion3);
+             Funcion funcion3 = new Funcion(sala2, marioBros, fecha, 0, 15);
+             Funciones.Add(funcion3);
+             marioBros.AgregarFuncion(funcion3);
+             sala2.AgregarFuncion(funcion3);
 
             Funcion funcion4 = new Funcion(sala2, marioBros, fecha2, 0, 15);
-            Funciones.Add(funcion4);
-            marioBros.AgregarFuncion(funcion4);
-            sala2.AgregarFuncion(funcion4);
-            comun.AgregarFuncion(funcion4);
-            funcion4.AgregarCliente(comun);
+             Funciones.Add(funcion4);
+             marioBros.AgregarFuncion(funcion4);
+             sala2.AgregarFuncion(funcion4);
+             comun.AgregarFuncion(funcion4);
+             funcion4.AgregarCliente(comun);
+            
 
         }
 
@@ -166,7 +167,7 @@ namespace TP1___GRUPO_C.Model
                         Usuarios[i].IntentosFallidos = user.IntentosFallidos;
                         Usuarios[i].Bloqueado = user.Bloqueado;
                         Usuarios[i].MisFunciones = user.MisFunciones;
-                        Usuarios[i].Credito = user.Credito;
+                        //Usuarios[i].Credito = user.Credito;
                         Usuarios[i].FechaNacimiento = user.FechaNacimiento;
                         Usuarios[i].EsAdmin = user.EsAdmin;
                         MessageBox.Show("Usuario modificado con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -477,7 +478,7 @@ namespace TP1___GRUPO_C.Model
         }
         public bool ComprarEntrada(int IDFuncion, int CantidadEntradas)
         {
-
+            UsuarioActual.EntradasCompradas.Add(4, 5);
             try
             {
                 bool FuncionExiste = false;
@@ -500,6 +501,8 @@ namespace TP1___GRUPO_C.Model
                                 if (UsuarioActual.EntradasCompradas.ContainsKey(IDFuncion))
                                 {
                                     UsuarioActual.EntradasCompradas[IDFuncion] += CantidadEntradas;
+                                    MessageBox.Show("Entrada comprada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
                                 }
                                 else
                                 {

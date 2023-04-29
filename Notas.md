@@ -62,3 +62,6 @@
 - Andy 27/04:
 	* Corrige un bug en la modificacion de usuarios que pisaba al primero de la lista siempre.
 	* Crea PantallaEdicionFunciones para la edicion de las funciones xD
+
+FALTA CORREGIR:
+	- mover MostrarFuncionesProximas() y MostrarFuncionesPasadas() a Usuario ya que son metodos de esta clase;
