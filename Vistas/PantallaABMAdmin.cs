@@ -500,7 +500,7 @@ namespace TP1___GRUPO_C.Vistas
                     if (user.ObtenerMisFunciones()[j].ID == ID)
                     {
                         user.EliminarFuncion(user.ObtenerMisFunciones()[j].ID);
-                        miCine.ModificarFuncion(func.ID, func);
+                        miCine.ModificarUsuario(user.ID, user);
                         break;
                     }
                 }
@@ -514,8 +514,10 @@ namespace TP1___GRUPO_C.Vistas
             {
                 if (peli.ObtenerMisFunciones()[i].ID == ID)
                 {
+                    MessageBox.Show("peli id encontrado: " + peli.ObtenerMisFunciones()[i].ID);
                     peli.EliminarFuncion(peli.ObtenerMisFunciones()[i].ID);
-                    //miCine.Modifi
+                    miCine.ModificarPelicula(peli.ID, peli);
+                    break;
                 }
             }
 

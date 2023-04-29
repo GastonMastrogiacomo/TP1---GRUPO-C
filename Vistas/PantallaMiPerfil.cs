@@ -168,8 +168,13 @@ namespace TP1___GRUPO_C.Vistas
 
             //ver porque creo que devovler entrada no elimina la funcion del usuario
             if (miCine.DevolverEntrada(idFuncionSeleccionada,cantidadEntradasSeleccionadas)) {
-
+                MessageBox.Show("Devolvemos la entrada.");
                 MostrarFuncionesProximas();
+            }
+            else
+            {
+                MessageBox.Show("No se pudo realizar la devolucion de entradas.");
+
             }
 
         }
@@ -180,7 +185,6 @@ namespace TP1___GRUPO_C.Vistas
         {
             // dataGridFunciones[0, e.RowIndex].Value.ToString();
             idFuncionSeleccionada = int.Parse(dataGridProximasFunciones[0, e.RowIndex].Value.ToString());
-
 
         }
     }

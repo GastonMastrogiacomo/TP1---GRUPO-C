@@ -30,6 +30,9 @@ namespace TP1___GRUPO_C
             MostrarPeliculasEnDataGridView();
             MostrarSalasEnDataGridView();
             MostrarFuncionesEnDataGridView();
+
+            //this.Label_MiCredito_Principal.Text = cine.UsuarioActual.Credito.ToString();
+
         }
 
         public void Refresh()
@@ -141,7 +144,7 @@ namespace TP1___GRUPO_C
             {
                 DateTime fechaActual = DateTime.Now;
 
-                if (funcion.Fecha >=  fechaActual)
+                if (funcion.Fecha >= fechaActual)
                 {
                     // Agregar una nueva fila al DataGridView con los datos de la película
                     dataGridFuncionesPpal.Rows.Add(funcion.ToString());
@@ -184,50 +187,76 @@ namespace TP1___GRUPO_C
             {
                 if (f.MiPelicula.ID == idPeliculaSeleccionada)
                 {
-                    //string fecha = f.Fecha.ToString("dd/MM/yyyy");
-                    //string cantidadClientes = f.CantidadClientes.ToString();
-                    //string costo = f.Costo.ToString();
-                    //string idMiSala = f.MiSala.ID.ToString();
-                    //string capacidadMiSala = f.MiSala.Capacidad.ToString();
-                    //string idPelicula = f.MiPelicula.ID.ToString();
-                    //string nombrePelicula = f.MiPelicula.Nombre.ToString();
-                    //string idsClientesArr = ObtenerIdsClientes(f);
-
-
-                    //dataGridFuncionesPpal.Rows.Add(fecha, cantidadClientes, costo, idMiSala, capacidadMiSala, idPelicula, nombrePelicula, idsClientesArr);
-
                     dataGridFuncionesPpal.Rows.Add(f.ToString());
-
-
-                    // dataGridViewTextBoxColumn3, Fecha, Cant_Clientes, Costo, Id_MiSala, Capacidad_MiSala, Id_Pelicula, Nombre_Pelicula, IDS_Clientes_Arr }
                 }
 
             }
 
         }
+
+        private int idFuncionSeleccionada;
+
+        private void dataGridFuncionesPpal_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            idFuncionSeleccionada = int.Parse(dataGridFuncionesPpal[0, e.RowIndex].Value.ToString());
+
+
+            if (int.TryParse(this.Input_CantEntradas.Text, out int cantEntradas))
+            {
+                // Realizar la compra de entradas
+                if (cine.ComprarEntrada(idFuncionSeleccionada, cantEntradas))
+                {
+                    MessageBox.Show("Llego a comprar");
+
+                    MostrarFuncionesEnDataGridView();
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo realizar la compra de entradas.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Ingrese una cantidad válida de entradas.");
+            }
+        }
+
+        private void Btn_ComprarEntradas_Click(object sender, EventArgs e)
+        {
+            if (idFuncionSeleccionada != 0 || idFuncionSeleccionada != null)
+            {
+                if (int.TryParse(this.Input_CantEntradas.Text, out int cantEntradas))
+                {
+                    // Realizar la compra de entradas
+                    if (cine.ComprarEntrada(idFuncionSeleccionada, cantEntradas))
+                    {
+                        MessageBox.Show("Llego a comprar");
+
+                        MostrarFuncionesEnDataGridView();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo realizar la compra de entradas.");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Ingrese una cantidad válida de entradas.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Tienes que seleccionar una funcion.");
+
+            }
+
+        }
+
+
 
         private int idSalaSeleccionada;
 
-        private void dataGridSalas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            idSalaSeleccionada = int.Parse(dataGridSalasPpal[0, e.RowIndex].Value.ToString());
 
-
-
-            dataGridFuncionesPpal.Rows.Clear();
-
-            foreach (Funcion f in cine.MostrarFunciones())
-            {
-                if (f.MiSala.ID == idSalaSeleccionada)
-                {
-
-                    dataGridFuncionesPpal.Rows.Add(f.ToString());
-
-                }
-
-            }
-
-        }
 
         private void Btn_BuscarPpal_Click(object sender, EventArgs e)
         {
@@ -239,7 +268,17 @@ namespace TP1___GRUPO_C
 
             cine.Busqueda(Pelicula, Fecha, PrecioMax, PrecioMin, Ubicacion);
 
+            foreach (Funcion f in cine.MostrarFunciones())
+            {
+                //if (//f.MiSala.ID == idSalaSeleccionada)
 
+                //{
+
+                //    dataGridFuncionesPpal.Rows.Add(f.ToString());
+
+                //}
+
+            }
 
         }
 
@@ -251,7 +290,7 @@ namespace TP1___GRUPO_C
 
         private void tabControl1_Selected(object sender, TabControlEventArgs e)
         {
-
+            /* Lo comento de momento porque si filtramos no sirve refrescar con cada cambio de ventana
             switch (tabControl1.SelectedIndex)
             {
 
@@ -271,17 +310,49 @@ namespace TP1___GRUPO_C
                     {
                         //funciones
                         MostrarFuncionesEnDataGridView();
-                       
+
                         break;
                     }
             }
+            */
 
         }
-      
+
 
         private void button1_Click_1(object sender, EventArgs e)
         {
 
+        }
+
+        private void Btn_RefrescarPpal_Click(object sender, EventArgs e)
+        {
+
+            MostrarPeliculasEnDataGridView();
+            MostrarSalasEnDataGridView();
+            MostrarFuncionesEnDataGridView();
+            this.Label_MiCredito_Principal.Text = cine.UsuarioActual.Credito.ToString();
+
+
+        }
+
+        private void dataGridSalasPpal_CellDoubleClick_1(object sender, DataGridViewCellEventArgs e)
+        {
+            idSalaSeleccionada = int.Parse(dataGridSalasPpal[0, e.RowIndex].Value.ToString());
+
+
+
+            dataGridFuncionesPpal.Rows.Clear();
+
+            foreach (Funcion f in cine.MostrarFunciones())
+            {
+                if (f.MiSala.ID == idSalaSeleccionada)
+                {
+
+                    dataGridFuncionesPpal.Rows.Add(f.ToString());
+
+                }
+
+            }
         }
     }
 }

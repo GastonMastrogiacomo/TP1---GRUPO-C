@@ -77,6 +77,7 @@
             Btn_ComprarEntradas = new Button();
             label10 = new Label();
             Input_CantEntradas = new NumericUpDown();
+            Btn_RefrescarPpal = new Button();
             tabControl1.SuspendLayout();
             Peliculas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridPeliculasPpal).BeginInit();
@@ -336,6 +337,7 @@
             dataGridSalasPpal.RowTemplate.Height = 25;
             dataGridSalasPpal.Size = new Size(757, 210);
             dataGridSalasPpal.TabIndex = 1;
+            dataGridSalasPpal.CellDoubleClick += dataGridSalasPpal_CellDoubleClick_1;
             // 
             // ID
             // 
@@ -477,6 +479,7 @@
             Btn_ComprarEntradas.TabIndex = 25;
             Btn_ComprarEntradas.Text = "Comprar Entradas";
             Btn_ComprarEntradas.UseVisualStyleBackColor = true;
+            Btn_ComprarEntradas.Click += Btn_ComprarEntradas_Click;
             // 
             // label10
             // 
@@ -494,11 +497,22 @@
             Input_CantEntradas.Size = new Size(100, 23);
             Input_CantEntradas.TabIndex = 28;
             // 
+            // Btn_RefrescarPpal
+            // 
+            Btn_RefrescarPpal.Location = new Point(14, 148);
+            Btn_RefrescarPpal.Name = "Btn_RefrescarPpal";
+            Btn_RefrescarPpal.Size = new Size(83, 26);
+            Btn_RefrescarPpal.TabIndex = 29;
+            Btn_RefrescarPpal.Text = "Refrescar";
+            Btn_RefrescarPpal.UseVisualStyleBackColor = true;
+            Btn_RefrescarPpal.Click += Btn_RefrescarPpal_Click;
+            // 
             // PantallaPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(Btn_RefrescarPpal);
             Controls.Add(Input_CantEntradas);
             Controls.Add(label10);
             Controls.Add(Btn_ComprarEntradas);
@@ -590,5 +604,6 @@
         private DataGridViewTextBoxColumn Id_Pelicula;
         private DataGridViewTextBoxColumn Nombre_Pelicula;
         private DataGridViewTextBoxColumn IDS_Clientes_Arr;
+        private Button Btn_RefrescarPpal;
     }
 }

@@ -49,25 +49,25 @@ namespace TP1___GRUPO_C.Model
             comun.AgregarFuncion(funcion1);
             funcion1.AgregarCliente(comun);
 
-             Funcion funcion2 = new Funcion(sala1, marioBros, fecha, 0, 15);
-             Funciones.Add(funcion2);
-             marioBros.AgregarFuncion(funcion2);
-             sala1.AgregarFuncion(funcion2);
-             comun.AgregarFuncion(funcion2);
-             funcion2.AgregarCliente(comun);
+            Funcion funcion2 = new Funcion(sala1, marioBros, fecha, 0, 15);
+            Funciones.Add(funcion2);
+            marioBros.AgregarFuncion(funcion2);
+            sala1.AgregarFuncion(funcion2);
+            comun.AgregarFuncion(funcion2);
+            funcion2.AgregarCliente(comun);
 
-             Funcion funcion3 = new Funcion(sala2, marioBros, fecha, 0, 15);
-             Funciones.Add(funcion3);
-             marioBros.AgregarFuncion(funcion3);
-             sala2.AgregarFuncion(funcion3);
+            Funcion funcion3 = new Funcion(sala2, marioBros, fecha, 0, 15);
+            Funciones.Add(funcion3);
+            marioBros.AgregarFuncion(funcion3);
+            sala2.AgregarFuncion(funcion3);
 
             Funcion funcion4 = new Funcion(sala2, marioBros, fecha2, 0, 15);
-             Funciones.Add(funcion4);
-             marioBros.AgregarFuncion(funcion4);
-             sala2.AgregarFuncion(funcion4);
-             comun.AgregarFuncion(funcion4);
-             funcion4.AgregarCliente(comun);
-            
+            Funciones.Add(funcion4);
+            marioBros.AgregarFuncion(funcion4);
+            sala2.AgregarFuncion(funcion4);
+            comun.AgregarFuncion(funcion4);
+            funcion4.AgregarCliente(comun);
+
 
         }
 
@@ -478,59 +478,85 @@ namespace TP1___GRUPO_C.Model
         }
         public bool ComprarEntrada(int IDFuncion, int CantidadEntradas)
         {
-            UsuarioActual.EntradasCompradas.Add(4, 5);
             try
             {
-                bool FuncionExiste = false;
+                //bool FuncionExiste = false;
 
-                foreach (Funcion fun in Funciones)
+                if (UsuarioActual != null)
                 {
-                    if (fun.ID == IDFuncion)
-
+                    foreach (Funcion fun in Funciones)
                     {
-                        FuncionExiste = true;
-                        if (UsuarioActual.Credito >= fun.Costo)
+
+                        if (fun.ID == (IDFuncion+1))
+
                         {
-                            if (fun.MiSala.Capacidad <= CantidadEntradas)
+                            if (CantidadEntradas > 0)
                             {
-                                UsuarioActual.MisFunciones.Add(fun);
-                                fun.CantidadClientes += CantidadEntradas;
-                                fun.AgregarCliente(UsuarioActual);
 
 
-                                if (UsuarioActual.EntradasCompradas.ContainsKey(IDFuncion))
+                                //FuncionExiste = true;
+                                if (UsuarioActual.Credito >= fun.Costo)
                                 {
-                                    UsuarioActual.EntradasCompradas[IDFuncion] += CantidadEntradas;
-                                    MessageBox.Show("Entrada comprada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    if (fun.MiSala.Capacidad <= CantidadEntradas)
+                                    {
+                                        UsuarioActual.MisFunciones.Add(fun);
+                                        fun.CantidadClientes += CantidadEntradas;
+                                        fun.AgregarCliente(UsuarioActual);
+
+
+                                        if (UsuarioActual.EntradasCompradas.ContainsKey(IDFuncion))
+                                        {
+                                            UsuarioActual.EntradasCompradas[IDFuncion] += CantidadEntradas;
+                                            UsuarioActual.Credito -= fun.Costo * CantidadEntradas;
+
+                                            MessageBox.Show("Entrada comprada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                        }
+                                        else
+                                        {
+                                            UsuarioActual.EntradasCompradas.Add(IDFuncion, CantidadEntradas);
+                                            UsuarioActual.Credito -= fun.Costo * CantidadEntradas;
+                                            MessageBox.Show("Entrada comprada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        }
+
+                                      
+
+                                    }
+                                    return true;
 
                                 }
                                 else
                                 {
-                                    UsuarioActual.EntradasCompradas.Add(IDFuncion, CantidadEntradas);
+                                    throw new InvalidOperationException("No hay la cantidad solicitada de asientos");
                                 }
 
                             }
-                            return true;
+                            else
+                            {
+                                throw new InvalidOperationException("No podes comprar 0 entradas");
+
+                            }
+
 
                         }
                         else
                         {
-                            throw new InvalidOperationException("No hay la cantidad solicitada de asientos");
+                            throw new InvalidOperationException("Créditos insuficientes");
                         }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Por favor logueate", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException("Créditos insuficientes");
-                    }
                 }
 
 
-                if (!FuncionExiste) { throw new FileNotFoundException("No se econtró la función."); }
+                //if (!FuncionExiste) { throw new FileNotFoundException("No se econtró la función."); }
 
 
 
-                return true;
+                return false;
             }
             catch (Exception e)
             {
@@ -568,6 +594,7 @@ namespace TP1___GRUPO_C.Model
                                 UsuarioActual.EntradasCompradas[IDFuncion] -= CantidadEntradas;
 
                                 UsuarioActual.Credito += CantidadEntradas * (fun.Costo);
+                                MessageBox.Show("Entrada devuelta con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
 
@@ -644,7 +671,7 @@ namespace TP1___GRUPO_C.Model
                         }
                         else { throw new InvalidOperationException("No se puede acceder, el usuario se encuentra bloqueado"); }
                     }
-                  
+
                 }
                 throw new InvalidOperationException("Email o contraseña incorrecta, intentalo nuevamente");
 
@@ -740,26 +767,61 @@ namespace TP1___GRUPO_C.Model
             throw new InvalidDataException("El ID no se encontró en la base de datos.");
         }
 
-        public void Busqueda (string  Pelicula, DateTime Fecha, int PrecioMax, int PrecioMin, string Ubicacion)
+        public void Busqueda(string Pelicula, DateTime Fecha, int PrecioMax, int PrecioMin, string Ubicacion)
         {
             //pelicula>nombre MostrarPelicula();
             // funcion> fecha, Costo  MostrarFunciones();
             //sala>ubicacion MostrarSala();
-            List <Pelicula> Peliculas = MostrarPeliculas();
+            List<Pelicula> Peliculas = MostrarPeliculas();
             List<Funcion> Funciones = MostrarFunciones();
             List<Sala> Salas = MostrarSalas();
-            List<Pelicula> PeliculaFiltrada = new List<Pelicula>();
+            List<int> IDPeliculaFiltrada = new List<int>();
+            List<int> IDFechaFuncionFiltrada = new List<int>();
+            List<int> IDCostoFuncionFiltrada = new List<int>();
+            List<int> IDUbicacionSalaFiltrada = new List<int>();
+            List<int> Resultado = new List<int>();
 
             foreach (Pelicula p in Peliculas)
             {
-                
                 if (p.Nombre == Pelicula)
                 {
-
+                    IDPeliculaFiltrada.Add(p.ID);
                 }
-                i++;
+            }
+            foreach (Funcion f in Funciones)
+            {
+                if (f.Fecha == Fecha)
+                {
+                    IDFechaFuncionFiltrada.Add(f.ID);
+                }
+                if (f.Costo > PrecioMin && f.Costo < PrecioMax)
+                {
+                    IDCostoFuncionFiltrada.Add(f.ID);
+                }
+            }
+            foreach (Sala s in Salas)
+            {
+                if (s.Ubicacion == Ubicacion)
+                {
+                    IDUbicacionSalaFiltrada.Add(s.ID);
+                }
             }
 
+            if (IDPeliculaFiltrada.Count == 0) { IDPeliculaFiltrada.Add(0); }
+            if (IDFechaFuncionFiltrada.Count == 0) { IDFechaFuncionFiltrada.Add(0); }
+            if (IDCostoFuncionFiltrada.Count == 0) { IDCostoFuncionFiltrada.Add(0); }
+            if (IDUbicacionSalaFiltrada.Count == 0) { IDUbicacionSalaFiltrada.Add(0); }
+
+            //List<int> Intersec = IDPeliculaFiltrada.Intersect(IDFechaFuncionFiltrada).Intersect(IDCostoFuncionFiltrada).Intersect(IDUbicacionSalaFiltrada);
+
+            //foreach (var i in Intersec)
+            //{
+            //    Resultado.Add(i);
+            //}
+
+
+            //foreach()
+            //Console.WriteLine(Resultado);
 
         }
         //TODO
