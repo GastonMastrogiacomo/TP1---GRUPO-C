@@ -482,18 +482,37 @@ namespace TP1___GRUPO_C.Model
             {
                 //bool FuncionExiste = false;
 
+                //IDFuncion++;
+                if(UsuarioActual != null)
+                {
+
+                   
+                for(int i = 0; i < Funciones.Count; i++)
+                {
+                        if (Funciones[i].ID == IDFuncion)
+                        {
+                            MessageBox.Show("credito x aca: " + UsuarioActual.Credito);
+                            MessageBox.Show("costo x aca: " + Funciones[i].Costo);
+                        }
+                }
+
+                }
                 if (UsuarioActual != null)
                 {
                     foreach (Funcion fun in Funciones)
                     {
 
-                        if (fun.ID == (IDFuncion+1))
+                        if (fun.ID == IDFuncion)
 
                         {
+                            MessageBox.Show("estoy aca con el Id match");
                             if (CantidadEntradas > 0)
                             {
 
+                                MessageBox.Show("credito x aca: " + UsuarioActual.Credito);
+                                MessageBox.Show("costo x aca: " + fun.Costo);
 
+                                double valorReal = fun.Costo * CantidadEntradas;
                                 //FuncionExiste = true;
                                 if (UsuarioActual.Credito >= fun.Costo)
                                 {
@@ -504,10 +523,15 @@ namespace TP1___GRUPO_C.Model
                                         fun.AgregarCliente(UsuarioActual);
 
 
+
+
                                         if (UsuarioActual.EntradasCompradas.ContainsKey(IDFuncion))
                                         {
                                             UsuarioActual.EntradasCompradas[IDFuncion] += CantidadEntradas;
                                             UsuarioActual.Credito -= fun.Costo * CantidadEntradas;
+
+                                            MessageBox.Show("credito x aca: " + UsuarioActual.Credito);
+                                            MessageBox.Show("enrtadas cli: " + UsuarioActual.EntradasCompradas[IDFuncion].ToString());
 
                                             MessageBox.Show("Entrada comprada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -519,7 +543,7 @@ namespace TP1___GRUPO_C.Model
                                             MessageBox.Show("Entrada comprada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         }
 
-                                      
+
 
                                     }
                                     return true;
@@ -775,17 +799,17 @@ namespace TP1___GRUPO_C.Model
             List<Pelicula> Peliculas = MostrarPeliculas();
             List<Funcion> Funciones = MostrarFunciones();
             List<Sala> Salas = MostrarSalas();
-            List<int> IDPeliculaFiltrada = new List<int>();
+            List<Pelicula> PeliculaFiltrada = new List<Pelicula>();
             List<int> IDFechaFuncionFiltrada = new List<int>();
             List<int> IDCostoFuncionFiltrada = new List<int>();
-            List<int> IDUbicacionSalaFiltrada = new List<int>();
-            List<int> Resultado = new List<int>();
-
+            List<Sala> SalaFiltrada = new List<Sala>();
+            List<int> IDFuncionFiltrada = new List<int>();
+            List<Funcion> FuncionResultado = new List<Funcion>();
             foreach (Pelicula p in Peliculas)
             {
                 if (p.Nombre == Pelicula)
                 {
-                    IDPeliculaFiltrada.Add(p.ID);
+                    PeliculaFiltrada.Add(p);
                 }
             }
             foreach (Funcion f in Funciones)
@@ -803,25 +827,38 @@ namespace TP1___GRUPO_C.Model
             {
                 if (s.Ubicacion == Ubicacion)
                 {
-                    IDUbicacionSalaFiltrada.Add(s.ID);
+                    SalaFiltrada.Add(s);
                 }
             }
 
-            if (IDPeliculaFiltrada.Count == 0) { IDPeliculaFiltrada.Add(0); }
+            //if (PeliculaFiltrada.Count == 0) { IDPeliculaFiltrada.Add(0); }
             if (IDFechaFuncionFiltrada.Count == 0) { IDFechaFuncionFiltrada.Add(0); }
             if (IDCostoFuncionFiltrada.Count == 0) { IDCostoFuncionFiltrada.Add(0); }
-            if (IDUbicacionSalaFiltrada.Count == 0) { IDUbicacionSalaFiltrada.Add(0); }
+            //if (IDUbicacionSalaFiltrada.Count == 0) { IDUbicacionSalaFiltrada.Add(0); }
+            
+            var Intersec = IDFechaFuncionFiltrada.Intersect(IDCostoFuncionFiltrada);
 
-            //List<int> Intersec = IDPeliculaFiltrada.Intersect(IDFechaFuncionFiltrada).Intersect(IDCostoFuncionFiltrada).Intersect(IDUbicacionSalaFiltrada);
+            foreach (var i in Intersec)
+            {
+                IDFuncionFiltrada.Add(i);
+            }
 
-            //foreach (var i in Intersec)
-            //{
-            //    Resultado.Add(i);
-            //}
+             for (int i = 0; i < IDFuncionFiltrada.Count; i++) {
+                Funcion fun = ObtenerFuncionPorId(IDFuncionFiltrada[i]);
+                for(int j = 0; j< SalaFiltrada.Count; j++) {  
+                    if (fun.MiSala == SalaFiltrada[j])
+                    {
+                        for(int k = 0; k< PeliculaFiltrada.Count; k++)
+                        {
+                            //if()
+                            FuncionResultado.Add(fun);
+                        }
+                    }
+                {
 
-
-            //foreach()
-            //Console.WriteLine(Resultado);
+                }
+             }
+            
 
         }
         //TODO

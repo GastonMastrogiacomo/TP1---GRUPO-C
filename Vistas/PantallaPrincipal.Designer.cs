@@ -384,6 +384,7 @@
             dataGridFuncionesPpal.RowTemplate.Height = 25;
             dataGridFuncionesPpal.Size = new Size(763, 216);
             dataGridFuncionesPpal.TabIndex = 34;
+            dataGridFuncionesPpal.CellDoubleClick += dataGridFuncionesPpal_CellDoubleClick_1;
             // 
             // dataGridViewTextBoxColumn3
             // 

@@ -29,12 +29,7 @@ namespace TP1___GRUPO_C.Vistas
         public delegate void VolverPantallaPrincipal();
         public delegate void VolverAtras();
 
-        //Label_UserCredito.Text= miCine.UsuarioActual.Credito.ToString()
-
-
-
-
-        private void label6_Click(object sender, EventArgs e)
+             private void label6_Click(object sender, EventArgs e)
         {
 
         }
