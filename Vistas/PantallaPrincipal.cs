@@ -40,6 +40,11 @@ namespace TP1___GRUPO_C
             MostrarFuncionesEnDataGridView();
             CargarListaUbicacion();
 
+            if(cine.UsuarioActual == null)
+            {
+                Label_MiCredito_Principal.Hide();
+                label8.Hide();
+            }
 
         }
 
@@ -220,6 +225,8 @@ namespace TP1___GRUPO_C
             Btn_CerrarSesion.Show();
             btnRegistrarse.Hide();
             button3.Hide();
+            Label_MiCredito_Principal.Show();
+            label8.Show();
             this.iniciarVentanaLogin();
 
         }

@@ -476,9 +476,9 @@
             Label_MiCredito_Principal.AutoSize = true;
             Label_MiCredito_Principal.Location = new Point(707, 148);
             Label_MiCredito_Principal.Name = "Label_MiCredito_Principal";
-            Label_MiCredito_Principal.Size = new Size(47, 15);
+            Label_MiCredito_Principal.Size = new Size(13, 15);
             Label_MiCredito_Principal.TabIndex = 24;
-            Label_MiCredito_Principal.Text = "AAAAA";
+            Label_MiCredito_Principal.Text = "0";
             // 
             // Btn_ComprarEntradas
             // 

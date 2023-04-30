@@ -44,24 +44,7 @@ namespace TP1___GRUPO_C.Model
             EntradasCompradas = new Dictionary<int, int>();
         }
 
-        public Usuario(int DNI, string Nombre, string Apellido,string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int ID)
-        {
 
-            this.ID = ID;
-            this.DNI = DNI;
-            this.Nombre = Nombre;
-            this.Apellido = Apellido;
-            this.Mail = Mail;
-            this.Password = Password;
-            IntentosFallidos = 0;
-            Bloqueado = false;
-            MisFunciones = new List<Funcion>();
-            Credito = 0;
-            this.FechaNacimiento = FechaNacimiento;
-            this.EsAdmin = EsAdmin;
-            EntradasCompradas = new Dictionary<int, int>();
-
-        }
 
         //ABM Funcion
         public bool AgregarFuncion(Funcion funcion)

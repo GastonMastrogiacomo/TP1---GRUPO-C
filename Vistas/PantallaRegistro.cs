@@ -36,7 +36,7 @@ namespace TP1___GRUPO_C
             DateTime FechaNacimiento = dateTimePicker1.Value.Date;
             bool esAdmin = checkBox1.Checked;
 
-            if (cine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin)) { 
+            if (cine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin,0)) { 
             this.pantallaPrincipal();
             }
 

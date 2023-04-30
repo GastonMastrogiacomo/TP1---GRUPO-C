@@ -71,6 +71,7 @@
             Nombre_Pelicula = new DataGridViewTextBoxColumn();
             IDS_Clientes_Arr = new DataGridViewTextBoxColumn();
             Películas = new TabPage();
+            CLB_Funciones = new CheckedListBox();
             Label_PeliculaId = new Label();
             Input_Sinopsis = new TextBox();
             Input_Descripcion = new TextBox();
@@ -79,7 +80,6 @@
             Input_Duracion = new TextBox();
             label10 = new Label();
             Input_Poster = new TextBox();
-            Cb_Funciones = new ComboBox();
             label15 = new Label();
             Btn_EliminarPelicula = new Button();
             Btn_ModificarPelicula = new Button();
@@ -137,6 +137,7 @@
             EsAdmin = new DataGridViewTextBoxColumn();
             LabelBienvenida = new Label();
             Btn_CerrarSesionAdmin = new Button();
+            Asientos_Disponibles = new DataGridViewTextBoxColumn();
             Pestañas.SuspendLayout();
             Salas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridSalas).BeginInit();
@@ -461,7 +462,7 @@
             // 
             dataGridFunciones.AllowUserToOrderColumns = true;
             dataGridFunciones.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridFunciones.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn3, Fecha, Cant_Clientes, Costo, Id_MiSala, Capacidad_MiSala, Id_Pelicula, Nombre_Pelicula, IDS_Clientes_Arr });
+            dataGridFunciones.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn3, Fecha, Cant_Clientes, Costo, Id_MiSala, Capacidad_MiSala, Id_Pelicula, Nombre_Pelicula, IDS_Clientes_Arr, Asientos_Disponibles });
             dataGridFunciones.Location = new Point(8, 126);
             dataGridFunciones.Name = "dataGridFunciones";
             dataGridFunciones.RowTemplate.Height = 25;
@@ -525,6 +526,7 @@
             // 
             // Películas
             // 
+            Películas.Controls.Add(CLB_Funciones);
             Películas.Controls.Add(Label_PeliculaId);
             Películas.Controls.Add(Input_Sinopsis);
             Películas.Controls.Add(Input_Descripcion);
@@ -533,7 +535,6 @@
             Películas.Controls.Add(Input_Duracion);
             Películas.Controls.Add(label10);
             Películas.Controls.Add(Input_Poster);
-            Películas.Controls.Add(Cb_Funciones);
             Películas.Controls.Add(label15);
             Películas.Controls.Add(Btn_EliminarPelicula);
             Películas.Controls.Add(Btn_ModificarPelicula);
@@ -550,6 +551,14 @@
             Películas.TabIndex = 2;
             Películas.Text = "Películas";
             Películas.UseVisualStyleBackColor = true;
+            // 
+            // CLB_Funciones
+            // 
+            CLB_Funciones.FormattingEnabled = true;
+            CLB_Funciones.Location = new Point(493, 78);
+            CLB_Funciones.Name = "CLB_Funciones";
+            CLB_Funciones.Size = new Size(188, 40);
+            CLB_Funciones.TabIndex = 69;
             // 
             // Label_PeliculaId
             // 
@@ -594,7 +603,7 @@
             // 
             Input_Duracion.Location = new Point(493, 46);
             Input_Duracion.Name = "Input_Duracion";
-            Input_Duracion.Size = new Size(89, 23);
+            Input_Duracion.Size = new Size(188, 23);
             Input_Duracion.TabIndex = 63;
             // 
             // label10
@@ -612,14 +621,6 @@
             Input_Poster.Name = "Input_Poster";
             Input_Poster.Size = new Size(100, 23);
             Input_Poster.TabIndex = 61;
-            // 
-            // Cb_Funciones
-            // 
-            Cb_Funciones.FormattingEnabled = true;
-            Cb_Funciones.Location = new Point(493, 75);
-            Cb_Funciones.Name = "Cb_Funciones";
-            Cb_Funciones.Size = new Size(166, 23);
-            Cb_Funciones.TabIndex = 59;
             // 
             // label15
             // 
@@ -1112,6 +1113,12 @@
             Btn_CerrarSesionAdmin.UseVisualStyleBackColor = true;
             Btn_CerrarSesionAdmin.Click += Btn_CerrarSesion;
             // 
+            // Asientos_Disponibles
+            // 
+            Asientos_Disponibles.HeaderText = "Asientos_Disponibles";
+            Asientos_Disponibles.Name = "Asientos_Disponibles";
+            Asientos_Disponibles.ReadOnly = true;
+            // 
             // PantallaABMAdmin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1255,5 +1262,7 @@
         private DataGridViewTextBoxColumn Duracion;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
         private DataGridViewTextBoxColumn IDS_Clientes_Arr;
+        private CheckedListBox CLB_Funciones;
+        private DataGridViewTextBoxColumn Asientos_Disponibles;
     }
 }

@@ -119,11 +119,11 @@ namespace TP1___GRUPO_C.Vistas
                 this.dataGridPeliculas.Rows.Add(pel.PeliculaToString());
             }
 
-            Cb_Funciones.Items.Clear();
+            this.CLB_Funciones.Items.Clear();
             foreach (Funcion f in miCine.MostrarFunciones())
             {
-                string stringFuncion = f.ID.ToString() + ", " + f.MiPelicula.Nombre + ". " + f.Fecha.ToString();
-                this.Cb_Funciones.Items.Add(stringFuncion);
+                string stringFunc = f.ID.ToString() + ", " + f.MiPelicula.Nombre + ". " + f.Fecha.ToString();
+                this.CLB_Funciones.Items.Add(stringFunc);
             }
         }
 
@@ -215,7 +215,27 @@ namespace TP1___GRUPO_C.Vistas
             this.Input_Sinopsis.Text = dataGridPeliculas[3, e.RowIndex].Value.ToString();
             this.Input_Poster.Text = dataGridPeliculas[4, e.RowIndex].Value.ToString();
             this.Input_Duracion.Text = dataGridPeliculas[5, e.RowIndex].Value.ToString();
-            this.Cb_Funciones.SelectedIndex = e.RowIndex;
+
+            string idFunciones = dataGridPeliculas[6, e.RowIndex].Value.ToString();
+
+            List<Funcion> funciones = miCine.MostrarFunciones();
+            if (idFunciones != "")
+            {
+                string[] ids = idFunciones.Split(", ");
+
+                for (int i = 0; i < funciones.Count; i++)
+                {
+                    CLB_Funciones.SetItemChecked(i, false);
+                    for (int j = 0; j < ids.Length; j++)
+                    {
+                        if (funciones[i].ID == int.Parse(ids[j]))
+                        {
+                            CLB_Funciones.SetItemChecked(i, true);
+                            break;
+                        }
+                    }
+                }
+            }
 
             List<Pelicula> peliculas = miCine.MostrarPeliculas();
             this.PeliculaAuxiliar = peliculas.FirstOrDefault(p => p.ID == int.Parse(Label_PeliculaId.Text));
@@ -349,12 +369,21 @@ namespace TP1___GRUPO_C.Vistas
             double.TryParse(this.Input_Costo.Text, out double Costo);
 
             List<Funcion> funciones = miCine.MostrarFunciones();
-            Funcion func = funciones.FirstOrDefault(f => f.ID == ID);
 
-            if (miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, CantidadClientes, Costo, func.MostrarClientes()))
+            Funcion func = funciones.FirstOrDefault(f => f.ID == ID);
+            if (func != null)
             {
-                RefreshFunciones();
+                if (miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, CantidadClientes, Costo, func.MostrarClientes()))
+                {
+                    RefreshFunciones();
+                }
+
             }
+            else
+            {
+                MessageBox.Show("No se encontró la función.", "404 Not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
 
         }
 
@@ -387,12 +416,30 @@ namespace TP1___GRUPO_C.Vistas
             string sinopsis = this.Input_Sinopsis.Text;
             string poster = this.Input_Poster.Text;
             int.TryParse(this.Input_Duracion.Text, out int duracion);
-            //string funcion = this.Cb_Funciones.Sele
 
-            //if (miCine.ModificarPelicula(ID, nombre, descripcion, sinopsis, poster, duracion))
-            //{
-            //    RefreshPeliculas();
-            //}
+
+            List<Funcion> funcionesCine = miCine.MostrarFunciones();
+            List<Funcion> funcionesSelec = new List<Funcion>();
+
+
+
+            for (int i = 0; i < CLB_Funciones.Items.Count; i++)
+            {
+                CheckState st = CLB_Funciones.GetItemCheckState(i);
+                if (st.ToString() == "Checked")
+                {
+                    string idFunc = CLB_Funciones.Items[i].ToString().Split(",")[0];
+                    Funcion func = funcionesCine.FirstOrDefault(f => f.ID == int.Parse(idFunc));
+
+                    funcionesSelec.Add(func);
+
+                }
+            }
+
+            if (miCine.ModificarPelicula(ID, nombre, descripcion, sinopsis, poster, duracion, funcionesSelec))
+            {
+                RefreshPeliculas();
+            }
 
 
         }
@@ -423,8 +470,10 @@ namespace TP1___GRUPO_C.Vistas
             string Pass = this.Input_Password.Text;
             DateTime FechaNacimiento = this.Selec_FechaDeNacimiento.Value;
             bool esAdmin = this.Cb_EsAdmin.Checked;
+            int.TryParse(this.Input_Credito.Text, out int credito);
 
-            if (miCine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin))
+
+            if (miCine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin,credito))
             {
                 RefreshUsuarios();
             }

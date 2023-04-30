@@ -94,7 +94,7 @@ namespace TP1___GRUPO_C.Vistas
                 Input_MailPerfil.Text = user.Mail;
                 Input_PasswordPerfil.Text = user.Password;
                 DateTime_MiPerfil.Value = user.FechaNacimiento;
-                    
+
                 MostrarDatosUsuario();
 
             }
@@ -133,7 +133,6 @@ namespace TP1___GRUPO_C.Vistas
 
 
         }
-
 
         private void MostrarFuncionesProximas()
         {
