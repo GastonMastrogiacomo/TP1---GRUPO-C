@@ -14,7 +14,7 @@ namespace TP1___GRUPO_C.Model
         public static int ultimoID = 0;
         public Sala MiSala { get; set; }
         public Pelicula MiPelicula { get; set; }
-        public List<Usuario> Clientes { get; set; }
+        public List<Usuario> Clientes;
         public DateTime Fecha { get; set; }
         public int AsientosDisponibles { get; set; }
         public int CantidadClientes { get; set; } //CantidadEntradasCompradas

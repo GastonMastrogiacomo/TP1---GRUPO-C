@@ -71,7 +71,7 @@ Pantalla principal:
 	-En esta pantalla se pueden ver una lista de Peliculas, Salas y Funciones. Hacer doble click en una pelicula especifica 
 	,clickear la ventana de funciones te mostrara estas funciones filtradas;Lo mismo sucede con Salas.
 	-Hacer doble click en una funcion selecciona dicha funcion, por lo que uno puede hacer click en el 
-	boton de comprar entrada (Uno puede tiene que estar logueado y solo puede comprar hasta 50 entradas)
+	boton de comprar entrada (Uno debe estar logueado y solo puede comprar hasta 50 entradas)
 	-El boton de Refrescar actualiza todas las listas de Salas,Funciones y Peliculas , por lo que si uno utiliza el filtro debe tocar refrescar para volver a la visualizacion normal.
 	-Al mismo tiempo, el boton de refrescar actualiza la cantidad de credito que tiene un usuario si es que se realizo una compra previamente.
 	-En la parte superior se puede ver una barra donde uno puede completarla con la busqueda de funciones que desea ver.

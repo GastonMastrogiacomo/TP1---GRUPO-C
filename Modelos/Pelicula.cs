@@ -15,7 +15,7 @@ namespace TP1___GRUPO_C.Model
         public string Sinopsis { get; set; }
         public string Poster { get; set; }
         public int Duracion { get; set; }
-        public List<Funcion> MisFunciones { get; set; }
+        public List<Funcion> MisFunciones;
 
         public Pelicula(string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion)
         {

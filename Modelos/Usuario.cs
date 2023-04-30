@@ -18,7 +18,7 @@ namespace TP1___GRUPO_C.Model
         public string Password { get; set; }
         public int IntentosFallidos { get; set; }
         public bool Bloqueado { get; set; }
-        public List<Funcion> MisFunciones { get; set; }
+        public List<Funcion> MisFunciones;
         public double Credito { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public bool EsAdmin { get; set; }

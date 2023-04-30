@@ -13,7 +13,7 @@ namespace TP1___GRUPO_C.Model
         public static int ultimoID = 0;
         public string Ubicacion { get; set; }
         public int Capacidad { get; set; }
-        public List<Funcion> MisFunciones { get; set; }
+        public List<Funcion> MisFunciones;
 
         public Sala(string Ubicacion, int Capacidad)
         {

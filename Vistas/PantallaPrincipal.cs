@@ -149,31 +149,7 @@ namespace TP1___GRUPO_C
         //TABLAS DATAGRID
         private void PestañasPpal_SelectedIndexChange(object sender, EventArgs e)
         {
-            /* Lo comento de momento porque si filtramos no sirve refrescar con cada cambio de ventana
-           switch (tabControl1.SelectedIndex)
-           {
 
-               case 0:
-                   {
-                       //peliculas
-                       MostrarPeliculasEnDataGridView();
-                       break;
-                   }
-               case 1:
-                   {
-                       //salas
-                       MostrarSalasEnDataGridView();
-                       break;
-                   }
-               case 2:
-                   {
-                       //funciones
-                       MostrarFuncionesEnDataGridView();
-
-                       break;
-                   }
-           }
-           */
         }
 
         private void DataGridPeliculasPpal_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -248,12 +224,9 @@ namespace TP1___GRUPO_C
 
             if (int.TryParse(this.Input_CantEntradas.Text, out int cantEntradas))
             {
-                MessageBox.Show("idFuncionSeleccionada: " + idFuncionSeleccionada);
                 // Realizar la compra de entradas
                 if (cine.ComprarEntrada(idFuncionSeleccionada, cantEntradas))
                 {
-                    MessageBox.Show("Llego a comprar");
-
                     MostrarFuncionesEnDataGridView();
                 }
                 else

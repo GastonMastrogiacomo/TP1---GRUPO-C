@@ -473,7 +473,7 @@ namespace TP1___GRUPO_C.Vistas
             int.TryParse(this.Input_Credito.Text, out int credito);
 
 
-            if (miCine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin,credito))
+            if (miCine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, credito))
             {
                 RefreshUsuarios();
             }
@@ -528,23 +528,6 @@ namespace TP1___GRUPO_C.Vistas
             }
         }
 
-        //VER QUE ES
-        private void Btn_VerFuncionesEnSalas_Click(object sender, EventArgs e)
-        {
-            if (SalaAuxiliar == null)
-            {
-                MessageBox.Show("Debe seleccionar una Sala primero.", "Sala not found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-
-                //abrirPantallaCargaSalas(this.SalaAuxiliar);
-            }
-        }
-
-
-
-
-
     }
+
 }

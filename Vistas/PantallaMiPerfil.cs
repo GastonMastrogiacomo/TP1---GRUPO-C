@@ -167,8 +167,6 @@ namespace TP1___GRUPO_C.Vistas
             Usuario usuarioActual = miCine.UsuarioActual;
             int cantidadEntradasSeleccionadas = usuarioActual.EntradasCompradas[idFuncionSeleccionada];
 
-            MessageBox.Show("idFuncionSeleccionada: " + idFuncionSeleccionada);
-
             if (miCine.DevolverEntrada(idFuncionSeleccionada, cantidadEntradasSeleccionadas))
             {
                 MessageBox.Show("Devolvemos la entrada.");

@@ -89,7 +89,7 @@ namespace TP1___GRUPO_C.Model
         }
 
         //ABM Usuario
-        public bool AgregarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin,int credito)
+        public bool AgregarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int credito)
         {
             bool flagDni = false;
 
@@ -632,7 +632,6 @@ namespace TP1___GRUPO_C.Model
             }
         }
 
-        //no esta tomando la funcion
         public bool ModificarPelicula(int IDPelicula, string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion, List<Funcion> MisFunciones)
         {
 
@@ -1016,14 +1015,15 @@ namespace TP1___GRUPO_C.Model
         {
             List<Funcion> funcionesEncontradas = new List<Funcion>();
 
+            //bool flagNoFecha = false;
+
             foreach (Funcion fun in Funciones)
             {
                 bool cumpleRequisitos = true;
 
                 if (fun.Fecha >= DateTime.Today)
                 {
-
-
+                    //flagNoFecha = true;
                     // Verifico que si el input no esta en vacio entonces el valor tiene que ser igual o similar al de la pelicula;
                     if (!string.IsNullOrEmpty(pelicula))
                     {
@@ -1066,6 +1066,8 @@ namespace TP1___GRUPO_C.Model
                 else
                 {
                     cumpleRequisitos = false;
+
+
                 }
 
                 if (cumpleRequisitos)
@@ -1073,6 +1075,12 @@ namespace TP1___GRUPO_C.Model
                     funcionesEncontradas.Add(fun);
                 }
             }
+
+            //if (flagNoFecha)
+            //{
+
+            //    MessageBox.Show("No se puede filtar por una fecha anterior a hoy.", "Error.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
 
             return funcionesEncontradas;
 
