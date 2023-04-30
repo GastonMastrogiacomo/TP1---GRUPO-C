@@ -158,15 +158,26 @@ namespace TP1___GRUPO_C
 
             dataGridFuncionesPpal.Rows.Clear();
 
+            bool flagFuncionOk = false;
+
             foreach (Funcion f in cine.MostrarFunciones())
             {
                 if (f.MiPelicula.ID == idPeliculaSeleccionada)
                 {
-                    dataGridFuncionesPpal.Rows.Add(f.ToString());
+                    if (f.Fecha >= DateTime.Today)
+                    {
+                        dataGridFuncionesPpal.Rows.Add(f.ToString());
+                        flagFuncionOk = true;
+                    }
                 }
 
             }
-
+          
+            if(!flagFuncionOk)
+            {
+                MessageBox.Show("No hay funciones para la pelicula seleccionada actualmente." ,"Advertencia!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            PestañasPpal.SelectedIndex = 2; 
         }
 
         private void DataGridSalasPpal_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

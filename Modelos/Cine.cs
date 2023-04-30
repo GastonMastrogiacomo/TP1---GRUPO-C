@@ -1014,76 +1014,76 @@ namespace TP1___GRUPO_C.Model
         public List<Funcion> BuscarFuncion(string pelicula, string ubicacion, DateTime fecha, int precioMinimo, int precioMaximo)
         {
             List<Funcion> funcionesEncontradas = new List<Funcion>();
-
-            //bool flagNoFecha = false;
-
-            foreach (Funcion fun in Funciones)
+            if (fecha >= DateTime.Today)
             {
-                bool cumpleRequisitos = true;
-
-                if (fun.Fecha >= DateTime.Today)
+              
+                foreach (Funcion fun in Funciones)
                 {
-                    //flagNoFecha = true;
-                    // Verifico que si el input no esta en vacio entonces el valor tiene que ser igual o similar al de la pelicula;
-                    if (!string.IsNullOrEmpty(pelicula))
-                    {
-                        Regex regularEx = new Regex(pelicula, RegexOptions.IgnoreCase);
+                    bool cumpleRequisitos = true;
 
-                        if (!regularEx.IsMatch(fun.MiPelicula.Nombre))
+                    if (fun.Fecha >= DateTime.Today)
+                    {
+                        // Verifico que si el input no esta en vacio entonces el valor tiene que ser igual o similar al de la pelicula;
+                        if (!string.IsNullOrEmpty(pelicula))
                         {
-                            cumpleRequisitos = false;
+                            Regex regularEx = new Regex(pelicula, RegexOptions.IgnoreCase);
+
+                            if (!regularEx.IsMatch(fun.MiPelicula.Nombre))
+                            {
+                                cumpleRequisitos = false;
+                            }
+                        }
+
+                        // Lo mismo con ubicacion
+                        if (!string.IsNullOrEmpty(ubicacion))
+                        {
+                            if (fun.MiSala.Ubicacion != ubicacion)
+                            {
+                                cumpleRequisitos = false;
+                            }
+
+                        }
+
+                        //todas las funciones que superen el minimo
+
+                        if (precioMinimo >= 0)
+                        {
+                            if (fun.Costo < precioMinimo)
+                            {
+                                cumpleRequisitos = false;
+                            }
+                        }
+
+                        if (precioMaximo > 0)
+                        {
+                            if (fun.Costo > precioMaximo)
+                            {
+                                cumpleRequisitos = false;
+                            }
                         }
                     }
-
-                    // Lo mismo con ubicacion
-                    if (!string.IsNullOrEmpty(ubicacion))
+                    else
                     {
-                        if (fun.MiSala.Ubicacion != ubicacion)
-                        {
-                            cumpleRequisitos = false;
-                        }
+                        cumpleRequisitos = false;
+
 
                     }
 
-                    //todas las funciones que superen el minimo
-
-                    if (precioMinimo >= 0)
+                    if (cumpleRequisitos)
                     {
-                        if (fun.Costo < precioMinimo)
-                        {
-                            cumpleRequisitos = false;
-                        }
-                    }
-
-                    if (precioMaximo > 0)
-                    {
-                        if (fun.Costo > precioMaximo)
-                        {
-                            cumpleRequisitos = false;
-                        }
+                        funcionesEncontradas.Add(fun);
                     }
                 }
-                else
-                {
-                    cumpleRequisitos = false;
 
-
-                }
-
-                if (cumpleRequisitos)
-                {
-                    funcionesEncontradas.Add(fun);
-                }
+               
+            }
+            else
+            {
+                MessageBox.Show("No se puede filtar por una fecha anterior a hoy.", "Error.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            //if (flagNoFecha)
-            //{
-
-            //    MessageBox.Show("No se puede filtar por una fecha anterior a hoy.", "Error.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
 
             return funcionesEncontradas;
-
 
         }
 

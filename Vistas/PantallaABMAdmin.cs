@@ -493,11 +493,14 @@ namespace TP1___GRUPO_C.Vistas
             string Pass = this.Input_Password.Text;
             DateTime FechaNacimiento = this.Selec_FechaDeNacimiento.Value;
             bool esAdmin = this.Cb_EsAdmin.Checked;
+            int.TryParse(Input_Credito.Text, out int Credito);
+            bool Bloqueda = this.Cb_Bloqueado.Checked;
+            int.TryParse(this.Input_IntentosFallidos.Text, out int IntentosFallidos);         
 
             List<Usuario> usuarios = miCine.MostrarUsuarios();
             Usuario user = usuarios.FirstOrDefault(u => u.ID == ID);
 
-            if (miCine.ModificarUsuario(ID, DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, user.IntentosFallidos, user.Bloqueado, user.Credito, user.MisFunciones))
+            if (miCine.ModificarUsuario(ID, DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, IntentosFallidos, Bloqueda, Credito, user.MisFunciones))
             {
                 RefreshUsuarios();
             }
