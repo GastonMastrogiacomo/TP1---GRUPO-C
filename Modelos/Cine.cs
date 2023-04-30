@@ -215,7 +215,6 @@ namespace TP1___GRUPO_C.Model
             // Se busca el usuario que tiene el id pasado por parametro
             Usuario user = Usuarios.FirstOrDefault(u => u.ID == idUsuario);
 
-
             if (user != null)
             {
                 try
@@ -723,59 +722,7 @@ namespace TP1___GRUPO_C.Model
 
                     if (funcion != null)
                     {
-                        // Verificar si la cantidad de entradas es mayor a cero
-                        if (cantidadEntradas > 0)
-                        {
-                            double costoTotal = funcion.Costo * cantidadEntradas;
-
-                            // Verificar si el usuario tiene suficiente crédito
-                            if (UsuarioActual.Credito >= costoTotal)
-                            {
-                                // Verificar si la capacidad de la sala es suficiente
-                                if (funcion.AsientosDisponibles >= cantidadEntradas)
-                                {
-                                    // Agregar la función a las funciones del usuario
-                                    UsuarioActual.MisFunciones.Add(funcion);
-
-                                    // Actualizar la cantidad de clientes de la función
-                                    funcion.CantidadClientes += cantidadEntradas;
-
-                                    funcion.AsientosDisponibles -= cantidadEntradas;
-
-                                    // Agregar al usuario como cliente de la función
-                                    funcion.AgregarCliente(UsuarioActual);
-
-                                    // Actualizar el crédito del usuario
-                                    UsuarioActual.Credito -= costoTotal;
-
-
-                                    // Actualizar las entradas compradas por el usuario
-                                    if (UsuarioActual.EntradasCompradas.ContainsKey(idFuncion))
-                                    {
-                                        UsuarioActual.EntradasCompradas[idFuncion] += cantidadEntradas;
-                                    }
-                                    else
-                                    {
-                                        UsuarioActual.EntradasCompradas.Add(idFuncion, cantidadEntradas);
-                                    }
-
-                                    MessageBox.Show("Entrada comprada con éxito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                    return true;
-                                }
-                                else
-                                {
-                                    throw new InvalidOperationException("No hay suficiente capacidad en la sala.");
-                                }
-                            }
-                            else
-                            {
-                                throw new InvalidOperationException("Créditos insuficientes.");
-                            }
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException("La cantidad de entradas debe ser mayor a cero.");
-                        }
+                        return ComprarEntradaFuncionNotNull(UsuarioActual, cantidadEntradas, funcion, idFuncion);
                     }
                     else
                     {
@@ -806,52 +753,8 @@ namespace TP1___GRUPO_C.Model
                 {
 
                     return DevolverEntradaFuncionNotNull(UsuarioActual, funcion, idFuncion, cantidadEntradas);
-                    //// Verificar si la función ya ha ocurrido
-                    //if (funcion.Fecha > DateTime.Now)
-                    //{
-                    //    // Verificar si el usuario tiene compradas las entradas
-                    //    if (UsuarioActual.EntradasCompradas.ContainsKey(idFuncion) && UsuarioActual.EntradasCompradas[idFuncion] >= cantidadEntradas)
-                    //    {
-                    //        // Remover la función de las funciones del usuario
-                    //        UsuarioActual.MisFunciones.Remove(funcion);
+                   
 
-                    //        // Actualizar la cantidad de clientes de la función
-                    //        funcion.CantidadClientes -= cantidadEntradas;
-
-                    //        funcion.AsientosDisponibles += cantidadEntradas;
-
-
-                    //        // Eliminar al usuario como cliente de la función
-                    //        funcion.EliminarCliente(UsuarioActual.ID);
-
-                    //        // Actualizar las entradas compradas por el usuario
-                    //        UsuarioActual.EntradasCompradas[idFuncion] -= cantidadEntradas;
-
-                    //        MessageBox.Show("asientos disponibles: " + funcion.AsientosDisponibles);
-                    //        MessageBox.Show("cantidad clientes: " + funcion.CantidadClientes);
-
-                    //        // Verificar si se han devuelto todas las entradas
-                    //        if (UsuarioActual.EntradasCompradas[idFuncion] <= 0)
-                    //        {
-                    //            UsuarioActual.EntradasCompradas.Remove(idFuncion);
-                    //        }
-
-                    //        // Calcular el reembolso y actualizar el crédito del usuario
-                    //        double costoTotal = funcion.Costo * cantidadEntradas;
-                    //        UsuarioActual.Credito += costoTotal;
-
-                    //        MessageBox.Show("Entrada devuelta con éxito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //        return true;
-                    //    }
-                    //    else
-                    //    {
-                    //        throw new InvalidOperationException("No tienes suficientes entradas compradas para devolver.");
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    throw new InvalidOperationException("No es posible devolver una entrada de una función que ya ocurrió.");
-                    //}
 
                 }
                 else
@@ -1016,7 +919,7 @@ namespace TP1___GRUPO_C.Model
             List<Funcion> funcionesEncontradas = new List<Funcion>();
             if (fecha >= DateTime.Today)
             {
-              
+
                 foreach (Funcion fun in Funciones)
                 {
                     bool cumpleRequisitos = true;
@@ -1075,7 +978,7 @@ namespace TP1___GRUPO_C.Model
                     }
                 }
 
-               
+
             }
             else
             {
@@ -1139,6 +1042,64 @@ namespace TP1___GRUPO_C.Model
             }
         }
 
+        public bool ComprarEntradaFuncionNotNull(Usuario user, int cantidadEntradas, Funcion funcion, int idFuncion)
+        {
+            // Verificar si la cantidad de entradas es mayor a cero
+            if (cantidadEntradas > 0)
+            {
+                double costoTotal = funcion.Costo * cantidadEntradas;
+
+                // Verificar si el usuario tiene suficiente crédito
+                if (user.Credito >= costoTotal)
+                {
+                    // Verificar si la capacidad de la sala es suficiente
+                    if (funcion.AsientosDisponibles >= cantidadEntradas)
+                    {
+                        // Agregar la función a las funciones del usuario
+                        user.MisFunciones.Add(funcion);
+
+                        // Actualizar la cantidad de clientes de la función
+                        funcion.CantidadClientes += cantidadEntradas;
+
+                        funcion.AsientosDisponibles -= cantidadEntradas;
+
+                        // Agregar al usuario como cliente de la función
+                        funcion.AgregarCliente(user);
+
+                        // Actualizar el crédito del usuario
+                        user.Credito -= costoTotal;
+
+
+                        // Actualizar las entradas compradas por el usuario
+                        if (user.EntradasCompradas.ContainsKey(idFuncion))
+                        {
+                            user.EntradasCompradas[idFuncion] += cantidadEntradas;
+                        }
+                        else
+                        {
+                            user.EntradasCompradas.Add(idFuncion, cantidadEntradas);
+                        }
+
+                        MessageBox.Show("Entrada comprada con éxito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return true;
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("No hay suficiente capacidad en la sala.");
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("Créditos insuficientes.");
+                }
+
+             
+            }
+            else
+            {
+                throw new InvalidOperationException("La cantidad de entradas debe ser mayor a cero.");
+            }
+        }
     }
 
 }
