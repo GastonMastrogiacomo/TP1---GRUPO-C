@@ -26,9 +26,7 @@ namespace TP1___GRUPO_C.Model
         public Dictionary<int, int> EntradasCompradas { get; set; }
         // Entrada
 
-
-        public Usuario(int DNI, string Nombre, string Apellido,
-            string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin)
+        public Usuario(int DNI, string Nombre, string Apellido,string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin)
         {
             ultimoID++;
             this.ID = ultimoID;
@@ -46,8 +44,7 @@ namespace TP1___GRUPO_C.Model
             EntradasCompradas = new Dictionary<int, int>();
         }
 
-        public Usuario(int DNI, string Nombre, string Apellido,
-          string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int ID)
+        public Usuario(int DNI, string Nombre, string Apellido,string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int ID)
         {
 
             this.ID = ID;
@@ -66,11 +63,7 @@ namespace TP1___GRUPO_C.Model
 
         }
 
-
-
         //ABM Funcion
-
-
         public bool AgregarFuncion(Funcion funcion)
         {
             try
@@ -108,7 +101,6 @@ namespace TP1___GRUPO_C.Model
             return false;
         }
 
-
         public bool ModificarFuncion(int IDFuncion, Funcion funcion)
         {
             for (int i = 0; i < MisFunciones.Count; i++)
@@ -121,6 +113,7 @@ namespace TP1___GRUPO_C.Model
             }
             return false;
         }
+
         public List<Funcion> ObtenerMisFunciones()
         {
             return MisFunciones.ToList();
@@ -147,7 +140,6 @@ namespace TP1___GRUPO_C.Model
 
         }
 
-
         public List<Funcion> MostrarFuncionesPasadas()
         {
 
@@ -169,7 +161,6 @@ namespace TP1___GRUPO_C.Model
 
         }
 
-
         private string ExtraerIDFunciones()
         {
             string IDFunciones = "";
@@ -187,7 +178,6 @@ namespace TP1___GRUPO_C.Model
 
             return IDFunciones;
         }
-
 
         public string[] ToString()
         {

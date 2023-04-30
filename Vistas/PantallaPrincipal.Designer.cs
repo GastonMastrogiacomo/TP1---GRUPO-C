@@ -43,7 +43,7 @@
             Btn_BuscarPpal = new Button();
             Btn_MiPerfil = new Button();
             Btn_CerrarSesion = new Button();
-            tabControl1 = new TabControl();
+            PestañasPpal = new TabControl();
             Peliculas = new TabPage();
             dataGridPeliculasPpal = new DataGridView();
             dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
@@ -70,6 +70,7 @@
             Id_Pelicula = new DataGridViewTextBoxColumn();
             Nombre_Pelicula = new DataGridViewTextBoxColumn();
             IDS_Clientes_Arr = new DataGridViewTextBoxColumn();
+            Asientos_Disponibles = new DataGridViewTextBoxColumn();
             Input_PrecioMinimoPpal = new NumericUpDown();
             Input_PrecioMaximoPpal = new NumericUpDown();
             label8 = new Label();
@@ -78,7 +79,8 @@
             label10 = new Label();
             Input_CantEntradas = new NumericUpDown();
             Btn_RefrescarPpal = new Button();
-            tabControl1.SuspendLayout();
+            label9 = new Label();
+            PestañasPpal.SuspendLayout();
             Peliculas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridPeliculasPpal).BeginInit();
             Salas.SuspendLayout();
@@ -99,7 +101,7 @@
             btnRegistrarse.TabIndex = 1;
             btnRegistrarse.Text = "Registrarse";
             btnRegistrarse.UseVisualStyleBackColor = true;
-            btnRegistrarse.Click += button2_Click;
+            btnRegistrarse.Click += Btn_AbrirRegistro;
             // 
             // button3
             // 
@@ -110,7 +112,7 @@
             button3.TabIndex = 2;
             button3.Text = "Iniciar Sesion";
             button3.UseVisualStyleBackColor = true;
-            button3.Click += button3_Click;
+            button3.Click += Btn_IniciarSesion;
             // 
             // Input_UbicacionPpal
             // 
@@ -119,7 +121,6 @@
             Input_UbicacionPpal.Name = "Input_UbicacionPpal";
             Input_UbicacionPpal.Size = new Size(163, 23);
             Input_UbicacionPpal.TabIndex = 3;
-            Input_UbicacionPpal.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // Input_FechaPpal
             // 
@@ -127,6 +128,7 @@
             Input_FechaPpal.Name = "Input_FechaPpal";
             Input_FechaPpal.Size = new Size(200, 23);
             Input_FechaPpal.TabIndex = 4;
+            Input_FechaPpal.Value = new DateTime(2023, 4, 30, 0, 0, 0, 0);
             // 
             // label1
             // 
@@ -185,7 +187,6 @@
             label6.Size = new Size(221, 28);
             label6.TabIndex = 13;
             label6.Text = "Busqueda de Peliculas";
-            label6.Click += label6_Click;
             // 
             // label7
             // 
@@ -196,7 +197,6 @@
             label7.Size = new Size(61, 19);
             label7.TabIndex = 14;
             label7.Text = "Pelicula";
-            label7.Click += label7_Click;
             // 
             // Input_PeliculaPpal
             // 
@@ -237,17 +237,17 @@
             Btn_CerrarSesion.UseVisualStyleBackColor = true;
             Btn_CerrarSesion.Click += Btn_CerrarSesion_Click;
             // 
-            // tabControl1
+            // PestañasPpal
             // 
-            tabControl1.Controls.Add(Peliculas);
-            tabControl1.Controls.Add(Salas);
-            tabControl1.Controls.Add(Funciones);
-            tabControl1.Location = new Point(14, 194);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(771, 244);
-            tabControl1.TabIndex = 20;
-            tabControl1.SelectedIndexChanged += tabControl1_SelectedIndexChanged;
+            PestañasPpal.Controls.Add(Peliculas);
+            PestañasPpal.Controls.Add(Salas);
+            PestañasPpal.Controls.Add(Funciones);
+            PestañasPpal.Location = new Point(14, 194);
+            PestañasPpal.Name = "PestañasPpal";
+            PestañasPpal.SelectedIndex = 0;
+            PestañasPpal.Size = new Size(771, 244);
+            PestañasPpal.TabIndex = 20;
+            PestañasPpal.SelectedIndexChanged += PestañasPpal_SelectedIndexChange;
             // 
             // Peliculas
             // 
@@ -271,7 +271,7 @@
             dataGridPeliculasPpal.RowTemplate.Height = 25;
             dataGridPeliculasPpal.Size = new Size(757, 210);
             dataGridPeliculasPpal.TabIndex = 50;
-            dataGridPeliculasPpal.CellDoubleClick += dataGridPeliculas_CellDoubleClick;
+            dataGridPeliculasPpal.CellDoubleClick += DataGridPeliculasPpal_CellDoubleClick;
             // 
             // dataGridViewTextBoxColumn4
             // 
@@ -337,7 +337,7 @@
             dataGridSalasPpal.RowTemplate.Height = 25;
             dataGridSalasPpal.Size = new Size(757, 210);
             dataGridSalasPpal.TabIndex = 1;
-            dataGridSalasPpal.CellDoubleClick += dataGridSalasPpal_CellDoubleClick_1;
+            dataGridSalasPpal.CellDoubleClick += DataGridSalasPpal_CellDoubleClick;
             // 
             // ID
             // 
@@ -377,14 +377,14 @@
             // 
             dataGridFuncionesPpal.AllowUserToOrderColumns = true;
             dataGridFuncionesPpal.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridFuncionesPpal.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn3, Fecha, Cant_Clientes, Costo, Id_MiSala, Capacidad_MiSala, Id_Pelicula, Nombre_Pelicula, IDS_Clientes_Arr });
+            dataGridFuncionesPpal.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn3, Fecha, Cant_Clientes, Costo, Id_MiSala, Capacidad_MiSala, Id_Pelicula, Nombre_Pelicula, IDS_Clientes_Arr, Asientos_Disponibles });
             dataGridFuncionesPpal.Dock = DockStyle.Fill;
             dataGridFuncionesPpal.Location = new Point(0, 0);
             dataGridFuncionesPpal.Name = "dataGridFuncionesPpal";
             dataGridFuncionesPpal.RowTemplate.Height = 25;
             dataGridFuncionesPpal.Size = new Size(763, 216);
             dataGridFuncionesPpal.TabIndex = 34;
-            dataGridFuncionesPpal.CellDoubleClick += dataGridFuncionesPpal_CellDoubleClick_1;
+            dataGridFuncionesPpal.CellDoubleClick += DataGridFuncionesPpal_CellDoubleClick;
             // 
             // dataGridViewTextBoxColumn3
             // 
@@ -440,9 +440,16 @@
             IDS_Clientes_Arr.Name = "IDS_Clientes_Arr";
             IDS_Clientes_Arr.ReadOnly = true;
             // 
+            // Asientos_Disponibles
+            // 
+            Asientos_Disponibles.HeaderText = "Asientos_Disponibles";
+            Asientos_Disponibles.Name = "Asientos_Disponibles";
+            Asientos_Disponibles.ReadOnly = true;
+            // 
             // Input_PrecioMinimoPpal
             // 
             Input_PrecioMinimoPpal.Location = new Point(392, 98);
+            Input_PrecioMinimoPpal.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             Input_PrecioMinimoPpal.Name = "Input_PrecioMinimoPpal";
             Input_PrecioMinimoPpal.Size = new Size(100, 23);
             Input_PrecioMinimoPpal.TabIndex = 21;
@@ -450,6 +457,7 @@
             // Input_PrecioMaximoPpal
             // 
             Input_PrecioMaximoPpal.Location = new Point(498, 97);
+            Input_PrecioMaximoPpal.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             Input_PrecioMaximoPpal.Name = "Input_PrecioMaximoPpal";
             Input_PrecioMaximoPpal.Size = new Size(100, 23);
             Input_PrecioMaximoPpal.TabIndex = 22;
@@ -494,6 +502,7 @@
             // Input_CantEntradas
             // 
             Input_CantEntradas.Location = new Point(498, 178);
+            Input_CantEntradas.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
             Input_CantEntradas.Name = "Input_CantEntradas";
             Input_CantEntradas.Size = new Size(100, 23);
             Input_CantEntradas.TabIndex = 28;
@@ -508,11 +517,21 @@
             Btn_RefrescarPpal.UseVisualStyleBackColor = true;
             Btn_RefrescarPpal.Click += Btn_RefrescarPpal_Click;
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(513, 163);
+            label9.Name = "label9";
+            label9.Size = new Size(56, 15);
+            label9.TabIndex = 30;
+            label9.Text = "(Max. 50)";
+            // 
             // PantallaPrincipal
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label9);
             Controls.Add(Btn_RefrescarPpal);
             Controls.Add(Input_CantEntradas);
             Controls.Add(label10);
@@ -521,7 +540,7 @@
             Controls.Add(label8);
             Controls.Add(Input_PrecioMaximoPpal);
             Controls.Add(Input_PrecioMinimoPpal);
-            Controls.Add(tabControl1);
+            Controls.Add(PestañasPpal);
             Controls.Add(Btn_CerrarSesion);
             Controls.Add(Btn_MiPerfil);
             Controls.Add(Btn_BuscarPpal);
@@ -541,7 +560,7 @@
             Name = "PantallaPrincipal";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form2";
-            tabControl1.ResumeLayout(false);
+            PestañasPpal.ResumeLayout(false);
             Peliculas.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridPeliculasPpal).EndInit();
             Salas.ResumeLayout(false);
@@ -571,7 +590,7 @@
         private Button Btn_BuscarPpal;
         private Button Btn_MiPerfil;
         private Button Btn_CerrarSesion;
-        private TabControl tabControl1;
+        private TabControl PestañasPpal;
         private TabPage Peliculas;
         private TabPage Salas;
         private TabPage Funciones;
@@ -606,5 +625,7 @@
         private DataGridViewTextBoxColumn Nombre_Pelicula;
         private DataGridViewTextBoxColumn IDS_Clientes_Arr;
         private Button Btn_RefrescarPpal;
+        private DataGridViewTextBoxColumn Asientos_Disponibles;
+        private Label label9;
     }
 }

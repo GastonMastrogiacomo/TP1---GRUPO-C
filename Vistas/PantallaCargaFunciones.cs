@@ -69,6 +69,7 @@ namespace TP1___GRUPO_C.Vistas
                 this.Clb_FuncionesCine.Items.Insert(func.ID - 1, Linea);
             }
         }
+
         private void Btn_AgregarALista_Click(object sender, EventArgs e)
         {
 
@@ -107,7 +108,6 @@ namespace TP1___GRUPO_C.Vistas
             cerrarPantallaCargaFunciones();
         }
 
-
         private void Btn_GuardarYSalir_Click(object sender, EventArgs e)
         {
 
@@ -133,11 +133,15 @@ namespace TP1___GRUPO_C.Vistas
 
             for (int i = 0; i < Clb_FuncionesUsuario.Items.Count; i++)
             {
-                Funcion func = miCine.ObtenerFuncionPorId(i + 1);
-                UsuarioAuxiliar.AgregarFuncion(func);
+                List<Funcion> funciones = miCine.MostrarFunciones();
+                Funcion func = funciones.FirstOrDefault(u => u.ID == (i + 1));
+                if (func != null)
+                {
+                    UsuarioAuxiliar.AgregarFuncion(func);
+                }
             }
 
-            if (!miCine.ModificarUsuario(UsuarioAuxiliar.ID, UsuarioAuxiliar))
+            if (!miCine.ModificarUsuario(UsuarioAuxiliar.ID, UsuarioAuxiliar.DNI, UsuarioAuxiliar.Nombre, UsuarioAuxiliar.Apellido, UsuarioAuxiliar.Mail, UsuarioAuxiliar.Password, UsuarioAuxiliar.FechaNacimiento, UsuarioAuxiliar.EsAdmin, UsuarioAuxiliar.IntentosFallidos, UsuarioAuxiliar.Bloqueado, UsuarioAuxiliar.Credito, UsuarioAuxiliar.MisFunciones))
             {
                 MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

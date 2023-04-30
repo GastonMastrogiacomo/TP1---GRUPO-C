@@ -18,7 +18,6 @@ namespace TP1___GRUPO_C.Vistas
         private Usuario usuarioAuxiliar;
         public CerrarYGuardarPantallaEdicionFunciones cerrarYGuardarPantallaEdicionFunciones;
 
-
         public PantallaEdicionFunciones(Cine cine, Usuario usuarioAuxiliar)
         {
             InitializeComponent();

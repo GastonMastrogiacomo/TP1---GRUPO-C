@@ -69,6 +69,7 @@
             Capacidad_MiSala = new DataGridViewTextBoxColumn();
             Id_Pelicula = new DataGridViewTextBoxColumn();
             Nombre_Pelicula = new DataGridViewTextBoxColumn();
+            IDS_Clientes_Arr = new DataGridViewTextBoxColumn();
             Películas = new TabPage();
             Label_PeliculaId = new Label();
             Input_Sinopsis = new TextBox();
@@ -136,7 +137,6 @@
             EsAdmin = new DataGridViewTextBoxColumn();
             LabelBienvenida = new Label();
             Btn_CerrarSesionAdmin = new Button();
-            IDS_Clientes_Arr = new DataGridViewTextBoxColumn();
             Pestañas.SuspendLayout();
             Salas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridSalas).BeginInit();
@@ -182,7 +182,6 @@
             Salas.TabIndex = 0;
             Salas.Text = "Salas";
             Salas.UseVisualStyleBackColor = true;
-            Salas.Click += Salas_Click;
             // 
             // Label_SalaId
             // 
@@ -326,7 +325,6 @@
             Funciones.TabIndex = 1;
             Funciones.Text = "Funciones";
             Funciones.UseVisualStyleBackColor = true;
-            Funciones.Click += Funciones_Click;
             // 
             // Label_FuncionId
             // 
@@ -518,6 +516,12 @@
             Nombre_Pelicula.HeaderText = "Nombre_Pelicula";
             Nombre_Pelicula.Name = "Nombre_Pelicula";
             Nombre_Pelicula.ReadOnly = true;
+            // 
+            // IDS_Clientes_Arr
+            // 
+            IDS_Clientes_Arr.HeaderText = "IDS_Clientes_Arr";
+            IDS_Clientes_Arr.Name = "IDS_Clientes_Arr";
+            IDS_Clientes_Arr.ReadOnly = true;
             // 
             // Películas
             // 
@@ -1107,12 +1111,6 @@
             Btn_CerrarSesionAdmin.Text = "Cerrar Sesión";
             Btn_CerrarSesionAdmin.UseVisualStyleBackColor = true;
             Btn_CerrarSesionAdmin.Click += Btn_CerrarSesion;
-            // 
-            // IDS_Clientes_Arr
-            // 
-            IDS_Clientes_Arr.HeaderText = "IDS_Clientes_Arr";
-            IDS_Clientes_Arr.Name = "IDS_Clientes_Arr";
-            IDS_Clientes_Arr.ReadOnly = true;
             // 
             // PantallaABMAdmin
             // 

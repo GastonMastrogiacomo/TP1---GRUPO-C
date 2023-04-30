@@ -16,6 +16,8 @@ namespace TP1___GRUPO_C.Vistas
         private Cine miCine;
         public VolverPantallaPrincipal volverPantallaPrincipal;
         public VolverAtras volverAtras;
+        private int idFuncionSeleccionada;
+
 
         public PantallaMiPerfil(Cine cine)
         {
@@ -29,7 +31,7 @@ namespace TP1___GRUPO_C.Vistas
         public delegate void VolverPantallaPrincipal();
         public delegate void VolverAtras();
 
-             private void label6_Click(object sender, EventArgs e)
+        private void label6_Click(object sender, EventArgs e)
         {
 
         }
@@ -66,27 +68,33 @@ namespace TP1___GRUPO_C.Vistas
             string Pass = this.Input_PasswordPerfil.Text;
             DateTime FechaNacimiento = this.DateTime_MiPerfil.Value;
             bool esAdmin = false;
-            double Credito=double.Parse(this.Label_MiCredito.Text);
+            double Credito = double.Parse(this.Label_MiCredito.Text);
 
-            Usuario nuevo = new Usuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, ID);
-            nuevo.Credito = miCine.UsuarioActual.Credito;
-            foreach(Funcion fun in miCine.UsuarioActual.ObtenerMisFunciones())
+
+            List<Usuario> usuarios = miCine.MostrarUsuarios();
+            Usuario user = usuarios.FirstOrDefault(u => u.ID == ID);
+
+
+            user.Credito = miCine.UsuarioActual.Credito;
+            foreach (Funcion fun in miCine.UsuarioActual.ObtenerMisFunciones())
             {
-                nuevo.AgregarFuncion(fun);
+                user.AgregarFuncion(fun);
             }
-            if (miCine.ModificarUsuario(ID, nuevo))
+
+
+            if (miCine.ModificarUsuario(ID, DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, user.IntentosFallidos, user.Bloqueado, user.Credito, user.MisFunciones))
             {
 
                 // Actualizar la visualización del nuevo usuario en los inputs
 
-                Label_IDPerfil.Text = nuevo.ID.ToString();
-                Input_NombrePerfil.Text = nuevo.Nombre;
-                Input_ApellidoPerfil.Text = nuevo.Apellido;
-                Input_DNIPerfil.Text = nuevo.DNI.ToString();
-                Input_MailPerfil.Text = nuevo.Mail;
-                Input_PasswordPerfil.Text = nuevo.Password;
-                DateTime_MiPerfil.Value = nuevo.FechaNacimiento;
-
+                Label_IDPerfil.Text = user.ID.ToString();
+                Input_NombrePerfil.Text = user.Nombre;
+                Input_ApellidoPerfil.Text = user.Apellido;
+                Input_DNIPerfil.Text = user.DNI.ToString();
+                Input_MailPerfil.Text = user.Mail;
+                Input_PasswordPerfil.Text = user.Password;
+                DateTime_MiPerfil.Value = user.FechaNacimiento;
+                    
                 MostrarDatosUsuario();
 
             }
@@ -129,8 +137,7 @@ namespace TP1___GRUPO_C.Vistas
 
         private void MostrarFuncionesProximas()
         {
-
-            dataGridPasadasFunciones.Rows.Clear();
+            dataGridProximasFunciones.Rows.Clear();
 
             List<Funcion> funcionesProximas = miCine.UsuarioActual.MostrarFuncionesProximas();
             foreach (Funcion fun in funcionesProximas)
@@ -161,8 +168,10 @@ namespace TP1___GRUPO_C.Vistas
             Usuario usuarioActual = miCine.UsuarioActual;
             int cantidadEntradasSeleccionadas = usuarioActual.EntradasCompradas[idFuncionSeleccionada];
 
-            //ver porque creo que devovler entrada no elimina la funcion del usuario
-            if (miCine.DevolverEntrada(idFuncionSeleccionada,cantidadEntradasSeleccionadas)) {
+            MessageBox.Show("idFuncionSeleccionada: " + idFuncionSeleccionada);
+
+            if (miCine.DevolverEntrada(idFuncionSeleccionada, cantidadEntradasSeleccionadas))
+            {
                 MessageBox.Show("Devolvemos la entrada.");
                 MostrarFuncionesProximas();
             }
@@ -174,12 +183,11 @@ namespace TP1___GRUPO_C.Vistas
 
         }
 
-        private int idFuncionSeleccionada;
-
         private void dataGridProximasFunciones_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            // dataGridFunciones[0, e.RowIndex].Value.ToString();
-            idFuncionSeleccionada = int.Parse(dataGridProximasFunciones[0, e.RowIndex].Value.ToString());
+            // Obtengo el valor de ID Funcion para luego pasarselo a devolver entrada
+
+            idFuncionSeleccionada = int.Parse(dataGridProximasFunciones.Rows[e.RowIndex].Cells[0].Value.ToString());
 
         }
     }
