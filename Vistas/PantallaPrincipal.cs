@@ -236,12 +236,25 @@ namespace TP1___GRUPO_C
 
         private void Btn_BuscarPpal_Click(object sender, EventArgs e)
         {
+            string Ubicacion ;
+            string Pelicula;
+            DateTime Fecha;
 
-            string Ubicacion = Input_UbicacionPpal.Text;
-            DateTime Fecha = Input_FechaPpal.Value;
-            int.TryParse(Input_PrecioMinimoPpal.Text, out int PrecioMin);
-            int.TryParse(Input_PrecioMaximoPpal.Text, out int PrecioMax);
-            string Pelicula = Input_PeliculaPpal.Text;
+            if (!string.IsNullOrWhiteSpace(Input_PeliculaPpal.Text))
+                Pelicula = Input_PeliculaPpal.Text;
+            else
+                Pelicula = "";
+            if (!string.IsNullOrWhiteSpace(Input_UbicacionPpal.Text))
+                Ubicacion = Input_UbicacionPpal.Text;
+            else
+                Ubicacion = "";
+         if (!DateTime.TryParse(Input_FechaPpal.Text, out Fecha))
+                Fecha = DateTime.MinValue;
+            if (!int.TryParse(Input_PrecioMinimoPpal.Text, out int PrecioMin))
+                PrecioMin = 0;
+            if (!int.TryParse(Input_PrecioMaximoPpal.Text, out int PrecioMax))
+                PrecioMax = int.MaxValue;
+            
 
             cine.Busqueda(Pelicula, Fecha, PrecioMax, PrecioMin, Ubicacion);
 

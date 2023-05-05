@@ -799,12 +799,17 @@ namespace TP1___GRUPO_C.Model
             List<Pelicula> Peliculas = MostrarPeliculas();
             List<Funcion> Funciones = MostrarFunciones();
             List<Sala> Salas = MostrarSalas();
-            List<Pelicula> PeliculaFiltrada = new List<Pelicula>();
+
+            
             List<int> IDFechaFuncionFiltrada = new List<int>();
             List<int> IDCostoFuncionFiltrada = new List<int>();
-            List<Sala> SalaFiltrada = new List<Sala>();
             List<int> IDFuncionFiltrada = new List<int>();
+
+            List<Sala> SalaFiltrada = new List<Sala>();
+            List<Pelicula> PeliculaFiltrada = new List<Pelicula>();
             List<Funcion> FuncionResultado = new List<Funcion>();
+
+            //obtengo lista de peliculas con campo
             foreach (Pelicula p in Peliculas)
             {
                 if (p.Nombre == Pelicula)
