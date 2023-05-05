@@ -46,7 +46,6 @@ namespace TP1___GRUPO_C
 
         private void UsuarioComunLogueado()
         {
-
             pantallaLogin.Close();
             pantallaPrincipal.Show();
         }
@@ -60,12 +59,10 @@ namespace TP1___GRUPO_C
             pantallaABMAdmin.pantallaPrincipal += VolverPantallaPrincipal;
             pantallaABMAdmin.Show();
 
-
         }
 
         private void AbrirRegistro()
         {
-
             pantallaRegistro = new PantallaRegistro(cine);
             pantallaRegistro.MdiParent = this;
             pantallaRegistro.pantallaPrincipal += VolverPantallaPrincipal;
@@ -141,6 +138,7 @@ namespace TP1___GRUPO_C
             pantallaCargaFunciones.Close();
 
         }
+
         private void AbrirMiPerfil()
         {
             pantallaPrincipal.Hide();
@@ -149,8 +147,6 @@ namespace TP1___GRUPO_C
             PantallaMIPerfil.volverPantallaPrincipal += VolverPantallaPrincipal;
             PantallaMIPerfil.volverAtras += VolverAtrasPantallaPerfil;
             PantallaMIPerfil.Show();
-
-
         }
 
     }

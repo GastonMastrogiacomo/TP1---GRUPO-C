@@ -16,7 +16,6 @@ namespace TP1___GRUPO_C
     {
 
         private Cine miCine;
-
         public UsuarioComunLogueado usuarioComunLogueado;
         public UsuarioAdminLogueado usuarioAdminLogueado;
         public volverPantallaPrincipal pantallaPrincipal;
@@ -41,7 +40,6 @@ namespace TP1___GRUPO_C
 
             string mail = this.textBox1.Text;
             string pass = this.textBox2.Text;
-
             bool esAdmin = this.checkBox1.Checked;
 
             if (mail != null && mail != "" && pass != null & pass != "")
@@ -67,12 +65,9 @@ namespace TP1___GRUPO_C
         }
 
         
-
         private void button2_Click(object sender, EventArgs e)
         {
             this.pantallaPrincipal();
-
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)

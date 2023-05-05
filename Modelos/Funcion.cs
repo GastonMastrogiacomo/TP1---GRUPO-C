@@ -10,20 +10,17 @@ namespace TP1___GRUPO_C.Model
     public class Funcion
     {
 
-
         public int ID { get; set; }
-
         public static int ultimoID = 0;
-        
         public Sala MiSala { get; set; }
         public Pelicula MiPelicula { get; set; }
-        public List<Usuario> Clientes { get; set; }
+        public List<Usuario> Clientes;
         public DateTime Fecha { get; set; }
+        public int AsientosDisponibles { get; set; }
         public int CantidadClientes { get; set; } //CantidadEntradasCompradas
         public double Costo { get; set; }
 
-        public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha,
-            int CantidadClientes, double Costo)
+        public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha,int CantidadClientes, double Costo)
         {
             ultimoID++;
             this.ID = ultimoID;
@@ -33,13 +30,11 @@ namespace TP1___GRUPO_C.Model
             this.Fecha = Fecha;
             this.CantidadClientes = CantidadClientes;
             this.Costo = Costo;
-            
-
+            this.AsientosDisponibles = MiSala.Capacidad;
 
         }
 
-        public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha,
-           int CantidadClientes, double Costo, int ID)
+        public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha,int CantidadClientes, double Costo, int ID)
         {
             this.ID = ID;
             this.MiSala = MiSala;
@@ -48,17 +43,15 @@ namespace TP1___GRUPO_C.Model
             this.Fecha = Fecha;
             this.CantidadClientes = CantidadClientes;
             this.Costo = Costo;
+            this.AsientosDisponibles = MiSala.Capacidad;
 
 
 
         }
 
-        // ABM Clientes
-
         public bool AgregarCliente(Usuario usuario)
         {
 
-            //faltaria corroborar que el cliente no exista ya o quizas no dado que un cliente puede comprar mas entradas
             try
             {
                 Clientes.Add(usuario);
@@ -70,7 +63,6 @@ namespace TP1___GRUPO_C.Model
 
             }
         }
-
 
         public bool EliminarCliente(int IDCliente)
         {
@@ -86,7 +78,6 @@ namespace TP1___GRUPO_C.Model
             }
             return false;
         }
-
 
         public bool ModificarCliente(int IDCliente, Usuario cliente)
         {
@@ -119,24 +110,29 @@ namespace TP1___GRUPO_C.Model
             return IDClientes;
         }
 
+        public List<Usuario> MostrarClientes()
+        {
+            return this.Clientes.ToList();
+        }
+
         public string[] ToString()
         {
             string IdClientes = ExtraerIdClientes();
             if(MiSala != null && MiPelicula != null)
             {
-                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), IdClientes };
+                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), IdClientes, AsientosDisponibles.ToString() };
 
             }
             else if(MiSala == null && MiPelicula != null)
             {
-                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), "", "", MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), IdClientes };
+                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), "", "", MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), IdClientes, AsientosDisponibles.ToString() };
             }else if(MiSala != null && MiPelicula == null)
             {
-                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), "", "", IdClientes };
+                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), "", "", IdClientes, AsientosDisponibles.ToString() };
             }
             else
             {
-                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), "", "", "", "", IdClientes };
+                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), "", "", "", "", IdClientes, AsientosDisponibles.ToString() };
 
             }
         }

@@ -18,7 +18,6 @@ namespace TP1___GRUPO_C.Vistas
         private Usuario usuarioAuxiliar;
         public CerrarYGuardarPantallaEdicionFunciones cerrarYGuardarPantallaEdicionFunciones;
 
-
         public PantallaEdicionFunciones(Cine cine, Usuario usuarioAuxiliar)
         {
             InitializeComponent();
@@ -72,10 +71,6 @@ namespace TP1___GRUPO_C.Vistas
         private void Btn_Volver_Click(object sender, EventArgs e)
         {
 
-            // verificar si la funcion tiene tiene espacio antes de agregar la cantidad de entradas
-            //que pidio el clietne.
-
-            //verificar si el cliente tiene credito suficiente
             try
             {
                 List<Funcion> funciones = this.usuarioAuxiliar.ObtenerMisFunciones();
@@ -84,40 +79,25 @@ namespace TP1___GRUPO_C.Vistas
                 double costoEntradas = 0.0;
                 for (int i = 0; i < funciones.Count; i++)
                 {
-                    Funcion Funcion = miCine.ObtenerFuncionPorId(funciones[i].ID);
-                    NumericUpDown CantEntradas = this.Controls.Find("funcionNumUpDown-" + funciones[i].ID, true).FirstOrDefault() as NumericUpDown;
-                    if (CantEntradas != null)
+                    List<Funcion> funcionesCine = miCine.MostrarFunciones();
+                    Funcion func = funcionesCine.FirstOrDefault(f => f.ID == funciones[i].ID);
+
+                    if (func != null)
                     {
-                        int entradasDisponibles = Funcion.MiSala.Capacidad - Funcion.CantidadClientes;
-
-                        int entradasUsuario = int.Parse(CantEntradas.Value.ToString());
-
-                        if (entradasDisponibles >= entradasUsuario)
+                        NumericUpDown CantEntradas = this.Controls.Find("funcionNumUpDown-" + funciones[i].ID, true).FirstOrDefault() as NumericUpDown;
+                        if (CantEntradas != null)
                         {
-                            costoEntradas += Funcion.Costo * entradasUsuario;
-                            Funcion.CantidadClientes += entradasDisponibles;
-                            Funcion.AgregarCliente(usuarioAuxiliar);
-                            usuarioAuxiliar.Credito -= costoEntradas;
+                            this.Label_Credito.Text = usuarioAuxiliar.Credito.ToString();
+                            miCine.ComprarEntradaFuncionNotNull(usuarioAuxiliar, int.Parse(CantEntradas.Value.ToString()), func, func.ID);
+
                         }
                         else
                         {
-                            throw new InvalidOperationException("No hay más entradas para la función " + Funcion.MiPelicula.Nombre);
+                            throw new Exception("No se ingresaron cantidad de entradas para la funcion " + func.MiPelicula.Nombre);
                         }
-                    }
-                    else
-                    {
-                        throw new Exception("No se ingresaron cantidad de entradas para la funcion " + Funcion.MiPelicula.Nombre);
                     }
                 }
 
-                if (costoEntradas <= int.Parse(this.Label_Credito.Text))
-                {
-                    this.usuarioAuxiliar.Credito -= costoEntradas;
-                }
-                else
-                {
-                    throw new InvalidOperationException("El usuario no tiene credito suficiente");
-                }
                 cerrarYGuardarPantallaEdicionFunciones();
             }
             catch (Exception ex)

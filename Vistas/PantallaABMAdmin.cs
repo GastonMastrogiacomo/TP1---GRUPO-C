@@ -16,14 +16,13 @@ namespace TP1___GRUPO_C.Vistas
     {
 
         private Cine miCine;
+
+        public AbrirPantallaCargaFunciones abrirPantallaCargaFunciones;
+        public volverPantallaPrincipal pantallaPrincipal;
         private Usuario UsuarioAuxiliar;
         private Sala SalaAuxiliar;
         private Funcion FuncionAuxiliar;
         private Pelicula PeliculaAuxiliar;
-        public AbrirPantallaCargaFunciones abrirPantallaCargaFunciones;
-        public volverPantallaPrincipal pantallaPrincipal;
-
-
 
         public PantallaABMAdmin(Cine cine)
         {
@@ -41,12 +40,13 @@ namespace TP1___GRUPO_C.Vistas
         public delegate void AbrirPantallaCargaFunciones(Usuario usuarioAuxiliar);
 
         //GENERALES
+        //borrar
         private void PantallaABMAdmin_Load(object sender, EventArgs e)
         {
         }
+
         private void Pestañas_Selected(object sender, TabControlEventArgs e)
         {
-
             switch (Pestañas.SelectedIndex)
             {
 
@@ -79,17 +79,21 @@ namespace TP1___GRUPO_C.Vistas
 
 
         }
+
+        //borrar
+
         private void Pestañas_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
+
         private void Btn_CerrarSesion(object sender, EventArgs e)
         {
             miCine.CerrarSesion();
             pantallaPrincipal();
         }
 
-        //SALAS
+        //REFRESH SALA
         private void RefreshSalas()
         {
             dataGridSalas.Rows.Clear();
@@ -99,101 +103,13 @@ namespace TP1___GRUPO_C.Vistas
                 dataGridSalas.Rows.Add(sal.SalaToString());
             }
         }
+
         private void Btn_RefrescarSalas_Click(object sender, EventArgs e)
         {
             RefreshSalas();
         }
-        private void DataGridSalas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
 
-                string ID = dataGridSalas[0, e.RowIndex].Value.ToString();
-                this.Label_SalaId.Text = dataGridSalas[0, e.RowIndex].Value.ToString();
-                this.Input_Ubicacion.Text = dataGridSalas[1, e.RowIndex].Value.ToString();
-                this.Input_Capacidad.Text = dataGridSalas[2, e.RowIndex].Value.ToString();
-
-                List<Sala> salas = miCine.MostrarSalas();
-                this.SalaAuxiliar = salas.FirstOrDefault(s => s.ID == int.Parse(ID));
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-                MessageBox.Show("No existen filas en la tabla. Cree una!");
-            }
-
-        }
-        private void Salas_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Btn_NuevoSala_Click(object sender, EventArgs e)
-        {
-
-            string Ubicacion = this.Input_Ubicacion.Text;
-            int.TryParse(this.Label_SalaId.Text, out int DNI);
-            int.TryParse(this.Input_Capacidad.Text, out int Capacidad);
-
-            Sala nuevo = new Sala(Ubicacion, Capacidad);
-
-            if (miCine.AgregarSala(nuevo))
-            {
-                RefreshSalas();
-            }
-
-
-
-
-
-        }
-        private void Btn_ModificarSala_Click(object sender, EventArgs e)
-        {
-            int.TryParse(Label_SalaId.Text, out int ID);
-            string Ubicacion = this.Input_Ubicacion.Text;
-            int Capacidad = int.Parse(this.Input_Capacidad.Text);
-
-
-            Sala nuevo = new Sala(Ubicacion, Capacidad, ID);
-            if (miCine.ModificarSala(ID, nuevo))
-            {
-                RefreshSalas();
-            }
-        }
-        private void Btn_EliminarSala_Click(object sender, EventArgs e)
-        {
-            int.TryParse(Label_SalaId.Text, out int ID);
-
-            Sala sala = miCine.ObtenerSalaPorId(ID);
-
-            for (int i = 0; i < sala.MisFunciones.Count; i++)
-            {
-                Funcion funcionActual = sala.MisFunciones[i];
-                funcionActual.MiSala = null;
-                miCine.ModificarFuncion(funcionActual.ID, funcionActual);
-
-            }
-
-            if (miCine.EliminarSala(ID))
-            {
-                RefreshSalas();
-            }
-        }
-        private void Btn_VerFuncionesEnSalas_Click(object sender, EventArgs e)
-        {
-            if (SalaAuxiliar == null)
-            {
-                MessageBox.Show("Debe seleccionar una Sala primero.", "Sala not found", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else
-            {
-
-                //abrirPantallaCargaSalas(this.SalaAuxiliar);
-            }
-        }
-
-        //PELICULAS
+        //REFRESH PELICULA
         private void RefreshPeliculas()
         {
             dataGridPeliculas.Rows.Clear();
@@ -203,87 +119,20 @@ namespace TP1___GRUPO_C.Vistas
                 this.dataGridPeliculas.Rows.Add(pel.PeliculaToString());
             }
 
-            Cb_Funciones.Items.Clear();
+            this.CLB_Funciones.Items.Clear();
             foreach (Funcion f in miCine.MostrarFunciones())
             {
-                string stringFuncion = f.ID.ToString() + ", " + f.MiPelicula.Nombre + ". " + f.Fecha.ToString();
-                this.Cb_Funciones.Items.Add(stringFuncion);
+                string stringFunc = f.ID.ToString() + ", " + f.MiPelicula.Nombre + ". " + f.Fecha.ToString();
+                this.CLB_Funciones.Items.Add(stringFunc);
             }
         }
+
         private void Btn_RefrescarPeliculas(object sender, EventArgs e)
         {
             RefreshPeliculas();
         }
-        private void DataGridPeliculas_CellDoubleClick_2(object sender, DataGridViewCellEventArgs e)
-        {
-            this.Label_PeliculaId.Text = dataGridPeliculas[0, e.RowIndex].Value.ToString();
-            this.Input_Nombre_Pelicula.Text = dataGridPeliculas[1, e.RowIndex].Value.ToString();
-            this.Input_Descripcion.Text = dataGridPeliculas[2, e.RowIndex].Value.ToString();
-            this.Input_Sinopsis.Text = dataGridPeliculas[3, e.RowIndex].Value.ToString();
-            this.Input_Poster.Text = dataGridPeliculas[4, e.RowIndex].Value.ToString();
-            this.Input_Duracion.Text = dataGridPeliculas[5, e.RowIndex].Value.ToString();
-            this.Cb_Funciones.SelectedIndex = e.RowIndex;
 
-            List<Pelicula> peliculas = miCine.MostrarPeliculas();
-            this.PeliculaAuxiliar = peliculas.FirstOrDefault(p => p.ID == int.Parse(Label_PeliculaId.Text));
-        }
-        private void Btn_EliminarPelicula_Click(object sender, EventArgs e)
-        {
-            int.TryParse(Label_PeliculaId.Text, out int ID);
-
-            Pelicula peli = miCine.ObtenerPeliculaPorId(ID);
-
-            for (int i = 0; i < peli.MisFunciones.Count; i++)
-            {
-                Funcion funcionActual = peli.MisFunciones[i];
-                funcionActual.MiPelicula = null;
-                miCine.ModificarFuncion(funcionActual.ID, funcionActual);
-
-            }
-            if (miCine.EliminarPelicula(ID))
-            {
-                RefreshPeliculas();
-            }
-        }
-        private void Btn_ModificarPelicula_Click(object sender, EventArgs e)
-        {
-            int.TryParse(Label_PeliculaId.Text, out int ID);
-            string nombre = this.Input_Nombre_Pelicula.Text;
-            string descripcion = this.Input_Descripcion.Text;
-            string sinopsis = this.Input_Sinopsis.Text;
-            string poster = this.Input_Poster.Text;
-            int.TryParse(this.Input_Duracion.Text, out int duracion);
-
-            Pelicula nuevo = new Pelicula(nombre, descripcion, sinopsis, poster, duracion, ID);
-
-            if (miCine.ModificarPelicula(ID, nuevo))
-            {
-                RefreshPeliculas();
-            }
-
-
-        }
-        private void Btn_NuevoPelicula_Click(object sender, EventArgs e)
-        {
-
-            string nombre = this.Input_Nombre_Pelicula.Text;
-            string descripcion = this.Input_Descripcion.Text;
-            string sinopsis = this.Input_Sinopsis.Text;
-            string poster = this.Input_Poster.Text;
-
-            int.TryParse(this.Input_Duracion.Text, out int duracion);
-
-
-
-            Pelicula nuevo = new Pelicula(nombre, descripcion, sinopsis, poster, duracion);
-
-            if (miCine.AgregarPelicula(nuevo))
-            {
-                RefreshPeliculas();
-            }
-        }
-
-        //FUNCIONES
+        //REFRESH FUNCION
         private void RefreshFunciones()
         {
             dataGridFunciones.Rows.Clear();
@@ -313,10 +162,85 @@ namespace TP1___GRUPO_C.Vistas
 
 
         }
+
         private void Btn_RefrescarFunciones_Click(object sender, EventArgs e)
         {
             RefreshFunciones();
         }
+
+        //REFRESH USUARIO
+        private void RefreshUsuarios()
+        {
+            dataGridUsuarios.Rows.Clear();
+
+            foreach (Usuario user in miCine.MostrarUsuarios())
+            {
+                dataGridUsuarios.Rows.Add(user.ToString());
+            }
+        }
+
+        private void Btn_RefrescarUsuarios(object sender, EventArgs e)
+        {
+            RefreshUsuarios();
+        }
+
+        //TABLAS DATAGRID
+        private void DataGridSalas_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+
+                string ID = dataGridSalas[0, e.RowIndex].Value.ToString();
+                this.Label_SalaId.Text = dataGridSalas[0, e.RowIndex].Value.ToString();
+                this.Input_Ubicacion.Text = dataGridSalas[1, e.RowIndex].Value.ToString();
+                this.Input_Capacidad.Text = dataGridSalas[2, e.RowIndex].Value.ToString();
+
+                List<Sala> salas = miCine.MostrarSalas();
+                this.SalaAuxiliar = salas.FirstOrDefault(s => s.ID == int.Parse(ID));
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                MessageBox.Show("No existen filas en la tabla. Cree una!");
+            }
+
+        }
+
+        private void DataGridPeliculas_CellDoubleClick_2(object sender, DataGridViewCellEventArgs e)
+        {
+            this.Label_PeliculaId.Text = dataGridPeliculas[0, e.RowIndex].Value.ToString();
+            this.Input_Nombre_Pelicula.Text = dataGridPeliculas[1, e.RowIndex].Value.ToString();
+            this.Input_Descripcion.Text = dataGridPeliculas[2, e.RowIndex].Value.ToString();
+            this.Input_Sinopsis.Text = dataGridPeliculas[3, e.RowIndex].Value.ToString();
+            this.Input_Poster.Text = dataGridPeliculas[4, e.RowIndex].Value.ToString();
+            this.Input_Duracion.Text = dataGridPeliculas[5, e.RowIndex].Value.ToString();
+
+            string idFunciones = dataGridPeliculas[6, e.RowIndex].Value.ToString();
+
+            List<Funcion> funciones = miCine.MostrarFunciones();
+            if (idFunciones != "")
+            {
+                string[] ids = idFunciones.Split(", ");
+
+                for (int i = 0; i < funciones.Count; i++)
+                {
+                    CLB_Funciones.SetItemChecked(i, false);
+                    for (int j = 0; j < ids.Length; j++)
+                    {
+                        if (funciones[i].ID == int.Parse(ids[j]))
+                        {
+                            CLB_Funciones.SetItemChecked(i, true);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            List<Pelicula> peliculas = miCine.MostrarPeliculas();
+            this.PeliculaAuxiliar = peliculas.FirstOrDefault(p => p.ID == int.Parse(Label_PeliculaId.Text));
+        }
+
         private void DataGridFunciones_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
 
@@ -355,196 +279,7 @@ namespace TP1___GRUPO_C.Vistas
             this.FuncionAuxiliar = funciones.FirstOrDefault(f => f.ID == int.Parse(this.Label_FuncionId.Text));
 
         }
-        private void Btn_NuevaFuncion_Click(object sender, EventArgs e)
-        {
 
-
-            string salaSelected = (string)this.Cb_Salas.SelectedItem;
-            if (salaSelected != null && salaSelected != "")
-            {
-                string salaSelectedID = salaSelected.Split(",")[0];
-                List<Sala> salas = miCine.MostrarSalas();
-                Sala salaElegida = salas.FirstOrDefault(s => s.ID == int.Parse(salaSelectedID));
-
-                if (salaElegida != null)
-                {
-                    string peliSelected = (string)this.Cb_Peliculas.SelectedItem;
-
-                    if (peliSelected != null && peliSelected != "")
-                    {
-                        string peliSelectedID = peliSelected.Split(",")[0];
-                        List<Pelicula> peliculas = miCine.MostrarPeliculas();
-
-
-                        Pelicula peliElegida = peliculas.FirstOrDefault(p => p.ID == int.Parse(peliSelectedID));
-                        if (peliElegida != null)
-                        {
-
-                            int.TryParse(this.Input_CantidadClientes.Text, out int CantidadClientes);
-                            int.TryParse(this.Input_Costo.Text, out int Costo);
-
-                            if (Costo != 0)
-                            {
-                                DateTime Fecha = this.Selec_Fecha.Value;
-
-                                Funcion nuevo = new Funcion(salaElegida, peliElegida, Fecha, CantidadClientes, Costo);
-                                if (miCine.AgregarFuncion(nuevo))
-                                {
-                                    RefreshFunciones();
-                                }
-                            }
-                            else
-                            {
-                                MessageBox.Show("Asegurece de cargar un costo", "Faltan Datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                            }
-
-                        }
-                        else
-                        {
-                            MessageBox.Show("No se encontró la pelicula", "404 Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Asegurece de seleccionar una pelicula", "Faltan datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-
-                }
-                else
-                {
-                    MessageBox.Show("No se encontró la sala.", "404 Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-            }
-            else
-            {
-                MessageBox.Show("Asegurese de seleccionar una sala.", "Faltan datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-        }
-        private void Btn_ModificarFuncion_Click(object sender, EventArgs e)
-        {
-
-            string salaSelected = (string)this.Cb_Salas.SelectedItem;
-            if (salaSelected != null && salaSelected != "")
-            {
-                string salaSelectedID = salaSelected.Split(",")[0];
-                List<Sala> salas = miCine.MostrarSalas();
-                Sala salaElegida = salas.FirstOrDefault(s => s.ID == int.Parse(salaSelectedID));
-
-                if (salaElegida != null)
-                {
-                    string peliSelected = (string)this.Cb_Peliculas.SelectedItem;
-
-                    if (peliSelected != null && peliSelected != "")
-                    {
-                        string peliSelectedID = peliSelected.Split(",")[0];
-                        List<Pelicula> peliculas = miCine.MostrarPeliculas();
-
-
-                        Pelicula peliElegida = peliculas.FirstOrDefault(p => p.ID == int.Parse(peliSelectedID));
-                        if (peliElegida != null)
-                        {
-
-                            int.TryParse(Label_FuncionId.Text, out int ID);
-                            DateTime Fecha = this.Selec_Fecha.Value;
-                            int.TryParse(this.Input_CantidadClientes.Text, out int CantidadClientes);
-                            double.TryParse(this.Input_Costo.Text, out double Costo);
-
-                            Funcion nuevo = new Funcion(salaElegida, peliElegida, Fecha, CantidadClientes, Costo, ID);
-
-                            if (miCine.ModificarFuncion(ID, nuevo))
-                            {
-                                RefreshFunciones();
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("No se encontró la pelicula", "404 Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Asegurece de seleccionar una pelicula", "Faltan datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-
-                }
-                else
-                {
-                    MessageBox.Show("No se encontró la sala.", "404 Not Found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-
-            }
-            else
-            {
-                MessageBox.Show("Asegurese de seleccionar una sala.", "Faltan datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
-        }
-        private void Btn_EliminarFuncion_Click(object sender, EventArgs e)
-        {
-            int.TryParse(Label_FuncionId.Text, out int ID);
-
-            Funcion func = miCine.ObtenerFuncionPorId(ID);
-
-            for (int i = 0; i < func.Clientes.Count; i++)
-            {
-                Usuario user = func.Clientes[i];
-
-                for (int j = 0; j < user.ObtenerMisFunciones().Count; j++)
-                {
-                    if (user.ObtenerMisFunciones()[j].ID == ID)
-                    {
-                        user.EliminarFuncion(user.ObtenerMisFunciones()[j].ID);
-                        miCine.ModificarUsuario(user.ID, user);
-                        break;
-                    }
-                }
-                break;
-            }
-
-            Pelicula peli = miCine.ObtenerPeliculaPorId(func.MiPelicula.ID);
-
-
-            for (int i = 0; i < peli.ObtenerMisFunciones().Count; i++)
-            {
-                if (peli.ObtenerMisFunciones()[i].ID == ID)
-                {
-                    MessageBox.Show("peli id encontrado: " + peli.ObtenerMisFunciones()[i].ID);
-                    peli.EliminarFuncion(peli.ObtenerMisFunciones()[i].ID);
-                    miCine.ModificarPelicula(peli.ID, peli);
-                    break;
-                }
-            }
-
-            if (miCine.EliminarFuncion(ID))
-            {
-                RefreshFunciones();
-            }
-        }
-        private void Funciones_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        //USUARIOS
-        private void RefreshUsuarios()
-        {
-            dataGridUsuarios.Rows.Clear();
-
-            foreach (Usuario user in miCine.MostrarUsuarios())
-            {
-                dataGridUsuarios.Rows.Add(user.ToString());
-            }
-        }
-        private void Btn_RefrescarUsuarios(object sender, EventArgs e)
-        {
-            RefreshUsuarios();
-        }
         private void DataGridUsuarios_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             this.Label_IdUsuario.Text = dataGridUsuarios[0, e.RowIndex].Value.ToString();
@@ -566,6 +301,165 @@ namespace TP1___GRUPO_C.Vistas
             this.Selec_FechaDeNacimiento.Value = fecha;
             this.Cb_EsAdmin.Checked = bool.Parse(dataGridUsuarios[11, e.RowIndex].Value.ToString());
         }
+
+        //ABM SALA
+        private void Btn_NuevoSala_Click(object sender, EventArgs e)
+        {
+            string Ubicacion = this.Input_Ubicacion.Text;
+            int.TryParse(this.Input_Capacidad.Text, out int Capacidad);
+            if (miCine.AgregarSala(Capacidad, Ubicacion))
+            {
+                RefreshSalas();
+            }
+        }
+
+        private void Btn_ModificarSala_Click(object sender, EventArgs e)
+        {
+            int.TryParse(Label_SalaId.Text, out int ID);
+            string Ubicacion = this.Input_Ubicacion.Text;
+            int Capacidad = int.Parse(this.Input_Capacidad.Text);
+
+            List<Sala> salas = miCine.MostrarSalas();
+            Sala salaElegida = salas.FirstOrDefault(s => s.ID == ID);
+
+            if (miCine.ModificarSala(ID, Ubicacion, Capacidad, salaElegida.MisFunciones))
+            {
+                RefreshSalas();
+            }
+        }
+
+        private void Btn_EliminarSala_Click(object sender, EventArgs e)
+        {
+            int.TryParse(Label_SalaId.Text, out int ID);
+
+            if (miCine.EliminarSala(ID))
+            {
+                RefreshSalas();
+            }
+        }
+
+        //ABM FUNCION
+        private void Btn_NuevaFuncion_Click(object sender, EventArgs e)
+        {
+            string salaSelected = (string)this.Cb_Salas.SelectedItem;
+            int.TryParse(salaSelected.Split(",")[0], out int salaSelectedID);
+            string peliSelected = (string)this.Cb_Peliculas.SelectedItem;
+            int.TryParse(peliSelected.Split(",")[0], out int peliSelectedID);
+            int.TryParse(this.Input_CantidadClientes.Text, out int CantidadClientes);
+            int.TryParse(this.Input_Costo.Text, out int Costo);
+            DateTime Fecha = this.Selec_Fecha.Value;
+
+            if (miCine.AgregarFuncion(salaSelectedID, peliSelectedID, Fecha, CantidadClientes, Costo))
+            {
+                RefreshFunciones();
+            }
+
+        }
+
+        private void Btn_ModificarFuncion_Click(object sender, EventArgs e)
+        {
+
+            string salaSelected = (string)this.Cb_Salas.SelectedItem;
+            int.TryParse(salaSelected.Split(",")[0], out int salaSelectedID);
+            string peliSelected = (string)this.Cb_Peliculas.SelectedItem;
+            int.TryParse(peliSelected.Split(",")[0], out int peliSelectedID);
+            int.TryParse(Label_FuncionId.Text, out int ID);
+            DateTime Fecha = this.Selec_Fecha.Value;
+            int.TryParse(this.Input_CantidadClientes.Text, out int CantidadClientes);
+            double.TryParse(this.Input_Costo.Text, out double Costo);
+
+            List<Funcion> funciones = miCine.MostrarFunciones();
+
+            Funcion func = funciones.FirstOrDefault(f => f.ID == ID);
+            if (func != null)
+            {
+                if (miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, CantidadClientes, Costo, func.MostrarClientes()))
+                {
+                    RefreshFunciones();
+                }
+
+            }
+            else
+            {
+                MessageBox.Show("No se encontró la función.", "404 Not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
+        }
+
+        private void Btn_EliminarFuncion_Click(object sender, EventArgs e)
+        {
+            int.TryParse(Label_FuncionId.Text, out int ID);
+
+            if (miCine.EliminarFuncion(ID))
+            {
+                RefreshFunciones();
+            }
+        }
+
+        //ABM PELICULA
+        private void Btn_EliminarPelicula_Click(object sender, EventArgs e)
+        {
+            int.TryParse(Label_PeliculaId.Text, out int ID);
+
+            if (miCine.EliminarPelicula(ID))
+            {
+                RefreshPeliculas();
+            }
+        }
+
+        private void Btn_ModificarPelicula_Click(object sender, EventArgs e)
+        {
+            int.TryParse(Label_PeliculaId.Text, out int ID);
+            string nombre = this.Input_Nombre_Pelicula.Text;
+            string descripcion = this.Input_Descripcion.Text;
+            string sinopsis = this.Input_Sinopsis.Text;
+            string poster = this.Input_Poster.Text;
+            int.TryParse(this.Input_Duracion.Text, out int duracion);
+
+
+            List<Funcion> funcionesCine = miCine.MostrarFunciones();
+            List<Funcion> funcionesSelec = new List<Funcion>();
+
+
+
+            for (int i = 0; i < CLB_Funciones.Items.Count; i++)
+            {
+                CheckState st = CLB_Funciones.GetItemCheckState(i);
+                if (st.ToString() == "Checked")
+                {
+                    string idFunc = CLB_Funciones.Items[i].ToString().Split(",")[0];
+                    Funcion func = funcionesCine.FirstOrDefault(f => f.ID == int.Parse(idFunc));
+
+                    funcionesSelec.Add(func);
+
+                }
+            }
+
+            if (miCine.ModificarPelicula(ID, nombre, descripcion, sinopsis, poster, duracion, funcionesSelec))
+            {
+                RefreshPeliculas();
+            }
+
+
+        }
+
+        private void Btn_NuevoPelicula_Click(object sender, EventArgs e)
+        {
+
+            string nombre = this.Input_Nombre_Pelicula.Text;
+            string descripcion = this.Input_Descripcion.Text;
+            string sinopsis = this.Input_Sinopsis.Text;
+            string poster = this.Input_Poster.Text;
+            int.TryParse(this.Input_Duracion.Text, out int duracion);
+
+            if (miCine.AgregarPelicula(nombre, descripcion, sinopsis, poster, duracion))
+            {
+                RefreshPeliculas();
+            }
+        }
+
+        //ABM USUARIO
         private void Btn_NuevoUsuario_Click(object sender, EventArgs e)
         {
 
@@ -576,16 +470,17 @@ namespace TP1___GRUPO_C.Vistas
             string Pass = this.Input_Password.Text;
             DateTime FechaNacimiento = this.Selec_FechaDeNacimiento.Value;
             bool esAdmin = this.Cb_EsAdmin.Checked;
+            int.TryParse(this.Input_Credito.Text, out int credito);
 
-            Usuario nuevo = new Usuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin);
 
-            if (miCine.AgregarUsuario(nuevo))
+            if (miCine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, credito))
             {
                 RefreshUsuarios();
             }
 
 
         }
+
         private void Btn_ModificarUsuario_Click(object sender, EventArgs e)
         {
 
@@ -598,33 +493,31 @@ namespace TP1___GRUPO_C.Vistas
             string Pass = this.Input_Password.Text;
             DateTime FechaNacimiento = this.Selec_FechaDeNacimiento.Value;
             bool esAdmin = this.Cb_EsAdmin.Checked;
+            int.TryParse(Input_Credito.Text, out int Credito);
+            bool Bloqueda = this.Cb_Bloqueado.Checked;
+            int.TryParse(this.Input_IntentosFallidos.Text, out int IntentosFallidos);         
 
-            Usuario nuevo = new Usuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, ID);
-            if (miCine.ModificarUsuario(ID, nuevo))
+            List<Usuario> usuarios = miCine.MostrarUsuarios();
+            Usuario user = usuarios.FirstOrDefault(u => u.ID == ID);
+
+            if (miCine.ModificarUsuario(ID, DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, IntentosFallidos, Bloqueda, Credito, user.MisFunciones))
             {
                 RefreshUsuarios();
             }
         }
+
         private void Btn_EliminarUsuario_Click(object sender, EventArgs e)
         {
 
             int.TryParse(Label_IdUsuario.Text, out int ID);
-
-            Usuario user = miCine.ObtenerUsuarioPorId(ID);
-
-            for (int i = 0; i < user.MisFunciones.Count; i++)
-            {
-                Funcion funcionActual = user.MisFunciones[i];
-                funcionActual.EliminarCliente(ID);
-                miCine.ModificarFuncion(funcionActual.ID, funcionActual);
-
-            }
 
             if (miCine.EliminarUsuario(ID))
             {
                 RefreshUsuarios();
             }
         }
+
+        //OPCIONES USUARIO
         private void Btn_VerFunciones_Click(object sender, EventArgs e)
         {
             if (UsuarioAuxiliar == null)
@@ -638,6 +531,6 @@ namespace TP1___GRUPO_C.Vistas
             }
         }
 
-
     }
+
 }

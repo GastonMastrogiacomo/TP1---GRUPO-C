@@ -13,7 +13,7 @@ namespace TP1___GRUPO_C.Model
         public static int ultimoID = 0;
         public string Ubicacion { get; set; }
         public int Capacidad { get; set; }
-        public List<Funcion> MisFunciones { get; set; }
+        public List<Funcion> MisFunciones;
 
         public Sala(string Ubicacion, int Capacidad)
         {
@@ -32,6 +32,7 @@ namespace TP1___GRUPO_C.Model
             this.Capacidad = Capacidad;
             MisFunciones = new List<Funcion>();
         }
+
         public bool AgregarFuncion(Funcion funcion)
         {
             try
@@ -45,6 +46,7 @@ namespace TP1___GRUPO_C.Model
                 return false;
             }
         }
+
         public bool EliminarFuncion(int IDFuncion)
         {
             foreach (Funcion fun in MisFunciones)
@@ -58,6 +60,7 @@ namespace TP1___GRUPO_C.Model
             }
             return false;
         }
+
         public bool ModificarFuncion(int IDFuncion, Funcion funcion)
         {
             for (int i = 0; i < MisFunciones.Count; i++)
@@ -76,6 +79,12 @@ namespace TP1___GRUPO_C.Model
             }
             return false;
         }
+
+        public List<Funcion> ObtenerMisFunciones()
+        {
+            return MisFunciones.ToList();
+        }
+
         private string ExtraerIDFunciones()
         {
             string IDFunciones = "";
