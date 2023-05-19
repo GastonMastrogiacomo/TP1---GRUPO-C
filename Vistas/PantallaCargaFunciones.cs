@@ -115,8 +115,10 @@ namespace TP1___GRUPO_C.Vistas
             {
                 for (int i = 0; i < Clb_FuncionesUsuario.Items.Count; i++)
                 {
-                    //le sumo 1 xq antes lo reste en el indice del item.
+                    //le sumo 1 xq antes lo reste en el indice del item. (en la vista)
                     Funcion func = miCine.ObtenerFuncionPorId(i + 1);
+                    // re crear la funcion en el front y pasarsela al back
+                    // pero generaria una nueva linea cuando la funcion es otra
                     UsuarioAuxiliar.AgregarFuncion(func);
                 }
             }

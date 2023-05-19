@@ -46,7 +46,7 @@ namespace TP1___GRUPO_C.Model
             Pelicula mario2 = new Pelicula("Mario 2", "It's me Mario!", "Nintendo", "", 100);
             Peliculas.Add(mario2);
 
-            Funcion funcion1 = new Funcion(sala1, toyStory, fecha, 0, 10);
+            Funcion funcion1 = new Funcion(sala1, toyStory, fecha, 10);
             Funciones.Add(funcion1);
             toyStory.AgregarFuncion(funcion1);
             sala1.AgregarFuncion(funcion1);
@@ -55,7 +55,7 @@ namespace TP1___GRUPO_C.Model
             funcion1.AsientosDisponibles -= 1;
             funcion1.CantidadClientes += 1;
 
-            Funcion funcion2 = new Funcion(sala1, marioBros, fecha, 0, 15);
+            Funcion funcion2 = new Funcion(sala1, marioBros, fecha, 15);
             Funciones.Add(funcion2);
             marioBros.AgregarFuncion(funcion2);
             sala1.AgregarFuncion(funcion2);
@@ -65,12 +65,12 @@ namespace TP1___GRUPO_C.Model
             funcion2.CantidadClientes += 1;
 
 
-            Funcion funcion3 = new Funcion(sala2, marioBros, fecha, 0, 20);
+            Funcion funcion3 = new Funcion(sala2, marioBros, fecha, 20);
             Funciones.Add(funcion3);
             marioBros.AgregarFuncion(funcion3);
             sala2.AgregarFuncion(funcion3);
 
-            Funcion funcion4 = new Funcion(sala2, marioBros, fecha2, 0, 256);
+            Funcion funcion4 = new Funcion(sala2, marioBros, fecha2, 256);
             Funciones.Add(funcion4);
             marioBros.AgregarFuncion(funcion4);
             sala2.AgregarFuncion(funcion4);
@@ -81,7 +81,7 @@ namespace TP1___GRUPO_C.Model
 
 
 
-            Funcion funcion5 = new Funcion(sala1, mario2, fecha2, 0, 1500);
+            Funcion funcion5 = new Funcion(sala1, mario2, fecha2, 1500);
             Funciones.Add(funcion5);
             mario2.AgregarFuncion(funcion5);
             sala1.AgregarFuncion(funcion5);
@@ -122,7 +122,7 @@ namespace TP1___GRUPO_C.Model
                                         Usuario otro = new Usuario(DNI, Nombre, Apellido, Mail, Password, FechaNacimiento, EsAdmin);
                                         otro.Credito = credito;
                                         Usuarios.Add(otro);
-                                        MessageBox.Show("Usuario Registrado con exito! Revise su email para validar cuenta", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                        //MessageBox.Show("Usuario Registrado con exito! Revise su email para validar cuenta", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                         return true;
                                     }
 
@@ -192,19 +192,19 @@ namespace TP1___GRUPO_C.Model
                         Usuarios[i].EsAdmin = esAdmin;
 
 
-                        MessageBox.Show("Usuario modificado con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show("Usuario modificado con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return true;
                     }
 
                 }
 
-                MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 
             }
             else
             {
-                MessageBox.Show("Complete todos los campos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Complete todos los campos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             return false;
@@ -225,26 +225,29 @@ namespace TP1___GRUPO_C.Model
                         Funcion funcionActual = user.MisFunciones[i];
                         int cantidadEntradasSeleccionadas = user.EntradasCompradas[funcionActual.ID];
 
-                        DevolverEntradaFuncionNotNull(user, funcionActual, funcionActual.ID, cantidadEntradasSeleccionadas);
+                        if(DevolverEntradaFuncionNotNull(user, funcionActual, funcionActual.ID, cantidadEntradasSeleccionadas))
+                        {
+                            // Aca hay una condicion que se fija si devuelve todas las entradas antes de eliminar al usuario
+                            funcionActual.EliminarCliente(idUsuario);
+                        }
 
-                        funcionActual.EliminarCliente(idUsuario);
 
                     }
 
                     Usuarios.Remove(user);
-                    MessageBox.Show("El usuario fue eliminado", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show("El usuario fue eliminado", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     return true;
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(ex.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show(ex.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return false;
                 }
             }
             else
             {
-                MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -268,7 +271,7 @@ namespace TP1___GRUPO_C.Model
                         if (Costo > 0)
                         {
                             // Crear una nueva instancia de Funcion
-                            Funcion func = new Funcion(salaElegida, peliElegida, Fecha, CantidadClientes, Costo);
+                            Funcion func = new Funcion(salaElegida, peliElegida, Fecha, Costo);
 
                             // Agregar la función a la lista de funciones
                             Funciones.Add(func);
@@ -278,7 +281,7 @@ namespace TP1___GRUPO_C.Model
 
                             // Agregar la función a la lista de funciones de la película correspondiente
                             peliElegida.AgregarFuncion(func);
-                            MessageBox.Show("Función Agregada correctamente", "Todo ok!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            //MessageBox.Show("Función Agregada correctamente", "Todo ok!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
                         }
@@ -305,7 +308,7 @@ namespace TP1___GRUPO_C.Model
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.Message, "No se pudo guardar.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show(e.Message, "No se pudo guardar.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -334,9 +337,9 @@ namespace TP1___GRUPO_C.Model
                     break;
                 }
 
-                // Buscar la película asociada a la función y eliminar la función de su lista de funciones
-                Pelicula peli = Peliculas.FirstOrDefault(p => p.ID == func.MiPelicula.ID);
 
+                Pelicula peli = func.MiPelicula;
+         
                 for (int i = 0; i < peli.ObtenerMisFunciones().Count; i++)
                 {
                     if (peli.ObtenerMisFunciones()[i].ID == IDFuncion)
@@ -346,8 +349,7 @@ namespace TP1___GRUPO_C.Model
                     }
                 }
 
-                // Buscar la sala asociada a la función y eliminar la función de su lista de funciones
-                Sala sala = Salas.FirstOrDefault(s => s.ID == func.MiSala.ID);
+                Sala sala = func.MiSala;
 
                 for (int i = 0; i < sala.ObtenerMisFunciones().Count; i++)
                 {
@@ -360,20 +362,20 @@ namespace TP1___GRUPO_C.Model
 
                 // Eliminar la función de la lista de funciones
                 Funciones.Remove(func);
-                MessageBox.Show("Función eliminada con éxito.", "Todo ok!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("Función eliminada con éxito.", "Todo ok!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 return true;
             }
             else
             {
-                MessageBox.Show("No se pudo encontrar la funcion.", "404 Not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("No se pudo encontrar la funcion.", "404 Not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
 
             }
 
         }
 
-        public bool ModificarFuncion(int IDFuncion, int MiSalaId, int MiPeliculaId, DateTime Fecha, int CantidadClientes, double Costo, List<Usuario> Clientes)
+        public bool ModificarFuncion(int IDFuncion, int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo)
         {
             try
             {
@@ -392,7 +394,7 @@ namespace TP1___GRUPO_C.Model
 
                             if (Fecha >= DateTime.Today)
                             {
-                                if (CantidadClientes >= 0 && Costo > 0 && Clientes != null)
+                                if (func.CantidadClientes >= 0 && Costo > 0 && func.Clientes != null)
                                 {
 
                                     func.MiSala.EliminarFuncion(func.ID);
@@ -400,15 +402,15 @@ namespace TP1___GRUPO_C.Model
 
                                     func.MiSala = salaElegida;
                                     func.MiPelicula = peliElegida;
-                                    func.Clientes = Clientes;
+                                    
                                     func.Fecha = Fecha;
-                                    func.CantidadClientes = CantidadClientes;
+                                   
                                     func.Costo = Costo;
 
                                     func.MiSala.AgregarFuncion(func);
                                     func.MiPelicula.AgregarFuncion(func);
 
-                                    MessageBox.Show("Función modificada con éxito.", "Todo ok!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    //MessageBox.Show("Función modificada con éxito.", "Todo ok!", MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 }
                                 else
                                 {
@@ -447,7 +449,7 @@ namespace TP1___GRUPO_C.Model
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Datos incorrectos.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show(ex.Message, "Datos incorrectos.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -468,7 +470,7 @@ namespace TP1___GRUPO_C.Model
                         Sala nuevaSala = new Sala(Ubicacion, Capacidad);
                         Salas.Add(nuevaSala);
 
-                        MessageBox.Show("Sala agregada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show("Sala agregada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return true;
                     }
                     else
@@ -485,7 +487,7 @@ namespace TP1___GRUPO_C.Model
             }
             catch (Exception e)
             {
-                MessageBox.Show("Faltan datos" + e.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Faltan datos" + e.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return false;
         }
@@ -501,16 +503,17 @@ namespace TP1___GRUPO_C.Model
                 for (int i = 0; i < sala.MisFunciones.Count; i++)
                 {
                     Funcion funcionActual = sala.MisFunciones[i];
-                    funcionActual.MiSala = null;
+                    sala.EliminarFuncion(funcionActual.ID);
+                   // funcionActual.MiSala = null;
                 }
 
                 Salas.Remove(sala);
-                MessageBox.Show("La Sala fue eliminada", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("La Sala fue eliminada", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return true;
             }
             else
             {
-                MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -531,7 +534,7 @@ namespace TP1___GRUPO_C.Model
                         Salas[i].Capacidad = Capacidad;
                         Salas[i].Ubicacion = Ubicacion;
                         Salas[i].MisFunciones = MisFunciones;
-                        MessageBox.Show("Sala Modificada correctamente", "Todo ok!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show("Sala Modificada correctamente", "Todo ok!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         return true;
                     }
@@ -540,7 +543,7 @@ namespace TP1___GRUPO_C.Model
             }
             else
             {
-                MessageBox.Show("Complete todos los campos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Complete todos los campos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
@@ -567,7 +570,7 @@ namespace TP1___GRUPO_C.Model
                                     // De ser correctas creamos una nueva pelicula y la agregamos a la lista de peliculas
                                     Pelicula NuevaPelicula = new Pelicula(Nombre, Descripcion, Sinopsis, Poster, Duracion);
                                     Peliculas.Add(NuevaPelicula);
-                                    MessageBox.Show("Pelicula agregada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    //MessageBox.Show("Pelicula agregada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                                     return true;
                                 }
@@ -600,7 +603,7 @@ namespace TP1___GRUPO_C.Model
             }
             catch (Exception e)
             {
-                MessageBox.Show(e.ToString(), "Parametros incorrectos.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show(e.ToString(), "Parametros incorrectos.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             return false;
         }
@@ -617,22 +620,33 @@ namespace TP1___GRUPO_C.Model
                 for (int i = 0; i < peli.MisFunciones.Count; i++)
                 {
                     Funcion funcionActual = peli.MisFunciones[i];
-                    funcionActual.MiPelicula = null;
+                    peli.EliminarFuncion(funcionActual.ID);
+                    //funcionActual.MiPelicula = null;
                 }
 
                 Peliculas.Remove(peli);
-                MessageBox.Show("La Pelicula fue eliminada", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show("La Pelicula fue eliminada", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return true;
             }
             else
             {
-                MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
 
-        public bool ModificarPelicula(int IDPelicula, string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion, List<Funcion> MisFunciones)
+        public bool ModificarPelicula(int IDPelicula, string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion, List<string> IdFunciones)
         {
+
+                       List<Funcion> MisFunciones = new List<Funcion>();
+
+            for(int i = 0; i < IdFunciones.Count; i++)
+            {
+                int.TryParse(IdFunciones[i], out int idFunc);
+                Funcion func = MisFunciones.FirstOrDefault(f => f.ID == idFunc);
+                MisFunciones.Add(func);
+            }
+            
 
             if (IDPelicula != 0 && Nombre != null && Nombre != "" && Descripcion != null && Descripcion != "" && Sinopsis != null && Sinopsis != "" && Poster != null && Poster != "" && Duracion >= 0)
             {
@@ -668,7 +682,7 @@ namespace TP1___GRUPO_C.Model
                         }
 
 
-                        MessageBox.Show("Pelicula modificada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show("Pelicula modificada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return true;
                     }
                 }
@@ -694,19 +708,19 @@ namespace TP1___GRUPO_C.Model
                     if (importe > 0)
                     {
                         user.Credito += importe;
-                        MessageBox.Show("Creditos cargados con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        //MessageBox.Show("Creditos cargados con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return true;
                     }
                     else
                     {
-                        MessageBox.Show("Por favor, ingrese una cantidad de créditos válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        //MessageBox.Show("Por favor, ingrese una cantidad de créditos válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                     }
 
                 }
             }
+            //MessageBox.Show("Error al cargar los créditos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return false;
-            MessageBox.Show("Error al cargar los créditos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
         }
 
@@ -731,14 +745,14 @@ namespace TP1___GRUPO_C.Model
                 }
                 else
                 {
-                    MessageBox.Show("Por favor, inicia sesión.", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show("Por favor, inicia sesión.", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 return false;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show(ex.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
         }
@@ -753,7 +767,7 @@ namespace TP1___GRUPO_C.Model
                 {
 
                     return DevolverEntradaFuncionNotNull(UsuarioActual, funcion, idFuncion, cantidadEntradas);
-                   
+
 
 
                 }
@@ -764,7 +778,7 @@ namespace TP1___GRUPO_C.Model
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //MessageBox.Show(ex.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
         }
@@ -803,13 +817,14 @@ namespace TP1___GRUPO_C.Model
                             else if (user.IntentosFallidos < 3)
                             {
                                 user.IntentosFallidos += 1;
-                                MessageBox.Show("Email o contraseña incorrecta, intentalo nuevamente");
+                                //MessageBox.Show("Email o contraseña incorrecta, intentalo nuevamente");
+                              
 
                             }
                             else
                             {
                                 user.Bloqueado = true;
-                                MessageBox.Show("Ha alcanzado la cantidad de intentos. Usuario bloqueado");
+                                //MessageBox.Show("Ha alcanzado la cantidad de intentos. Usuario bloqueado");
 
                             }
                         }
@@ -857,35 +872,6 @@ namespace TP1___GRUPO_C.Model
             return Peliculas.ToList();
         }
 
-        //MOSTRAR POR ID
-        public Usuario ObtenerUsuarioPorId(int ID)
-        {
-            foreach (Usuario user in Usuarios)
-            {
-
-                if (user.ID == ID)
-                {
-                    return user;
-                }
-            }
-
-            throw new InvalidDataException("El ID no se encontró en la base de datos.");
-        }
-
-        public Sala ObtenerSalaPorId(int ID)
-        {
-            foreach (Sala sal in Salas)
-            {
-
-                if (sal.ID == ID)
-                {
-                    return sal;
-                }
-            }
-
-            throw new InvalidDataException("El ID no se encontró en la base de datos.");
-        }
-
         public Funcion ObtenerFuncionPorId(int ID)
         {
             foreach (Funcion func in Funciones)
@@ -900,20 +886,6 @@ namespace TP1___GRUPO_C.Model
 
         }
 
-        public Pelicula ObtenerPeliculaPorId(int ID)
-        {
-            foreach (Pelicula pel in Peliculas)
-            {
-
-                if (pel.ID == ID)
-                {
-                    return pel;
-                }
-            }
-
-            throw new InvalidDataException("El ID no se encontró en la base de datos.");
-        }
-
         public List<Funcion> BuscarFuncion(string pelicula, string ubicacion, DateTime fecha, int precioMinimo, int precioMaximo)
         {
             List<Funcion> funcionesEncontradas = new List<Funcion>();
@@ -923,6 +895,7 @@ namespace TP1___GRUPO_C.Model
                 foreach (Funcion fun in Funciones)
                 {
                     bool cumpleRequisitos = true;
+                 
 
                     if (fun.Fecha >= DateTime.Today)
                     {
@@ -937,9 +910,14 @@ namespace TP1___GRUPO_C.Model
                             }
                         }
 
+
                         // Lo mismo con ubicacion
+                        // IsNullOrEmpty(ubicacion) --> devuelve true si no encuenrta valor en el campo
+                        // si esto es false entonces es porque tengo un valor
+
                         if (!string.IsNullOrEmpty(ubicacion))
                         {
+                            // yo quiero que esto sea igual para no modificar el flag
                             if (fun.MiSala.Ubicacion != ubicacion)
                             {
                                 cumpleRequisitos = false;
@@ -968,8 +946,6 @@ namespace TP1___GRUPO_C.Model
                     else
                     {
                         cumpleRequisitos = false;
-
-
                     }
 
                     if (cumpleRequisitos)
@@ -1093,7 +1069,7 @@ namespace TP1___GRUPO_C.Model
                     throw new InvalidOperationException("Créditos insuficientes.");
                 }
 
-             
+
             }
             else
             {

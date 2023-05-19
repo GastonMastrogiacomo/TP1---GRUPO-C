@@ -239,6 +239,8 @@ namespace TP1___GRUPO_C
                 if (cine.ComprarEntrada(idFuncionSeleccionada, cantEntradas))
                 {
                     MostrarFuncionesEnDataGridView();
+                    MessageBox.Show("Entrada comprada con exito.");
+
                 }
                 else
                 {

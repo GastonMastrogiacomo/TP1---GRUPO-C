@@ -128,7 +128,10 @@ namespace TP1___GRUPO_C.Vistas
             if (miCine.CargarCredito(usuarioActual.ID, cantidadCreditos))
             {
                 Label_MiCredito.Text = usuarioActual.Credito.ToString();
-
+                MessageBox.Show("Credito cargado con exito!");
+            }
+            else{
+                MessageBox.Show("No se pudo cargar el credito!");
             }
 
 

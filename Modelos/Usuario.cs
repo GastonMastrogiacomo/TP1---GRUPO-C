@@ -46,7 +46,7 @@ namespace TP1___GRUPO_C.Model
 
 
 
-        //ABM Funcion
+        //Eliminar, se encarga el Cine
         public bool AgregarFuncion(Funcion funcion)
         {
             try
@@ -70,6 +70,7 @@ namespace TP1___GRUPO_C.Model
             }
         }
 
+        //Eliminar, se encarga el Cine
         public bool EliminarFuncion(int IDFuncion)
         {
             foreach (Funcion func in MisFunciones)
@@ -79,19 +80,6 @@ namespace TP1___GRUPO_C.Model
                     MisFunciones.Remove(func);
                     return true;
 
-                }
-            }
-            return false;
-        }
-
-        public bool ModificarFuncion(int IDFuncion, Funcion funcion)
-        {
-            for (int i = 0; i < MisFunciones.Count; i++)
-            {
-                if (MisFunciones[i].ID == IDFuncion)
-                {
-                    MisFunciones[i] = funcion;
-                    return true;
                 }
             }
             return false;
@@ -144,6 +132,8 @@ namespace TP1___GRUPO_C.Model
 
         }
 
+
+        //modificar andy implementacion
         private string ExtraerIDFunciones()
         {
             string IDFunciones = "";

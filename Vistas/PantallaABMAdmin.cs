@@ -356,6 +356,8 @@ namespace TP1___GRUPO_C.Vistas
 
         }
 
+
+
         private void Btn_ModificarFuncion_Click(object sender, EventArgs e)
         {
 
@@ -365,25 +367,18 @@ namespace TP1___GRUPO_C.Vistas
             int.TryParse(peliSelected.Split(",")[0], out int peliSelectedID);
             int.TryParse(Label_FuncionId.Text, out int ID);
             DateTime Fecha = this.Selec_Fecha.Value;
-            int.TryParse(this.Input_CantidadClientes.Text, out int CantidadClientes);
             double.TryParse(this.Input_Costo.Text, out double Costo);
 
-            List<Funcion> funciones = miCine.MostrarFunciones();
-
-            Funcion func = funciones.FirstOrDefault(f => f.ID == ID);
-            if (func != null)
+            if (miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, Costo))
             {
-                if (miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, CantidadClientes, Costo, func.MostrarClientes()))
-                {
-                    RefreshFunciones();
-                }
-
+                RefreshFunciones();
+                MessageBox.Show("Funcion modificada con exito!");
             }
             else
             {
-                MessageBox.Show("No se encontró la función.", "404 Not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
 
+                MessageBox.Show("Funcion no se pudo modificar");
+            }
 
         }
 
@@ -418,8 +413,7 @@ namespace TP1___GRUPO_C.Vistas
             int.TryParse(this.Input_Duracion.Text, out int duracion);
 
 
-            List<Funcion> funcionesCine = miCine.MostrarFunciones();
-            List<Funcion> funcionesSelec = new List<Funcion>();
+            List<string> funcionesSelec = new List<string>();
 
 
 
@@ -429,9 +423,7 @@ namespace TP1___GRUPO_C.Vistas
                 if (st.ToString() == "Checked")
                 {
                     string idFunc = CLB_Funciones.Items[i].ToString().Split(",")[0];
-                    Funcion func = funcionesCine.FirstOrDefault(f => f.ID == int.Parse(idFunc));
-
-                    funcionesSelec.Add(func);
+                    funcionesSelec.Add(idFunc);
 
                 }
             }
@@ -495,7 +487,7 @@ namespace TP1___GRUPO_C.Vistas
             bool esAdmin = this.Cb_EsAdmin.Checked;
             int.TryParse(Input_Credito.Text, out int Credito);
             bool Bloqueda = this.Cb_Bloqueado.Checked;
-            int.TryParse(this.Input_IntentosFallidos.Text, out int IntentosFallidos);         
+            int.TryParse(this.Input_IntentosFallidos.Text, out int IntentosFallidos);
 
             List<Usuario> usuarios = miCine.MostrarUsuarios();
             Usuario user = usuarios.FirstOrDefault(u => u.ID == ID);

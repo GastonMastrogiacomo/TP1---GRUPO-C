@@ -70,6 +70,7 @@
             Id_Pelicula = new DataGridViewTextBoxColumn();
             Nombre_Pelicula = new DataGridViewTextBoxColumn();
             IDS_Clientes_Arr = new DataGridViewTextBoxColumn();
+            Asientos_Disponibles = new DataGridViewTextBoxColumn();
             Películas = new TabPage();
             CLB_Funciones = new CheckedListBox();
             Label_PeliculaId = new Label();
@@ -137,7 +138,6 @@
             EsAdmin = new DataGridViewTextBoxColumn();
             LabelBienvenida = new Label();
             Btn_CerrarSesionAdmin = new Button();
-            Asientos_Disponibles = new DataGridViewTextBoxColumn();
             Pestañas.SuspendLayout();
             Salas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridSalas).BeginInit();
@@ -356,6 +356,7 @@
             // 
             Input_CantidadClientes.Location = new Point(333, 78);
             Input_CantidadClientes.Name = "Input_CantidadClientes";
+            Input_CantidadClientes.ReadOnly = true;
             Input_CantidadClientes.Size = new Size(100, 23);
             Input_CantidadClientes.TabIndex = 46;
             // 
@@ -523,6 +524,12 @@
             IDS_Clientes_Arr.HeaderText = "IDS_Clientes_Arr";
             IDS_Clientes_Arr.Name = "IDS_Clientes_Arr";
             IDS_Clientes_Arr.ReadOnly = true;
+            // 
+            // Asientos_Disponibles
+            // 
+            Asientos_Disponibles.HeaderText = "Asientos_Disponibles";
+            Asientos_Disponibles.Name = "Asientos_Disponibles";
+            Asientos_Disponibles.ReadOnly = true;
             // 
             // Películas
             // 
@@ -1112,12 +1119,6 @@
             Btn_CerrarSesionAdmin.Text = "Cerrar Sesión";
             Btn_CerrarSesionAdmin.UseVisualStyleBackColor = true;
             Btn_CerrarSesionAdmin.Click += Btn_CerrarSesion;
-            // 
-            // Asientos_Disponibles
-            // 
-            Asientos_Disponibles.HeaderText = "Asientos_Disponibles";
-            Asientos_Disponibles.Name = "Asientos_Disponibles";
-            Asientos_Disponibles.ReadOnly = true;
             // 
             // PantallaABMAdmin
             // 
