@@ -93,28 +93,10 @@ namespace TP1___GRUPO_C.Model
             return MisFunciones.ToList();
         }
 
-        private string ExtraerIDFunciones()
-        {
-            string IDFunciones = "";
-            foreach (Funcion func in MisFunciones)
-            {
-                if (IDFunciones == "")
-                {
-                    IDFunciones += func.ID;
-                }
-                else
-                {
-                    IDFunciones += ", " + func.ID;
-                }
-            }
-
-            return IDFunciones;
-        }
 
         public string[] PeliculaToString()
         {
-            string FuncionesIDs = ExtraerIDFunciones();
-            return new string[] { ID.ToString(), Nombre.ToString(), Descripcion.ToString(), Sinopsis.ToString(), Poster.ToString(), Duracion.ToString(), FuncionesIDs };
+            return new string[] { ID.ToString(), Nombre.ToString(), Descripcion.ToString(), Sinopsis.ToString(), Poster.ToString(), Duracion.ToString() };
         }
     }
 }

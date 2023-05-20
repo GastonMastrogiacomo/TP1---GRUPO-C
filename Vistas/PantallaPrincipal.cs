@@ -47,6 +47,10 @@ namespace TP1___GRUPO_C
                 Label_MiCredito_Principal.Hide();
                 label8.Hide();
             }
+            else if(cine.UsuarioActual != null)
+            {
+                this.Label_MiCredito_Principal.Text = cine.UsuarioActual.Credito.ToString();
+            }
 
         }
 

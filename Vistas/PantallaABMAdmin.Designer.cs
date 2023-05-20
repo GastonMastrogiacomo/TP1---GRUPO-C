@@ -43,7 +43,6 @@
             ID = new DataGridViewTextBoxColumn();
             Ubicacion = new DataGridViewTextBoxColumn();
             Capacidad = new DataGridViewTextBoxColumn();
-            ID_Funciones_Arr = new DataGridViewTextBoxColumn();
             Funciones = new TabPage();
             Label_FuncionId = new Label();
             Input_Costo = new TextBox();
@@ -90,13 +89,6 @@
             label17 = new Label();
             label18 = new Label();
             dataGridPeliculas = new DataGridView();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
-            Descripcion = new DataGridViewTextBoxColumn();
-            Sinopsis = new DataGridViewTextBoxColumn();
-            Poster = new DataGridViewTextBoxColumn();
-            Duracion = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn6 = new DataGridViewTextBoxColumn();
             Usuarios = new TabPage();
             Label_IdUsuario = new Label();
             Btn_VerFunciones = new Button();
@@ -132,12 +124,17 @@
             Password = new DataGridViewTextBoxColumn();
             IntentosFallidos = new DataGridViewTextBoxColumn();
             Bloquedo = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
             Credito = new DataGridViewTextBoxColumn();
             FechaNacimiento = new DataGridViewTextBoxColumn();
             EsAdmin = new DataGridViewTextBoxColumn();
             LabelBienvenida = new Label();
             Btn_CerrarSesionAdmin = new Button();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
+            Descripcion = new DataGridViewTextBoxColumn();
+            Sinopsis = new DataGridViewTextBoxColumn();
+            Poster = new DataGridViewTextBoxColumn();
+            Duracion = new DataGridViewTextBoxColumn();
             Pestañas.SuspendLayout();
             Salas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridSalas).BeginInit();
@@ -269,7 +266,7 @@
             // 
             dataGridSalas.AllowUserToOrderColumns = true;
             dataGridSalas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridSalas.Columns.AddRange(new DataGridViewColumn[] { ID, Ubicacion, Capacidad, ID_Funciones_Arr });
+            dataGridSalas.Columns.AddRange(new DataGridViewColumn[] { ID, Ubicacion, Capacidad });
             dataGridSalas.Location = new Point(3, 129);
             dataGridSalas.Name = "dataGridSalas";
             dataGridSalas.RowTemplate.Height = 25;
@@ -294,12 +291,6 @@
             Capacidad.HeaderText = "Capacidad";
             Capacidad.Name = "Capacidad";
             Capacidad.ReadOnly = true;
-            // 
-            // ID_Funciones_Arr
-            // 
-            ID_Funciones_Arr.HeaderText = "Funciones_Arr";
-            ID_Funciones_Arr.Name = "ID_Funciones_Arr";
-            ID_Funciones_Arr.ReadOnly = true;
             // 
             // Funciones
             // 
@@ -709,55 +700,13 @@
             // 
             dataGridPeliculas.AllowUserToOrderColumns = true;
             dataGridPeliculas.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridPeliculas.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, Descripcion, Sinopsis, Poster, Duracion, dataGridViewTextBoxColumn6 });
+            dataGridPeliculas.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn4, dataGridViewTextBoxColumn5, Descripcion, Sinopsis, Poster, Duracion });
             dataGridPeliculas.Location = new Point(3, 128);
             dataGridPeliculas.Name = "dataGridPeliculas";
             dataGridPeliculas.RowTemplate.Height = 25;
             dataGridPeliculas.Size = new Size(768, 194);
             dataGridPeliculas.TabIndex = 49;
             dataGridPeliculas.CellDoubleClick += DataGridPeliculas_CellDoubleClick_2;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.HeaderText = "ID";
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn5
-            // 
-            dataGridViewTextBoxColumn5.HeaderText = "Nombre";
-            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            dataGridViewTextBoxColumn5.ReadOnly = true;
-            // 
-            // Descripcion
-            // 
-            Descripcion.HeaderText = "Descripcion";
-            Descripcion.Name = "Descripcion";
-            Descripcion.ReadOnly = true;
-            // 
-            // Sinopsis
-            // 
-            Sinopsis.HeaderText = "Sinopsis";
-            Sinopsis.Name = "Sinopsis";
-            Sinopsis.ReadOnly = true;
-            // 
-            // Poster
-            // 
-            Poster.HeaderText = "Poster";
-            Poster.Name = "Poster";
-            Poster.ReadOnly = true;
-            // 
-            // Duracion
-            // 
-            Duracion.HeaderText = "Duracion";
-            Duracion.Name = "Duracion";
-            Duracion.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn6
-            // 
-            dataGridViewTextBoxColumn6.HeaderText = "ID_Funciones_Arr";
-            dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            dataGridViewTextBoxColumn6.ReadOnly = true;
             // 
             // Usuarios
             // 
@@ -1018,7 +967,7 @@
             // 
             dataGridUsuarios.AllowUserToOrderColumns = true;
             dataGridUsuarios.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridUsuarios.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, DNI, Nombre, Apellido, Mail, Password, IntentosFallidos, Bloquedo, dataGridViewTextBoxColumn2, Credito, FechaNacimiento, EsAdmin });
+            dataGridUsuarios.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn1, DNI, Nombre, Apellido, Mail, Password, IntentosFallidos, Bloquedo, Credito, FechaNacimiento, EsAdmin });
             dataGridUsuarios.Location = new Point(4, 152);
             dataGridUsuarios.Name = "dataGridUsuarios";
             dataGridUsuarios.RowTemplate.Height = 25;
@@ -1074,12 +1023,6 @@
             Bloquedo.Name = "Bloquedo";
             Bloquedo.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.HeaderText = "ID_Funciones_Arr";
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
             // Credito
             // 
             Credito.HeaderText = "Credito";
@@ -1119,6 +1062,42 @@
             Btn_CerrarSesionAdmin.Text = "Cerrar Sesión";
             Btn_CerrarSesionAdmin.UseVisualStyleBackColor = true;
             Btn_CerrarSesionAdmin.Click += Btn_CerrarSesion;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.HeaderText = "ID";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewTextBoxColumn5.HeaderText = "Nombre";
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            dataGridViewTextBoxColumn5.ReadOnly = true;
+            // 
+            // Descripcion
+            // 
+            Descripcion.HeaderText = "Descripcion";
+            Descripcion.Name = "Descripcion";
+            Descripcion.ReadOnly = true;
+            // 
+            // Sinopsis
+            // 
+            Sinopsis.HeaderText = "Sinopsis";
+            Sinopsis.Name = "Sinopsis";
+            Sinopsis.ReadOnly = true;
+            // 
+            // Poster
+            // 
+            Poster.HeaderText = "Poster";
+            Poster.Name = "Poster";
+            Poster.ReadOnly = true;
+            // 
+            // Duracion
+            // 
+            Duracion.HeaderText = "Duracion";
+            Duracion.Name = "Duracion";
+            Duracion.ReadOnly = true;
             // 
             // PantallaABMAdmin
             // 
@@ -1231,22 +1210,6 @@
         private Label Label_FuncionId;
         private Label Label_PeliculaId;
         private Button Btn_EliminarFuncion;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private DataGridViewTextBoxColumn DNI;
-        private DataGridViewTextBoxColumn Nombre;
-        private DataGridViewTextBoxColumn Apellido;
-        private DataGridViewTextBoxColumn Mail;
-        private DataGridViewTextBoxColumn Password;
-        private DataGridViewTextBoxColumn IntentosFallidos;
-        private DataGridViewTextBoxColumn Bloquedo;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private DataGridViewTextBoxColumn Credito;
-        private DataGridViewTextBoxColumn FechaNacimiento;
-        private DataGridViewTextBoxColumn EsAdmin;
-        private DataGridViewTextBoxColumn ID;
-        private DataGridViewTextBoxColumn Ubicacion;
-        private DataGridViewTextBoxColumn Capacidad;
-        private DataGridViewTextBoxColumn ID_Funciones_Arr;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private DataGridViewTextBoxColumn Fecha;
         private DataGridViewTextBoxColumn Cant_Clientes;
@@ -1255,15 +1218,28 @@
         private DataGridViewTextBoxColumn Capacidad_MiSala;
         private DataGridViewTextBoxColumn Id_Pelicula;
         private DataGridViewTextBoxColumn Nombre_Pelicula;
+        private DataGridViewTextBoxColumn IDS_Clientes_Arr;
+        private CheckedListBox CLB_Funciones;
+        private DataGridViewTextBoxColumn Asientos_Disponibles;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private DataGridViewTextBoxColumn DNI;
+        private DataGridViewTextBoxColumn Nombre;
+        private DataGridViewTextBoxColumn Apellido;
+        private DataGridViewTextBoxColumn Mail;
+        private DataGridViewTextBoxColumn Password;
+        private DataGridViewTextBoxColumn IntentosFallidos;
+        private DataGridViewTextBoxColumn Bloquedo;
+        private DataGridViewTextBoxColumn Credito;
+        private DataGridViewTextBoxColumn FechaNacimiento;
+        private DataGridViewTextBoxColumn EsAdmin;
+        private DataGridViewTextBoxColumn ID;
+        private DataGridViewTextBoxColumn Ubicacion;
+        private DataGridViewTextBoxColumn Capacidad;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
         private DataGridViewTextBoxColumn Descripcion;
         private DataGridViewTextBoxColumn Sinopsis;
         private DataGridViewTextBoxColumn Poster;
         private DataGridViewTextBoxColumn Duracion;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn6;
-        private DataGridViewTextBoxColumn IDS_Clientes_Arr;
-        private CheckedListBox CLB_Funciones;
-        private DataGridViewTextBoxColumn Asientos_Disponibles;
     }
 }

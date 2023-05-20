@@ -62,7 +62,7 @@ namespace TP1___GRUPO_C
                 }
                 else
                 {
-                    MessageBox.Show(mensaje,"Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(mensaje,"Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
                 

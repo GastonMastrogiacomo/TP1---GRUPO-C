@@ -90,24 +90,7 @@ namespace TP1___GRUPO_C.Model
             return false;
         }
 
-        private string ExtraerIdClientes()
-        {
-            string IDClientes = "";
-            foreach (Usuario cli in Clientes)
-            {
-                if (IDClientes == "")
-                {
-                    IDClientes += cli.ID;
-                }
-                else
-                {
-                    IDClientes += ", " + cli.ID;
-                }
-            }
-
-            return IDClientes;
-        }
-
+       
         public List<Usuario> MostrarClientes()
         {
             return this.Clientes.ToList();
@@ -115,22 +98,22 @@ namespace TP1___GRUPO_C.Model
 
         public string[] ToString()
         {
-            string IdClientes = ExtraerIdClientes();
+           
             if(MiSala != null && MiPelicula != null)
             {
-                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), IdClientes, AsientosDisponibles.ToString() };
+                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(),  AsientosDisponibles.ToString() };
 
             }
             else if(MiSala == null && MiPelicula != null)
             {
-                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), "", "", MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), IdClientes, AsientosDisponibles.ToString() };
+                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), "", "", MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), AsientosDisponibles.ToString() };
             }else if(MiSala != null && MiPelicula == null)
             {
-                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), "", "", IdClientes, AsientosDisponibles.ToString() };
+                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), "", "", AsientosDisponibles.ToString() };
             }
             else
             {
-                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), "", "", "", "", IdClientes, AsientosDisponibles.ToString() };
+                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), "", "", "", "", AsientosDisponibles.ToString() };
 
             }
         }

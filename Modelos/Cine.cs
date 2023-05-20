@@ -231,23 +231,30 @@ namespace TP1___GRUPO_C.Model
                     for (int i = 0; i < user.MisFunciones.Count; i++)
                     {
                         Funcion funcionActual = user.MisFunciones[i];
-                        int cantidadEntradasSeleccionadas = user.EntradasCompradas[funcionActual.ID];
+                       
 
-                        if (DevolverEntradaFuncionNotNull(user, funcionActual, funcionActual.ID, cantidadEntradasSeleccionadas))
+                        if(funcionActual != null)
+
                         {
+                            int cantidadEntradasSeleccionadas = user.EntradasCompradas[funcionActual.ID];
+                            DevolverEntrada(user, funcionActual.ID, cantidadEntradasSeleccionadas);
+
                             // Aca hay una condicion que se fija si devuelve todas las entradas antes de eliminar al usuario
                             funcionActual.EliminarCliente(idUsuario);
                         }
+                       
+                       
 
 
                     }
 
                     Usuarios.Remove(user);
 
-                    return 204;
+                    return 200;
                 }
                 catch (Exception ex)
                 {
+                    MessageBox.Show(ex.Message);
                     Console.WriteLine(ex.Message);
                     return 500;
                 }
@@ -514,7 +521,7 @@ namespace TP1___GRUPO_C.Model
 
                 Salas.Remove(sala);
 
-                return 204;
+                return 200;
             }
             else
             {
@@ -760,7 +767,7 @@ namespace TP1___GRUPO_C.Model
             }
         }
 
-        public int DevolverEntrada(int idFuncion, int cantidadEntradas)
+        public int DevolverEntrada(Usuario user,  int idFuncion, int cantidadEntradas)
         {
             try
             {
@@ -768,8 +775,8 @@ namespace TP1___GRUPO_C.Model
 
                 if (funcion != null)
                 {
-
-                    DevolverEntradaFuncionNotNull(UsuarioActual, funcion, idFuncion, cantidadEntradas);
+                    // Ver despues de eliminar idFuncion como firma ya que es innecesario
+                    DevolverEntradaFuncionNotNull(user, funcion, idFuncion, cantidadEntradas);
                     return 200;
 
 

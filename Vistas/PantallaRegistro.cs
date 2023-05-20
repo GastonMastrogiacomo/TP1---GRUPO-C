@@ -35,6 +35,7 @@ namespace TP1___GRUPO_C
             string Mail = this.textBoxMail.Text;
             string Pass = this.textBoxPass.Text;
             DateTime FechaNacimiento = dateTimePicker1.Value.Date;
+          
             bool esAdmin = checkBox1.Checked;
 
             int peticion = cine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, 0);
@@ -42,7 +43,7 @@ namespace TP1___GRUPO_C
             if (peticion == 200) { 
             this.pantallaPrincipal();
             }
-            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
 
         }

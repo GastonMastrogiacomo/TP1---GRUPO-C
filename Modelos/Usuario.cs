@@ -133,24 +133,7 @@ namespace TP1___GRUPO_C.Model
         }
 
 
-        ////modificar andy implementacion
-        //private string ExtraerIDFunciones()
-        //{
-        //    string IDFunciones = "";
-        //    foreach (Funcion func in MisFunciones)
-        //    {
-        //        if (IDFunciones == "")
-        //        {
-        //            IDFunciones += func.ID;
-        //        }
-        //        else
-        //        {
-        //            IDFunciones += ", " + func.ID;
-        //        }
-        //    }
 
-        //    return IDFunciones;
-        //}
 
         public string[] ToString()
         {

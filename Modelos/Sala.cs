@@ -85,29 +85,13 @@ namespace TP1___GRUPO_C.Model
             return MisFunciones.ToList();
         }
 
-        private string ExtraerIDFunciones()
-        {
-            string IDFunciones = "";
-            foreach (Funcion func in MisFunciones)
-            {
-                if (IDFunciones == "")
-                {
-                    IDFunciones += func.ID;
-                }
-                else
-                {
-                    IDFunciones += ", " + func.ID;
-                }
-            }
-
-            return IDFunciones;
-        }
+     
 
         // obtenerUbicaciones
         public string[] SalaToString()
         {
-            string FuncionesIDs = ExtraerIDFunciones(); ;
-            return new string[] { ID.ToString(), Ubicacion.ToString(), Capacidad.ToString(), FuncionesIDs };
+         
+            return new string[] { ID.ToString(), Ubicacion.ToString(), Capacidad.ToString() };
         }
 
     }

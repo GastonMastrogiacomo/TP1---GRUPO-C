@@ -34,8 +34,7 @@ nivel programación ortodoxa pero desafortunadamente, puede que les complique las
 Dejen que sea public List<Funcion> MisFunciones { get; set; } y que Cine se encargue del ABM de forma centralizada, después de todo, Cine 
 es la clase lógica y está bien que pueda modificar estas listas (no sería correcto que lo hagan las clases de vista). 
 
-- PantallaPrincipal: Los botones de iniciar sesión o registrarse no me anduvieron, no veo que tengan oyentes asignados, está la
-implementación hecha en la clase, es correcta pero no están vinculados los botones con los métodos oyentes.
+
 
 COSAS COMPLETADAS:
 
@@ -71,15 +70,15 @@ PREGUNTAR AL PROFE:
 	que el usuario haya completado todos los campos de un formulario, no es correcto que valide que el usuario tenga saldo 
 	suficiente para comprar las entradas (eso le corresponde a Cine) pero sí todo lo que tiene que ver con inputs.
 
+	- PantallaPrincipal: Los botones de iniciar sesión o registrarse no me anduvieron, no veo que tengan oyentes asignados, está la
+	implementación hecha en la clase, es correcta pero no están vinculados los botones con los métodos oyentes.
+
 
 ANDY:
 	
 	- ObtenerFuncionPorId: No me gusta que pasemos un objeto a la vista, tienen otros "ObtenerPorID" definidos pero no los usan, este sí y la
 	verdad no me gusta.
 
-	- ExtraerIDFunciones un poco demasiado mostrar todos los IDs del usuario en el ToString. En general en las clases model nos
-	encontramos properties, constructor y algún método ToString y ya, no deberíamos manejar mucho más en el modelo, la variable estática
-	usada como contador también va a desaparecer en el próximo TP con DB.
 
 LUCKY:
 
