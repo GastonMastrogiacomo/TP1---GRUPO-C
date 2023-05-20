@@ -89,7 +89,7 @@ namespace TP1___GRUPO_C.Model
         }
 
         //ABM Usuario
-        public bool AgregarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int credito)
+        public int AgregarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int credito)
         {
             bool flagDni = false;
 
@@ -122,53 +122,63 @@ namespace TP1___GRUPO_C.Model
                                         Usuario otro = new Usuario(DNI, Nombre, Apellido, Mail, Password, FechaNacimiento, EsAdmin);
                                         otro.Credito = credito;
                                         Usuarios.Add(otro);
-                                        //MessageBox.Show("Usuario Registrado con exito! Revise su email para validar cuenta", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                        return true;
+
+                                        return 201;
                                     }
 
 
-                                    MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                                    return 500;
 
                                 }
                                 else
                                 {
-                                    throw new InvalidOperationException("Password incorrecta")
-    ;
+                                    throw new InvalidOperationException("Password incorrecta");
+
+
                                 }
                             }
                             else
                             {
                                 throw new InvalidOperationException("Mail Incorrecto");
+
                             }
                         }
                         else
                         {
                             throw new InvalidOperationException("Apellido Incorrecto");
+
                         }
                     }
                     else
                     {
                         throw new InvalidOperationException("Nombre Incorrecto");
+
                     }
                 }
                 else
                 {
                     throw new InvalidOperationException("DNI Incorrecto");
+
                 }
 
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                MessageBox.Show("Complete todos los campos" + e.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 422;
 
             }
 
-            return false;
+            return 400;
         }
 
-        public bool ModificarUsuario(int idUsuario, int DNI, string Nombre, string Apellido, string Mail, string Pass, DateTime FechaNacimiento, bool esAdmin, int IntentosFallidos, bool Bloqueado, double Credito, List<Funcion> MisFunciones)
+        public int ModificarUsuario(int idUsuario, int DNI, string Nombre, string Apellido, string Mail, string Pass, DateTime FechaNacimiento, bool esAdmin, int IntentosFallidos, bool Bloqueado, double Credito)
         {
+
+           Usuario user = Usuarios.FirstOrDefault(u => u.ID == idUsuario);
+
+            List<Funcion> MisFunciones = user.MisFunciones;
             // Verificamos que los campos no sean nulos o vacios
             if (DNI != 0 && Nombre != null && Nombre != "" && Apellido != null && Apellido != "" && Mail != null && Mail != "" && Pass != null && Pass != "")
             {
@@ -192,25 +202,23 @@ namespace TP1___GRUPO_C.Model
                         Usuarios[i].EsAdmin = esAdmin;
 
 
-                        //MessageBox.Show("Usuario modificado con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return true;
+                        return 200;
                     }
 
                 }
 
-                //MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                return 500;
 
             }
             else
             {
-                //MessageBox.Show("Complete todos los campos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 400;
             }
 
-            return false;
+
         }
 
-        public bool EliminarUsuario(int idUsuario)
+        public int EliminarUsuario(int idUsuario)
         {
             // Se busca el usuario que tiene el id pasado por parametro
             Usuario user = Usuarios.FirstOrDefault(u => u.ID == idUsuario);
@@ -225,7 +233,7 @@ namespace TP1___GRUPO_C.Model
                         Funcion funcionActual = user.MisFunciones[i];
                         int cantidadEntradasSeleccionadas = user.EntradasCompradas[funcionActual.ID];
 
-                        if(DevolverEntradaFuncionNotNull(user, funcionActual, funcionActual.ID, cantidadEntradasSeleccionadas))
+                        if (DevolverEntradaFuncionNotNull(user, funcionActual, funcionActual.ID, cantidadEntradasSeleccionadas))
                         {
                             // Aca hay una condicion que se fija si devuelve todas las entradas antes de eliminar al usuario
                             funcionActual.EliminarCliente(idUsuario);
@@ -235,26 +243,24 @@ namespace TP1___GRUPO_C.Model
                     }
 
                     Usuarios.Remove(user);
-                    //MessageBox.Show("El usuario fue eliminado", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    return true;
+                    return 204;
                 }
                 catch (Exception ex)
                 {
-                    //MessageBox.Show(ex.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    return false;
+                    Console.WriteLine(ex.Message);
+                    return 500;
                 }
             }
             else
             {
-                //MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return 500;
             }
 
         }
 
         // ABM Funcion
-        public bool AgregarFuncion(int MiSalaId, int MiPeliculaId, DateTime Fecha, int CantidadClientes, double Costo)
+        public int AgregarFuncion(int MiSalaId, int MiPeliculaId, DateTime Fecha, int CantidadClientes, double Costo)
         {
             try
             {
@@ -281,8 +287,8 @@ namespace TP1___GRUPO_C.Model
 
                             // Agregar la función a la lista de funciones de la película correspondiente
                             peliElegida.AgregarFuncion(func);
-                            //MessageBox.Show("Función Agregada correctamente", "Todo ok!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                            return 200;
 
                         }
                         else
@@ -302,18 +308,15 @@ namespace TP1___GRUPO_C.Model
                 {
                     throw new ArgumentException("El ID de la sala es incorrecto");
                 }
-
-                // Retornar true si no hubo errores
-                return true;
             }
             catch (Exception e)
             {
-                //MessageBox.Show(e.Message, "No se pudo guardar.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                Console.WriteLine(e.Message);
+                return 500;
             }
         }
 
-        public bool EliminarFuncion(int IDFuncion)
+        public int EliminarFuncion(int IDFuncion)
 
         {
             // Buscar la función con el ID correspondiente en la lista de funciones
@@ -339,7 +342,7 @@ namespace TP1___GRUPO_C.Model
 
 
                 Pelicula peli = func.MiPelicula;
-         
+
                 for (int i = 0; i < peli.ObtenerMisFunciones().Count; i++)
                 {
                     if (peli.ObtenerMisFunciones()[i].ID == IDFuncion)
@@ -362,20 +365,20 @@ namespace TP1___GRUPO_C.Model
 
                 // Eliminar la función de la lista de funciones
                 Funciones.Remove(func);
-                //MessageBox.Show("Función eliminada con éxito.", "Todo ok!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                return true;
+
+                return 200;
             }
             else
             {
-                //MessageBox.Show("No se pudo encontrar la funcion.", "404 Not found", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+
+                return 404;
 
             }
 
         }
 
-        public bool ModificarFuncion(int IDFuncion, int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo)
+        public int ModificarFuncion(int IDFuncion, int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo)
         {
             try
             {
@@ -402,15 +405,16 @@ namespace TP1___GRUPO_C.Model
 
                                     func.MiSala = salaElegida;
                                     func.MiPelicula = peliElegida;
-                                    
+
                                     func.Fecha = Fecha;
-                                   
+
                                     func.Costo = Costo;
 
                                     func.MiSala.AgregarFuncion(func);
                                     func.MiPelicula.AgregarFuncion(func);
 
-                                    //MessageBox.Show("Función modificada con éxito.", "Todo ok!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                    return 200;
                                 }
                                 else
                                 {
@@ -445,18 +449,19 @@ namespace TP1___GRUPO_C.Model
 
                 }
 
-                return true;
+                return 404;
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message, "Datos incorrectos.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+
+                Console.WriteLine(ex.Message);
+                return 500;
             }
 
         }
 
         //ABM Sala 
-        public bool AgregarSala(int Capacidad, string Ubicacion)
+        public int AgregarSala(int Capacidad, string Ubicacion)
         {
             try
             {
@@ -471,7 +476,7 @@ namespace TP1___GRUPO_C.Model
                         Salas.Add(nuevaSala);
 
                         //MessageBox.Show("Sala agregada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return true;
+                        return 200;
                     }
                     else
                     {
@@ -487,12 +492,12 @@ namespace TP1___GRUPO_C.Model
             }
             catch (Exception e)
             {
-                //MessageBox.Show("Faltan datos" + e.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine(e.Message);
             }
-            return false;
+            return 500;
         }
 
-        public bool EliminarSala(int IDSala)
+        public int EliminarSala(int IDSala)
         {
             // Se busca la sala con el id pasado por parametro
             Sala sala = Salas.FirstOrDefault(s => s.ID == IDSala);
@@ -504,24 +509,30 @@ namespace TP1___GRUPO_C.Model
                 {
                     Funcion funcionActual = sala.MisFunciones[i];
                     sala.EliminarFuncion(funcionActual.ID);
-                   // funcionActual.MiSala = null;
+                    // funcionActual.MiSala = null;
                 }
 
                 Salas.Remove(sala);
-                //MessageBox.Show("La Sala fue eliminada", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return true;
+
+                return 204;
             }
             else
             {
-                //MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+
+                return 500;
             }
 
 
         }
 
-        public bool ModificarSala(int IDSala, string Ubicacion, int Capacidad, List<Funcion> MisFunciones)
+        public int ModificarSala(int IDSala, string Ubicacion, int Capacidad)
         {
+
+
+  
+            Sala salaElegida = Salas.FirstOrDefault(s => s.ID == IDSala);
+
+            List<Funcion> MisFunciones = salaElegida.MisFunciones;
             // Verificamos que los valores sean validos
             if (IDSala != 0 && Capacidad >= 0 && Ubicacion != null && Ubicacion != "")
             {
@@ -534,24 +545,21 @@ namespace TP1___GRUPO_C.Model
                         Salas[i].Capacidad = Capacidad;
                         Salas[i].Ubicacion = Ubicacion;
                         Salas[i].MisFunciones = MisFunciones;
-                        //MessageBox.Show("Sala Modificada correctamente", "Todo ok!", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        return true;
+
+                        return 200;
                     }
 
                 }
             }
-            else
-            {
-                //MessageBox.Show("Complete todos los campos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
 
 
-            return false;
+
+            return 422;
         }
 
         // ABM Peliculas
-        public bool AgregarPelicula(string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion)
+        public int AgregarPelicula(string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion)
         {
             try
             {
@@ -570,9 +578,9 @@ namespace TP1___GRUPO_C.Model
                                     // De ser correctas creamos una nueva pelicula y la agregamos a la lista de peliculas
                                     Pelicula NuevaPelicula = new Pelicula(Nombre, Descripcion, Sinopsis, Poster, Duracion);
                                     Peliculas.Add(NuevaPelicula);
-                                    //MessageBox.Show("Pelicula agregada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                    
 
-                                    return true;
+                                    return 200;
                                 }
                                 else
                                 {
@@ -603,12 +611,12 @@ namespace TP1___GRUPO_C.Model
             }
             catch (Exception e)
             {
-                //MessageBox.Show(e.ToString(), "Parametros incorrectos.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine(e.Message);
             }
-            return false;
+            return 500;
         }
 
-        public bool EliminarPelicula(int IDPelicula)
+        public int EliminarPelicula(int IDPelicula)
         {
 
             // Se busca la pelicula con el id especificado
@@ -625,28 +633,27 @@ namespace TP1___GRUPO_C.Model
                 }
 
                 Peliculas.Remove(peli);
-                //MessageBox.Show("La Pelicula fue eliminada", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return true;
+                
+                return 204;
             }
             else
             {
-                //MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
+                return 500;
             }
         }
 
-        public bool ModificarPelicula(int IDPelicula, string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion, List<string> IdFunciones)
+        public int ModificarPelicula(int IDPelicula, string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion, List<string> IdFunciones)
         {
 
-                       List<Funcion> MisFunciones = new List<Funcion>();
+            List<Funcion> MisFunciones = new List<Funcion>();
 
-            for(int i = 0; i < IdFunciones.Count; i++)
+            for (int i = 0; i < IdFunciones.Count; i++)
             {
                 int.TryParse(IdFunciones[i], out int idFunc);
                 Funcion func = MisFunciones.FirstOrDefault(f => f.ID == idFunc);
                 MisFunciones.Add(func);
             }
-            
+
 
             if (IDPelicula != 0 && Nombre != null && Nombre != "" && Descripcion != null && Descripcion != "" && Sinopsis != null && Sinopsis != "" && Poster != null && Poster != "" && Duracion >= 0)
             {
@@ -682,23 +689,18 @@ namespace TP1___GRUPO_C.Model
                         }
 
 
-                        //MessageBox.Show("Pelicula modificada con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return true;
+                        return 200;
                     }
                 }
-                MessageBox.Show("Error, intentelo nuevamente!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                return 500;
             }
-            else
-            {
-                MessageBox.Show("Complete todos los campos!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            return false;
+           
+            return 422;
 
         }
 
         // METODOS
-        public bool CargarCredito(int idUsuario, double importe)
+        public int CargarCredito(int idUsuario, double importe)
         {
             foreach (Usuario user in Usuarios)
             {
@@ -708,23 +710,21 @@ namespace TP1___GRUPO_C.Model
                     if (importe > 0)
                     {
                         user.Credito += importe;
-                        //MessageBox.Show("Creditos cargados con exito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return true;
+                        return 200;
                     }
                     else
                     {
-                        //MessageBox.Show("Por favor, ingrese una cantidad de créditos válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
+                       return 400;
                     }
 
                 }
             }
-            //MessageBox.Show("Error al cargar los créditos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return false;
+            
+            return 500;
 
         }
 
-        public bool ComprarEntrada(int idFuncion, int cantidadEntradas)
+        public int ComprarEntrada(int idFuncion, int cantidadEntradas)
         {
             try
             {
@@ -736,7 +736,9 @@ namespace TP1___GRUPO_C.Model
 
                     if (funcion != null)
                     {
-                        return ComprarEntradaFuncionNotNull(UsuarioActual, cantidadEntradas, funcion, idFuncion);
+
+                        ComprarEntradaFuncionNotNull(UsuarioActual, cantidadEntradas, funcion, idFuncion);
+                        return 200;
                     }
                     else
                     {
@@ -745,19 +747,20 @@ namespace TP1___GRUPO_C.Model
                 }
                 else
                 {
-                    //MessageBox.Show("Por favor, inicia sesión.", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                   
+                    return 403;
                 }
 
-                return false;
+
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false;
+                Console.WriteLine(ex.Message);
+                return 500;
             }
         }
 
-        public bool DevolverEntrada(int idFuncion, int cantidadEntradas)
+        public int DevolverEntrada(int idFuncion, int cantidadEntradas)
         {
             try
             {
@@ -766,8 +769,8 @@ namespace TP1___GRUPO_C.Model
                 if (funcion != null)
                 {
 
-                    return DevolverEntradaFuncionNotNull(UsuarioActual, funcion, idFuncion, cantidadEntradas);
-
+                    DevolverEntradaFuncionNotNull(UsuarioActual, funcion, idFuncion, cantidadEntradas);
+                    return 200;
 
 
                 }
@@ -778,12 +781,12 @@ namespace TP1___GRUPO_C.Model
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                return false;
+                Console.WriteLine(ex.Message);
+                return 500;
             }
         }
 
-        public bool IniciarSesion(string Mail, string Password, bool esAdmin)
+        public int IniciarSesion(string Mail, string Password, bool esAdmin)
         {
             try
             {
@@ -803,7 +806,7 @@ namespace TP1___GRUPO_C.Model
                                     // Se establece el usuario como usuario actual
                                     UsuarioActual = user;
                                     user.IntentosFallidos = 0;
-                                    return true;
+                                    return 200;
 
                                 }
                                 else
@@ -817,31 +820,33 @@ namespace TP1___GRUPO_C.Model
                             else if (user.IntentosFallidos < 3)
                             {
                                 user.IntentosFallidos += 1;
-                                //MessageBox.Show("Email o contraseña incorrecta, intentalo nuevamente");
-                              
+                                
+                                return 401;
 
                             }
                             else
                             {
                                 user.Bloqueado = true;
-                                //MessageBox.Show("Ha alcanzado la cantidad de intentos. Usuario bloqueado");
-
+                               
+                                return 429;
                             }
                         }
-                        else { throw new InvalidOperationException("No se puede acceder, el usuario se encuentra bloqueado"); }
+                        return 423;
+
                     }
 
                 }
-                throw new InvalidOperationException("Email o contraseña incorrecta, intentalo nuevamente");
+                return 401;
+                
 
             }
 
 
             catch (Exception e)
             {
-                MessageBox.Show(e.Message);
+                Console.WriteLine(e.Message);
             }
-            return false;
+            return 500;
 
         }
 
@@ -889,18 +894,19 @@ namespace TP1___GRUPO_C.Model
         public List<Funcion> BuscarFuncion(string pelicula, string ubicacion, DateTime fecha, int precioMinimo, int precioMaximo)
         {
             List<Funcion> funcionesEncontradas = new List<Funcion>();
+
             if (fecha >= DateTime.Today)
             {
 
                 foreach (Funcion fun in Funciones)
                 {
                     bool cumpleRequisitos = true;
-                 
+
 
                     if (fun.Fecha >= DateTime.Today)
                     {
                         // Verifico que si el input no esta en vacio entonces el valor tiene que ser igual o similar al de la pelicula;
-                        if (!string.IsNullOrEmpty(pelicula))
+                        if (!string.IsNullOrWhiteSpace(pelicula))
                         {
                             Regex regularEx = new Regex(pelicula, RegexOptions.IgnoreCase);
 
@@ -909,13 +915,17 @@ namespace TP1___GRUPO_C.Model
                                 cumpleRequisitos = false;
                             }
                         }
+                        else
+                        {
+                            cumpleRequisitos = cumpleRequisitos && (fun.MiPelicula.Nombre != null);
+                        }
 
 
                         // Lo mismo con ubicacion
                         // IsNullOrEmpty(ubicacion) --> devuelve true si no encuenrta valor en el campo
                         // si esto es false entonces es porque tengo un valor
 
-                        if (!string.IsNullOrEmpty(ubicacion))
+                        if (!string.IsNullOrWhiteSpace(ubicacion))
                         {
                             // yo quiero que esto sea igual para no modificar el flag
                             if (fun.MiSala.Ubicacion != ubicacion)
@@ -923,6 +933,10 @@ namespace TP1___GRUPO_C.Model
                                 cumpleRequisitos = false;
                             }
 
+                        }
+                        else
+                        {
+                            cumpleRequisitos = cumpleRequisitos && (fun.MiSala.Ubicacion != null);
                         }
 
                         //todas las funciones que superen el minimo
@@ -934,6 +948,10 @@ namespace TP1___GRUPO_C.Model
                                 cumpleRequisitos = false;
                             }
                         }
+                        else
+                        {
+                            cumpleRequisitos = cumpleRequisitos && (fun.Costo >= 0);
+                        }
 
                         if (precioMaximo > 0)
                         {
@@ -942,6 +960,11 @@ namespace TP1___GRUPO_C.Model
                                 cumpleRequisitos = false;
                             }
                         }
+                        else
+                        {
+                            cumpleRequisitos = cumpleRequisitos && (fun.Costo <= 0);
+                        }
+
                     }
                     else
                     {
@@ -956,10 +979,11 @@ namespace TP1___GRUPO_C.Model
 
 
             }
-            else
-            {
-                MessageBox.Show("No se puede filtar por una fecha anterior a hoy.", "Error.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //else
+            //{
+
+            //    MessageBox.Show("No se puede filtar por una fecha anterior a hoy.", "Error.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
 
 
             return funcionesEncontradas;
@@ -1018,7 +1042,7 @@ namespace TP1___GRUPO_C.Model
             }
         }
 
-        public bool ComprarEntradaFuncionNotNull(Usuario user, int cantidadEntradas, Funcion funcion, int idFuncion)
+        public int ComprarEntradaFuncionNotNull(Usuario user, int cantidadEntradas, Funcion funcion, int idFuncion)
         {
             // Verificar si la cantidad de entradas es mayor a cero
             if (cantidadEntradas > 0)
@@ -1056,8 +1080,8 @@ namespace TP1___GRUPO_C.Model
                             user.EntradasCompradas.Add(idFuncion, cantidadEntradas);
                         }
 
-                        MessageBox.Show("Entrada comprada con éxito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        return true;
+                        //MessageBox.Show("Entrada comprada con éxito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        return 200;
                     }
                     else
                     {
@@ -1074,6 +1098,7 @@ namespace TP1___GRUPO_C.Model
             else
             {
                 throw new InvalidOperationException("La cantidad de entradas debe ser mayor a cero.");
+                return 500;
             }
         }
     }

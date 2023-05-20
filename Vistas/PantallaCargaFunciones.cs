@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP1___GRUPO_C.Model;
+using TP1___GRUPO_C.Modelos;
 using static TP1___GRUPO_C.Vistas.PantallaABMAdmin;
 
 namespace TP1___GRUPO_C.Vistas
@@ -142,10 +143,11 @@ namespace TP1___GRUPO_C.Vistas
                     UsuarioAuxiliar.AgregarFuncion(func);
                 }
             }
-
-            if (!miCine.ModificarUsuario(UsuarioAuxiliar.ID, UsuarioAuxiliar.DNI, UsuarioAuxiliar.Nombre, UsuarioAuxiliar.Apellido, UsuarioAuxiliar.Mail, UsuarioAuxiliar.Password, UsuarioAuxiliar.FechaNacimiento, UsuarioAuxiliar.EsAdmin, UsuarioAuxiliar.IntentosFallidos, UsuarioAuxiliar.Bloqueado, UsuarioAuxiliar.Credito, UsuarioAuxiliar.MisFunciones))
+            int peticion = miCine.ModificarUsuario(UsuarioAuxiliar.ID, UsuarioAuxiliar.DNI, UsuarioAuxiliar.Nombre, UsuarioAuxiliar.Apellido, UsuarioAuxiliar.Mail, UsuarioAuxiliar.Password, UsuarioAuxiliar.FechaNacimiento, UsuarioAuxiliar.EsAdmin, UsuarioAuxiliar.IntentosFallidos, UsuarioAuxiliar.Bloqueado, UsuarioAuxiliar.Credito);
+            String mensaje = StatusCode.ObtenerMensaje(peticion);
+            if (peticion!=200)
             {
-                MessageBox.Show("No se pudo actualizar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {

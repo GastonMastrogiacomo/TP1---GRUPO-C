@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP1___GRUPO_C.Model;
+using TP1___GRUPO_C.Modelos;
 using static TP1___GRUPO_C.PantallaPrincipal;
 
 namespace TP1___GRUPO_C.Vistas
@@ -307,10 +308,17 @@ namespace TP1___GRUPO_C.Vistas
         {
             string Ubicacion = this.Input_Ubicacion.Text;
             int.TryParse(this.Input_Capacidad.Text, out int Capacidad);
-            if (miCine.AgregarSala(Capacidad, Ubicacion))
+
+            int peticion = miCine.AgregarSala(Capacidad, Ubicacion);
+            String mensaje = StatusCode.ObtenerMensaje(peticion);
+
+            if (peticion == 200)
             {
                 RefreshSalas();
             }
+         
+                MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            
         }
 
         private void Btn_ModificarSala_Click(object sender, EventArgs e)
@@ -319,20 +327,21 @@ namespace TP1___GRUPO_C.Vistas
             string Ubicacion = this.Input_Ubicacion.Text;
             int Capacidad = int.Parse(this.Input_Capacidad.Text);
 
-            List<Sala> salas = miCine.MostrarSalas();
-            Sala salaElegida = salas.FirstOrDefault(s => s.ID == ID);
 
-            if (miCine.ModificarSala(ID, Ubicacion, Capacidad, salaElegida.MisFunciones))
+            int peticion =miCine.ModificarSala(ID, Ubicacion, Capacidad);
+            String mensaje = StatusCode.ObtenerMensaje(peticion);
+            if (peticion == 200)
             {
                 RefreshSalas();
             }
+            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void Btn_EliminarSala_Click(object sender, EventArgs e)
         {
             int.TryParse(Label_SalaId.Text, out int ID);
-
-            if (miCine.EliminarSala(ID))
+            int peticion = miCine.EliminarSala(ID);
+            if (peticion == 200)
             {
                 RefreshSalas();
             }
@@ -349,10 +358,13 @@ namespace TP1___GRUPO_C.Vistas
             int.TryParse(this.Input_Costo.Text, out int Costo);
             DateTime Fecha = this.Selec_Fecha.Value;
 
-            if (miCine.AgregarFuncion(salaSelectedID, peliSelectedID, Fecha, CantidadClientes, Costo))
+           int peticion = miCine.AgregarFuncion(salaSelectedID, peliSelectedID, Fecha, CantidadClientes, Costo);
+            String mensaje = StatusCode.ObtenerMensaje(peticion);
+            if (peticion == 200)
             {
                 RefreshFunciones();
             }
+            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
         }
 
@@ -369,16 +381,18 @@ namespace TP1___GRUPO_C.Vistas
             DateTime Fecha = this.Selec_Fecha.Value;
             double.TryParse(this.Input_Costo.Text, out double Costo);
 
-            if (miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, Costo))
+            int peticion = miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, Costo);
+            String mensaje= StatusCode.ObtenerMensaje(peticion);
+            if (peticion == 200)
             {
                 RefreshFunciones();
-                MessageBox.Show("Funcion modificada con exito!");
+                
+                
             }
-            else
-            {
 
-                MessageBox.Show("Funcion no se pudo modificar");
-            }
+
+            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
 
         }
 
@@ -386,10 +400,13 @@ namespace TP1___GRUPO_C.Vistas
         {
             int.TryParse(Label_FuncionId.Text, out int ID);
 
-            if (miCine.EliminarFuncion(ID))
+            int peticion = miCine.EliminarFuncion(ID);
+            String mensaje = StatusCode.ObtenerMensaje(peticion);
+            if (peticion==200)
             {
                 RefreshFunciones();
             }
+            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         //ABM PELICULA
@@ -397,10 +414,13 @@ namespace TP1___GRUPO_C.Vistas
         {
             int.TryParse(Label_PeliculaId.Text, out int ID);
 
-            if (miCine.EliminarPelicula(ID))
+            int peticion= miCine.EliminarPelicula(ID);
+            String mensaje = StatusCode.ObtenerMensaje(peticion);
+            if (peticion == 200)
             {
                 RefreshPeliculas();
             }
+            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void Btn_ModificarPelicula_Click(object sender, EventArgs e)
@@ -427,11 +447,16 @@ namespace TP1___GRUPO_C.Vistas
 
                 }
             }
-
-            if (miCine.ModificarPelicula(ID, nombre, descripcion, sinopsis, poster, duracion, funcionesSelec))
+            int peticion = miCine.ModificarPelicula(ID, nombre, descripcion, sinopsis, poster, duracion, funcionesSelec);
+            String mensaje = StatusCode.ObtenerMensaje(peticion);
+            if (peticion == 200 )
             {
                 RefreshPeliculas();
             }
+           
+                
+                MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+           
 
 
         }
@@ -445,10 +470,16 @@ namespace TP1___GRUPO_C.Vistas
             string poster = this.Input_Poster.Text;
             int.TryParse(this.Input_Duracion.Text, out int duracion);
 
-            if (miCine.AgregarPelicula(nombre, descripcion, sinopsis, poster, duracion))
+            int peticion = miCine.AgregarPelicula(nombre, descripcion, sinopsis, poster, duracion);
+            String mensaje = StatusCode.ObtenerMensaje(peticion);
+            if (peticion == 200 )
             {
                 RefreshPeliculas();
             }
+            
+               
+                MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+           
         }
 
         //ABM USUARIO
@@ -464,11 +495,15 @@ namespace TP1___GRUPO_C.Vistas
             bool esAdmin = this.Cb_EsAdmin.Checked;
             int.TryParse(this.Input_Credito.Text, out int credito);
 
-
-            if (miCine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, credito))
+            int peticion = miCine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, credito);
+            String mensaje = StatusCode.ObtenerMensaje(peticion);
+            if (peticion ==200)
             {
                 RefreshUsuarios();
             }
+            
+                MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            
 
 
         }
@@ -489,13 +524,14 @@ namespace TP1___GRUPO_C.Vistas
             bool Bloqueda = this.Cb_Bloqueado.Checked;
             int.TryParse(this.Input_IntentosFallidos.Text, out int IntentosFallidos);
 
-            List<Usuario> usuarios = miCine.MostrarUsuarios();
-            Usuario user = usuarios.FirstOrDefault(u => u.ID == ID);
-
-            if (miCine.ModificarUsuario(ID, DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, IntentosFallidos, Bloqueda, Credito, user.MisFunciones))
+           
+            int peticion = miCine.ModificarUsuario(ID, DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, IntentosFallidos, Bloqueda, Credito);
+            String mensaje = StatusCode.ObtenerMensaje(peticion);
+            if (peticion == 200 )
             {
                 RefreshUsuarios();
             }
+            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         private void Btn_EliminarUsuario_Click(object sender, EventArgs e)
@@ -503,10 +539,13 @@ namespace TP1___GRUPO_C.Vistas
 
             int.TryParse(Label_IdUsuario.Text, out int ID);
 
-            if (miCine.EliminarUsuario(ID))
+            int peticion = miCine.EliminarUsuario(ID);
+            String mensaje = StatusCode.ObtenerMensaje(peticion);
+            if (peticion == 200)
             {
                 RefreshUsuarios();
             }
+            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         //OPCIONES USUARIO

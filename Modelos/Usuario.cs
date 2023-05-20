@@ -133,29 +133,29 @@ namespace TP1___GRUPO_C.Model
         }
 
 
-        //modificar andy implementacion
-        private string ExtraerIDFunciones()
-        {
-            string IDFunciones = "";
-            foreach (Funcion func in MisFunciones)
-            {
-                if (IDFunciones == "")
-                {
-                    IDFunciones += func.ID;
-                }
-                else
-                {
-                    IDFunciones += ", " + func.ID;
-                }
-            }
+        ////modificar andy implementacion
+        //private string ExtraerIDFunciones()
+        //{
+        //    string IDFunciones = "";
+        //    foreach (Funcion func in MisFunciones)
+        //    {
+        //        if (IDFunciones == "")
+        //        {
+        //            IDFunciones += func.ID;
+        //        }
+        //        else
+        //        {
+        //            IDFunciones += ", " + func.ID;
+        //        }
+        //    }
 
-            return IDFunciones;
-        }
+        //    return IDFunciones;
+        //}
 
         public string[] ToString()
         {
-            string FuncionesIDs = ExtraerIDFunciones(); ;
-            return new string[] { ID.ToString(), DNI.ToString(), Nombre, Apellido, Mail, Password, IntentosFallidos.ToString(), Bloqueado.ToString(), FuncionesIDs, Credito.ToString(), FechaNacimiento.ToString("dd/MM/yyyy"), EsAdmin.ToString() };
+            //string FuncionesIDs = ExtraerIDFunciones(); /*;*/
+            return new string[] { ID.ToString(), DNI.ToString(), Nombre, Apellido, Mail, Password, IntentosFallidos.ToString(), Bloqueado.ToString(), Credito.ToString(), FechaNacimiento.ToString("dd/MM/yyyy"), EsAdmin.ToString() };
         }
     }
 }

@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP1___GRUPO_C.Model;
+using TP1___GRUPO_C.Modelos;
 using static System.Net.Mime.MediaTypeNames;
 using static TP1___GRUPO_C.PantallaLogin;
 using static TP1___GRUPO_C.PantallaRegistro;
@@ -33,6 +34,7 @@ namespace TP1___GRUPO_C
         {
             InitializeComponent();
             cine = c;
+            this.Input_FechaPpal.Value = DateTime.Now;
             Btn_MiPerfil.Hide();
             Btn_CerrarSesion.Hide();
             MostrarPeliculasEnDataGridView();
@@ -40,7 +42,7 @@ namespace TP1___GRUPO_C
             MostrarFuncionesEnDataGridView();
             CargarListaUbicacion();
 
-            if(cine.UsuarioActual == null)
+            if (cine.UsuarioActual == null)
             {
                 Label_MiCredito_Principal.Hide();
                 label8.Hide();
@@ -60,6 +62,8 @@ namespace TP1___GRUPO_C
             Btn_CerrarSesion.Hide();
             btnRegistrarse.Show();
             button3.Show();
+            this.Input_FechaPpal.Value = DateTime.Now;
+
 
         }
 
@@ -68,6 +72,7 @@ namespace TP1___GRUPO_C
             MostrarPeliculasEnDataGridView();
             MostrarSalasEnDataGridView();
             MostrarFuncionesEnDataGridView();
+            this.Input_FechaPpal.Value = DateTime.Now;
             if (cine.UsuarioActual != null)
             {
 
@@ -172,12 +177,12 @@ namespace TP1___GRUPO_C
                 }
 
             }
-          
-            if(!flagFuncionOk)
+
+            if (!flagFuncionOk)
             {
-                MessageBox.Show("No hay funciones para la pelicula seleccionada actualmente." ,"Advertencia!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("No hay funciones para la pelicula seleccionada actualmente.", "Advertencia!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            PestañasPpal.SelectedIndex = 2; 
+            PestañasPpal.SelectedIndex = 2;
         }
 
         private void DataGridSalasPpal_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -236,10 +241,12 @@ namespace TP1___GRUPO_C
             if (int.TryParse(this.Input_CantEntradas.Text, out int cantEntradas))
             {
                 // Realizar la compra de entradas
-                if (cine.ComprarEntrada(idFuncionSeleccionada, cantEntradas))
+                int peticion = cine.ComprarEntrada(idFuncionSeleccionada, cantEntradas);
+                if (peticion == 200)
                 {
                     MostrarFuncionesEnDataGridView();
                     MessageBox.Show("Entrada comprada con exito.");
+
 
                 }
                 else
@@ -264,6 +271,7 @@ namespace TP1___GRUPO_C
             int.TryParse(Input_PrecioMinimoPpal.Text, out int PrecioMin);
             int.TryParse(Input_PrecioMaximoPpal.Text, out int PrecioMax);
 
+
             List<Funcion> funcionEncontrada = cine.BuscarFuncion(pelicula, ubicacion, fecha, PrecioMin, PrecioMax);
 
             dataGridFuncionesPpal.Rows.Clear();
@@ -272,6 +280,14 @@ namespace TP1___GRUPO_C
             {
                 dataGridFuncionesPpal.Rows.Add(funcion.ToString());
             }
+
+            if (funcionEncontrada.Count == 0)
+            {
+                MessageBox.Show("Oops! No se encontraron las funciones seleccionadas.");
+            }
+
+            
+
 
         }
     }

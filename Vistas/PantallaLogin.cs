@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP1___GRUPO_C.Model;
+using TP1___GRUPO_C.Modelos;
 using static TP1___GRUPO_C.PantallaRegistro;
 
 namespace TP1___GRUPO_C
@@ -42,9 +43,12 @@ namespace TP1___GRUPO_C
             string pass = this.textBox2.Text;
             bool esAdmin = this.checkBox1.Checked;
 
+            int peticion = miCine.IniciarSesion(mail, pass, esAdmin);
+            String mensaje = StatusCode.ObtenerMensaje(peticion);
             if (mail != null && mail != "" && pass != null & pass != "")
             {
-                if (miCine.IniciarSesion(mail, pass, esAdmin))
+                
+                if (peticion == 200)
                 {
                     if (esAdmin)
                     {
@@ -56,11 +60,16 @@ namespace TP1___GRUPO_C
                         
                     }
                 }
+                else
+                {
+                    MessageBox.Show(mensaje,"Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
                 
             }
             else
             {
-                MessageBox.Show("Complete todos los campos", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Complete todos los campos", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error); 
             }
         }
 

@@ -61,6 +61,10 @@ COSAS COMPLETADAS:
 	- EliminarSala: Cuidado, setear la Sala de la función en null nos puede generar problemas, lo mejor en ese caso sería llamar a EliminarFuncion.
 	Mismo para otros eliminar, cuidado con los null.
 
+	- BuscarFuncion: Excelente pero estaría bueno que sea opcional completar todos los campos. 
+	Sin hacer la combinatoria de todas las opciones, traten de mandar flags desde la vista al cine (pueden ser nulls) para indicar si el
+	usuario completó o no ese campo de la búsqueda y entonces en los if filtran sólo si ese campo no es flag.
+
 PREGUNTAR AL PROFE:
 
 	- Otro tema importante, las validaciones de Input bien las puede hacer la vista, es correcto que la vista valide 
@@ -70,8 +74,6 @@ PREGUNTAR AL PROFE:
 
 ANDY:
 	
-	- falta revisar modificarSala y modificarUsuario --> que el front no maneje logica
-
 	- ObtenerFuncionPorId: No me gusta que pasemos un objeto a la vista, tienen otros "ObtenerPorID" definidos pero no los usan, este sí y la
 	verdad no me gusta.
 
@@ -81,11 +83,9 @@ ANDY:
 
 LUCKY:
 
-- Clase Cine: Traten de no usar MessageBox acá, de última pueden devolver un string y mostrarlo como cartel o 
-un flag, por ejemplo, 0 = ok, 1 = error, 2 = datos incompletos. STATUS CODES
+    - Clase Cine: Traten de no usar MessageBox acá, de última pueden devolver un string y mostrarlo como cartel o 
+    un flag, por ejemplo, 0 = ok, 1 = error, 2 = datos incompletos. STATUS CODES
 
 GASTI: 
 
-- BuscarFuncion: Excelente pero estaría bueno que sea opcional completar todos los campos. 
-Sin hacer la combinatoria de todas las opciones, traten de mandar flags desde la vista al cine (pueden ser nulls) para indicar si el
-usuario completó o no ese campo de la búsqueda y entonces en los if filtran sólo si ese campo no es flag.
+

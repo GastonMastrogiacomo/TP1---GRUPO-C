@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP1___GRUPO_C.Model;
+using TP1___GRUPO_C.Modelos;
 
 namespace TP1___GRUPO_C
 {
@@ -36,9 +37,12 @@ namespace TP1___GRUPO_C
             DateTime FechaNacimiento = dateTimePicker1.Value.Date;
             bool esAdmin = checkBox1.Checked;
 
-            if (cine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin,0)) { 
+            int peticion = cine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, 0);
+            String mensaje = StatusCode.ObtenerMensaje(peticion);
+            if (peticion == 200) { 
             this.pantallaPrincipal();
             }
+            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
 
         }

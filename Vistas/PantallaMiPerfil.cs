@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TP1___GRUPO_C.Model;
+using TP1___GRUPO_C.Modelos;
 
 namespace TP1___GRUPO_C.Vistas
 {
@@ -81,8 +82,8 @@ namespace TP1___GRUPO_C.Vistas
                 user.AgregarFuncion(fun);
             }
 
-
-            if (miCine.ModificarUsuario(ID, DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, user.IntentosFallidos, user.Bloqueado, user.Credito, user.MisFunciones))
+            int peticion =miCine.ModificarUsuario(ID, DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, user.IntentosFallidos, user.Bloqueado, user.Credito);
+            if (peticion == 200)
             {
 
                 // Actualizar la visualización del nuevo usuario en los inputs
@@ -124,14 +125,15 @@ namespace TP1___GRUPO_C.Vistas
             double cantidadCreditos;
             double.TryParse(Input_NuevoCreditoPerfil.Text, out cantidadCreditos);
 
-
-            if (miCine.CargarCredito(usuarioActual.ID, cantidadCreditos))
+            int peticion = miCine.CargarCredito(usuarioActual.ID, cantidadCreditos);
+            String Mensaje = StatusCode.ObtenerMensaje(peticion);
+            if (peticion == 200)
             {
                 Label_MiCredito.Text = usuarioActual.Credito.ToString();
-                MessageBox.Show("Credito cargado con exito!");
+                MessageBox.Show(Mensaje + "Credito cargado con exito!");
             }
             else{
-                MessageBox.Show("No se pudo cargar el credito!");
+                MessageBox.Show(Mensaje + "No se pudo cargar el credito!");
             }
 
 
@@ -170,7 +172,8 @@ namespace TP1___GRUPO_C.Vistas
             Usuario usuarioActual = miCine.UsuarioActual;
             int cantidadEntradasSeleccionadas = usuarioActual.EntradasCompradas[idFuncionSeleccionada];
 
-            if (miCine.DevolverEntrada(idFuncionSeleccionada, cantidadEntradasSeleccionadas))
+            int peticion = miCine.DevolverEntrada(idFuncionSeleccionada, cantidadEntradasSeleccionadas);
+            if (peticion ==200)
             {
                 MessageBox.Show("Devolvemos la entrada.");
                 MostrarFuncionesProximas();
