@@ -10,21 +10,25 @@ namespace TP1___GRUPO_C.Model
     {
         public int ID { get; }
 
+        // Esto tendriamos que eliminarlo, una vez implementado DB el id es autoincremental y no lo tenemos que insertar nosotros
         public static int ultimoID = 0;
         public int DNI { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Mail { get; set; }
         public string Password { get; set; }
+
+        // Esto podriamos cambiarlo para que no sea una propiedad del usuario y lo ponemos en Cine
         public int IntentosFallidos { get; set; }
         public bool Bloqueado { get; set; }
+
         public List<Funcion> MisFunciones;
         public double Credito { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public bool EsAdmin { get; set; }
 
+        // Esto tiene que ser reemplazado por una tabla de muchos a muchos entre usuarios y Funciones
         public Dictionary<int, int> EntradasCompradas { get; set; }
-        // Entrada
 
         public Usuario(int DNI, string Nombre, string Apellido,string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin)
         {
@@ -41,6 +45,8 @@ namespace TP1___GRUPO_C.Model
             Credito = 0;
             this.FechaNacimiento = FechaNacimiento;
             this.EsAdmin = EsAdmin;
+
+            // Esto tiene que ser reemplazado por una tabla de muchos a muchos entre usuarios y Funciones
             EntradasCompradas = new Dictionary<int, int>();
         }
 
