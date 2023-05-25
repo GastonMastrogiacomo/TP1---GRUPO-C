@@ -130,35 +130,44 @@ namespace TP1___GRUPO_C.Model
             */
 
 
-            /*  Ejemplos de como tenemos que hacer las vinculaciones entre foreign keys para que se inicializen correctamente
-             * 
-                //SI FUESE MANY TO MANY
-                //misUserDom = DB.inicializarUserDom();
-                //foreach(UserDom ud in misUserDom)
-                //{
-                //    foreach (Domicilio domicilio in misDomicilios)
-                //    {
-                //        foreach (Usuario u in misUsuarios)
-                //            if (ud.idUser==u.id && ud.idDom==domicilio.id)
-                //            {
-                //                u.misDirecciones.Add(domicilio);
-                //                domicilio.misUsuarios.Add(u);
-                //            }
-                //    }
-                //}
+            //  Ejemplos de como tenemos que hacer las vinculaciones entre foreign keys para que se inicializen correctamente
 
-                // "Vinculacion" ejemplo entre clase domicilio y Usuario , esto es parecido a como funcion y salas o pelicula y salas o otras relaciones tiene que ser
-                foreach (Domicilio domicilio in misDomicilios)
+            //SI FUESE MANY TO MANY
+            misUsuarioFuncion = DB.inicializarUsuarioFuncion();
+            foreach (UsuarioFuncion uf in misUsuarioFuncion)
+            {
+                foreach (Funcion fun in Funciones)
                 {
-                    foreach (Usuario u in misUsuarios)
-                        if (u.id == domicilio.idUsuario)
+                    foreach (Usuario u in Usuarios)
+                        if (uf.idUsuario == u.ID && uf.idFuncion == fun.ID)
                         {
-                            u.misDirecciones.Add(domicilio);
-                            domicilio.user = u;
+                            u.MisFunciones.Add(fun);
+                            fun.Clientes.Add(u);
                         }
                 }
+            }
 
-            */
+            // Relacion one to many Funciones por Pelicula
+            foreach (Funcion fun in Funciones)
+            {
+                foreach (Pelicula p in Peliculas)
+                    if (p.ID == fun.idPelicula)
+                    {
+                        p.MisFunciones.Add(fun);
+                        fun.MiPelicula = p;
+                    }
+            }
+
+            //Relacion one to many Funciones por Sala
+            foreach (Funcion fun in Funciones)
+            {
+                foreach (Sala s in Salas)
+                    if (s.ID == fun.idSala)
+                    {
+                        s.MisFunciones.Add(fun);
+                        fun.MiSala = s;
+                    }
+            }
 
         }
 
@@ -547,6 +556,76 @@ namespace TP1___GRUPO_C.Model
         #region ABM Funcion
         public int AgregarFuncion(int MiSalaId, int MiPeliculaId, DateTime Fecha, int CantidadClientes, double Costo)
         {
+            #region AgregarFuncion con DB
+            /*
+                try
+                {
+                    // Buscar la sala correspondiente en la lista de salas
+                    Sala salaElegida = Salas.FirstOrDefault(s => s.ID == MiSalaId);
+
+                    if (salaElegida != null)
+                    {
+                        // Buscar la película correspondiente en la lista de películas
+                        Pelicula peliElegida = Peliculas.FirstOrDefault(p => p.ID == MiPeliculaId);
+                        if (peliElegida != null)
+                        {
+                            // Verificar que el costo sea mayor a 0
+                            if (Costo > 0)
+                            {
+
+                                int idNuevaFuncion;
+                                idNuevaFuncion = DB.agregarFuncion(MiSalaId, MiPeliculaId, Fecha, CantidadClientes, Costo);
+
+                                if (idNuevaFuncion != -1)
+                                {
+                                    // Crear una nueva instancia de Funcion
+                                    Funcion func = new Funcion(salaElegida, peliElegida, Fecha, Costo);
+
+                                    // Agregar la función a la lista de funciones
+                                    Funciones.Add(func);
+
+                                    // Agregar la función a la lista de funciones de la sala correspondiente
+                                    salaElegida.AgregarFuncion(func);
+
+                                    // Agregar la función a la lista de funciones de la película correspondiente
+                                    peliElegida.AgregarFuncion(func);
+
+                                    return 200;
+                                }
+                                else
+                                {
+                                    return 500;
+                                }
+
+                            }
+                            else
+                            {
+                                throw new ArgumentException("El costo debe ser mayor a 0.");
+
+                            }
+
+                        }
+                        else
+                        {
+                            throw new ArgumentException("El ID de la pelicula es incorrecto.");
+                        }
+
+                    }
+                    else
+                    {
+                        throw new ArgumentException("El ID de la sala es incorrecto");
+                    }
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    return 500;
+                }
+            */
+            #endregion
+
+
+
             try
             {
                 // Buscar la sala correspondiente en la lista de salas
@@ -561,6 +640,7 @@ namespace TP1___GRUPO_C.Model
                         // Verificar que el costo sea mayor a 0
                         if (Costo > 0)
                         {
+
                             // Crear una nueva instancia de Funcion
                             Funcion func = new Funcion(salaElegida, peliElegida, Fecha, Costo);
 
@@ -604,8 +684,75 @@ namespace TP1___GRUPO_C.Model
         public int EliminarFuncion(int IDFuncion)
 
         {
+
             // Buscar la función con el ID correspondiente en la lista de funciones
             Funcion func = Funciones.FirstOrDefault(f => f.ID == IDFuncion);
+
+            #region Eliminar Usuario con DB
+            /*
+                if (DB.eliminarFuncion(IDFuncion) == 1)
+                {
+                    if (func != null)
+                    {
+                        // Eliminar la función de la lista de funciones de los clientes asociados
+                        for (int i = 0; i < func.Clientes.Count; i++)
+                        {
+                            Usuario user = func.Clientes[i];
+
+                            for (int j = 0; j < user.ObtenerMisFunciones().Count; j++)
+                            {
+                                if (user.ObtenerMisFunciones()[j].ID == IDFuncion)
+                                {
+                                    user.EliminarFuncion(user.ObtenerMisFunciones()[j].ID);
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+
+
+                        Pelicula peli = func.MiPelicula;
+
+                        for (int i = 0; i < peli.ObtenerMisFunciones().Count; i++)
+                        {
+                            if (peli.ObtenerMisFunciones()[i].ID == IDFuncion)
+                            {
+                                peli.EliminarFuncion(peli.ObtenerMisFunciones()[i].ID);
+                                break;
+                            }
+                        }
+
+                        Sala sala = func.MiSala;
+
+                        for (int i = 0; i < sala.ObtenerMisFunciones().Count; i++)
+                        {
+                            if (sala.ObtenerMisFunciones()[i].ID == IDFuncion)
+                            {
+                                sala.EliminarFuncion(sala.ObtenerMisFunciones()[i].ID);
+                                break;
+                            }
+                        }
+
+                        // Eliminar la función de la lista de funciones
+                        Funciones.Remove(func);
+
+
+                        return 200;
+                    }
+                    else
+                    {
+
+                        return 404;
+
+                    }
+                }
+                else
+                {
+                    return 500;
+                }
+
+            */
+            #endregion
 
             if (func != null)
             {
@@ -667,7 +814,83 @@ namespace TP1___GRUPO_C.Model
         {
             try
             {
+                #region ModificarFuncion con DB
+                /*
+                Funcion func = Funciones.FirstOrDefault(f => f.ID == IDFuncion);
 
+                if (DB.modificarFuncion(IDFuncion,MiSalaId,MiPeliculaId,Fecha,Costo) == 1) {
+
+                    if (func != null)
+                    {
+                        Sala salaElegida = Salas.FirstOrDefault(s => s.ID == MiSalaId);
+                        if (salaElegida != null)
+                        {
+
+                            Pelicula peliElegida = Peliculas.FirstOrDefault(p => p.ID == MiPeliculaId);
+                            if (peliElegida != null)
+                            {
+
+                                if (Fecha >= DateTime.Today)
+                                {
+                                    if (func.CantidadClientes >= 0 && Costo > 0 && func.Clientes != null)
+                                    {
+
+                                        func.MiSala.EliminarFuncion(func.ID);
+                                        func.MiPelicula.EliminarFuncion(func.ID);
+
+                                        func.MiSala = salaElegida;
+                                        func.MiPelicula = peliElegida;
+
+                                        func.Fecha = Fecha;
+
+                                        func.Costo = Costo;
+
+                                        func.MiSala.AgregarFuncion(func);
+                                        func.MiPelicula.AgregarFuncion(func);
+
+
+                                        return 200;
+                                    }
+                                    else
+                                    {
+                                        throw new ArgumentException("Faltan datos");
+                                    }
+
+                                }
+                                else
+                                {
+                                    throw new ArgumentException("La fecha no puede ser menor a hoy.");
+
+                                }
+
+                            }
+                            else
+                            {
+                                throw new ArgumentException("Película no encontrada.");
+
+                            }
+
+                        }
+                        else
+                        {
+                            throw new ArgumentException("Sala no encontrada.");
+
+                        }
+
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Función no encontrada.");
+
+                    }
+
+                }
+                else
+                {
+                    return 500;
+                }
+                */
+                #endregion
 
                 Funcion func = Funciones.FirstOrDefault(f => f.ID == IDFuncion);
                 if (func != null)
@@ -734,7 +957,6 @@ namespace TP1___GRUPO_C.Model
 
                 }
 
-                return 404;
             }
             catch (Exception ex)
             {

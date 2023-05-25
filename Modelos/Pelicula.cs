@@ -9,12 +9,14 @@ namespace TP1___GRUPO_C.Model
     public class Pelicula
     {
         public int ID { get; set; }
+
         public static int ultimoID = 0;
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public string Sinopsis { get; set; }
         public string Poster { get; set; }
         public int Duracion { get; set; }
+
         public List<Funcion> MisFunciones;
 
         public Pelicula(string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion)
@@ -41,8 +43,8 @@ namespace TP1___GRUPO_C.Model
             this.MisFunciones = new List<Funcion>();
         }
 
-        //ABM Funcion
 
+        #region ABM Funcion
         public bool AgregarFuncion(Funcion funcion)
         {
             try
@@ -87,6 +89,7 @@ namespace TP1___GRUPO_C.Model
             }
             return false;
         }
+        #endregion
 
         public List<Funcion> ObtenerMisFunciones()
         {

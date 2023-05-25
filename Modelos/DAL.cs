@@ -21,6 +21,8 @@ namespace TP1___GRUPO_C.Modelos
             connectionString = Properties.Resources.ConnectionStr;
             //connectionString = "Data Source=DESKTOP-LR8KJAR\\SQLEXPRESS;Initial Catalog=20221017;Integrated Security=True";
         }
+
+        #region Metodos Inicializar
         public List<Usuario> inicializarUsuarios()
         {
             List<Usuario> misUsuarios = new List<Usuario>();
@@ -184,6 +186,8 @@ namespace TP1___GRUPO_C.Modelos
             return usuarioFuncion;
         }
 
+        #endregion
+
         #region ABM Usuario lado DB
         public int agregarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int credito)
         {
@@ -264,7 +268,7 @@ namespace TP1___GRUPO_C.Modelos
             // HAY QUE VER COMO PODEMOS HACER PARA QUE INTENTOS FALLIDOS NO ESTE ACA, ver lo que escribi en Usuario porque me parece que conviene eliminar ese atributo
             // De momento lo dejo puesto y arreglo el codigo para que lo contemple  pero probablemente no funcione asi
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Usuarios] SET Nombre=@nombre,Apellido = @apellido , Mail=@mail,Password=@password,FechaNacimiento = @fechaNacimiento,EsADM=@esadm,IntentosFallidos = @intentosFallidos, Bloqueado=@bloqueado, Credito = @credito WHERE ID=@id;";
+            string queryString = "UPDATE [dbo].[Usuarios] SET DNI = @dni, Nombre=@nombre,Apellido = @apellido , Mail=@mail,Password=@password,FechaNacimiento = @fechaNacimiento,EsADM=@esadm,IntentosFallidos = @intentosFallidos, Bloqueado=@bloqueado, Credito = @credito WHERE ID=@id;";
             using (SqlConnection connection =
                 new SqlConnection(connectionString))
             {
@@ -512,6 +516,131 @@ namespace TP1___GRUPO_C.Modelos
             }
         }
 
+
+        #endregion
+
+        #region ABM Funcion lado DB
+
+        public int agregarFuncion(int MiSalaId, int MiPeliculaId, DateTime Fecha, int CantidadClientes, double Costo)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    // Buscar la sala correspondiente en la base de datos
+                    string salaQuery = "SELECT * FROM Salas WHERE ID = @salaId";
+                    SqlCommand salaCommand = new SqlCommand(salaQuery, connection);
+                    salaCommand.Parameters.AddWithValue("@salaId", MiSalaId);
+                    connection.Open();
+                    SqlDataReader salaReader = salaCommand.ExecuteReader();
+                    if (!salaReader.HasRows)
+                    {
+                        salaReader.Close();
+                        return -1; // ID de sala no encontrado
+                    }
+                    salaReader.Close();
+
+                    // Buscar la película correspondiente en la base de datos
+                    string peliculaQuery = "SELECT * FROM Peliculas WHERE ID = @peliculaId";
+                    SqlCommand peliculaCommand = new SqlCommand(peliculaQuery, connection);
+                    peliculaCommand.Parameters.AddWithValue("@peliculaId", MiPeliculaId);
+                    SqlDataReader peliculaReader = peliculaCommand.ExecuteReader();
+                    if (!peliculaReader.HasRows)
+                    {
+                        peliculaReader.Close();
+                        return -2; // ID de película no encontrado
+                    }
+                    peliculaReader.Close();
+
+                    // Verificar que el costo sea mayor a 0
+                    if (Costo <= 0)
+                    {
+                        return -3; // Costo inválido
+                    }
+
+                    // Insertar la nueva función en la base de datos
+                    string insertQuery = "INSERT INTO Funciones (MiSalaId, MiPeliculaId, Fecha, CantidadClientes, Costo) VALUES (@salaId, @peliculaId, @fecha, @cantidad, @costo);";
+                    SqlCommand insertCommand = new SqlCommand(insertQuery, connection);
+                    insertCommand.Parameters.AddWithValue("@salaId", MiSalaId);
+                    insertCommand.Parameters.AddWithValue("@peliculaId", MiPeliculaId);
+                    insertCommand.Parameters.AddWithValue("@fecha", Fecha);
+                    insertCommand.Parameters.AddWithValue("@cantidad", CantidadClientes);
+                    insertCommand.Parameters.AddWithValue("@costo", Costo);
+                    int newFuncId = Convert.ToInt32(insertCommand.ExecuteScalar());
+
+                    return newFuncId; // ID de la nueva función agregada
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 500; // Error desconocido
+            }
+        }
+
+        public int eliminarFuncion(int IDFuncion)
+        {
+            //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[Funciones] WHERE ID=@id";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                command.Parameters["@id"].Value = IDFuncion;
+                try
+                {
+                    connection.Open();
+                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+        public int modificarFuncion(int IDFuncion, int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo)
+        {
+            // HAY QUE VER COMO PODEMOS HACER PARA QUE INTENTOS FALLIDOS NO ESTE ACA, ver lo que escribi en Usuario porque me parece que conviene eliminar ese atributo
+            // De momento lo dejo puesto y arreglo el codigo para que lo contemple  pero probablemente no funcione asi
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Usuarios] SET MiSalaId=@misalaid,MiPeliculaID = @mipeliculaid , Fecha=@fecha,Costo=@costo WHERE ID=@id;";
+            using (SqlConnection connection =
+                new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@misalaid", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@mipeliculaid", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@fecha", SqlDbType.DateTime));
+                command.Parameters.Add(new SqlParameter("@costo", SqlDbType.Int));
+
+
+
+                command.Parameters["@id"].Value = IDFuncion;
+                command.Parameters["@misalaid"].Value = MiSalaId;
+                command.Parameters["@mipeliculaid"].Value = MiPeliculaId;
+                command.Parameters["@fecha"].Value = Fecha;
+                command.Parameters["@costo"].Value = Costo;
+ 
+                try
+                {
+                    connection.Open();
+                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
+                    return command.ExecuteNonQuery();
+                    //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
 
         #endregion
 

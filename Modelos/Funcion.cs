@@ -15,13 +15,28 @@ namespace TP1___GRUPO_C.Model
         public Sala MiSala { get; set; }
         public Pelicula MiPelicula { get; set; }
 
+        public int idSala { get; set; }
+        public int idPelicula { get; set; }
+
         public List<Usuario> Clientes;
         public DateTime Fecha { get; set; }
         public int AsientosDisponibles { get; set; }
         public int CantidadClientes { get; set; } //CantidadEntradasCompradas
         public double Costo { get; set; }
 
+        public Funcion(int iD, Sala miSala, Pelicula miPelicula, int idSala, int idPelicula, DateTime fecha, int cantidadClientes, double costo)
+        {
+            ID = iD;
+            MiSala = miSala;
+            MiPelicula = miPelicula;
+            this.idSala = idSala;
+            this.idPelicula = idPelicula;
+            Fecha = fecha;
+            CantidadClientes = cantidadClientes;
+            Costo = costo;
+            Clientes = new List<Usuario>();
 
+        }
 
         public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha, double Costo)
         {
@@ -37,7 +52,7 @@ namespace TP1___GRUPO_C.Model
 
         }
 
-        public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha,int CantidadClientes, double Costo, int ID)
+        public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha, int CantidadClientes, double Costo, int ID)
         {
             this.ID = ID;
             this.MiSala = MiSala;
@@ -50,6 +65,7 @@ namespace TP1___GRUPO_C.Model
 
         }
 
+        #region ABM Cliente
         public bool AgregarCliente(Usuario usuario)
         {
 
@@ -57,7 +73,8 @@ namespace TP1___GRUPO_C.Model
             {
                 Clientes.Add(usuario);
                 return true;
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 Console.WriteLine(e.ToString());
                 return false;
@@ -92,8 +109,8 @@ namespace TP1___GRUPO_C.Model
             }
             return false;
         }
+        #endregion
 
-       
         public List<Usuario> MostrarClientes()
         {
             return this.Clientes.ToList();
@@ -101,16 +118,17 @@ namespace TP1___GRUPO_C.Model
 
         public string[] ToString()
         {
-           
-            if(MiSala != null && MiPelicula != null)
+
+            if (MiSala != null && MiPelicula != null)
             {
-                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(),  AsientosDisponibles.ToString() };
+                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), AsientosDisponibles.ToString() };
 
             }
-            else if(MiSala == null && MiPelicula != null)
+            else if (MiSala == null && MiPelicula != null)
             {
                 return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), "", "", MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), AsientosDisponibles.ToString() };
-            }else if(MiSala != null && MiPelicula == null)
+            }
+            else if (MiSala != null && MiPelicula == null)
             {
                 return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), "", "", AsientosDisponibles.ToString() };
             }

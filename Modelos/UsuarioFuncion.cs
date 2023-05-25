@@ -14,13 +14,13 @@ namespace TP1___GRUPO_C.Modelos
         public int idFuncion { get; set; }
 
         //Cantidad de entradas tendria que ir aca
-        public int cantidadEntradas { get; set; }
+        public int CantidadEntradasCompradas { get; set; }
 
         public UsuarioFuncion(int idUsuario, int idFuncion, int cantidadEntradas)
         {
             this.idUsuario = idUsuario;
             this.idFuncion = idFuncion;
-            this.cantidadEntradas = cantidadEntradas;
+            this.CantidadEntradasCompradas = cantidadEntradas;
         }
     }
 }

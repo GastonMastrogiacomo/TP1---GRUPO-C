@@ -63,6 +63,9 @@ COSAS COMPLETADAS:
 	- BuscarFuncion: Excelente pero estaría bueno que sea opcional completar todos los campos. 
 	Sin hacer la combinatoria de todas las opciones, traten de mandar flags desde la vista al cine (pueden ser nulls) para indicar si el
 	usuario completó o no ese campo de la búsqueda y entonces en los if filtran sólo si ese campo no es flag.
+	
+    - Clase Cine: Traten de no usar MessageBox acá, de última pueden devolver un string y mostrarlo como cartel o 
+    un flag, por ejemplo, 0 = ok, 1 = error, 2 = datos incompletos. STATUS CODES
 
 PREGUNTAR AL PROFE:
 
@@ -70,8 +73,6 @@ PREGUNTAR AL PROFE:
 	que el usuario haya completado todos los campos de un formulario, no es correcto que valide que el usuario tenga saldo 
 	suficiente para comprar las entradas (eso le corresponde a Cine) pero sí todo lo que tiene que ver con inputs.
 
-	- PantallaPrincipal: Los botones de iniciar sesión o registrarse no me anduvieron, no veo que tengan oyentes asignados, está la
-	implementación hecha en la clase, es correcta pero no están vinculados los botones con los métodos oyentes.
 
 
 ANDY:
@@ -82,8 +83,6 @@ ANDY:
 
 LUCKY:
 
-    - Clase Cine: Traten de no usar MessageBox acá, de última pueden devolver un string y mostrarlo como cartel o 
-    un flag, por ejemplo, 0 = ok, 1 = error, 2 = datos incompletos. STATUS CODES
 
 GASTI: 
 

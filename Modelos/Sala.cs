@@ -33,6 +33,7 @@ namespace TP1___GRUPO_C.Model
             MisFunciones = new List<Funcion>();
         }
 
+        #region ABM Funcion
         public bool AgregarFuncion(Funcion funcion)
         {
             try
@@ -79,6 +80,7 @@ namespace TP1___GRUPO_C.Model
             }
             return false;
         }
+        #endregion
 
         public List<Funcion> ObtenerMisFunciones()
         {
@@ -86,7 +88,6 @@ namespace TP1___GRUPO_C.Model
         }
 
      
-
         // obtenerUbicaciones
         public string[] SalaToString()
         {
