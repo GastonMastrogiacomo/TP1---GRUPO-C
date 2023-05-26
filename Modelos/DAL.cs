@@ -18,7 +18,9 @@ namespace TP1___GRUPO_C.Modelos
         public DAL()
         {
             //Cargo la cadena de conexión desde el archivo de properties
-            connectionString = Properties.Resources.ConnectionStr;
+            //connectionString = Properties.Resources.ConnectionStr;
+            //connectionString = Properties.Resources.ConnectionAndy;
+            connectionString = "Data Source=localhost;Initial Catalog=cine;Integrated Security=True";
             //connectionString = "Data Source=DESKTOP-LR8KJAR\\SQLEXPRESS;Initial Catalog=20221017;Integrated Security=True";
         }
 
@@ -743,7 +745,7 @@ namespace TP1___GRUPO_C.Modelos
 
         }
 
-        public int devolverEntrada(int idFuncion, int idUsuario, int cantidad)
+        public int devolverEntrada(int idFuncion, int idUsuario)
         {
             string queryString = "DELETE FROM [dbo].[UsuarioFuncion] WHERE idFuncion = @idFuncion AND idUsuario = @idUsuario;";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -767,10 +769,37 @@ namespace TP1___GRUPO_C.Modelos
                 }
             }
 
+        }
+
+        public int devolverEntradaMayorCero(int idFuncion, int idUsuario, int entradasRestantes)
+        {
+            string queryString = "UPDATE [dbo].[UsuarioFuncion] SET cantidad_entradas_compradas = @cantidad WHERE idFuncion = @idFuncion AND idUsuario = @idUsuario;";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@idFuncion", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
+
+                command.Parameters["@idFuncion"].Value = idFuncion;
+                command.Parameters["@idUsuario"].Value = idUsuario;
+                command.Parameters["@cantidad"].Value = entradasRestantes;
+
+                try
+                {
+                    connection.Open();
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
 
         }
 
-        public int actualizarCreditoUsuario(int idFuncion, int idUsuario, int credito)
+        public int actualizarCreditoUsuario(int idUsuario, double credito)
         {
             string queryString = "UPDATE [dbo].[Usuarios] SET credito = @credito WHERE ID = @idUsuario;";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -794,6 +823,33 @@ namespace TP1___GRUPO_C.Modelos
                 }
             }
         }
+
+        public int actualizarAsientosDisponibles (int idFuncion, int cantidadEntradas)
+        {
+            string queryString = "UPDATE [dbo].[Funciones] SET asientos_disponibles = asientos_disponibles + @cantidadEntradas WHERE ID = @idFuncion;";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@cantidadEntradas", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@idFuncion", SqlDbType.Int));
+
+                command.Parameters["@cantidadEntradas"].Value = cantidadEntradas;
+                command.Parameters["@idFuncion"].Value = idFuncion;
+
+                try
+                {
+                    connection.Open();
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
+
 
         #endregion
 

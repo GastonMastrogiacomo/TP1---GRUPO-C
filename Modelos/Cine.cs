@@ -33,7 +33,7 @@ namespace TP1___GRUPO_C.Model
 
             //misUsuarioFuncion = new List<UsuarioFuncion>();
             DB = new DAL();
-            //inicializarAtributos();
+            inicializarAtributos();
 
             /*
             #region Datos Hardcodeados para pruebas
@@ -1539,7 +1539,6 @@ namespace TP1___GRUPO_C.Model
 
                     if (funcion != null)
                     {
-
                         ComprarEntradaFuncionNotNull(UsuarioActual, cantidadEntradas, funcion, idFuncion);
                         return 200;
                     }
@@ -1550,10 +1549,8 @@ namespace TP1___GRUPO_C.Model
                 }
                 else
                 {
-
                     return 403;
                 }
-
 
             }
             catch (Exception ex)
@@ -1572,7 +1569,7 @@ namespace TP1___GRUPO_C.Model
                 if (funcion != null)
                 {
                     // Ver despues de eliminar idFuncion como firma ya que es innecesario
-                    DevolverEntradaFuncionNotNull(user, funcion, idFuncion, cantidadEntradas);
+                    DevolverEntradaFuncionNotNull(user,idFuncion, cantidadEntradas);
                     return 200;
 
 
@@ -1667,7 +1664,6 @@ namespace TP1___GRUPO_C.Model
 
         public List<Funcion> MostrarFunciones()
         {
-
             return Funciones.ToList();
         }
 
@@ -1794,43 +1790,60 @@ namespace TP1___GRUPO_C.Model
 
         }
 
-        private bool DevolverEntradaFuncionNotNull(Usuario user, Funcion funcion, int idFuncion, int cantidadEntradas)
-        {
+        private bool DevolverEntradaFuncionNotNull(Usuario user,int idFuncion, int cantidadEntradas)
+        {   
+            //le saque a como parametro el objeto Funcion y lo consigo aca abajo directamente, preguntar si estaba antes asi por algo especifico.
+            Funcion funcion = Funciones.FirstOrDefault(f => f.ID == idFuncion);
 
-            if(funcion.Fecha > DateTime.Now)
-            {
-                UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
+            #region DevolverEntrada con DB
 
-                if (entrada != null)
+                /*
+                if (funcion.Fecha > DateTime.Now)
                 {
-                    if(entrada.CantidadEntradasCompradas >= cantidadEntradas)
+                    UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
+
+                    if (entrada != null)
                     {
-                        user.MisFunciones.Remove(funcion);
-                        funcion.CantidadClientes -= cantidadEntradas;
-                        funcion.AsientosDisponibles += cantidadEntradas;
-                        funcion.EliminarCliente(user.ID);
-                        entrada.CantidadEntradasCompradas -= cantidadEntradas;
-
-                        double costoTotal = funcion.Costo * cantidadEntradas;
-                        user.Credito += costoTotal;
-
-
-                        if (entrada.CantidadEntradasCompradas <= 0)
+                        if(entrada.CantidadEntradasCompradas >= cantidadEntradas)
                         {
-                            DB.devolverEntrada(funcion.ID, user.ID, cantidadEntradas);
-                            DB.actualizarCreditoUsuario(funcion.ID, user.ID, user.Credito);
+                            user.MisFunciones.Remove(funcion);
+                            funcion.CantidadClientes -= cantidadEntradas;
+                            funcion.AsientosDisponibles += cantidadEntradas;
+                            funcion.EliminarCliente(user.ID);
+                            entrada.CantidadEntradasCompradas -= cantidadEntradas;
+
+                            double costoTotal = funcion.Costo * cantidadEntradas;
+                            user.Credito += costoTotal;
+
+
+                            if (entrada.CantidadEntradasCompradas <= 0)
+                            {
+                                DB.devolverEntrada(idFuncion, user.ID);
+                                DB.actualizarCreditoUsuario(user.ID, user.Credito);
+                                DB.actualizarAsientosDisponibles(idFuncion, cantidadEntradas);
+
+
+                            }
+                            else if (entrada.CantidadEntradasCompradas >= 1)
+                            {
+                                //Emplear una mejor forma que distinga, ya que si es 0 tiene que eliminar la fila y sino simplemente actualizar la cantidad
+                                DB.devolverEntradaMayorCero(idFuncion, user.ID,entrada.CantidadEntradasCompradas);
+                                DB.actualizarCreditoUsuario(user.ID, user.Credito);
+                                DB.actualizarAsientosDisponibles(idFuncion, cantidadEntradas);
+                            }
+
+
                         }
-
                     }
-                }
-                else
-                {
-                    //No existe
-                }
+                    else
+                    {
+                        //No existe
+                    }
 
-            }
+                }
+                */
+            #endregion
 
-        
             // Verificar si la función ya ha ocurrido
             if (funcion.Fecha > DateTime.Now)
             {
@@ -1843,9 +1856,7 @@ namespace TP1___GRUPO_C.Model
 
                     // Actualizar la cantidad de clientes de la función
                     funcion.CantidadClientes -= cantidadEntradas;
-
                     funcion.AsientosDisponibles += cantidadEntradas;
-
 
                     // Eliminar al usuario como cliente de la función
                     funcion.EliminarCliente(user.ID);
@@ -1865,14 +1876,11 @@ namespace TP1___GRUPO_C.Model
                     // Calcular el reembolso y actualizar el crédito del usuario
                     double costoTotal = funcion.Costo * cantidadEntradas;
                     user.Credito += costoTotal;
-
-
                     return true;
                 }
                 else
                 {
                     throw new InvalidOperationException("No tienes suficientes entradas compradas para devolver.");
-
                 }
             }
             else
@@ -1883,6 +1891,61 @@ namespace TP1___GRUPO_C.Model
 
         public int ComprarEntradaFuncionNotNull(Usuario user, int cantidadEntradas, Funcion funcion, int idFuncion)
         {
+            #region ComprarEntrada con DB INCOMPLETO
+                /*
+                UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
+
+                // Verificar si la cantidad de entradas es mayor a cero
+                if (cantidadEntradas > 0)
+                {
+                    double costoTotal = funcion.Costo * cantidadEntradas;
+
+                    // Verificar si el usuario tiene suficiente crédito
+                    if (user.Credito >= costoTotal)
+                    {
+                        // Verificar si la capacidad de la sala es suficiente
+                        if (funcion.AsientosDisponibles >= cantidadEntradas)
+                        {
+                            // Agregar la función a las funciones del usuario
+                            user.MisFunciones.Add(funcion);
+
+                            // Actualizar la cantidad de clientes de la función
+                            funcion.CantidadClientes += cantidadEntradas;
+
+                            funcion.AsientosDisponibles -= cantidadEntradas;
+
+                            // Agregar al usuario como cliente de la función
+                            funcion.AgregarCliente(user);
+
+                            // Actualizar el crédito del usuario
+                            user.Credito -= costoTotal;
+
+                            entrada.CantidadEntradasCompradas += cantidadEntradas;
+                            DB.actualizarAsientosDisponibles();
+                            DB.actualizarCreditoUsuario();
+                            //AGREGAR: Antes de hacer esto tengo que meter un insert a la tabla UsuariosFunciones, porque 
+                            // no puedo modificar estas cosas si el registro no existe.
+
+                            return 200;
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("No hay suficiente capacidad en la sala.");
+                        }
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Créditos insuficientes.");
+                    }
+
+                }
+                else
+                {
+                    return 500;
+                }
+                */
+            #endregion
+
             // Verificar si la cantidad de entradas es mayor a cero
             if (cantidadEntradas > 0)
             {
@@ -1918,8 +1981,6 @@ namespace TP1___GRUPO_C.Model
                         {
                             user.EntradasCompradas.Add(idFuncion, cantidadEntradas);
                         }
-
-                        //MessageBox.Show("Entrada comprada con éxito!", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         return 200;
                     }
                     else
@@ -1932,11 +1993,9 @@ namespace TP1___GRUPO_C.Model
                     throw new InvalidOperationException("Créditos insuficientes.");
                 }
 
-
             }
             else
             {
-                throw new InvalidOperationException("La cantidad de entradas debe ser mayor a cero.");
                 return 500;
             }
         }

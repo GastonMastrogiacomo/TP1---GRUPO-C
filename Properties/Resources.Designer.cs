@@ -39,7 +39,7 @@ namespace TP1___GRUPO_C.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Clase6.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -63,9 +63,18 @@ namespace TP1___GRUPO_C.Properties {
         /// <summary>
         ///   Busca una cadena traducida similar a Data Source=DESKTOP-LR8KJAR\SQLEXPRESS;Initial Catalog=Clase6_IDS;Integrated Security=True.
         /// </summary>
-        internal static string ConnectionStr {
+        internal static string ConnectionStr
+        {
             get {
                 return ResourceManager.GetString("ConnectionStr", resourceCulture);
+            }
+        }
+        // @edit Andy ConnectionAndy
+        internal static string ConnectionAndy
+        {
+            get
+            {
+                return ResourceManager.GetString("ConnectionAndy", resourceCulture);
             }
         }
     }
