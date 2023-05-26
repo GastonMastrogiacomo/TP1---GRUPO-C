@@ -524,7 +524,7 @@ namespace TP1___GRUPO_C.Modelos
 
         #region ABM Funcion lado DB
 
-        public int agregarFuncion(int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo,int capacidad)
+        public int agregarFuncion(int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo, int capacidad)
         {
             try
             {
@@ -688,14 +688,13 @@ namespace TP1___GRUPO_C.Modelos
             // De momento lo dejo puesto y arreglo el codigo para que lo contemple  pero probablemente no funcione asi
             string connectionString = Properties.Resources.ConnectionStr;
             string queryString = "UPDATE [dbo].[Usuarios] SET credito = @credito WHERE ID=@id;";
-            using (SqlConnection connection =
-                new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
                 command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
                 command.Parameters.Add(new SqlParameter("@credito", SqlDbType.Int));
                 command.Parameters["@id"].Value = idUsuario;
-                command.Parameters["@credito"].Value = idUsuario;
+                command.Parameters["@credito"].Value = importe;
 
                 try
                 {
@@ -713,6 +712,90 @@ namespace TP1___GRUPO_C.Modelos
             }
         }
 
+        public int bloquearUsuario(int idUsuario)
+        {
+
+            string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Usuarios] SET bloqueado = @bloqueado WHERE ID=@id;";
+            using (SqlConnection connection =
+                new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
+                command.Parameters["@id"].Value = idUsuario;
+                command.Parameters["@bloqueado"].Value = 0;
+
+                try
+                {
+                    connection.Open();
+                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
+                    return command.ExecuteNonQuery();
+                    //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+
+        }
+
+        public int devolverEntrada(int idFuncion, int idUsuario, int cantidad)
+        {
+            string queryString = "DELETE FROM [dbo].[UsuarioFuncion] WHERE idFuncion = @idFuncion AND idUsuario = @idUsuario;";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@idFuncion", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+
+                command.Parameters["@idFuncion"].Value = idFuncion;
+                command.Parameters["@idUsuario"].Value = idUsuario;
+
+                try
+                {
+                    connection.Open();
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+
+
+        }
+
+        public int actualizarCreditoUsuario(int idFuncion, int idUsuario, int credito)
+        {
+            string queryString = "UPDATE [dbo].[Usuarios] SET credito = @credito WHERE ID = @idUsuario;";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@credito", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+
+                command.Parameters["@credito"].Value = credito;
+                command.Parameters["@idUsuario"].Value = idUsuario;
+
+                try
+                {
+                    connection.Open();
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
         #endregion
+
     }
 }

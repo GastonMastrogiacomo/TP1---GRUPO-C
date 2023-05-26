@@ -21,6 +21,7 @@ namespace TP1___GRUPO_C.Model
         public List<Pelicula> Peliculas;
         public Usuario UsuarioActual;
         public List<UsuarioFuncion> misUsuarioFuncion;
+
         private DAL DB;
 
         public Cine()
@@ -100,7 +101,7 @@ namespace TP1___GRUPO_C.Model
             */
         }
 
-        /*
+        
         private void inicializarAtributos()
         {
            
@@ -113,25 +114,9 @@ namespace TP1___GRUPO_C.Model
             //SI FUESE MANY TO MANY
             //Esto depende de como creamos la base de datos, verificar que la logica esta bien
             
-            foreach(UsuarioFuncion uf in misUsuarioFuncion)
-            {
-                foreach (Funcion funcion in Funciones)
-                {
-                    foreach (Usuario u in Usuarios)
-                        if (uf.idUsuario == u.ID && uf.idFuncion == funcion.ID)
-                        {
-                            u.MisFunciones.Add(funcion);
-                            funcion.Clientes.Add(u);
-                        }
-                }
-            }
-            
-
-
             //  Ejemplos de como tenemos que hacer las vinculaciones entre foreign keys para que se inicializen correctamente
 
             //SI FUESE MANY TO MANY
-            misUsuarioFuncion = DB.inicializarUsuarioFuncion();
             foreach (UsuarioFuncion uf in misUsuarioFuncion)
             {
                 foreach (Funcion fun in Funciones)
@@ -168,7 +153,7 @@ namespace TP1___GRUPO_C.Model
             }
 
         }
-        */
+        
 
         #region ABM Usuario
 
@@ -1631,7 +1616,6 @@ namespace TP1___GRUPO_C.Model
                                 {
                                     // el usuario seleccion "administrador" sin serlo
                                     // o el administrador no puso el checkbox
-
                                     throw new InvalidOperationException("Has seleccionado una opción incorrecta.");
                                 }
 
@@ -1645,6 +1629,7 @@ namespace TP1___GRUPO_C.Model
                             }
                             else
                             {
+                                DB.bloquearUsuario(user.ID);
                                 user.Bloqueado = true;
 
                                 return 429;
@@ -1811,11 +1796,41 @@ namespace TP1___GRUPO_C.Model
 
         private bool DevolverEntradaFuncionNotNull(Usuario user, Funcion funcion, int idFuncion, int cantidadEntradas)
         {
-            //UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
+
+            if(funcion.Fecha > DateTime.Now)
+            {
+                UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
+
+                if (entrada != null)
+                {
+                    if(entrada.CantidadEntradasCompradas >= cantidadEntradas)
+                    {
+                        user.MisFunciones.Remove(funcion);
+                        funcion.CantidadClientes -= cantidadEntradas;
+                        funcion.AsientosDisponibles += cantidadEntradas;
+                        funcion.EliminarCliente(user.ID);
+                        entrada.CantidadEntradasCompradas -= cantidadEntradas;
+
+                        double costoTotal = funcion.Costo * cantidadEntradas;
+                        user.Credito += costoTotal;
 
 
+                        if (entrada.CantidadEntradasCompradas <= 0)
+                        {
+                            DB.devolverEntrada(funcion.ID, user.ID, cantidadEntradas);
+                            DB.actualizarCreditoUsuario(funcion.ID, user.ID, user.Credito);
+                        }
 
+                    }
+                }
+                else
+                {
+                    //No existe
+                }
 
+            }
+
+        
             // Verificar si la función ya ha ocurrido
             if (funcion.Fecha > DateTime.Now)
             {
