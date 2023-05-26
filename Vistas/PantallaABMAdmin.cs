@@ -349,11 +349,12 @@ namespace TP1___GRUPO_C.Vistas
             int.TryParse(salaSelected.Split(",")[0], out int salaSelectedID);
             string peliSelected = (string)this.Cb_Peliculas.SelectedItem;
             int.TryParse(peliSelected.Split(",")[0], out int peliSelectedID);
-            int.TryParse(this.Input_CantidadClientes.Text, out int CantidadClientes);
+            // Lo comento porque esta mal poder seleccionar cuantas entradas hay, a lo sumo hay que modificar la capacidad.
+            //int.TryParse(this.Input_CantidadClientes.Text, out int CantidadClientes);
             int.TryParse(this.Input_Costo.Text, out int Costo);
             DateTime Fecha = this.Selec_Fecha.Value;
 
-            int peticion = miCine.AgregarFuncion(salaSelectedID, peliSelectedID, Fecha, CantidadClientes, Costo);
+            int peticion = miCine.AgregarFuncion(salaSelectedID, peliSelectedID, Fecha, Costo);
             String mensaje = StatusCode.ObtenerMensaje(peticion);
             if (peticion == 200)
             {

@@ -15,6 +15,9 @@ namespace TP1___GRUPO_C.Model
         public int Capacidad { get; set; }
         public List<Funcion> MisFunciones;
 
+
+
+
         public Sala(string Ubicacion, int Capacidad)
         {
             ultimoID++;

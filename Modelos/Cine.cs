@@ -20,9 +20,7 @@ namespace TP1___GRUPO_C.Model
         public List<Sala> Salas;
         public List<Pelicula> Peliculas;
         public Usuario UsuarioActual;
-
         public List<UsuarioFuncion> misUsuarioFuncion;
-
         private DAL DB;
 
         public Cine()
@@ -36,6 +34,7 @@ namespace TP1___GRUPO_C.Model
             DB = new DAL();
             //inicializarAtributos();
 
+            /*
             #region Datos Hardcodeados para pruebas
 
             DateTime fecha = new DateTime(1986, 05, 12);
@@ -98,23 +97,22 @@ namespace TP1___GRUPO_C.Model
             sala1.AgregarFuncion(funcion5);
 
             #endregion
-
+            */
         }
 
+        /*
         private void inicializarAtributos()
         {
-            /*
-             
+           
             Usuarios = DB.inicializarUsuarios();
             Funciones = DB.inicializarFunciones();
             Salas = DB.inicializarSalas();
             Peliculas = DB.iniicalizarPeliculas();
-
+            misUsuarioFuncion = DB.inicializarUsuarioFuncion();
 
             //SI FUESE MANY TO MANY
             //Esto depende de como creamos la base de datos, verificar que la logica esta bien
             
-            misUsuarioFuncion = DB.inicializarUsuarioFuncion();
             foreach(UsuarioFuncion uf in misUsuarioFuncion)
             {
                 foreach (Funcion funcion in Funciones)
@@ -127,7 +125,7 @@ namespace TP1___GRUPO_C.Model
                         }
                 }
             }
-            */
+            
 
 
             //  Ejemplos de como tenemos que hacer las vinculaciones entre foreign keys para que se inicializen correctamente
@@ -170,6 +168,7 @@ namespace TP1___GRUPO_C.Model
             }
 
         }
+        */
 
         #region ABM Usuario
 
@@ -209,7 +208,7 @@ namespace TP1___GRUPO_C.Model
                                     {
                                         Descomentar cuando se implementa la base de datos
                                         int idNuevoUsuario;
-                                        idNuevoUsuario = DB.agregarUsuario(DNI, Nombre, Apellido, Mail, Password, FechaNacimiento, EsAdmin, credito);
+                                        idNuevoUsuario = DB.agregarUsuario(DNI, Nombre, Apellido, Mail, Password, FechaNacimiento, EsAdmin, credito,0);
 
                                         if (idNuevoUsuario != -1)
                                         {
@@ -554,7 +553,7 @@ namespace TP1___GRUPO_C.Model
         #endregion
 
         #region ABM Funcion
-        public int AgregarFuncion(int MiSalaId, int MiPeliculaId, DateTime Fecha, int CantidadClientes, double Costo)
+        public int AgregarFuncion(int MiSalaId, int MiPeliculaId, DateTime Fecha,double Costo)
         {
             #region AgregarFuncion con DB
             /*
@@ -562,8 +561,9 @@ namespace TP1___GRUPO_C.Model
                 {
                     // Buscar la sala correspondiente en la lista de salas
                     Sala salaElegida = Salas.FirstOrDefault(s => s.ID == MiSalaId);
+                    int capacidad = salaElegida.Capacidad;
 
-                    if (salaElegida != null)
+                if (salaElegida != null)
                     {
                         // Buscar la película correspondiente en la lista de películas
                         Pelicula peliElegida = Peliculas.FirstOrDefault(p => p.ID == MiPeliculaId);
@@ -574,7 +574,7 @@ namespace TP1___GRUPO_C.Model
                             {
 
                                 int idNuevaFuncion;
-                                idNuevaFuncion = DB.agregarFuncion(MiSalaId, MiPeliculaId, Fecha, CantidadClientes, Costo);
+                                idNuevaFuncion = DB.agregarFuncion(MiSalaId, MiPeliculaId, Fecha, Costo, capacidad);
 
                                 if (idNuevaFuncion != -1)
                                 {
@@ -624,12 +624,11 @@ namespace TP1___GRUPO_C.Model
             */
             #endregion
 
-
-
             try
             {
                 // Buscar la sala correspondiente en la lista de salas
                 Sala salaElegida = Salas.FirstOrDefault(s => s.ID == MiSalaId);
+                int capacidad = salaElegida.Capacidad;
 
                 if (salaElegida != null)
                 {
@@ -1048,6 +1047,7 @@ namespace TP1___GRUPO_C.Model
             }
             return 500;
         }
+
         public int EliminarSala(int IDSala)
         {
             #region EliminarSala con BD
@@ -1110,6 +1110,7 @@ namespace TP1___GRUPO_C.Model
 
 
         }
+
         public int ModificarSala(int IDSala, string Ubicacion, int Capacidad)
         {
 
@@ -1298,6 +1299,7 @@ namespace TP1___GRUPO_C.Model
             }
             return 500;
         }
+
         public int EliminarPelicula(int IDPelicula)
         {
             #region EliminarPelicula con DB
@@ -1358,6 +1360,7 @@ namespace TP1___GRUPO_C.Model
                 return 500;
             }
         }
+
         public int ModificarPelicula(int IDPelicula, string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion, List<string> IdFunciones)
         {
 
@@ -1483,13 +1486,47 @@ namespace TP1___GRUPO_C.Model
         #region Metodos
         public int CargarCredito(int idUsuario, double importe)
         {
+
+            #region CargarCredito con DB
+            /*
+                foreach (Usuario user in Usuarios)
+                {
+                    // se encuentra el usuario con el id pasado por parametro y se le agrega el credito correspondiente
+                    if (user.ID == idUsuario)
+                    {
+                        if (importe > 0)
+                        {
+                            if (DB.cargarCredito(idUsuario, importe) == 1)
+                            {
+                                user.Credito += importe;
+                                return 200;
+                            }
+                            else
+                            {
+                                return 500;
+                            }
+
+                        }
+                        else
+                        {
+                            return 400;
+                        }
+
+                    }
+                }
+
+                return 500;
+            */
+            #endregion
+
+
             foreach (Usuario user in Usuarios)
             {
                 // se encuentra el usuario con el id pasado por parametro y se le agrega el credito correspondiente
                 if (user.ID == idUsuario)
                 {
                     if (importe > 0)
-                    {
+                    {   
                         user.Credito += importe;
                         return 200;
                     }
@@ -1594,6 +1631,7 @@ namespace TP1___GRUPO_C.Model
                                 {
                                     // el usuario seleccion "administrador" sin serlo
                                     // o el administrador no puso el checkbox
+
                                     throw new InvalidOperationException("Has seleccionado una opción incorrecta.");
                                 }
 
@@ -1773,10 +1811,15 @@ namespace TP1___GRUPO_C.Model
 
         private bool DevolverEntradaFuncionNotNull(Usuario user, Funcion funcion, int idFuncion, int cantidadEntradas)
         {
+            //UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
+
+
+
 
             // Verificar si la función ya ha ocurrido
             if (funcion.Fecha > DateTime.Now)
             {
+
                 // Verificar si el usuario tiene compradas las entradas
                 if (user.EntradasCompradas.ContainsKey(idFuncion) && user.EntradasCompradas[idFuncion] >= cantidadEntradas)
                 {

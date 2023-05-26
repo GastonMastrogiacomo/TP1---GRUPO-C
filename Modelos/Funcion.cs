@@ -24,17 +24,20 @@ namespace TP1___GRUPO_C.Model
         public int CantidadClientes { get; set; } //CantidadEntradasCompradas
         public double Costo { get; set; }
 
-        public Funcion(int iD, Sala miSala, Pelicula miPelicula, int idSala, int idPelicula, DateTime fecha, int cantidadClientes, double costo)
+        public Funcion(DateTime fecha, double costo,int idSala, int idPelicula)
         {
-            ID = iD;
-            MiSala = miSala;
-            MiPelicula = miPelicula;
+            this.ID = ultimoID;
             this.idSala = idSala;
             this.idPelicula = idPelicula;
             Fecha = fecha;
-            CantidadClientes = cantidadClientes;
+            this.CantidadClientes = 0;
             Costo = costo;
             Clientes = new List<Usuario>();
+
+            //MiSala = new Sala();
+            //MiPelicula = new Pelicula();
+
+            this.AsientosDisponibles = MiSala.Capacidad;
 
         }
 
@@ -52,14 +55,14 @@ namespace TP1___GRUPO_C.Model
 
         }
 
-        public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha, int CantidadClientes, double Costo, int ID)
+        public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha, double Costo, int ID)
         {
             this.ID = ID;
             this.MiSala = MiSala;
             this.MiPelicula = MiPelicula;
             Clientes = new List<Usuario>();
             this.Fecha = Fecha;
-            this.CantidadClientes = CantidadClientes;
+            this.CantidadClientes = 0;
             this.Costo = Costo;
             this.AsientosDisponibles = MiSala.Capacidad;
 
