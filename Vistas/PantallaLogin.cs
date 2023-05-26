@@ -41,39 +41,38 @@ namespace TP1___GRUPO_C
 
             string mail = this.textBox1.Text;
             string pass = this.textBox2.Text;
-            bool esAdmin = this.checkBox1.Checked;
 
-            int peticion = miCine.IniciarSesion(mail, pass, esAdmin);
+            int peticion = miCine.IniciarSesion(mail, pass);
             String mensaje = StatusCode.ObtenerMensaje(peticion);
             if (mail != null && mail != "" && pass != null & pass != "")
             {
-                
+
                 if (peticion == 200)
                 {
-                    if (esAdmin)
+                    if (miCine.esAdmin())
                     {
                         this.usuarioAdminLogueado();
                     }
                     else
                     {
                         this.usuarioComunLogueado();
-                        
+
                     }
                 }
                 else
                 {
-                    MessageBox.Show(mensaje,"Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
 
-                
+
             }
             else
             {
-                MessageBox.Show("Complete todos los campos", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error); 
+                MessageBox.Show("Complete todos los campos", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        
+
         private void button2_Click(object sender, EventArgs e)
         {
             this.pantallaPrincipal();

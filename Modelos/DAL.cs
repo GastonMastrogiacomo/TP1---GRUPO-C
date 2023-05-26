@@ -18,11 +18,12 @@ namespace TP1___GRUPO_C.Modelos
         public DAL()
         {
             //Cargo la cadena de conexión desde el archivo de properties
-            connectionString = Properties.Resources.ConnectionStr;
+            //connectionString = Properties.Resources.ConnectionStr;
+            connectionString = "Data Source=DESKTOP-88BRRQU\\SQLEXPRESS;Initial Catalog=cine;Integrated Security=True";
             //connectionString = "Data Source=localhost;Initial Catalog=cine;Integrated Security=True";
             //este de abajo es el que estaba antes de andy
             //connectionString  = "Data Source=DESKTOP-4S2EH6K\SQLEXPRESS01;Initial Catalog=cine;Integrated Security=True"
-  
+
         }
 
         #region Metodos Inicializar
@@ -49,7 +50,7 @@ namespace TP1___GRUPO_C.Modelos
                     //mientras haya registros/filas en mi DataReader, sigo leyendo
                     while (reader.Read())
                     {
-                        aux = new Usuario(reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetDateTime(6), reader.GetBoolean(8));
+                        aux = new Usuario(reader.GetInt32(0),reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4),reader.GetString(5),  reader.GetDateTime(6), reader.GetBoolean(8));
                         misUsuarios.Add(aux);
                     }
                     //En este punto ya recorrí todas las filas del resultado de la query
@@ -159,8 +160,7 @@ namespace TP1___GRUPO_C.Modelos
             return misFunciones;
         }
 
-        //ESTE MÉTODO SE USARÍA PARA COMPLETAR LA LISTA QUE REPRESENTA LA TALBA INTERMEDIA ENTRE
-        //USUARIO Y DOMICILIO SI SU RELACIÓN ES MANY TO MANY
+
         public List<UsuarioFuncion> inicializarUsuarioFuncion()
         {
             List<UsuarioFuncion> usuarioFuncion = new List<UsuarioFuncion>();
@@ -197,7 +197,7 @@ namespace TP1___GRUPO_C.Modelos
             //primero me aseguro que lo pueda agregar a la base
             int resultadoQuery;
             int idNuevoUsuario;
-            string queryString = "INSERT INTO [cine].[dbo].[Usuarios] ([dni],[nombre],[apellido],[mail],[password],[fecha_nacimiento],[credito],[es_admin],[bloqueado]) VALUES (@dni,@nombre,@apellido,@mail,@password,@fechaNacimiento,@credito,@esadm,@bloqueado);";
+            string queryString = "INSERT INTO [dbo].[Usuarios] ([dni],[nombre],[apellido],[mail],[password],[fecha_nacimiento],[credito],[es_admin],[bloqueado],[intentos_fallidos]) VALUES (@dni,@nombre,@apellido,@mail,@password,@fechaNacimiento,@credito,@esadm,@bloqueado,@intentos);";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -210,6 +210,8 @@ namespace TP1___GRUPO_C.Modelos
                 command.Parameters.Add(new SqlParameter("@esadm", SqlDbType.Bit));
                 command.Parameters.Add(new SqlParameter("@credito", SqlDbType.Int));
                 command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
+                command.Parameters.Add(new SqlParameter("@intentos", SqlDbType.Int));
+
 
                 command.Parameters["@dni"].Value = DNI;
                 command.Parameters["@nombre"].Value = Nombre;
@@ -220,6 +222,7 @@ namespace TP1___GRUPO_C.Modelos
                 command.Parameters["@esadm"].Value = EsAdmin;
                 command.Parameters["@credito"].Value = credito;
                 command.Parameters["@bloqueado"].Value = bloqueado;
+                command.Parameters["@intentos"].Value = 0;
 
                 try
                 {
@@ -229,7 +232,7 @@ namespace TP1___GRUPO_C.Modelos
 
                     //*******************************************
                     //Ahora hago esta query para obtener el ID
-                    string ConsultaID = "SELECT MAX([ID]) FROM [cine].[dbo].[Usuarios]";
+                    string ConsultaID = "SELECT MAX([ID]) FROM [dbo].[Usuarios]";
                     command = new SqlCommand(ConsultaID, connection);
                     SqlDataReader reader = command.ExecuteReader();
                     reader.Read();
@@ -249,8 +252,8 @@ namespace TP1___GRUPO_C.Modelos
         public int eliminarUsuario(int Id)
         {
             //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
-            string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "DELETE FROM [dbo].[Usuarios] WHERE ID=@id";
+            //string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[Usuarios] WHERE id=@id";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -274,8 +277,8 @@ namespace TP1___GRUPO_C.Modelos
         {
             // HAY QUE VER COMO PODEMOS HACER PARA QUE INTENTOS FALLIDOS NO ESTE ACA, ver lo que escribi en Usuario porque me parece que conviene eliminar ese atributo
             // De momento lo dejo puesto y arreglo el codigo para que lo contemple  pero probablemente no funcione asi
-            string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Usuarios] SET dni = @dni, nombre =@nombre, apellido = @apellido , mail =@mail,password=@password,fecha_nacimiento = @fechaNacimiento, es_admin=@esadm,bloqueado=@bloqueado, credito = @credito WHERE ID=@id;";
+            //string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Usuarios] SET dni = @dni, nombre =@nombre, apellido = @apellido , mail =@mail,password=@password,fecha_nacimiento = @fechaNacimiento, es_admin=@esadm,intentos_fallidos = @intentosFallidos , bloqueado=@bloqueado, credito = @credito WHERE id=@id;";
             using (SqlConnection connection =
                 new SqlConnection(connectionString))
             {
@@ -288,7 +291,7 @@ namespace TP1___GRUPO_C.Modelos
                 command.Parameters.Add(new SqlParameter("@password", SqlDbType.NVarChar));
                 command.Parameters.Add(new SqlParameter("@fechaNacimiento", SqlDbType.Date));
                 command.Parameters.Add(new SqlParameter("@esadm", SqlDbType.Bit));
-                //command.Parameters.Add(new SqlParameter("@intentosFallidos", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@intentosFallidos", SqlDbType.Int));
                 command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
                 command.Parameters.Add(new SqlParameter("@credito", SqlDbType.Int));
 
@@ -364,8 +367,8 @@ namespace TP1___GRUPO_C.Modelos
         public int eliminarSala(int id)
         {
             //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
-            string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "DELETE FROM [dbo].[Salas] WHERE ID=@id";
+            //string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[Salas] WHERE id=@id";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -387,8 +390,8 @@ namespace TP1___GRUPO_C.Modelos
 
         public int modificarSala(int idSala, string ubicacion, int capacidad)
         {
-            string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Salas] SET ubicacion=@ubicacion,capacidad = @capacidad WHERE ID=@id;";
+            //string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Salas] SET ubicacion=@ubicacion,capacidad = @capacidad WHERE id=@id;";
             using (SqlConnection connection =
                 new SqlConnection(connectionString))
             {
@@ -464,8 +467,8 @@ namespace TP1___GRUPO_C.Modelos
         public int eliminarPelicula(int IDPelicula)
         {
             //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
-            string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "DELETE FROM [dbo].[Peliculas] WHERE ID=@id";
+            //string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[Peliculas] WHERE id=@id";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -487,8 +490,8 @@ namespace TP1___GRUPO_C.Modelos
 
         public int modificarPelicula(int IDPelicula, string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion, List<string> IdFunciones)
         {
-            string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Peliculas] SET nombre=@nombre,descripcion = @descripcion,sinopsis = @sinopsis, poster = @poster, duracion = @duracion WHERE ID=@id;";
+            //string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Peliculas] SET nombre=@nombre,descripcion = @descripcion,sinopsis = @sinopsis, poster = @poster, duracion = @duracion WHERE id=@id;";
             using (SqlConnection connection =
                 new SqlConnection(connectionString))
             {
@@ -621,8 +624,8 @@ namespace TP1___GRUPO_C.Modelos
         public int eliminarFuncion(int IDFuncion)
         {
             //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
-            string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "DELETE FROM [dbo].[Funciones] WHERE ID=@id";
+            //string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[Funciones] WHERE id=@id";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -646,8 +649,8 @@ namespace TP1___GRUPO_C.Modelos
         {
             // HAY QUE VER COMO PODEMOS HACER PARA QUE INTENTOS FALLIDOS NO ESTE ACA, ver lo que escribi en Usuario porque me parece que conviene eliminar ese atributo
             // De momento lo dejo puesto y arreglo el codigo para que lo contemple  pero probablemente no funcione asi
-            string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Funciones] SET fecha=@fecha,asientos_disponibles = @asientos, costo = @costo , id_sala=@id_sala,id_pelicula=@id_pelicula WHERE ID=@id;";
+            //string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Funciones] SET fecha=@fecha,asientos_disponibles = @asientos, costo = @costo , id_sala=@id_sala,id_pelicula=@id_pelicula WHERE id=@id;";
             using (SqlConnection connection =
                 new SqlConnection(connectionString))
             {
@@ -692,8 +695,8 @@ namespace TP1___GRUPO_C.Modelos
         {
             // HAY QUE VER COMO PODEMOS HACER PARA QUE INTENTOS FALLIDOS NO ESTE ACA, ver lo que escribi en Usuario porque me parece que conviene eliminar ese atributo
             // De momento lo dejo puesto y arreglo el codigo para que lo contemple  pero probablemente no funcione asi
-            string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Usuarios] SET credito = @credito WHERE ID=@id;";
+            //string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Usuarios] SET credito = @credito WHERE id=@id;";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -721,8 +724,8 @@ namespace TP1___GRUPO_C.Modelos
         public int bloquearUsuario(int idUsuario)
         {
 
-            string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Usuarios] SET bloqueado = @bloqueado WHERE ID=@id;";
+            //string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Usuarios] SET bloqueado = @bloqueado WHERE id=@id;";
             using (SqlConnection connection =
                 new SqlConnection(connectionString))
             {
@@ -730,7 +733,7 @@ namespace TP1___GRUPO_C.Modelos
                 command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
                 command.Parameters.Add(new SqlParameter("@bloqueado", SqlDbType.Bit));
                 command.Parameters["@id"].Value = idUsuario;
-                command.Parameters["@bloqueado"].Value = 0;
+                command.Parameters["@bloqueado"].Value = true;
 
                 try
                 {
@@ -748,6 +751,45 @@ namespace TP1___GRUPO_C.Modelos
             }
 
         }
+
+
+
+        public int modificarIntentosFallidos(int idUsuario, int intentos)
+        {
+
+            //string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "UPDATE [dbo].[Usuarios] SET intentos_fallidos = @intentos WHERE id=@id;";
+            using (SqlConnection connection =
+                new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@intentos", SqlDbType.Int));
+                command.Parameters["@id"].Value = idUsuario;
+                command.Parameters["@intentos"].Value = intentos;
+
+                try
+                {
+                    connection.Open();
+                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
+                    return command.ExecuteNonQuery();
+                    //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+
+        }
+
+
+
+
+
+
 
         public int devolverEntrada(int idFuncion, int idUsuario)
         {
@@ -805,7 +847,7 @@ namespace TP1___GRUPO_C.Modelos
 
         public int actualizarCreditoUsuario(int idUsuario, double credito)
         {
-            string queryString = "UPDATE [dbo].[Usuarios] SET credito = @credito WHERE ID = @idUsuario;";
+            string queryString = "UPDATE [dbo].[Usuarios] SET credito = @credito WHERE id = @idUsuario;";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -830,7 +872,7 @@ namespace TP1___GRUPO_C.Modelos
 
         public int actualizarAsientosDisponibles (int idFuncion, int cantidadEntradas)
         {
-            string queryString = "UPDATE [dbo].[Funciones] SET asientos_disponibles = asientos_disponibles + @cantidadEntradas WHERE ID = @idFuncion;";
+            string queryString = "UPDATE [dbo].[Funciones] SET asientos_disponibles = asientos_disponibles + @cantidadEntradas WHERE id = @idFuncion;";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -852,7 +894,7 @@ namespace TP1___GRUPO_C.Modelos
                 }
             }
         }
-
+ 
 
 
         #endregion

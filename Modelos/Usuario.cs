@@ -11,7 +11,7 @@ namespace TP1___GRUPO_C.Model
         public int ID { get; }
 
         // Esto tendriamos que eliminarlo, una vez implementado DB el id es autoincremental y no lo tenemos que insertar nosotros
-        public static int ultimoID = 0;
+        //public static int ultimoID = 0;
         public int DNI { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
@@ -30,10 +30,11 @@ namespace TP1___GRUPO_C.Model
         // Esto tiene que ser reemplazado por una tabla de muchos a muchos entre usuarios y Funciones
         public Dictionary<int, int> EntradasCompradas { get; set; }
 
-        public Usuario(int DNI, string Nombre, string Apellido,string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin)
+        // este es el orignal de base de datos
+        public Usuario(int ID, int DNI, string Nombre, string Apellido,string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin)
         {
-            ultimoID++;
-            this.ID = ultimoID;
+            //ultimoID++;
+            this.ID = ID;
             this.DNI = DNI;
             this.Nombre = Nombre;
             this.Apellido = Apellido;
@@ -50,7 +51,26 @@ namespace TP1___GRUPO_C.Model
             EntradasCompradas = new Dictionary<int, int>();
         }
 
+        //esto es solo para la vista
+        public Usuario(int ID, int DNI, string Nombre, string Apellido, string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int IntentosFallidos)
+        {
+            //ultimoID++;
+            this.ID = ID;
+            this.DNI = DNI;
+            this.Nombre = Nombre;
+            this.Apellido = Apellido;
+            this.Mail = Mail;
+            this.Password = Password;
+            this.IntentosFallidos = IntentosFallidos;
+            Bloqueado = false;
+            MisFunciones = new List<Funcion>();
+            Credito = 0;
+            this.FechaNacimiento = FechaNacimiento;
+            this.EsAdmin = EsAdmin;
 
+            // Esto tiene que ser reemplazado por una tabla de muchos a muchos entre usuarios y Funciones
+            //EntradasCompradas = new Dictionary<int, int>();
+        }
 
         //Eliminar, se encarga el Cine
         public bool AgregarFuncion(Funcion funcion)

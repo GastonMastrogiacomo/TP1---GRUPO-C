@@ -192,12 +192,12 @@ namespace TP1___GRUPO_C.Model
                                     if (!flagDni)
                                     {
                                         int idNuevoUsuario;
-                                        MessageBox.Show("hola como estas");
+                                      
                                         idNuevoUsuario = DB.agregarUsuario(DNI, Nombre, Apellido, Mail, Password, FechaNacimiento, EsAdmin, credito, false);
 
                                         if (idNuevoUsuario != -1)
                                         {
-                                            Usuario otro = new Usuario(DNI, Nombre, Apellido, Mail, Password, FechaNacimiento, EsAdmin);
+                                            Usuario otro = new Usuario(idNuevoUsuario, DNI, Nombre, Apellido, Mail, Password, FechaNacimiento, EsAdmin);
                                             otro.Credito = credito;
                                             Usuarios.Add(otro);
                                             return 201;
@@ -1610,7 +1610,7 @@ namespace TP1___GRUPO_C.Model
             }
         }
 
-        public int IniciarSesion(string Mail, string Password, bool esAdmin)
+        public int IniciarSesion(string Mail, string Password)
         {
             try
             {
@@ -1624,7 +1624,7 @@ namespace TP1___GRUPO_C.Model
                         {
                             if (user.Password.Equals(Password))
                             {
-
+                                /* ARREGLAR
                                 if (user.EsAdmin == esAdmin)
                                 {
                                     // Se establece el usuario como usuario actual
@@ -1639,12 +1639,20 @@ namespace TP1___GRUPO_C.Model
                                     // o el administrador no puso el checkbox
                                     throw new InvalidOperationException("Has seleccionado una opción incorrecta.");
                                 }
+                                */
+
+
+                                UsuarioActual = user;
+                                user.IntentosFallidos = 0;
+                                DB.modificarIntentosFallidos(user.ID, user.IntentosFallidos);
+                                return 200;
 
                             }
                             else if (user.IntentosFallidos < 3)
                             {
                                 user.IntentosFallidos += 1;
-
+                                DB.modificarIntentosFallidos(user.ID, user.IntentosFallidos);
+                                MessageBox.Show("tiene que sumar +1");
                                 return 401;
 
                             }
@@ -2034,6 +2042,11 @@ namespace TP1___GRUPO_C.Model
         }
 
         #endregion
+
+        public bool esAdmin ()
+        {
+            return UsuarioActual.EsAdmin;
+        }
 
 
     }

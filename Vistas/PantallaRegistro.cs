@@ -36,8 +36,8 @@ namespace TP1___GRUPO_C
             string Pass = this.textBoxPass.Text;
             DateTime FechaNacimiento = dateTimePicker1.Value.Date;
 
-            //bool esAdmin = checkBox1.Checked;
-            MessageBox.Show("esto deberia aparecer");
+            
+           
             int peticion = cine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, false,0,false);
             String mensaje = StatusCode.ObtenerMensaje(peticion);
             if (peticion == 201) { 

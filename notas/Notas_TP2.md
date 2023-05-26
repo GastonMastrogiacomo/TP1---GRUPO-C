@@ -19,3 +19,12 @@ voy a anotar aca abajo que metodos implemente asi se entiende un poco mas.
 
 AVISO:Muchos de estos metodos van a estar a medio terminar porque no pude crear la base de datos, va a ser medio un quilombo
 pensar las relaciones y modificar algunas cosas pero la integracion es bastante facil una vez se entiende.
+
+
+
+
+
+- ABM Usuario anda bien
+-Iniciar Sesion anda bien
+-Registrarse anda bien (sacar el checklist admin)
+-
