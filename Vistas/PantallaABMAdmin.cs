@@ -376,8 +376,8 @@ namespace TP1___GRUPO_C.Vistas
             int.TryParse(Label_FuncionId.Text, out int ID);
             DateTime Fecha = this.Selec_Fecha.Value;
             double.TryParse(this.Input_Costo.Text, out double Costo);
-
-            int peticion = miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, Costo);
+            //@modificar esto
+            int peticion = miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, Costo,666);
             String mensaje = StatusCode.ObtenerMensaje(peticion);
             if (peticion == 200)
             {
@@ -491,7 +491,7 @@ namespace TP1___GRUPO_C.Vistas
             bool esAdmin = this.Cb_EsAdmin.Checked;
             int.TryParse(this.Input_Credito.Text, out int credito);
 
-            int peticion = miCine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, credito);
+            int peticion = miCine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, credito, false);
             String mensaje = StatusCode.ObtenerMensaje(peticion);
             if (peticion == 200)
             {

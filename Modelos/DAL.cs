@@ -18,10 +18,11 @@ namespace TP1___GRUPO_C.Modelos
         public DAL()
         {
             //Cargo la cadena de conexión desde el archivo de properties
-            //connectionString = Properties.Resources.ConnectionStr;
-            //connectionString = Properties.Resources.ConnectionAndy;
-            connectionString = "Data Source=localhost;Initial Catalog=cine;Integrated Security=True";
-            //connectionString = "Data Source=DESKTOP-LR8KJAR\\SQLEXPRESS;Initial Catalog=20221017;Integrated Security=True";
+            connectionString = Properties.Resources.ConnectionStr;
+            //connectionString = "Data Source=localhost;Initial Catalog=cine;Integrated Security=True";
+            //este de abajo es el que estaba antes de andy
+            //connectionString  = "Data Source=DESKTOP-4S2EH6K\SQLEXPRESS01;Initial Catalog=cine;Integrated Security=True"
+  
         }
 
         #region Metodos Inicializar
@@ -143,8 +144,9 @@ namespace TP1___GRUPO_C.Modelos
                     while (reader.Read())
                     {
                         // Esto hay que ver como lo hacemos porque recibe por parametros objetos Sala y Pelicula
-                        fun = new Funcion(reader.GetDateTime(1), reader.GetDouble(2), reader.GetInt32(3), reader.GetInt32(4));
+                        fun = new Funcion(reader.GetDateTime(1), reader.GetDouble(3), reader.GetInt32(4), reader.GetInt32(5),reader.GetInt32(2));
                         misFunciones.Add(fun);
+
                     }
                     reader.Close();
                 }
@@ -194,8 +196,8 @@ namespace TP1___GRUPO_C.Modelos
         {
             //primero me aseguro que lo pueda agregar a la base
             int resultadoQuery;
-            int idNuevoUsuario = -1;
-            string queryString = "INSERT INTO [dbo].[Usuarios] ([dni],[nombre],[apellido],[mail],[password],[fecha_nacimiento],[credito],[es_admin],[bloqueado]) VALUES (@dni,@nombre,@apellido,@mail,@password,@fechaNacimiento,@credito,@esadm,@bloqueado);";
+            int idNuevoUsuario;
+            string queryString = "INSERT INTO [cine].[dbo].[Usuarios] ([dni],[nombre],[apellido],[mail],[password],[fecha_nacimiento],[credito],[es_admin],[bloqueado]) VALUES (@dni,@nombre,@apellido,@mail,@password,@fechaNacimiento,@credito,@esadm,@bloqueado);";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
@@ -227,12 +229,13 @@ namespace TP1___GRUPO_C.Modelos
 
                     //*******************************************
                     //Ahora hago esta query para obtener el ID
-                    string ConsultaID = "SELECT MAX([ID]) FROM [dbo].[Usuarios]";
+                    string ConsultaID = "SELECT MAX([ID]) FROM [cine].[dbo].[Usuarios]";
                     command = new SqlCommand(ConsultaID, connection);
                     SqlDataReader reader = command.ExecuteReader();
                     reader.Read();
                     idNuevoUsuario = reader.GetInt32(0);
                     reader.Close();
+                    return idNuevoUsuario;
                 }
                 catch (Exception ex)
                 {
@@ -240,7 +243,6 @@ namespace TP1___GRUPO_C.Modelos
                     Console.WriteLine(ex.Message);
                     return -1;
                 }
-                return idNuevoUsuario;
             }
         }
 
@@ -572,7 +574,7 @@ namespace TP1___GRUPO_C.Modelos
                     SqlCommand command = new SqlCommand(queryString, connection);
                     command.Parameters.Add(new SqlParameter("@fecha", SqlDbType.Date));
                     command.Parameters.Add(new SqlParameter("@asientos_disponibles", SqlDbType.Int));
-                    command.Parameters.Add(new SqlParameter("@costo", SqlDbType.Int));
+                    command.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
                     command.Parameters.Add(new SqlParameter("@id_sala", SqlDbType.Int));
                     command.Parameters.Add(new SqlParameter("@id_pelicula", SqlDbType.Int));
 
@@ -640,12 +642,12 @@ namespace TP1___GRUPO_C.Modelos
             }
         }
 
-        public int modificarFuncion(int IDFuncion, int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo)
+        public int modificarFuncion(int IDFuncion, int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo,int capacidad)
         {
             // HAY QUE VER COMO PODEMOS HACER PARA QUE INTENTOS FALLIDOS NO ESTE ACA, ver lo que escribi en Usuario porque me parece que conviene eliminar ese atributo
             // De momento lo dejo puesto y arreglo el codigo para que lo contemple  pero probablemente no funcione asi
             string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "UPDATE [dbo].[Funciones] SET fecha=@fecha,costo = @costo , id_sala=@id_sala,id_pelicula=@id_pelicula WHERE ID=@id;";
+            string queryString = "UPDATE [dbo].[Funciones] SET fecha=@fecha,asientos_disponibles = @asientos, costo = @costo , id_sala=@id_sala,id_pelicula=@id_pelicula WHERE ID=@id;";
             using (SqlConnection connection =
                 new SqlConnection(connectionString))
             {
@@ -654,7 +656,8 @@ namespace TP1___GRUPO_C.Modelos
                 command.Parameters.Add(new SqlParameter("@id_sala", SqlDbType.Int));
                 command.Parameters.Add(new SqlParameter("@id_pelicula", SqlDbType.Int));
                 command.Parameters.Add(new SqlParameter("@fecha", SqlDbType.Date));
-                command.Parameters.Add(new SqlParameter("@costo", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@costo", SqlDbType.Float));
+                command.Parameters.Add(new SqlParameter("@asientos", SqlDbType.Int));
 
 
 
@@ -663,6 +666,7 @@ namespace TP1___GRUPO_C.Modelos
                 command.Parameters["@id_pelicula"].Value = MiPeliculaId;
                 command.Parameters["@fecha"].Value = Fecha;
                 command.Parameters["@costo"].Value = Costo;
+                command.Parameters["@asientos"].Value = capacidad;
 
                 try
                 {

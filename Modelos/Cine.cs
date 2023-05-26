@@ -101,10 +101,10 @@ namespace TP1___GRUPO_C.Model
             */
         }
 
-        
+
         private void inicializarAtributos()
         {
-           
+
             Usuarios = DB.inicializarUsuarios();
             Funciones = DB.inicializarFunciones();
             Salas = DB.inicializarSalas();
@@ -113,7 +113,7 @@ namespace TP1___GRUPO_C.Model
 
             //SI FUESE MANY TO MANY
             //Esto depende de como creamos la base de datos, verificar que la logica esta bien
-            
+
             //  Ejemplos de como tenemos que hacer las vinculaciones entre foreign keys para que se inicializen correctamente
 
             //SI FUESE MANY TO MANY
@@ -153,17 +153,17 @@ namespace TP1___GRUPO_C.Model
             }
 
         }
-        
+
 
         #region ABM Usuario
 
         //IMPLEMENTADO CON DB
-        public int AgregarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int credito)
+        public int AgregarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int credito,bool bloqueado)
         {
             bool flagDni = false;
 
             #region Metodo Agregar Usuario con BD
-            /*
+
             try
             {
                 // Verificaciones correspondientes
@@ -191,17 +191,97 @@ namespace TP1___GRUPO_C.Model
                                     // Si el DNI y el correo no están registrados, crear un nuevo usuario y agregarlo a la lista de usuarios
                                     if (!flagDni)
                                     {
-                                        Descomentar cuando se implementa la base de datos
                                         int idNuevoUsuario;
-                                        idNuevoUsuario = DB.agregarUsuario(DNI, Nombre, Apellido, Mail, Password, FechaNacimiento, EsAdmin, credito,0);
+                                        MessageBox.Show("hola como estas");
+                                        idNuevoUsuario = DB.agregarUsuario(DNI, Nombre, Apellido, Mail, Password, FechaNacimiento, EsAdmin, credito, false);
 
                                         if (idNuevoUsuario != -1)
                                         {
+                                            Usuario otro = new Usuario(DNI, Nombre, Apellido, Mail, Password, FechaNacimiento, EsAdmin);
+                                            otro.Credito = credito;
+                                            Usuarios.Add(otro);
+                                            return 201;
+                                        }
+
+                                    }
+                                    return 500;
+
+                                }
+                                else
+                                {
+                                    throw new InvalidOperationException("Password incorrecta");
+
+
+                                }
+                            }
+                            else
+                            {
+                                throw new InvalidOperationException("Mail Incorrecto");
+
+                            }
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("Apellido Incorrecto");
+
+                        }
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Nombre Incorrecto");
+
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException("DNI Incorrecto");
+
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 422;
+
+            }
+
+
+            #endregion
+
+            /* Codigo Viejo
+            try
+            {
+                // Verificaciones correspondientes
+                if (DNI != 0)
+                {
+                    if (Nombre != null && Nombre != "")
+                    {
+                        if (Apellido != null && Apellido != "")
+                        {
+                            if (Mail != null && Mail != "")
+                            {
+                                if (Password != null && Password != "")
+                                {
+
+                                    // Verifico si el DNI y correo ya estan registrados
+                                    foreach (Usuario u in Usuarios)
+                                    {
+                                        if (DNI == u.DNI || Mail == u.Mail)
+                                        {
+                                            flagDni = true;
+                                            MessageBox.Show("El DNI Ingresado ya se encuentra dentro del sistema");
+                                        }
+                                    }
+
+                                    // Si el DNI y el correo no están registrados, crear un nuevo usuario y agregarlo a la lista de usuarios
+                                    if (!flagDni)
+                                    {
+
                                         Usuario otro = new Usuario(DNI, Nombre, Apellido, Mail, Password, FechaNacimiento, EsAdmin);
                                         otro.Credito = credito;
                                         Usuarios.Add(otro);
                                         return 201;
-                                        }
 
                                     }
                                     return 500;
@@ -246,142 +326,66 @@ namespace TP1___GRUPO_C.Model
 
             }
             */
-
-            #endregion
-
-            try
-            {
-                // Verificaciones correspondientes
-                if (DNI != 0)
-                {
-                    if (Nombre != null && Nombre != "")
-                    {
-                        if (Apellido != null && Apellido != "")
-                        {
-                            if (Mail != null && Mail != "")
-                            {
-                                if (Password != null && Password != "")
-                                {
-
-                                    // Verifico si el DNI y correo ya estan registrados
-                                    foreach (Usuario u in Usuarios)
-                                    {
-                                        if (DNI == u.DNI || Mail == u.Mail)
-                                        {
-                                            flagDni = true;
-                                            MessageBox.Show("El DNI Ingresado ya se encuentra dentro del sistema");
-                                        }
-                                    }
-
-                                    // Si el DNI y el correo no están registrados, crear un nuevo usuario y agregarlo a la lista de usuarios
-                                    if (!flagDni)
-                                    {
-
-                                        Usuario otro = new Usuario(DNI, Nombre, Apellido, Mail, Password, FechaNacimiento, EsAdmin);
-                                        otro.Credito = credito;
-                                        Usuarios.Add(otro);
-                                        return 201;
-
-                                    }
-                                    return 500;
-
-                                }
-                                else
-                                {
-                                    throw new InvalidOperationException("Password incorrecta");
-
-
-                                }
-                            }
-                            else
-                            {
-                                throw new InvalidOperationException("Mail Incorrecto");
-
-                            }
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException("Apellido Incorrecto");
-
-                        }
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException("Nombre Incorrecto");
-
-                    }
-                }
-                else
-                {
-                    throw new InvalidOperationException("DNI Incorrecto");
-
-                }
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return 422;
-
-            }
 
         }
 
         //IMPLEMENTADO CON DB
         public int ModificarUsuario(int idUsuario, int DNI, string Nombre, string Apellido, string Mail, string Pass, DateTime FechaNacimiento, bool esAdmin, int IntentosFallidos, bool Bloqueado, double Credito)
         {
-            #region Modificar Usuario con BD (solo implemente un if no hacia falta cambiar nada)
-            /*
+            #region Modificar Usuario con BD 
 
-                Usuario user = Usuarios.FirstOrDefault(u => u.ID == idUsuario);
-                List<Funcion> MisFunciones = user.MisFunciones;
 
-                if (DB.modificarUsuario(idUsuario,DNI,Nombre,Apellido,Mail,Pass,FechaNacimiento,esAdmin,IntentosFallidos,Bloqueado,Credito) == 1)
+            Usuario user = Usuarios.FirstOrDefault(u => u.ID == idUsuario);
+            List<Funcion> MisFunciones = user.MisFunciones;
+
+            if (DB.modificarUsuario(idUsuario, DNI, Nombre, Apellido, Mail, Pass, FechaNacimiento, esAdmin, IntentosFallidos, Bloqueado, Credito) == 1)
+            {
+                // Verificamos que los campos no sean nulos o vacios
+                if (DNI != 0 && Nombre != null && Nombre != "" && Apellido != null && Apellido != "" && Mail != null && Mail != "" && Pass != null && Pass != "")
                 {
-                    // Verificamos que los campos no sean nulos o vacios
-                    if (DNI != 0 && Nombre != null && Nombre != "" && Apellido != null && Apellido != "" && Mail != null && Mail != "" && Pass != null && Pass != "")
+                    for (int i = 0; i < Usuarios.Count; i++)
                     {
-                        for (int i = 0; i < Usuarios.Count; i++)
+                        // Se busca el usuario con el ID correspondiente
+                        if (Usuarios[i].ID == idUsuario)
                         {
-                            // Se busca el usuario con el ID correspondiente
-                            if (Usuarios[i].ID == idUsuario)
-                            {
 
-                                // Modificamos los campos del usuario con los nuevos valores
-                                Usuarios[i].Nombre = Nombre;
-                                Usuarios[i].Apellido = Apellido;
-                                Usuarios[i].Mail = Mail;
-                                Usuarios[i].DNI = DNI;
-                                Usuarios[i].Password = Pass;
-                                Usuarios[i].IntentosFallidos = IntentosFallidos;
-                                Usuarios[i].Bloqueado = Bloqueado;
-                                Usuarios[i].MisFunciones = MisFunciones;
-                                Usuarios[i].Credito = Credito;
-                                Usuarios[i].FechaNacimiento = FechaNacimiento;
-                                Usuarios[i].EsAdmin = esAdmin;
+                            // Modificamos los campos del usuario con los nuevos valores
+                            Usuarios[i].Nombre = Nombre;
+                            Usuarios[i].Apellido = Apellido;
+                            Usuarios[i].Mail = Mail;
+                            Usuarios[i].DNI = DNI;
+                            Usuarios[i].Password = Pass;
+                            Usuarios[i].IntentosFallidos = IntentosFallidos;
+                            Usuarios[i].Bloqueado = Bloqueado;
+                            Usuarios[i].MisFunciones = MisFunciones;
+                            Usuarios[i].Credito = Credito;
+                            Usuarios[i].FechaNacimiento = FechaNacimiento;
+                            Usuarios[i].EsAdmin = esAdmin;
 
 
-                                return 200;
-                            }
-
+                            return 200;
                         }
 
-                        return 500;
+                    }
 
-                    }
-                    else
-                    {
-                        return 400;
-                    }
+                    return 500;
+
                 }
                 else
                 {
                     return 400;
                 }
+            }
+            else
+            {
+                return 400;
+            }
 
-            */
+
             #endregion
 
+
+            /* Codigo Viejo
 
             Usuario user = Usuarios.FirstOrDefault(u => u.ID == idUsuario);
             List<Funcion> MisFunciones = user.MisFunciones;
@@ -422,58 +426,53 @@ namespace TP1___GRUPO_C.Model
                 return 400;
             }
 
-
+            */
         }
 
         //IMPLEMENTADO CON DB
         public int EliminarUsuario(int idUsuario)
         {
+            Usuario user = Usuarios.FirstOrDefault(u => u.ID == idUsuario);
 
             #region Metodo nuevo eliminar con DB implementado
-            /*
-                if (DB.eliminarUsuario(idUsuario) == 1)
+
+            if (DB.eliminarUsuario(idUsuario) == 1)
+            {
+
+                if (user != null)
                 {
-
-
-                    if (user != null)
+                    try
                     {
-                        try
+                        // Se eliminan todas las funciones del cliente antes de eliminarlo completamente
+                        // ESTO HAY QUE VER PORQUE ME PARECE QUE CON DB SI PONES ON DELETE CASCADE TE LO SOLUCIONA
+                        for (int i = 0; i < user.MisFunciones.Count; i++)
                         {
-                            // Se eliminan todas las funciones del cliente antes de eliminarlo completamente
-                            // ESTO HAY QUE VER PORQUE ME PARECE QUE CON DB SI PONES ON DELETE CASCADE TE LO SOLUCIONA
-                            for (int i = 0; i < user.MisFunciones.Count; i++)
+                            Funcion funcionActual = user.MisFunciones[i];
+
+
+                            if (funcionActual != null)
+
                             {
-                                Funcion funcionActual = user.MisFunciones[i];
+                                int cantidadEntradasSeleccionadas = user.EntradasCompradas[funcionActual.ID];
+                                DevolverEntrada(user, funcionActual.ID, cantidadEntradasSeleccionadas);
 
-
-                                if (funcionActual != null)
-
-                                {
-                                    int cantidadEntradasSeleccionadas = user.EntradasCompradas[funcionActual.ID];
-                                    DevolverEntrada(user, funcionActual.ID, cantidadEntradasSeleccionadas);
-
-                                    // Aca hay una condicion que se fija si devuelve todas las entradas antes de eliminar al usuario
-                                    funcionActual.EliminarCliente(idUsuario);
-                                }
-
-
-
-
+                                // Aca hay una condicion que se fija si devuelve todas las entradas antes de eliminar al usuario
+                                funcionActual.EliminarCliente(idUsuario);
                             }
 
-                            Usuarios.Remove(user);
 
-                            return 200;
+
+
                         }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                            Console.WriteLine(ex.Message);
-                            return 500;
-                        }
+
+                        Usuarios.Remove(user);
+
+                        return 200;
                     }
-                    else
+                    catch (Exception ex)
                     {
+                        MessageBox.Show(ex.Message);
+                        Console.WriteLine(ex.Message);
                         return 500;
                     }
                 }
@@ -481,16 +480,15 @@ namespace TP1___GRUPO_C.Model
                 {
                     return 500;
                 }
-            */
+            }
+            else
+            {
+                return 500;
+            }
+
             #endregion
 
-
-
-            // Se busca el usuario que tiene el id pasado por parametro
-            Usuario user = Usuarios.FirstOrDefault(u => u.ID == idUsuario);
-
-
-
+            /*
             if (user != null)
             {
                 try
@@ -533,82 +531,85 @@ namespace TP1___GRUPO_C.Model
                 return 500;
             }
 
+            */
+
         }
 
         #endregion
 
         #region ABM Funcion
-        public int AgregarFuncion(int MiSalaId, int MiPeliculaId, DateTime Fecha,double Costo)
+        public int AgregarFuncion(int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo)
         {
             #region AgregarFuncion con DB
-            /*
-                try
-                {
-                    // Buscar la sala correspondiente en la lista de salas
-                    Sala salaElegida = Salas.FirstOrDefault(s => s.ID == MiSalaId);
-                    int capacidad = salaElegida.Capacidad;
+
+            try
+            {
+                // Buscar la sala correspondiente en la lista de salas
+                Sala salaElegida = Salas.FirstOrDefault(s => s.ID == MiSalaId);
+                int capacidad = salaElegida.Capacidad;
 
                 if (salaElegida != null)
+                {
+                    // Buscar la película correspondiente en la lista de películas
+                    Pelicula peliElegida = Peliculas.FirstOrDefault(p => p.ID == MiPeliculaId);
+                    if (peliElegida != null)
                     {
-                        // Buscar la película correspondiente en la lista de películas
-                        Pelicula peliElegida = Peliculas.FirstOrDefault(p => p.ID == MiPeliculaId);
-                        if (peliElegida != null)
+                        // Verificar que el costo sea mayor a 0
+                        if (Costo > 0)
                         {
-                            // Verificar que el costo sea mayor a 0
-                            if (Costo > 0)
+
+                            int idNuevaFuncion;
+                            idNuevaFuncion = DB.agregarFuncion(MiSalaId, MiPeliculaId, Fecha, Costo, capacidad);
+
+                            if (idNuevaFuncion != -1)
                             {
+                                // Crear una nueva instancia de Funcion
+                                Funcion func = new Funcion(salaElegida, peliElegida, Fecha, Costo);
 
-                                int idNuevaFuncion;
-                                idNuevaFuncion = DB.agregarFuncion(MiSalaId, MiPeliculaId, Fecha, Costo, capacidad);
+                                // Agregar la función a la lista de funciones
+                                Funciones.Add(func);
 
-                                if (idNuevaFuncion != -1)
-                                {
-                                    // Crear una nueva instancia de Funcion
-                                    Funcion func = new Funcion(salaElegida, peliElegida, Fecha, Costo);
+                                // Agregar la función a la lista de funciones de la sala correspondiente
+                                salaElegida.AgregarFuncion(func);
 
-                                    // Agregar la función a la lista de funciones
-                                    Funciones.Add(func);
+                                // Agregar la función a la lista de funciones de la película correspondiente
+                                peliElegida.AgregarFuncion(func);
 
-                                    // Agregar la función a la lista de funciones de la sala correspondiente
-                                    salaElegida.AgregarFuncion(func);
-
-                                    // Agregar la función a la lista de funciones de la película correspondiente
-                                    peliElegida.AgregarFuncion(func);
-
-                                    return 200;
-                                }
-                                else
-                                {
-                                    return 500;
-                                }
-
+                                return 200;
                             }
                             else
                             {
-                                throw new ArgumentException("El costo debe ser mayor a 0.");
-
+                                return 500;
                             }
 
                         }
                         else
                         {
-                            throw new ArgumentException("El ID de la pelicula es incorrecto.");
+                            throw new ArgumentException("El costo debe ser mayor a 0.");
+
                         }
 
                     }
                     else
                     {
-                        throw new ArgumentException("El ID de la sala es incorrecto");
+                        throw new ArgumentException("El ID de la pelicula es incorrecto.");
                     }
+
                 }
-                catch (Exception e)
+                else
                 {
-                    Console.WriteLine(e.Message);
-                    return 500;
+                    throw new ArgumentException("El ID de la sala es incorrecto");
                 }
-            */
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                return 500;
+            }
+
             #endregion
 
+            /*
             try
             {
                 // Buscar la sala correspondiente en la lista de salas
@@ -663,6 +664,7 @@ namespace TP1___GRUPO_C.Model
                 Console.WriteLine(e.Message);
                 return 500;
             }
+            */
         }
 
         public int EliminarFuncion(int IDFuncion)
@@ -673,71 +675,72 @@ namespace TP1___GRUPO_C.Model
             Funcion func = Funciones.FirstOrDefault(f => f.ID == IDFuncion);
 
             #region Eliminar Usuario con DB
-            /*
-                if (DB.eliminarFuncion(IDFuncion) == 1)
-                {
-                    if (func != null)
-                    {
-                        // Eliminar la función de la lista de funciones de los clientes asociados
-                        for (int i = 0; i < func.Clientes.Count; i++)
-                        {
-                            Usuario user = func.Clientes[i];
 
-                            for (int j = 0; j < user.ObtenerMisFunciones().Count; j++)
+            if (DB.eliminarFuncion(IDFuncion) == 1)
+            {
+                if (func != null)
+                {
+                    // Eliminar la función de la lista de funciones de los clientes asociados
+                    for (int i = 0; i < func.Clientes.Count; i++)
+                    {
+                        Usuario user = func.Clientes[i];
+
+                        for (int j = 0; j < user.ObtenerMisFunciones().Count; j++)
+                        {
+                            if (user.ObtenerMisFunciones()[j].ID == IDFuncion)
                             {
-                                if (user.ObtenerMisFunciones()[j].ID == IDFuncion)
-                                {
-                                    user.EliminarFuncion(user.ObtenerMisFunciones()[j].ID);
-                                    break;
-                                }
+                                user.EliminarFuncion(user.ObtenerMisFunciones()[j].ID);
+                                break;
                             }
+                        }
+                        break;
+                    }
+
+
+                    Pelicula peli = func.MiPelicula;
+
+                    for (int i = 0; i < peli.ObtenerMisFunciones().Count; i++)
+                    {
+                        if (peli.ObtenerMisFunciones()[i].ID == IDFuncion)
+                        {
+                            peli.EliminarFuncion(peli.ObtenerMisFunciones()[i].ID);
                             break;
                         }
-
-
-                        Pelicula peli = func.MiPelicula;
-
-                        for (int i = 0; i < peli.ObtenerMisFunciones().Count; i++)
-                        {
-                            if (peli.ObtenerMisFunciones()[i].ID == IDFuncion)
-                            {
-                                peli.EliminarFuncion(peli.ObtenerMisFunciones()[i].ID);
-                                break;
-                            }
-                        }
-
-                        Sala sala = func.MiSala;
-
-                        for (int i = 0; i < sala.ObtenerMisFunciones().Count; i++)
-                        {
-                            if (sala.ObtenerMisFunciones()[i].ID == IDFuncion)
-                            {
-                                sala.EliminarFuncion(sala.ObtenerMisFunciones()[i].ID);
-                                break;
-                            }
-                        }
-
-                        // Eliminar la función de la lista de funciones
-                        Funciones.Remove(func);
-
-
-                        return 200;
                     }
-                    else
+
+                    Sala sala = func.MiSala;
+
+                    for (int i = 0; i < sala.ObtenerMisFunciones().Count; i++)
                     {
-
-                        return 404;
-
+                        if (sala.ObtenerMisFunciones()[i].ID == IDFuncion)
+                        {
+                            sala.EliminarFuncion(sala.ObtenerMisFunciones()[i].ID);
+                            break;
+                        }
                     }
+
+                    // Eliminar la función de la lista de funciones
+                    Funciones.Remove(func);
+
+
+                    return 200;
                 }
                 else
                 {
-                    return 500;
-                }
 
-            */
+                    return 404;
+
+                }
+            }
+            else
+            {
+                return 500;
+            }
+
+
             #endregion
 
+            /*
             if (func != null)
             {
                 // Eliminar la función de la lista de funciones de los clientes asociados
@@ -791,18 +794,20 @@ namespace TP1___GRUPO_C.Model
                 return 404;
 
             }
+            */
 
         }
 
-        public int ModificarFuncion(int IDFuncion, int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo)
+        public int ModificarFuncion(int IDFuncion, int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo, int capacidad)
         {
             try
             {
                 #region ModificarFuncion con DB
-                /*
+
                 Funcion func = Funciones.FirstOrDefault(f => f.ID == IDFuncion);
 
-                if (DB.modificarFuncion(IDFuncion,MiSalaId,MiPeliculaId,Fecha,Costo) == 1) {
+                if (DB.modificarFuncion(IDFuncion, MiSalaId, MiPeliculaId, Fecha, Costo, capacidad) == 1)
+                {
 
                     if (func != null)
                     {
@@ -873,9 +878,10 @@ namespace TP1___GRUPO_C.Model
                 {
                     return 500;
                 }
-                */
+
                 #endregion
 
+                /* Codigo viejo
                 Funcion func = Funciones.FirstOrDefault(f => f.ID == IDFuncion);
                 if (func != null)
                 {
@@ -940,7 +946,7 @@ namespace TP1___GRUPO_C.Model
                     throw new ArgumentException("Función no encontrada.");
 
                 }
-
+                */
             }
             catch (Exception ex)
             {
@@ -957,51 +963,53 @@ namespace TP1___GRUPO_C.Model
         public int AgregarSala(int Capacidad, string Ubicacion)
         {
             #region Metodo Agregar Sala con DB
-            /*
-                try
+
+            try
+            {
+                // Verificamos que la capacidad sea valida
+                if (Capacidad >= 0)
                 {
-                    // Verificamos que la capacidad sea valida
-                    if (Capacidad >= 0)
+                    // Verificamos que la ubicacion se a valida
+                    if (Ubicacion != null && Ubicacion != "")
                     {
-                        // Verificamos que la ubicacion se a valida
-                        if (Ubicacion != null && Ubicacion != "")
+
+                        int idNuevaSala;
+                        idNuevaSala = DB.agregarSala(Capacidad, Ubicacion);
+
+                        if (idNuevaSala != -1)
                         {
-
-                            int idNuevaSala;
-                            idNuevaSala = DB.agregarSala(Capacidad, Ubicacion);
-
-                            if (idNuevaSala != -1)
-                            {
-                                // Se crea una nueva sala con los parametros para luego agregarla a la lista de salas
-                                Sala nuevaSala = new Sala(Ubicacion, Capacidad);
-                                Salas.Add(nuevaSala);
-                                return 200;
-
-                            }
-
-
+                            // Se crea una nueva sala con los parametros para luego agregarla a la lista de salas
+                            Sala nuevaSala = new Sala(Ubicacion, Capacidad);
+                            Salas.Add(nuevaSala);
+                            return 200;
 
                         }
-                        else
-                        {
-                            throw new InvalidOperationException("Ubicacion Incorrecta");
 
-                        }
+
+
                     }
                     else
                     {
-                        throw new InvalidOperationException("Capacidad Incorrecta");
-                    }
+                        throw new InvalidOperationException("Ubicacion Incorrecta");
 
+                    }
                 }
-                catch (Exception e)
+                else
                 {
-                    Console.WriteLine(e.Message);
+                    throw new InvalidOperationException("Capacidad Incorrecta");
                 }
-                return 500;
-            */
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return 500;
+
             #endregion
 
+
+            /* Codigo Viejo
             try
             {
                 // Verificamos que la capacidad sea valida
@@ -1031,45 +1039,48 @@ namespace TP1___GRUPO_C.Model
                 Console.WriteLine(e.Message);
             }
             return 500;
+            */
         }
 
         public int EliminarSala(int IDSala)
         {
             #region EliminarSala con BD
-            /*
-                Sala sala = Salas.FirstOrDefault(s => s.ID == IDSala);
-                if (DB.eliminarSala(IDSala) == 1)
+
+            Sala sala = Salas.FirstOrDefault(s => s.ID == IDSala);
+            if (DB.eliminarSala(IDSala) == 1)
+            {
+                // Se busca la sala con el id pasado por parametro
+                if (sala != null)
                 {
-                    // Se busca la sala con el id pasado por parametro
-                    if (sala != null)
+                    // Se eliminan las funciones de la sala antes de eliminar dicha sala
+                    for (int i = 0; i < sala.MisFunciones.Count; i++)
                     {
-                        // Se eliminan las funciones de la sala antes de eliminar dicha sala
-                        for (int i = 0; i < sala.MisFunciones.Count; i++)
-                        {
-                            Funcion funcionActual = sala.MisFunciones[i];
-                            sala.EliminarFuncion(funcionActual.ID);
-                            // funcionActual.MiSala = null;
-                        }
-
-                        Salas.Remove(sala);
-
-                        return 200;
+                        Funcion funcionActual = sala.MisFunciones[i];
+                        sala.EliminarFuncion(funcionActual.ID);
+                        // funcionActual.MiSala = null;
                     }
-                    else
-                    {
 
-                        return 500;
-                    }
+                    Salas.Remove(sala);
+
+                    return 200;
                 }
                 else
                 {
+
                     return 500;
                 }
+            }
+            else
+            {
+                return 500;
+            }
 
 
-            */
+
             #endregion
 
+            /* Codigo Viejo
+             
             // Se busca la sala con el id pasado por parametro
             Sala sala = Salas.FirstOrDefault(s => s.ID == IDSala);
 
@@ -1093,47 +1104,49 @@ namespace TP1___GRUPO_C.Model
                 return 500;
             }
 
-
+            */
         }
 
         public int ModificarSala(int IDSala, string Ubicacion, int Capacidad)
         {
 
             #region Metodo ModificarSala con BD
-            /*
-                Sala salaElegida = Salas.FirstOrDefault(s => s.ID == IDSala);
-                List<Funcion> MisFunciones = salaElegida.MisFunciones;
 
-                if (DB.modificarSala(IDSala, Ubicacion, Capacidad) == 1)
+            Sala salaElegida = Salas.FirstOrDefault(s => s.ID == IDSala);
+            List<Funcion> MisFunciones = salaElegida.MisFunciones;
+
+            if (DB.modificarSala(IDSala, Ubicacion, Capacidad) == 1)
+            {
+                // Verificamos que los valores sean validos
+                if (IDSala != 0 && Capacidad >= 0 && Ubicacion != null && Ubicacion != "")
                 {
-                    // Verificamos que los valores sean validos
-                    if (IDSala != 0 && Capacidad >= 0 && Ubicacion != null && Ubicacion != "")
+
+                    for (int i = 0; i < Salas.Count; i++)
                     {
-
-                        for (int i = 0; i < Salas.Count; i++)
+                        // Se busca la sala con el id correspondiente y se reemplazan los valores
+                        if (Salas[i].ID == IDSala)
                         {
-                            // Se busca la sala con el id correspondiente y se reemplazan los valores
-                            if (Salas[i].ID == IDSala)
-                            {
-                                Salas[i].Capacidad = Capacidad;
-                                Salas[i].Ubicacion = Ubicacion;
-                                Salas[i].MisFunciones = MisFunciones;
+                            Salas[i].Capacidad = Capacidad;
+                            Salas[i].Ubicacion = Ubicacion;
+                            Salas[i].MisFunciones = MisFunciones;
 
 
-                                return 200;
-                            }
-
+                            return 200;
                         }
+
                     }
                 }
-                else
-                {
-                    return 500;
-                }
-                    return 422;
-            */
+            }
+            else
+            {
+                return 500;
+            }
+            return 422;
+
             #endregion
 
+
+            /*
             Sala salaElegida = Salas.FirstOrDefault(s => s.ID == IDSala);
 
             List<Funcion> MisFunciones = salaElegida.MisFunciones;
@@ -1157,6 +1170,7 @@ namespace TP1___GRUPO_C.Model
                 }
             }
             return 422;
+            */
         }
 
         #endregion
@@ -1166,70 +1180,71 @@ namespace TP1___GRUPO_C.Model
         {
 
             #region AgregarPelicula con DB
-            /*
-                try
-                {
-                    // Hacemos las verificaciones correspondientes
-                    if (Nombre != null && Nombre != "")
-                    {
-                        if (Descripcion != null && Descripcion != "")
-                        {
-                            if (Sinopsis != null && Sinopsis != "")
-                            {
-                                if (Poster != null && Poster != "")
-                                {
-                                    if (Duracion >= 0)
-                                    {
-                                        int idNuevaPelicula;
-                                        idNuevaPelicula = DB.agregarPelicula(Nombre, Descripcion, Sinopsis, Poster, Duracion);
-                                        if (idNuevaPelicula != -1)
-                                        {
-                                            // De ser correctas creamos una nueva pelicula y la agregamos a la lista de peliculas
-                                            Pelicula NuevaPelicula = new Pelicula(Nombre, Descripcion, Sinopsis, Poster, Duracion);
-                                            Peliculas.Add(NuevaPelicula);
-                                            return 200;
-                                        }
-                                        else
-                                        {
-                                            return 500;
-                                        }
 
+            try
+            {
+                // Hacemos las verificaciones correspondientes
+                if (Nombre != null && Nombre != "")
+                {
+                    if (Descripcion != null && Descripcion != "")
+                    {
+                        if (Sinopsis != null && Sinopsis != "")
+                        {
+                            if (Poster != null && Poster != "")
+                            {
+                                if (Duracion >= 0)
+                                {
+                                    int idNuevaPelicula;
+                                    idNuevaPelicula = DB.agregarPelicula(Nombre, Descripcion, Sinopsis, Poster, Duracion);
+                                    if (idNuevaPelicula != -1)
+                                    {
+                                        // De ser correctas creamos una nueva pelicula y la agregamos a la lista de peliculas
+                                        Pelicula NuevaPelicula = new Pelicula(Nombre, Descripcion, Sinopsis, Poster, Duracion);
+                                        Peliculas.Add(NuevaPelicula);
+                                        return 200;
                                     }
                                     else
                                     {
-                                        throw new InvalidOperationException("Duracion Incorrecta");
+                                        return 500;
                                     }
 
                                 }
                                 else
                                 {
-                                    throw new InvalidOperationException("Poster Incorrecto");
+                                    throw new InvalidOperationException("Duracion Incorrecta");
                                 }
+
                             }
                             else
                             {
-                                throw new InvalidOperationException("Sinopsis Incorrecta");
+                                throw new InvalidOperationException("Poster Incorrecto");
                             }
                         }
                         else
                         {
-                            throw new InvalidOperationException("Descripcion Incorrecta");
+                            throw new InvalidOperationException("Sinopsis Incorrecta");
                         }
                     }
                     else
                     {
-                        throw new InvalidOperationException("Nombre Incorrecto");
+                        throw new InvalidOperationException("Descripcion Incorrecta");
                     }
-
                 }
-                catch (Exception e)
+                else
                 {
-                    Console.WriteLine(e.Message);
+                    throw new InvalidOperationException("Nombre Incorrecto");
                 }
-                return 500;
-            */
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return 500;
+
             #endregion
 
+            /* Codigo Viejo
             try
             {
                 // Hacemos las verificaciones correspondientes
@@ -1283,46 +1298,50 @@ namespace TP1___GRUPO_C.Model
                 Console.WriteLine(e.Message);
             }
             return 500;
+            */
         }
 
         public int EliminarPelicula(int IDPelicula)
         {
             #region EliminarPelicula con DB
-            /*
-                // Se busca la pelicula con el id especificado
-                Pelicula peli = Peliculas.FirstOrDefault(p => p.ID == IDPelicula);
 
-                if (DB.eliminarPelicula(IDPelicula) == 1)
+            // Se busca la pelicula con el id especificado
+            Pelicula peli = Peliculas.FirstOrDefault(p => p.ID == IDPelicula);
+
+            if (DB.eliminarPelicula(IDPelicula) == 1)
+            {
+
+
+                if (peli != null)
                 {
-
-
-                    if (peli != null)
+                    // En el caso de que exista, se eliminan de las funciones la pelicula especificada antes de remover la pelicula
+                    for (int i = 0; i < peli.MisFunciones.Count; i++)
                     {
-                        // En el caso de que exista, se eliminan de las funciones la pelicula especificada antes de remover la pelicula
-                        for (int i = 0; i < peli.MisFunciones.Count; i++)
-                        {
-                            Funcion funcionActual = peli.MisFunciones[i];
-                            peli.EliminarFuncion(funcionActual.ID);
-                            //funcionActual.MiPelicula = null;
-                        }
-
-                        Peliculas.Remove(peli);
-
-                        return 204;
-                    }
-                    else
-                    {
-                        return 500;
+                        Funcion funcionActual = peli.MisFunciones[i];
+                        peli.EliminarFuncion(funcionActual.ID);
+                        //funcionActual.MiPelicula = null;
                     }
 
+                    Peliculas.Remove(peli);
+
+                    return 204;
                 }
                 else
                 {
                     return 500;
                 }
-            */
+
+            }
+            else
+            {
+                return 500;
+            }
+
             #endregion
 
+
+            /* Codigo Viejo
+             
             // Se busca la pelicula con el id especificado
             Pelicula peli = Peliculas.FirstOrDefault(p => p.ID == IDPelicula);
 
@@ -1344,74 +1363,76 @@ namespace TP1___GRUPO_C.Model
             {
                 return 500;
             }
+            */
         }
 
         public int ModificarPelicula(int IDPelicula, string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion, List<string> IdFunciones)
         {
 
             #region ModificarPelicula DB
-            /*
-                List<Funcion> MisFunciones = new List<Funcion>();
 
-                if (DB.modificarPelicula(IDPelicula, Nombre, Descripcion, Sinopsis, Poster, Duracion, IdFunciones) == 1)
+            List<Funcion> MisFunciones = new List<Funcion>();
+
+            if (DB.modificarPelicula(IDPelicula, Nombre, Descripcion, Sinopsis, Poster, Duracion, IdFunciones) == 1)
+            {
+                for (int i = 0; i < IdFunciones.Count; i++)
                 {
-                    for (int i = 0; i < IdFunciones.Count; i++)
-                    {
-                        int.TryParse(IdFunciones[i], out int idFunc);
-                        Funcion func = MisFunciones.FirstOrDefault(f => f.ID == idFunc);
-                        MisFunciones.Add(func);
-                    }
-
-                    if (IDPelicula != 0 && Nombre != null && Nombre != "" && Descripcion != null && Descripcion != "" && Sinopsis != null && Sinopsis != "" && Poster != null && Poster != "" && Duracion >= 0)
-                    {
-
-                        for (int i = 0; i < Peliculas.Count; i++)
-                        {
-                            for (int j = 0; j < MisFunciones.Count; j++)
-                            {
-                                Funcion func = Peliculas[i].MisFunciones.FirstOrDefault(f => f.ID == MisFunciones[j].ID);
-                                if (func != null)
-                                {
-                                    Peliculas[i].EliminarFuncion(func.ID);
-
-                                }
-                            }
-                        }
-
-                        for (int i = 0; i < Peliculas.Count; i++)
-                        {
-                            if (Peliculas[i].ID == IDPelicula)
-                            {
-
-                                Peliculas[i].Nombre = Nombre;
-                                Peliculas[i].Descripcion = Descripcion;
-                                Peliculas[i].Sinopsis = Sinopsis;
-                                Peliculas[i].Poster = Poster;
-                                Peliculas[i].Duracion = Duracion;
-                                Peliculas[i].MisFunciones = MisFunciones;
-
-                                foreach (Funcion fun in Peliculas[i].MisFunciones)
-                                {
-                                    fun.MiPelicula = Peliculas[i];
-                                }
-
-
-                                return 200;
-                            }
-                        }
-                        return 500;
-                    }
-
-                    return 422;
-
+                    int.TryParse(IdFunciones[i], out int idFunc);
+                    Funcion func = MisFunciones.FirstOrDefault(f => f.ID == idFunc);
+                    MisFunciones.Add(func);
                 }
-                else
+
+                if (IDPelicula != 0 && Nombre != null && Nombre != "" && Descripcion != null && Descripcion != "" && Sinopsis != null && Sinopsis != "" && Poster != null && Poster != "" && Duracion >= 0)
                 {
+
+                    for (int i = 0; i < Peliculas.Count; i++)
+                    {
+                        for (int j = 0; j < MisFunciones.Count; j++)
+                        {
+                            Funcion func = Peliculas[i].MisFunciones.FirstOrDefault(f => f.ID == MisFunciones[j].ID);
+                            if (func != null)
+                            {
+                                Peliculas[i].EliminarFuncion(func.ID);
+
+                            }
+                        }
+                    }
+
+                    for (int i = 0; i < Peliculas.Count; i++)
+                    {
+                        if (Peliculas[i].ID == IDPelicula)
+                        {
+
+                            Peliculas[i].Nombre = Nombre;
+                            Peliculas[i].Descripcion = Descripcion;
+                            Peliculas[i].Sinopsis = Sinopsis;
+                            Peliculas[i].Poster = Poster;
+                            Peliculas[i].Duracion = Duracion;
+                            Peliculas[i].MisFunciones = MisFunciones;
+
+                            foreach (Funcion fun in Peliculas[i].MisFunciones)
+                            {
+                                fun.MiPelicula = Peliculas[i];
+                            }
+
+
+                            return 200;
+                        }
+                    }
                     return 500;
                 }
-            */
+
+                return 422;
+
+            }
+            else
+            {
+                return 500;
+            }
+
             #endregion
 
+            /* Codigo Viejo
             List<Funcion> MisFunciones = new List<Funcion>();
 
             for (int i = 0; i < IdFunciones.Count; i++)
@@ -1463,6 +1484,7 @@ namespace TP1___GRUPO_C.Model
             }
 
             return 422;
+            */
 
         }
 
@@ -1473,38 +1495,40 @@ namespace TP1___GRUPO_C.Model
         {
 
             #region CargarCredito con DB
-            /*
-                foreach (Usuario user in Usuarios)
-                {
-                    // se encuentra el usuario con el id pasado por parametro y se le agrega el credito correspondiente
-                    if (user.ID == idUsuario)
-                    {
-                        if (importe > 0)
-                        {
-                            if (DB.cargarCredito(idUsuario, importe) == 1)
-                            {
-                                user.Credito += importe;
-                                return 200;
-                            }
-                            else
-                            {
-                                return 500;
-                            }
 
+            foreach (Usuario user in Usuarios)
+            {
+                // se encuentra el usuario con el id pasado por parametro y se le agrega el credito correspondiente
+                if (user.ID == idUsuario)
+                {
+                    if (importe > 0)
+                    {
+                        if (DB.cargarCredito(idUsuario, importe) == 1)
+                        {
+                            user.Credito += importe;
+                            return 200;
                         }
                         else
                         {
-                            return 400;
+                            return 500;
                         }
 
                     }
-                }
+                    else
+                    {
+                        return 400;
+                    }
 
-                return 500;
-            */
+                }
+            }
+
+            return 500;
+
             #endregion
 
 
+            /* Codigo Viejo 
+             
             foreach (Usuario user in Usuarios)
             {
                 // se encuentra el usuario con el id pasado por parametro y se le agrega el credito correspondiente
@@ -1524,10 +1548,11 @@ namespace TP1___GRUPO_C.Model
             }
 
             return 500;
+            */
 
         }
 
-        public int ComprarEntrada(int idFuncion, int cantidadEntradas)
+        public int ComprarEntrada(Usuario UsuarioActual, int idFuncion, int cantidadEntradas)
         {
             try
             {
@@ -1568,8 +1593,7 @@ namespace TP1___GRUPO_C.Model
 
                 if (funcion != null)
                 {
-                    // Ver despues de eliminar idFuncion como firma ya que es innecesario
-                    DevolverEntradaFuncionNotNull(user,idFuncion, cantidadEntradas);
+                    DevolverEntradaFuncionNotNull(user, idFuncion, cantidadEntradas);
                     return 200;
 
 
@@ -1790,60 +1814,64 @@ namespace TP1___GRUPO_C.Model
 
         }
 
-        private bool DevolverEntradaFuncionNotNull(Usuario user,int idFuncion, int cantidadEntradas)
-        {   
-            //le saque a como parametro el objeto Funcion y lo consigo aca abajo directamente, preguntar si estaba antes asi por algo especifico.
+        private bool DevolverEntradaFuncionNotNull(Usuario user, int idFuncion, int cantidadEntradas)
+        {
             Funcion funcion = Funciones.FirstOrDefault(f => f.ID == idFuncion);
 
             #region DevolverEntrada con DB
 
-                /*
-                if (funcion.Fecha > DateTime.Now)
+
+            if (funcion.Fecha > DateTime.Now)
+            {
+                UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
+
+                if (entrada != null)
                 {
-                    UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
-
-                    if (entrada != null)
+                    if (entrada.CantidadEntradasCompradas >= cantidadEntradas)
                     {
-                        if(entrada.CantidadEntradasCompradas >= cantidadEntradas)
+                        user.MisFunciones.Remove(funcion);
+                        funcion.CantidadClientes -= cantidadEntradas;
+                        funcion.AsientosDisponibles += cantidadEntradas;
+                        funcion.EliminarCliente(user.ID);
+                        entrada.CantidadEntradasCompradas -= cantidadEntradas;
+
+                        double costoTotal = funcion.Costo * cantidadEntradas;
+                        user.Credito += costoTotal;
+
+                        if (entrada.CantidadEntradasCompradas <= 0)
                         {
-                            user.MisFunciones.Remove(funcion);
-                            funcion.CantidadClientes -= cantidadEntradas;
-                            funcion.AsientosDisponibles += cantidadEntradas;
-                            funcion.EliminarCliente(user.ID);
-                            entrada.CantidadEntradasCompradas -= cantidadEntradas;
-
-                            double costoTotal = funcion.Costo * cantidadEntradas;
-                            user.Credito += costoTotal;
-
-
-                            if (entrada.CantidadEntradasCompradas <= 0)
-                            {
-                                DB.devolverEntrada(idFuncion, user.ID);
-                                DB.actualizarCreditoUsuario(user.ID, user.Credito);
-                                DB.actualizarAsientosDisponibles(idFuncion, cantidadEntradas);
-
-
-                            }
-                            else if (entrada.CantidadEntradasCompradas >= 1)
-                            {
-                                //Emplear una mejor forma que distinga, ya que si es 0 tiene que eliminar la fila y sino simplemente actualizar la cantidad
-                                DB.devolverEntradaMayorCero(idFuncion, user.ID,entrada.CantidadEntradasCompradas);
-                                DB.actualizarCreditoUsuario(user.ID, user.Credito);
-                                DB.actualizarAsientosDisponibles(idFuncion, cantidadEntradas);
-                            }
-
-
+                            DB.devolverEntrada(idFuncion, user.ID);
+                        }else
+                        {
+                            DB.devolverEntradaMayorCero(idFuncion, user.ID, entrada.CantidadEntradasCompradas);
                         }
+
+                        DB.actualizarCreditoUsuario(user.ID, user.Credito);
+                        DB.actualizarAsientosDisponibles(idFuncion, cantidadEntradas);
+
+
+                        return true;
+
                     }
                     else
                     {
-                        //No existe
+                        return false;
                     }
-
                 }
-                */
+                else
+                {
+                    return false;
+                }
+
+            }
+            else
+            {
+                return false;
+            }
+
             #endregion
 
+            /* Codigo Viejo
             // Verificar si la función ya ha ocurrido
             if (funcion.Fecha > DateTime.Now)
             {
@@ -1887,65 +1915,69 @@ namespace TP1___GRUPO_C.Model
             {
                 throw new InvalidOperationException("No es posible devolver una entrada de una función que ya ocurrió.");
             }
+            */
         }
 
         public int ComprarEntradaFuncionNotNull(Usuario user, int cantidadEntradas, Funcion funcion, int idFuncion)
         {
             #region ComprarEntrada con DB INCOMPLETO
-                /*
-                UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
+            
+            UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
 
-                // Verificar si la cantidad de entradas es mayor a cero
-                if (cantidadEntradas > 0)
+            // Verificar si la cantidad de entradas es mayor a cero
+            if (cantidadEntradas > 0)
+            {
+                double costoTotal = funcion.Costo * cantidadEntradas;
+
+                // Verificar si el usuario tiene suficiente crédito
+                if (user.Credito >= costoTotal)
                 {
-                    double costoTotal = funcion.Costo * cantidadEntradas;
-
-                    // Verificar si el usuario tiene suficiente crédito
-                    if (user.Credito >= costoTotal)
+                    // Verificar si la capacidad de la sala es suficiente
+                    if (funcion.AsientosDisponibles >= cantidadEntradas)
                     {
-                        // Verificar si la capacidad de la sala es suficiente
-                        if (funcion.AsientosDisponibles >= cantidadEntradas)
-                        {
-                            // Agregar la función a las funciones del usuario
-                            user.MisFunciones.Add(funcion);
+                        // Agregar la función a las funciones del usuario
+                        user.MisFunciones.Add(funcion);
 
-                            // Actualizar la cantidad de clientes de la función
-                            funcion.CantidadClientes += cantidadEntradas;
+                        // Actualizar la cantidad de clientes de la función
+                        funcion.CantidadClientes += cantidadEntradas;
 
-                            funcion.AsientosDisponibles -= cantidadEntradas;
+                        funcion.AsientosDisponibles -= cantidadEntradas;
 
-                            // Agregar al usuario como cliente de la función
-                            funcion.AgregarCliente(user);
+                        // Agregar al usuario como cliente de la función
+                        funcion.AgregarCliente(user);
 
-                            // Actualizar el crédito del usuario
-                            user.Credito -= costoTotal;
+                        // Actualizar el crédito del usuario
+                        user.Credito -= costoTotal;
 
-                            entrada.CantidadEntradasCompradas += cantidadEntradas;
-                            DB.actualizarAsientosDisponibles();
-                            DB.actualizarCreditoUsuario();
-                            //AGREGAR: Antes de hacer esto tengo que meter un insert a la tabla UsuariosFunciones, porque 
-                            // no puedo modificar estas cosas si el registro no existe.
+                        entrada.CantidadEntradasCompradas += cantidadEntradas;
+                        //DB.actualizarAsientosDisponibles();
+                        //DB.actualizarCreditoUsuario();
+                        //AGREGAR: Antes de hacer esto tengo que meter un insert a la tabla UsuariosFunciones, porque 
+                        // no puedo modificar estas cosas si el registro no existe.
 
-                            return 200;
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException("No hay suficiente capacidad en la sala.");
-                        }
+                        return 200;
                     }
                     else
                     {
-                        throw new InvalidOperationException("Créditos insuficientes.");
+                        throw new InvalidOperationException("No hay suficiente capacidad en la sala.");
                     }
-
                 }
                 else
                 {
-                    return 500;
+                    throw new InvalidOperationException("Créditos insuficientes.");
                 }
-                */
+
+            }
+            else
+            {
+                return 500;
+            }
+            
             #endregion
 
+
+            /* Codigo Viejo
+             
             // Verificar si la cantidad de entradas es mayor a cero
             if (cantidadEntradas > 0)
             {
@@ -1998,6 +2030,7 @@ namespace TP1___GRUPO_C.Model
             {
                 return 500;
             }
+            */
         }
 
         #endregion

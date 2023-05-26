@@ -245,7 +245,8 @@ namespace TP1___GRUPO_C
             if (int.TryParse(this.Input_CantEntradas.Text, out int cantEntradas))
             {
                 // Realizar la compra de entradas
-                int peticion = cine.ComprarEntrada(idFuncionSeleccionada, cantEntradas);
+                //@modificar esto
+                int peticion = cine.ComprarEntrada(cine.UsuarioActual,idFuncionSeleccionada, cantEntradas);
                 if (peticion == 200)
                 {
                     MostrarFuncionesEnDataGridView();
