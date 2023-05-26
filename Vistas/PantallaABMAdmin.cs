@@ -336,10 +336,13 @@ namespace TP1___GRUPO_C.Vistas
         {
             int.TryParse(Label_SalaId.Text, out int ID);
             int peticion = miCine.EliminarSala(ID);
+            String mensaje = StatusCode.ObtenerMensaje(peticion);
             if (peticion == 200)
             {
                 RefreshSalas();
             }
+            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
         }
 
         //ABM FUNCION
@@ -508,7 +511,6 @@ namespace TP1___GRUPO_C.Vistas
         {
 
             int.TryParse(Label_IdUsuario.Text, out int ID);
-            MessageBox.Show("ID: " + ID.ToString());
             string Nombres = this.Input_Nombre.Text;
             string Apellidos = this.Input_Apellido.Text;
             int.TryParse(this.Input_DNI.Text, out int DNI);

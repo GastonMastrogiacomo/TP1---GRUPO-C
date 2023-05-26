@@ -24,7 +24,7 @@ namespace TP1___GRUPO_C
         }
 
         public delegate void volverPantallaPrincipal();
-        
+
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -36,12 +36,13 @@ namespace TP1___GRUPO_C
             string Pass = this.textBoxPass.Text;
             DateTime FechaNacimiento = dateTimePicker1.Value.Date;
 
-            
-           
-            int peticion = cine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, false,0,false);
+
+
+            int peticion = cine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, false, 0, false);
             String mensaje = StatusCode.ObtenerMensaje(peticion);
-            if (peticion == 201) { 
-            this.pantallaPrincipal();
+            if (peticion == 201)
+            {
+                this.pantallaPrincipal();
             }
             MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -61,7 +62,7 @@ namespace TP1___GRUPO_C
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {//nombres
-            
+
         }
 
         private void textBox4_TextChanged(object sender, EventArgs e)
@@ -81,7 +82,7 @@ namespace TP1___GRUPO_C
 
         private void Form3_Load(object sender, EventArgs e)
         {
-           
+
         }
 
         private void textBoxDNI_TextChanged(object sender, EventArgs e)

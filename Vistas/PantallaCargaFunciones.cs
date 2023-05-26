@@ -120,7 +120,7 @@ namespace TP1___GRUPO_C.Vistas
                     Funcion func = miCine.ObtenerFuncionPorId(i + 1);
                     // re crear la funcion en el front y pasarsela al back
                     // pero generaria una nueva linea cuando la funcion es otra
-                    UsuarioAuxiliar.AgregarFuncion(func);
+                    UsuarioAuxiliar.MisFunciones.Add(func);
                 }
             }
 
@@ -140,7 +140,7 @@ namespace TP1___GRUPO_C.Vistas
                 Funcion func = funciones.FirstOrDefault(u => u.ID == (i + 1));
                 if (func != null)
                 {
-                    UsuarioAuxiliar.AgregarFuncion(func);
+                    UsuarioAuxiliar.MisFunciones.Add(func);
                 }
             }
             int peticion = miCine.ModificarUsuario(UsuarioAuxiliar.ID, UsuarioAuxiliar.DNI, UsuarioAuxiliar.Nombre, UsuarioAuxiliar.Apellido, UsuarioAuxiliar.Mail, UsuarioAuxiliar.Password, UsuarioAuxiliar.FechaNacimiento, UsuarioAuxiliar.EsAdmin, UsuarioAuxiliar.IntentosFallidos, UsuarioAuxiliar.Bloqueado, UsuarioAuxiliar.Credito);

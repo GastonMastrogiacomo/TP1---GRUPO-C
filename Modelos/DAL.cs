@@ -32,7 +32,7 @@ namespace TP1___GRUPO_C.Modelos
             List<Usuario> misUsuarios = new List<Usuario>();
 
             //Defino el string con la consulta que quiero realizar
-            string queryString = "SELECT * from Usuarios";
+            string queryString = "SELECT * FROM [dbo].[Usuarios];";
 
             // Creo una conexión SQL con un Using, de modo que al finalizar, la conexión se cierra y se liberan recursos
             using (SqlConnection connection =
@@ -50,7 +50,7 @@ namespace TP1___GRUPO_C.Modelos
                     //mientras haya registros/filas en mi DataReader, sigo leyendo
                     while (reader.Read())
                     {
-                        aux = new Usuario(reader.GetInt32(0),reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4),reader.GetString(5),  reader.GetDateTime(6), reader.GetBoolean(8));
+                        aux = new Usuario(reader.GetInt32(0), reader.GetInt32(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetString(5), reader.GetDateTime(6), reader.GetBoolean(8));
                         misUsuarios.Add(aux);
                     }
                     //En este punto ya recorrí todas las filas del resultado de la query
@@ -73,7 +73,7 @@ namespace TP1___GRUPO_C.Modelos
                 new SqlConnection(connectionString))
             {
                 //Ahora cargo los domicilios
-                string queryString = "SELECT * from dbo.Salas";
+                string queryString = "SELECT * FROM [dbo].[Salas];";
                 SqlCommand command = new SqlCommand(queryString, connection);
                 try
                 {
@@ -82,7 +82,7 @@ namespace TP1___GRUPO_C.Modelos
                     Sala sal;
                     while (reader.Read())
                     {
-                        sal = new Sala(reader.GetString(1), reader.GetInt32(2));
+                        sal = new Sala(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2));
                         misSalas.Add(sal);
                     }
                     reader.Close();
@@ -103,7 +103,7 @@ namespace TP1___GRUPO_C.Modelos
                 new SqlConnection(connectionString))
             {
                 //Ahora cargo los domicilios
-                string queryString = "SELECT * from dbo.Peliculas";
+                string queryString = "SELECT * FROM [dbo].[Peliculas];";
                 SqlCommand command = new SqlCommand(queryString, connection);
                 try
                 {
@@ -113,7 +113,7 @@ namespace TP1___GRUPO_C.Modelos
                     while (reader.Read())
                     {
                         // Esto hay que ver como lo hacemos porque recibe por parametros objetos Sala y Pelicula
-                        pel = new Pelicula(reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
+                        pel = new Pelicula(reader.GetInt32(0), reader.GetString(1), reader.GetString(2), reader.GetString(3), reader.GetString(4), reader.GetInt32(5));
                         misPeliculas.Add(pel);
                     }
                     reader.Close();
@@ -135,7 +135,7 @@ namespace TP1___GRUPO_C.Modelos
                 new SqlConnection(connectionString))
             {
                 //Ahora cargo los domicilios
-                string queryString = "SELECT * from dbo.Funciones";
+                string queryString = "SELECT * FROM [dbo].[Funciones];";
                 SqlCommand command = new SqlCommand(queryString, connection);
                 try
                 {
@@ -145,7 +145,7 @@ namespace TP1___GRUPO_C.Modelos
                     while (reader.Read())
                     {
                         // Esto hay que ver como lo hacemos porque recibe por parametros objetos Sala y Pelicula
-                        fun = new Funcion(reader.GetDateTime(1), reader.GetDouble(3), reader.GetInt32(4), reader.GetInt32(5),reader.GetInt32(2));
+                        fun = new Funcion(reader.GetDateTime(1), reader.GetDouble(3), reader.GetInt32(4), reader.GetInt32(5), reader.GetInt32(2));
                         misFunciones.Add(fun);
 
                     }
@@ -645,7 +645,7 @@ namespace TP1___GRUPO_C.Modelos
             }
         }
 
-        public int modificarFuncion(int IDFuncion, int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo,int capacidad)
+        public int modificarFuncion(int IDFuncion, int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo, int capacidad)
         {
             // HAY QUE VER COMO PODEMOS HACER PARA QUE INTENTOS FALLIDOS NO ESTE ACA, ver lo que escribi en Usuario porque me parece que conviene eliminar ese atributo
             // De momento lo dejo puesto y arreglo el codigo para que lo contemple  pero probablemente no funcione asi
@@ -689,12 +689,77 @@ namespace TP1___GRUPO_C.Modelos
 
         #endregion
 
+        #region ABM UsuarioFuncion lado DB
+        public int agregarUsuarioFuncion(int idUsuario, int idFuncion)
+        {
+            //primero me aseguro que lo pueda agregar a la base
+            int resultadoQuery;
+            int idNueva = -1;
+            string queryString = "INSERT INTO [dbo].[UsuariosFunciones] ([id_usuario],[id_funcion],[cantidad_entradas_compradas]) VALUES (@id_usuario,@id_funcion,@cantidad);";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@id_usuario", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@id_funcion", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
+
+                command.Parameters["@id_usuario"].Value = idUsuario;
+                command.Parameters["@id_funcion"].Value = idFuncion;
+                command.Parameters["@cantidad"].Value = 0;
+
+                try
+                {
+                    connection.Open();
+                    resultadoQuery = command.ExecuteNonQuery();
+                    string ConsultaID = "SELECT MAX([ID]) FROM [dbo].[Salas]";
+                    command = new SqlCommand(ConsultaID, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+                    reader.Read();
+                    idNueva = reader.GetInt32(0);
+                    reader.Close();
+                }
+                catch (Exception ex)
+                {
+                    //devuelve el ID del usuario agregado a la base, si algo falla devuelve -1
+                    Console.WriteLine(ex.Message);
+                    return -1;
+                }
+                return idNueva;
+            }
+        }
+
+        public int eliminarUsuarioFuncion(int idUsuario)
+        {
+            //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
+            //string connectionString = Properties.Resources.ConnectionStr;
+            string queryString = "DELETE FROM [dbo].[UsuariosFunciones] WHERE id_usuario=@id_usuario;";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@id_usuario", SqlDbType.Int));
+                command.Parameters["@id_usuario"].Value = idUsuario;
+
+                try
+                {
+                    connection.Open();
+                    //esta consulta NO espera un resultado para leer, es del tipo NON Query
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+
+        }
+
+        #endregion
+
         #region Metodos
 
         public int cargarCredito(int idUsuario, double importe)
         {
-            // HAY QUE VER COMO PODEMOS HACER PARA QUE INTENTOS FALLIDOS NO ESTE ACA, ver lo que escribi en Usuario porque me parece que conviene eliminar ese atributo
-            // De momento lo dejo puesto y arreglo el codigo para que lo contemple  pero probablemente no funcione asi
             //string connectionString = Properties.Resources.ConnectionStr;
             string queryString = "UPDATE [dbo].[Usuarios] SET credito = @credito WHERE id=@id;";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -752,8 +817,6 @@ namespace TP1___GRUPO_C.Modelos
 
         }
 
-
-
         public int modificarIntentosFallidos(int idUsuario, int intentos)
         {
 
@@ -784,12 +847,6 @@ namespace TP1___GRUPO_C.Modelos
             }
 
         }
-
-
-
-
-
-
 
         public int devolverEntrada(int idFuncion, int idUsuario)
         {
@@ -870,7 +927,7 @@ namespace TP1___GRUPO_C.Modelos
             }
         }
 
-        public int actualizarAsientosDisponibles (int idFuncion, int cantidadEntradas)
+        public int actualizarAsientosDisponibles(int idFuncion, int cantidadEntradas)
         {
             string queryString = "UPDATE [dbo].[Funciones] SET asientos_disponibles = asientos_disponibles + @cantidadEntradas WHERE id = @idFuncion;";
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -894,7 +951,65 @@ namespace TP1___GRUPO_C.Modelos
                 }
             }
         }
- 
+
+        public int sumarEntrada(int idUsuario, int idFuncion, int cantidad)
+        {
+            string queryString = "UPDATE [dbo].[UsuarioFuncion] SET cantidad_entradas_compradas = @cantidadEntradas WHERE idUsuario = @idUsuario AND idFuncion = @idFuncion;";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@cantidadEntradas", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@idFuncion", SqlDbType.Int));
+
+                command.Parameters["@cantidadEntradas"].Value = cantidad;
+                command.Parameters["@idUsuario"].Value = idUsuario;
+                command.Parameters["@idFuncion"].Value = idFuncion;
+
+                try
+                {
+                    connection.Open();
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+
+
+        }
+
+        public int cargarEntradas(int idFuncion, int idUsuario, int cantidad)
+        {
+            string queryString = "INSERT INTO [dbo].[UsuarioFuncion] ([id_usuario],[id_funcion],[cantidad_entradas_compradas]) VALUES (@idUsuario, @idFuncion, @cantidadEntradas);";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@idFuncion", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@cantidadEntradas", SqlDbType.Int));
+
+                command.Parameters["@idUsuario"].Value = idUsuario;
+                command.Parameters["@idFuncion"].Value = idFuncion;
+                command.Parameters["@cantidadEntradas"].Value = cantidad;
+
+                try
+                {
+                    connection.Open();
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+
+
+        }
+
 
 
         #endregion

@@ -35,9 +35,7 @@
             label5 = new Label();
             label6 = new Label();
             label7 = new Label();
-            label8 = new Label();
             dateTimePicker1 = new DateTimePicker();
-            checkBox1 = new CheckBox();
             textBoxNombres = new TextBox();
             textBoxApellidos = new TextBox();
             textBoxDNI = new TextBox();
@@ -112,15 +110,6 @@
             label7.TabIndex = 6;
             label7.Text = "Mail";
             // 
-            // label8
-            // 
-            label8.AutoSize = true;
-            label8.Location = new Point(51, 285);
-            label8.Name = "label8";
-            label8.Size = new Size(24, 15);
-            label8.TabIndex = 7;
-            label8.Text = "Rol";
-            // 
             // dateTimePicker1
             // 
             dateTimePicker1.Location = new Point(51, 256);
@@ -128,17 +117,6 @@
             dateTimePicker1.Size = new Size(200, 23);
             dateTimePicker1.TabIndex = 8;
             dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
-            // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(51, 303);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(124, 19);
-            checkBox1.TabIndex = 9;
-            checkBox1.Text = "Soy Administrador";
-            checkBox1.UseVisualStyleBackColor = true;
-            checkBox1.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // textBoxNombres
             // 
@@ -182,7 +160,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(119, 338);
+            button1.Location = new Point(51, 302);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 16;
@@ -192,7 +170,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(119, 378);
+            button2.Location = new Point(143, 302);
             button2.Name = "button2";
             button2.Size = new Size(75, 23);
             button2.TabIndex = 17;
@@ -200,7 +178,7 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
-            // Form3
+            // PantallaRegistro
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -212,9 +190,7 @@
             Controls.Add(textBoxDNI);
             Controls.Add(textBoxApellidos);
             Controls.Add(textBoxNombres);
-            Controls.Add(checkBox1);
             Controls.Add(dateTimePicker1);
-            Controls.Add(label8);
             Controls.Add(label7);
             Controls.Add(label6);
             Controls.Add(label5);
@@ -223,7 +199,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
-            Name = "Form3";
+            Name = "PantallaRegistro";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form3";
             Load += Form3_Load;
@@ -240,9 +216,7 @@
         private Label label5;
         private Label label6;
         private Label label7;
-        private Label label8;
         private DateTimePicker dateTimePicker1;
-        private CheckBox checkBox1;
         private TextBox textBoxNombres;
         private TextBox textBoxApellidos;
         private TextBox textBoxDNI;

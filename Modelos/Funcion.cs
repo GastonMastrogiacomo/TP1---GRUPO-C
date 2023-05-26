@@ -18,7 +18,7 @@ namespace TP1___GRUPO_C.Model
         public int idSala { get; set; }
         public int idPelicula { get; set; }
 
-        public List<Usuario> Clientes;
+        public List<Usuario> Clientes { get; set; }
         public DateTime Fecha { get; set; }
         public int AsientosDisponibles { get; set; }
         public int CantidadClientes { get; set; } //CantidadEntradasCompradas
@@ -61,57 +61,6 @@ namespace TP1___GRUPO_C.Model
             this.Costo = Costo;
             this.AsientosDisponibles = MiSala.Capacidad;
 
-        }
-
-        #region ABM Cliente
-        public bool AgregarCliente(Usuario usuario)
-        {
-
-            try
-            {
-                Clientes.Add(usuario);
-                return true;
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                return false;
-
-            }
-        }
-
-        public bool EliminarCliente(int IDCliente)
-        {
-            foreach (Usuario cli in Clientes)
-            {
-                if (cli.ID == IDCliente)
-                {
-                    Clientes.Remove(cli);
-
-                    return true;
-
-                }
-            }
-            return false;
-        }
-
-        public bool ModificarCliente(int IDCliente, Usuario cliente)
-        {
-            for (int i = 0; i < Clientes.Count; i++)
-            {
-                if (Clientes[i].ID == IDCliente)
-                {
-                    Clientes[i] = cliente;
-                    return true;
-                }
-            }
-            return false;
-        }
-        #endregion
-
-        public List<Usuario> MostrarClientes()
-        {
-            return this.Clientes.ToList();
         }
 
         public string[] ToString()

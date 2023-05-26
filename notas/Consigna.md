@@ -22,11 +22,7 @@ Condiciones de entrega:
 	
 COSAS A COMPLETAR:
 
-	- En las clases modelo, por ejemplo, Usuario, lo que hicieron de devolver una lista de funciones clon 
-	y poner métodos para Agregar o Quitar una función está correcto a 
-	nivel programación ortodoxa pero desafortunadamente, puede que les complique las cosas más adelante.
-	Dejen que sea public List<Funcion> MisFunciones { get; set; } y que Cine se encargue del ABM de forma centralizada, después de todo, Cine 
-	es la clase lógica y está bien que pueda modificar estas listas (no sería correcto que lo hagan las clases de vista). 
+	
 
 COSAS COMPLETADAS:
 
@@ -58,6 +54,12 @@ COSAS COMPLETADAS:
 	
     - Clase Cine: Traten de no usar MessageBox acá, de última pueden devolver un string y mostrarlo como cartel o 
     un flag, por ejemplo, 0 = ok, 1 = error, 2 = datos incompletos. STATUS CODES
+
+	- En las clases modelo, por ejemplo, Usuario, lo que hicieron de devolver una lista de funciones clon 
+	y poner métodos para Agregar o Quitar una función está correcto a 
+	nivel programación ortodoxa pero desafortunadamente, puede que les complique las cosas más adelante.
+	Dejen que sea public List<Funcion> MisFunciones { get; set; } y que Cine se encargue del ABM de forma centralizada, después de todo, Cine 
+	es la clase lógica y está bien que pueda modificar estas listas (no sería correcto que lo hagan las clases de vista). 
 
 PREGUNTAR AL PROFE:
 

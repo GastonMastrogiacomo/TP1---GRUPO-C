@@ -73,6 +73,7 @@ namespace TP1___GRUPO_C.Vistas
 
             try
             {
+                // ya tengo una copia de la base de datos
                 List<Funcion> funciones = this.usuarioAuxiliar.ObtenerMisFunciones();
 
                 bool flagAlcanza = false;

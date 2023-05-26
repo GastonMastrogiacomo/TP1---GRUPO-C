@@ -79,7 +79,7 @@ namespace TP1___GRUPO_C.Vistas
             user.Credito = miCine.UsuarioActual.Credito;
             foreach (Funcion fun in miCine.UsuarioActual.ObtenerMisFunciones())
             {
-                user.AgregarFuncion(fun);
+                user.MisFunciones.Add(fun);
             }
 
             int peticion =miCine.ModificarUsuario(ID, DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, user.IntentosFallidos, user.Bloqueado, user.Credito);
@@ -130,7 +130,7 @@ namespace TP1___GRUPO_C.Vistas
             if (peticion == 200)
             {
                 Label_MiCredito.Text = usuarioActual.Credito.ToString();
-                MessageBox.Show(Mensaje + "Credito cargado con exito!");
+                MessageBox.Show(Mensaje + " Credito cargado con exito!");
             }
             else{
                 MessageBox.Show(Mensaje + "No se pudo cargar el credito!");

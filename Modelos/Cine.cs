@@ -30,8 +30,7 @@ namespace TP1___GRUPO_C.Model
             Funciones = new List<Funcion>();
             Salas = new List<Sala>();
             Peliculas = new List<Pelicula>();
-
-            //misUsuarioFuncion = new List<UsuarioFuncion>();
+            misUsuarioFuncion = new List<UsuarioFuncion>();
             DB = new DAL();
             inicializarAtributos();
 
@@ -158,7 +157,7 @@ namespace TP1___GRUPO_C.Model
         #region ABM Usuario
 
         //IMPLEMENTADO CON DB
-        public int AgregarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int credito,bool bloqueado)
+        public int AgregarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int credito, bool bloqueado)
         {
             bool flagDni = false;
 
@@ -192,7 +191,7 @@ namespace TP1___GRUPO_C.Model
                                     if (!flagDni)
                                     {
                                         int idNuevoUsuario;
-                                      
+
                                         idNuevoUsuario = DB.agregarUsuario(DNI, Nombre, Apellido, Mail, Password, FechaNacimiento, EsAdmin, credito, false);
 
                                         if (idNuevoUsuario != -1)
@@ -336,7 +335,7 @@ namespace TP1___GRUPO_C.Model
 
 
             Usuario user = Usuarios.FirstOrDefault(u => u.ID == idUsuario);
-            List<Funcion> MisFunciones = user.MisFunciones;
+            List<Funcion> MisFunciones = user.ObtenerMisFunciones();
 
             if (DB.modificarUsuario(idUsuario, DNI, Nombre, Apellido, Mail, Pass, FechaNacimiento, esAdmin, IntentosFallidos, Bloqueado, Credito) == 1)
             {
@@ -434,45 +433,98 @@ namespace TP1___GRUPO_C.Model
         {
             Usuario user = Usuarios.FirstOrDefault(u => u.ID == idUsuario);
 
-            #region Metodo nuevo eliminar con DB implementado
-
-            if (DB.eliminarUsuario(idUsuario) == 1)
+            if (user != null)
             {
-
-                if (user != null)
+                try
                 {
-                    try
+                    foreach (UsuarioFuncion uf in misUsuarioFuncion)
                     {
-                        // Se eliminan todas las funciones del cliente antes de eliminarlo completamente
-                        // ESTO HAY QUE VER PORQUE ME PARECE QUE CON DB SI PONES ON DELETE CASCADE TE LO SOLUCIONA
-                        for (int i = 0; i < user.MisFunciones.Count; i++)
+                        if (uf.idUsuario == user.ID)
                         {
-                            Funcion funcionActual = user.MisFunciones[i];
-
-
-                            if (funcionActual != null)
-
+                            if (DevolverEntrada(user, uf.idFuncion, uf.CantidadEntradasCompradas) == 200)
                             {
-                                int cantidadEntradasSeleccionadas = user.EntradasCompradas[funcionActual.ID];
-                                DevolverEntrada(user, funcionActual.ID, cantidadEntradasSeleccionadas);
 
-                                // Aca hay una condicion que se fija si devuelve todas las entradas antes de eliminar al usuario
-                                funcionActual.EliminarCliente(idUsuario);
+                                if (DB.eliminarUsuarioFuncion(idUsuario) >= 1)
+                                {
+                                    if (DB.eliminarUsuario(idUsuario) == 1)
+                                    {
+                                        Usuarios.Remove(user);
+                                    }
+                                    else
+                                    {
+                                        return 500;
+                                    }
+                                }
+                                else
+                                {
+                                    return 500;
+                                }
+                            }
+                            else
+                            {
+                                return 500;
+                            }
+                        }
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                    return 500;
+                }
+                return 200;
+            }
+            else
+            {
+                return 500;
+            }
+
+            #region  METODO VIEJO ELIMINAR
+
+            /*
+            if (DB.eliminarUsuarioFuncion(idUsuario) >= 1)
+            {
+                if (DB.eliminarUsuario(idUsuario) == 1)
+                {
+
+                    if (user != null)
+                    {
+                        try
+                        {
+                            // Se eliminan todas las funciones del cliente antes de eliminarlo completamente
+                            // ESTO HAY QUE VER PORQUE ME PARECE QUE CON DB SI PONES ON DELETE CASCADE TE LO SOLUCIONA
+                            for (int i = 0; i < user.MisFunciones.Count; i++)
+                            {
+                                Funcion funcionActual = user.MisFunciones[i];
+
+                                if (funcionActual != null)
+                                {
+                                    DevolverEntrada(user, funcionActual.ID, cantidadEntradasSeleccionadas);
+                                    if (DB.devolverEntrada(funcionActual.ID, user.ID) == 1)
+                                    {
+                                        DevolverEntrada(user, funcionActual.ID, cantidadEntradasSeleccionadas);
+                                    }
+
+                                    // Aca hay una condicion que se fija si devuelve todas las entradas antes de eliminar al usuario
+                                    funcionActual.Clientes.Remove(user);
+                                }
+
                             }
 
+                            Usuarios.Remove(user);
 
-
-
+                            return 200;
                         }
-
-                        Usuarios.Remove(user);
-
-                        return 200;
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                            Console.WriteLine(ex.Message);
+                            return 500;
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show(ex.Message);
-                        Console.WriteLine(ex.Message);
                         return 500;
                     }
                 }
@@ -486,7 +538,9 @@ namespace TP1___GRUPO_C.Model
                 return 500;
             }
 
-            #endregion
+           
+
+            
 
             /*
             if (user != null)
@@ -532,6 +586,7 @@ namespace TP1___GRUPO_C.Model
             }
 
             */
+            #endregion
 
         }
 
@@ -570,10 +625,10 @@ namespace TP1___GRUPO_C.Model
                                 Funciones.Add(func);
 
                                 // Agregar la función a la lista de funciones de la sala correspondiente
-                                salaElegida.AgregarFuncion(func);
+                                salaElegida.MisFunciones.Add(func);
 
                                 // Agregar la función a la lista de funciones de la película correspondiente
-                                peliElegida.AgregarFuncion(func);
+                                peliElegida.MisFunciones.Add(func);
 
                                 return 200;
                             }
@@ -689,7 +744,7 @@ namespace TP1___GRUPO_C.Model
                         {
                             if (user.ObtenerMisFunciones()[j].ID == IDFuncion)
                             {
-                                user.EliminarFuncion(user.ObtenerMisFunciones()[j].ID);
+                                user.MisFunciones.Remove(user.ObtenerMisFunciones()[j]);
                                 break;
                             }
                         }
@@ -703,7 +758,7 @@ namespace TP1___GRUPO_C.Model
                     {
                         if (peli.ObtenerMisFunciones()[i].ID == IDFuncion)
                         {
-                            peli.EliminarFuncion(peli.ObtenerMisFunciones()[i].ID);
+                            peli.MisFunciones.Remove(peli.ObtenerMisFunciones()[i]);
                             break;
                         }
                     }
@@ -714,7 +769,7 @@ namespace TP1___GRUPO_C.Model
                     {
                         if (sala.ObtenerMisFunciones()[i].ID == IDFuncion)
                         {
-                            sala.EliminarFuncion(sala.ObtenerMisFunciones()[i].ID);
+                             sala.MisFunciones.Remove(sala.ObtenerMisFunciones()[i]);
                             break;
                         }
                     }
@@ -824,8 +879,8 @@ namespace TP1___GRUPO_C.Model
                                     if (func.CantidadClientes >= 0 && Costo > 0 && func.Clientes != null)
                                     {
 
-                                        func.MiSala.EliminarFuncion(func.ID);
-                                        func.MiPelicula.EliminarFuncion(func.ID);
+                                        func.MiSala.MisFunciones.Remove(func);
+                                        func.MiPelicula.MisFunciones.Remove(func);
 
                                         func.MiSala = salaElegida;
                                         func.MiPelicula = peliElegida;
@@ -834,8 +889,8 @@ namespace TP1___GRUPO_C.Model
 
                                         func.Costo = Costo;
 
-                                        func.MiSala.AgregarFuncion(func);
-                                        func.MiPelicula.AgregarFuncion(func);
+                                        func.MiSala.MisFunciones.Add(func);
+                                        func.MiPelicula.MisFunciones.Add(func);
 
 
                                         return 200;
@@ -979,7 +1034,7 @@ namespace TP1___GRUPO_C.Model
                         if (idNuevaSala != -1)
                         {
                             // Se crea una nueva sala con los parametros para luego agregarla a la lista de salas
-                            Sala nuevaSala = new Sala(Ubicacion, Capacidad);
+                            Sala nuevaSala = new Sala(idNuevaSala, Ubicacion, Capacidad);
                             Salas.Add(nuevaSala);
                             return 200;
 
@@ -1056,7 +1111,7 @@ namespace TP1___GRUPO_C.Model
                     for (int i = 0; i < sala.MisFunciones.Count; i++)
                     {
                         Funcion funcionActual = sala.MisFunciones[i];
-                        sala.EliminarFuncion(funcionActual.ID);
+                        sala.MisFunciones.Remove(funcionActual);
                         // funcionActual.MiSala = null;
                     }
 
@@ -1199,7 +1254,7 @@ namespace TP1___GRUPO_C.Model
                                     if (idNuevaPelicula != -1)
                                     {
                                         // De ser correctas creamos una nueva pelicula y la agregamos a la lista de peliculas
-                                        Pelicula NuevaPelicula = new Pelicula(Nombre, Descripcion, Sinopsis, Poster, Duracion);
+                                        Pelicula NuevaPelicula = new Pelicula(idNuevaPelicula, Nombre, Descripcion, Sinopsis, Poster, Duracion);
                                         Peliculas.Add(NuevaPelicula);
                                         return 200;
                                     }
@@ -1318,7 +1373,7 @@ namespace TP1___GRUPO_C.Model
                     for (int i = 0; i < peli.MisFunciones.Count; i++)
                     {
                         Funcion funcionActual = peli.MisFunciones[i];
-                        peli.EliminarFuncion(funcionActual.ID);
+                        peli.MisFunciones.Remove(funcionActual);
                         //funcionActual.MiPelicula = null;
                     }
 
@@ -1392,8 +1447,7 @@ namespace TP1___GRUPO_C.Model
                             Funcion func = Peliculas[i].MisFunciones.FirstOrDefault(f => f.ID == MisFunciones[j].ID);
                             if (func != null)
                             {
-                                Peliculas[i].EliminarFuncion(func.ID);
-
+                                Peliculas[i].MisFunciones.Remove(func);
                             }
                         }
                     }
@@ -1691,21 +1745,30 @@ namespace TP1___GRUPO_C.Model
         // Devuelven copias de las listas originales
         public List<Usuario> MostrarUsuarios()
         {
+            Usuarios.Clear();
+            Usuarios = DB.inicializarUsuarios();
             return Usuarios.ToList();
         }
 
         public List<Funcion> MostrarFunciones()
         {
+            Funciones.Clear();
+            Funciones = DB.inicializarFunciones();
             return Funciones.ToList();
         }
 
         public List<Sala> MostrarSalas()
         {
+            Salas.Clear();
+            Salas = DB.inicializarSalas();
             return Salas.ToList();
+
         }
 
         public List<Pelicula> MostrarPeliculas()
         {
+            Peliculas.Clear();
+            Peliculas = DB.iniicalizarPeliculas();
             return Peliculas.ToList();
         }
 
@@ -1840,7 +1903,7 @@ namespace TP1___GRUPO_C.Model
                         user.MisFunciones.Remove(funcion);
                         funcion.CantidadClientes -= cantidadEntradas;
                         funcion.AsientosDisponibles += cantidadEntradas;
-                        funcion.EliminarCliente(user.ID);
+                        funcion.Clientes.Remove(user);
                         entrada.CantidadEntradasCompradas -= cantidadEntradas;
 
                         double costoTotal = funcion.Costo * cantidadEntradas;
@@ -1849,7 +1912,8 @@ namespace TP1___GRUPO_C.Model
                         if (entrada.CantidadEntradasCompradas <= 0)
                         {
                             DB.devolverEntrada(idFuncion, user.ID);
-                        }else
+                        }
+                        else
                         {
                             DB.devolverEntradaMayorCero(idFuncion, user.ID, entrada.CantidadEntradasCompradas);
                         }
@@ -1929,7 +1993,7 @@ namespace TP1___GRUPO_C.Model
         public int ComprarEntradaFuncionNotNull(Usuario user, int cantidadEntradas, Funcion funcion, int idFuncion)
         {
             #region ComprarEntrada con DB INCOMPLETO
-            
+
             UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
 
             // Verificar si la cantidad de entradas es mayor a cero
@@ -1952,16 +2016,30 @@ namespace TP1___GRUPO_C.Model
                         funcion.AsientosDisponibles -= cantidadEntradas;
 
                         // Agregar al usuario como cliente de la función
-                        funcion.AgregarCliente(user);
+                        funcion.Clientes.Add(user);
 
                         // Actualizar el crédito del usuario
                         user.Credito -= costoTotal;
 
-                        entrada.CantidadEntradasCompradas += cantidadEntradas;
-                        //DB.actualizarAsientosDisponibles();
-                        //DB.actualizarCreditoUsuario();
-                        //AGREGAR: Antes de hacer esto tengo que meter un insert a la tabla UsuariosFunciones, porque 
-                        // no puedo modificar estas cosas si el registro no existe.
+                        if(entrada != null)
+                        {
+                            entrada.CantidadEntradasCompradas += cantidadEntradas;
+                            DB.sumarEntrada(idFuncion, user.ID, entrada.CantidadEntradasCompradas);
+
+                        }
+                        else
+                        {
+                            entrada = new UsuarioFuncion(user.ID, idFuncion,  cantidadEntradas);
+                            misUsuarioFuncion.Add(entrada);
+
+                            //Aca podria usar el metodo ABM agregarUsuarioFunciones, de momento lo dejo asi porque 
+                            //ese metodo crea con cantidad 0 y en este hay que asignarle una cantidad
+                            DB.cargarEntradas(idFuncion,user.ID,cantidadEntradas);
+                        }
+
+                        DB.actualizarAsientosDisponibles(idFuncion,cantidadEntradas);
+                        DB.actualizarCreditoUsuario(user.ID, user.Credito);
+
 
                         return 200;
                     }
@@ -1980,7 +2058,7 @@ namespace TP1___GRUPO_C.Model
             {
                 return 500;
             }
-            
+
             #endregion
 
 
@@ -2043,7 +2121,7 @@ namespace TP1___GRUPO_C.Model
 
         #endregion
 
-        public bool esAdmin ()
+        public bool esAdmin()
         {
             return UsuarioActual.EsAdmin;
         }

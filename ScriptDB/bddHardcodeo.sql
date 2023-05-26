@@ -1,6 +1,6 @@
 INSERT INTO Usuarios (dni,nombre,apellido,mail,password,fecha_nacimiento,credito,es_admin,bloqueado) VALUES(1111, 'Pepe', 'Perez', 'pepe@mail.com', '123', 11/02/1992, 1000,0,0);
 INSERT INTO Usuarios (dni,nombre,apellido,mail,password,fecha_nacimiento,credito,es_admin,bloqueado) VALUES(2222,'El', 'Admin', 'admin@mail.com', '123', 08/06/1990, 0, 1,0); 
-INSERT INTO Usuarios (dni,nombre,apellido,mail,password,fecha_nacimiento,credito,es_admin,bloqueado) VALUES(3333, 'Lucas', 'Rodriguez', 'lucas@mail.com', '123', 24/08/1995, 3000,0,0);
+INSERT INTO Usuarios (dni,nombre,apellido,mail,password,fecha_nacimiento,credito,es_admin,bloqueado) VALUES(3333, 'Lucas', 'Rodriguez', 'lucas@mail.com', '123', 1995/08/05, 3000,0,0);
 
 
 INSERT INTO Salas (ubicacion,capacidad) VALUES ('Olivos', 100);
@@ -22,6 +22,6 @@ INSERT INTO Funciones (fecha,asientos_disponibles,costo,id_sala,id_pelicula) VAL
 INSERT INTO UsuariosFunciones (id_usuario,id_funcion,cantidad_entradas_compradas) VALUES (1,1,1);
 INSERT INTO UsuariosFunciones (id_usuario,id_funcion,cantidad_entradas_compradas) VALUES (1,2,4);
 INSERT INTO UsuariosFunciones (id_usuario,id_funcion,cantidad_entradas_compradas) VALUES (1,3,1);
-INSERT INTO UsuariosFunciones (id_usuario,id_funcion,cantidad_entradas_compradas) VALUES (3,4,3);
-INSERT INTO UsuariosFunciones (id_usuario,id_funcion,cantidad_entradas_compradas) VALUES (3,5,2);
+INSERT INTO UsuariosFunciones (id_usuario,id_funcion,cantidad_entradas_compradas) VALUES (11,4,3);
+INSERT INTO UsuariosFunciones (id_usuario,id_funcion,cantidad_entradas_compradas) VALUES (11,5,2);
 

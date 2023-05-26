@@ -22,7 +22,7 @@ namespace TP1___GRUPO_C.Model
         public int IntentosFallidos { get; set; }
         public bool Bloqueado { get; set; }
 
-        public List<Funcion> MisFunciones;
+        public List<Funcion> MisFunciones { get; set; }
         public double Credito { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public bool EsAdmin { get; set; }
@@ -49,67 +49,7 @@ namespace TP1___GRUPO_C.Model
 
             // Esto tiene que ser reemplazado por una tabla de muchos a muchos entre usuarios y Funciones
             EntradasCompradas = new Dictionary<int, int>();
-        }
-
-        //esto es solo para la vista
-        public Usuario(int ID, int DNI, string Nombre, string Apellido, string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int IntentosFallidos)
-        {
-            //ultimoID++;
-            this.ID = ID;
-            this.DNI = DNI;
-            this.Nombre = Nombre;
-            this.Apellido = Apellido;
-            this.Mail = Mail;
-            this.Password = Password;
-            this.IntentosFallidos = IntentosFallidos;
-            Bloqueado = false;
-            MisFunciones = new List<Funcion>();
-            Credito = 0;
-            this.FechaNacimiento = FechaNacimiento;
-            this.EsAdmin = EsAdmin;
-
-            // Esto tiene que ser reemplazado por una tabla de muchos a muchos entre usuarios y Funciones
-            //EntradasCompradas = new Dictionary<int, int>();
-        }
-
-        //Eliminar, se encarga el Cine
-        public bool AgregarFuncion(Funcion funcion)
-        {
-            try
-            {
-                if (!MisFunciones.Contains(funcion))
-                {
-                    MisFunciones.Add(funcion);
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.ToString());
-                return false;
-            }
-        }
-
-        //Eliminar, se encarga el Cine
-        public bool EliminarFuncion(int IDFuncion)
-        {
-            foreach (Funcion func in MisFunciones)
-            {
-                if (func.ID == IDFuncion)
-                {
-                    MisFunciones.Remove(func);
-                    return true;
-
-                }
-            }
-            return false;
-        }
+        }              
 
         public List<Funcion> ObtenerMisFunciones()
         {
