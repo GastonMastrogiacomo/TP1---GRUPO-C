@@ -708,6 +708,33 @@ namespace TP1___GRUPO_C.Modelos
 
         }
 
+        public int modificarUsuarioFuncion(int idFuncion, int idUsuario)
+        {
+            string queryString = "UPDATE [dbo].[UsuariosFunciones] SET cantidad_entradas_compradas = @cantidad, id_funcion = @idFuncion WHERE id_usuario = @idUsuario;";
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlCommand command = new SqlCommand(queryString, connection);
+                command.Parameters.Add(new SqlParameter("@idFuncion", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@idUsuario", SqlDbType.Int));
+                command.Parameters.Add(new SqlParameter("@cantidad", SqlDbType.Int));
+
+                command.Parameters["@idFuncion"].Value = idFuncion;
+                command.Parameters["@idUsuario"].Value = idUsuario;
+                command.Parameters["@cantidad"].Value = 1;
+
+                try
+                {
+                    connection.Open();
+                    return command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return 0;
+                }
+            }
+        }
+
 
 
 

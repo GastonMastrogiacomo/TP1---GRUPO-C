@@ -98,7 +98,7 @@ namespace TP1___GRUPO_C
             pantallaCargaFunciones.MdiParent = this;
             pantallaCargaFunciones.cerrarPantallaCargaFunciones += CerrarPantallaCargaFunciones;
             pantallaCargaFunciones.cerrarYGuardarPantallaCargaFunciones += CerrarYGuardarPantallaCargaFunciones;
-            pantallaCargaFunciones.abrirPantallaEdicionFunciones += AbrirPantallaEdicionFunciones;
+            //pantallaCargaFunciones.abrirPantallaEdicionFunciones += AbrirPantallaEdicionFunciones;
             pantallaCargaFunciones.Show();
         }
 

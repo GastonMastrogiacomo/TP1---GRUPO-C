@@ -32,35 +32,7 @@ namespace TP1___GRUPO_C.Model
             Costo = costo;
             Clientes = new List<Usuario>();
             this.AsientosDisponibles = AsientosDisponibles;
-        }
-
-        #region Constructores no usados
-        /*
-        public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha, double Costo)
-        {
-            this.MiSala = MiSala;
-            this.MiPelicula = MiPelicula;
-            Clientes = new List<Usuario>();
-            this.Fecha = Fecha;
-            this.CantidadClientes = 0;
-            this.Costo = Costo;
-            this.AsientosDisponibles = MiSala.Capacidad;
-
-        }
-        public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha, double Costo, int ID)
-        {
-            this.ID = ID;
-            this.MiSala = MiSala;
-            this.MiPelicula = MiPelicula;
-            Clientes = new List<Usuario>();
-            this.Fecha = Fecha;
-            this.CantidadClientes = 0;
-            this.Costo = Costo;
-            this.AsientosDisponibles = MiSala.Capacidad;
-
-        }
-        */
-        #endregion
+        }     
 
         public string[] ToString()
         {

@@ -170,7 +170,7 @@ namespace TP1___GRUPO_C.Model
         {
 
             Usuario user = Usuarios.FirstOrDefault(u => u.ID == idUsuario);
-            List<Funcion> MisFunciones = user.ObtenerMisFunciones();
+            List<Funcion> MisFunciones = user.MisFunciones;
 
             if (DB.modificarUsuario(idUsuario, DNI, Nombre, Apellido, Mail, Pass, FechaNacimiento, esAdmin, IntentosFallidos, Bloqueado, Credito) == 1)
             {
@@ -220,161 +220,80 @@ namespace TP1___GRUPO_C.Model
         public int EliminarUsuario(int idUsuario)
         {
             Usuario user = Usuarios.FirstOrDefault(u => u.ID == idUsuario);
+            UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID);
 
             if (user != null)
             {
-                try
+                if(entrada != null)
                 {
-                    foreach (UsuarioFuncion uf in misUsuarioFuncion)
+                    try
                     {
-                        if (uf.idUsuario == user.ID)
+                        foreach (UsuarioFuncion uf in misUsuarioFuncion)
                         {
-                            if (DevolverEntrada(user, uf.idFuncion, uf.CantidadEntradasCompradas) == 200)
+                            if (uf.idUsuario == user.ID)
                             {
-
-                                if (DB.eliminarUsuarioFuncion(idUsuario,true) >= 1)
+                                if (DevolverEntrada(user, uf.idFuncion, uf.CantidadEntradasCompradas) == 200)
                                 {
-                                    if (DB.eliminarUsuario(idUsuario) == 1)
+
+                                    if (DB.eliminarUsuarioFuncion(idUsuario, true) >= 1)
                                     {
-                                        Usuarios.Remove(user);
+                                        if (DB.eliminarUsuario(idUsuario) == 1)
+                                        {
+                                            Usuarios.Remove(user);
+                                            return 200;
+                                        }
+                                        else
+                                        {
+                                            return 500;
+                                        }
                                     }
                                     else
                                     {
                                         return 500;
                                     }
+
                                 }
                                 else
                                 {
                                     return 500;
                                 }
                             }
-                            else
-                            {
-                                return 500;
-                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        return 500;
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        if (DB.eliminarUsuario(idUsuario) == 1)
+                        {
+                            Usuarios.Remove(user);
+                            return 200;
+                        }
+                        else
+                        {
+                            return 500;
                         }
                     }
-
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
+                        return 500;
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.ToString());
-                    return 500;
-                }
+              
                 return 200;
             }
             else
             {
                 return 500;
             }
-
-            #region  METODO VIEJO ELIMINAR
-
-            /*
-            if (DB.eliminarUsuarioFuncion(idUsuario) >= 1)
-            {
-                if (DB.eliminarUsuario(idUsuario) == 1)
-                {
-
-                    if (user != null)
-                    {
-                        try
-                        {
-                            // Se eliminan todas las funciones del cliente antes de eliminarlo completamente
-                            // ESTO HAY QUE VER PORQUE ME PARECE QUE CON DB SI PONES ON DELETE CASCADE TE LO SOLUCIONA
-                            for (int i = 0; i < user.MisFunciones.Count; i++)
-                            {
-                                Funcion funcionActual = user.MisFunciones[i];
-
-                                if (funcionActual != null)
-                                {
-                                    DevolverEntrada(user, funcionActual.ID, cantidadEntradasSeleccionadas);
-                                    if (DB.devolverEntrada(funcionActual.ID, user.ID) == 1)
-                                    {
-                                        DevolverEntrada(user, funcionActual.ID, cantidadEntradasSeleccionadas);
-                                    }
-
-                                    // Aca hay una condicion que se fija si devuelve todas las entradas antes de eliminar al usuario
-                                    funcionActual.Clientes.Remove(user);
-                                }
-
-                            }
-
-                            Usuarios.Remove(user);
-
-                            return 200;
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show(ex.Message);
-                            Console.WriteLine(ex.Message);
-                            return 500;
-                        }
-                    }
-                    else
-                    {
-                        return 500;
-                    }
-                }
-                else
-                {
-                    return 500;
-                }
-            }
-            else
-            {
-                return 500;
-            }
-
-           
-
-            
-
-            /*
-            if (user != null)
-            {
-                try
-                {
-                    // Se eliminan todas las funciones del cliente antes de eliminarlo completamente
-                    // ESTO HAY QUE VER PORQUE ME PARECE QUE CON DB SI PONES ON DELETE CASCADE TE LO SOLUCIONA
-                    for (int i = 0; i < user.MisFunciones.Count; i++)
-                    {
-                        Funcion funcionActual = user.MisFunciones[i];
-
-
-                        if (funcionActual != null)
-
-                        {
-                            int cantidadEntradasSeleccionadas = user.EntradasCompradas[funcionActual.ID];
-                            DevolverEntrada(user, funcionActual.ID, cantidadEntradasSeleccionadas);
-
-                            // Aca hay una condicion que se fija si devuelve todas las entradas antes de eliminar al usuario
-                            funcionActual.EliminarCliente(idUsuario);
-                        }
-
-
-
-
-                    }
-
-                    Usuarios.Remove(user);
-
-                    return 200;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    Console.WriteLine(ex.Message);
-                    return 500;
-                }
-            }
-            else
-            {
-                return 500;
-            }
-
-            */
-            #endregion
 
         }
 
@@ -482,7 +401,7 @@ namespace TP1___GRUPO_C.Model
                             break;
                         }
 
-                      
+
                         // Eliminar la función de la lista de funciones
                         Funciones.Remove(func);
 
@@ -502,7 +421,7 @@ namespace TP1___GRUPO_C.Model
             {
                 return 500;
             }
-    
+
 
         }
 
@@ -772,61 +691,7 @@ namespace TP1___GRUPO_C.Model
 
             #endregion
 
-            /* Codigo Viejo
-            try
-            {
-                // Hacemos las verificaciones correspondientes
-                if (Nombre != null && Nombre != "")
-                {
-                    if (Descripcion != null && Descripcion != "")
-                    {
-                        if (Sinopsis != null && Sinopsis != "")
-                        {
-                            if (Poster != null && Poster != "")
-                            {
-
-                                if (Duracion >= 0)
-                                {
-                                    // De ser correctas creamos una nueva pelicula y la agregamos a la lista de peliculas
-                                    Pelicula NuevaPelicula = new Pelicula(Nombre, Descripcion, Sinopsis, Poster, Duracion);
-                                    Peliculas.Add(NuevaPelicula);
-
-
-                                    return 200;
-                                }
-                                else
-                                {
-                                    throw new InvalidOperationException("Duracion Incorrecta");
-                                }
-
-                            }
-                            else
-                            {
-                                throw new InvalidOperationException("Poster Incorrecto");
-                            }
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException("Sinopsis Incorrecta");
-                        }
-                    }
-                    else
-                    {
-                        throw new InvalidOperationException("Descripcion Incorrecta");
-                    }
-                }
-                else
-                {
-                    throw new InvalidOperationException("Nombre Incorrecto");
-                }
-
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-            return 500;
-            */
+           
         }
 
         public int EliminarPelicula(int IDPelicula)
@@ -868,30 +733,7 @@ namespace TP1___GRUPO_C.Model
             #endregion
 
 
-            /* Codigo Viejo
-             
-            // Se busca la pelicula con el id especificado
-            Pelicula peli = Peliculas.FirstOrDefault(p => p.ID == IDPelicula);
-
-            if (peli != null)
-            {
-                // En el caso de que exista, se eliminan de las funciones la pelicula especificada antes de remover la pelicula
-                for (int i = 0; i < peli.MisFunciones.Count; i++)
-                {
-                    Funcion funcionActual = peli.MisFunciones[i];
-                    peli.EliminarFuncion(funcionActual.ID);
-                    //funcionActual.MiPelicula = null;
-                }
-
-                Peliculas.Remove(peli);
-
-                return 204;
-            }
-            else
-            {
-                return 500;
-            }
-            */
+            
         }
 
         public int ModificarPelicula(int IDPelicula, string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion, List<string> IdFunciones)
@@ -959,59 +801,7 @@ namespace TP1___GRUPO_C.Model
 
             #endregion
 
-            /* Codigo Viejo
-            List<Funcion> MisFunciones = new List<Funcion>();
-
-            for (int i = 0; i < IdFunciones.Count; i++)
-            {
-                int.TryParse(IdFunciones[i], out int idFunc);
-                Funcion func = MisFunciones.FirstOrDefault(f => f.ID == idFunc);
-                MisFunciones.Add(func);
-            }
-
-
-            if (IDPelicula != 0 && Nombre != null && Nombre != "" && Descripcion != null && Descripcion != "" && Sinopsis != null && Sinopsis != "" && Poster != null && Poster != "" && Duracion >= 0)
-            {
-
-                for (int i = 0; i < Peliculas.Count; i++)
-                {
-                    for (int j = 0; j < MisFunciones.Count; j++)
-                    {
-                        Funcion func = Peliculas[i].MisFunciones.FirstOrDefault(f => f.ID == MisFunciones[j].ID);
-                        if (func != null)
-                        {
-                            Peliculas[i].EliminarFuncion(func.ID);
-
-                        }
-                    }
-                }
-
-                for (int i = 0; i < Peliculas.Count; i++)
-                {
-                    if (Peliculas[i].ID == IDPelicula)
-                    {
-
-                        Peliculas[i].Nombre = Nombre;
-                        Peliculas[i].Descripcion = Descripcion;
-                        Peliculas[i].Sinopsis = Sinopsis;
-                        Peliculas[i].Poster = Poster;
-                        Peliculas[i].Duracion = Duracion;
-                        Peliculas[i].MisFunciones = MisFunciones;
-
-                        foreach (Funcion fun in Peliculas[i].MisFunciones)
-                        {
-                            fun.MiPelicula = Peliculas[i];
-                        }
-
-
-                        return 200;
-                    }
-                }
-                return 500;
-            }
-
-            return 422;
-            */
+           
 
         }
 
@@ -1120,22 +910,7 @@ namespace TP1___GRUPO_C.Model
                         {
                             if (user.Password.Equals(Password))
                             {
-                                /* ARREGLAR
-                                if (user.EsAdmin == esAdmin)
-                                {
-                                    // Se establece el usuario como usuario actual
-                                    UsuarioActual = user;
-                                    user.IntentosFallidos = 0;
-                                    return 200;
-
-                                }
-                                else
-                                {
-                                    // el usuario seleccion "administrador" sin serlo
-                                    // o el administrador no puso el checkbox
-                                    throw new InvalidOperationException("Has seleccionado una opción incorrecta.");
-                                }
-                                */
+                                
 
                                 UsuarioActual = user;
 
@@ -1462,7 +1237,18 @@ namespace TP1___GRUPO_C.Model
 
         #endregion
 
-
+        public int agregarUsuarioFuncion(int idUsuario, int idFuncion)
+        {
+            
+            if (DB.agregarUsuarioFuncion(idUsuario,idFuncion) != -1 )
+            {
+                return 200;
+            }
+            else
+            {
+                return 500;
+            }
+        }
 
 
     }

@@ -166,7 +166,7 @@ namespace TP1___GRUPO_C
 
             foreach (Funcion f in cine.MostrarFunciones())
             {
-                if (f.MiPelicula.ID == idPeliculaSeleccionada)
+                if (f.idPelicula == idPeliculaSeleccionada)
                 {
                     if (f.Fecha >= DateTime.Today)
                     {
@@ -192,7 +192,7 @@ namespace TP1___GRUPO_C
 
             foreach (Funcion f in cine.MostrarFunciones())
             {
-                if (f.MiSala.ID == idSalaSeleccionada)
+                if (f.idSala == idSalaSeleccionada)
                 {
                     dataGridFuncionesPpal.Rows.Add(f.ToString());
                 }

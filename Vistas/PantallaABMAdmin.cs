@@ -264,7 +264,7 @@ namespace TP1___GRUPO_C.Vistas
 
             List<Usuario> usuarios = miCine.MostrarUsuarios();
 
-            this.UsuarioAuxiliar = usuarios.FirstOrDefault(u => u.ID == int.Parse(this.Label_IdUsuario.Text));
+           this.UsuarioAuxiliar = usuarios.FirstOrDefault(u => u.ID == int.Parse(this.Label_IdUsuario.Text));
 
             this.Input_Credito.Text = dataGridUsuarios[8, e.RowIndex].Value.ToString();
             String fecha1 = dataGridUsuarios[9, e.RowIndex].Value.ToString();

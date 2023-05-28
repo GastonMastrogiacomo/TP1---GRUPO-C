@@ -19,7 +19,7 @@ namespace TP1___GRUPO_C.Vistas
         private Usuario UsuarioAuxiliar;
         public CerrarPantallaCargaFunciones cerrarPantallaCargaFunciones;
         public CerrarYGuardarPantallaCargaFunciones cerrarYGuardarPantallaCargaFunciones;
-        public AbrirPantallaEdicionFunciones abrirPantallaEdicionFunciones;
+        //public AbrirPantallaEdicionFunciones abrirPantallaEdicionFunciones;
 
         public PantallaCargaFunciones(Cine cine, Usuario UsuarioAuxiliar)
         {
@@ -32,20 +32,33 @@ namespace TP1___GRUPO_C.Vistas
 
         public delegate void CerrarPantallaCargaFunciones();
         public delegate void CerrarYGuardarPantallaCargaFunciones();
-        public delegate void AbrirPantallaEdicionFunciones(Usuario UsuarioAuxiliar);
+        //public delegate void AbrirPantallaEdicionFunciones(Usuario UsuarioAuxiliar);
 
         private void CargarListaFuncionesUsuario()
         {
             this.Clb_FuncionesUsuario.Items.Clear();
 
-            if (this.UsuarioAuxiliar.ObtenerMisFunciones().Count > 0)
+            if (this.UsuarioAuxiliar.MisFunciones.Count > 0)
             {
-                for (int i = 0; i < this.UsuarioAuxiliar.ObtenerMisFunciones().Count; i++)
+                for (int i = 0; i < this.UsuarioAuxiliar.MisFunciones.Count; i++)
                 {
-                    Funcion func = this.UsuarioAuxiliar.ObtenerMisFunciones()[i];
-                    string NombrePelicula = func.MiPelicula.Nombre.ToString();
+                    Funcion func = this.UsuarioAuxiliar.MisFunciones[i];
+                    Pelicula p = miCine.MostrarPeliculas().FirstOrDefault(p => p.ID == func.idPelicula);
+                    string NombrePelicula = "";
+                    if (p != null)
+                    {
+                        NombrePelicula = p.Nombre.ToString();
+                    }
+                  
                     string FechaFuncion = func.Fecha.ToString();
-                    string Sala = func.MiSala.Ubicacion.ToString();
+
+                    Sala s = miCine.MostrarSalas().FirstOrDefault(s => s.ID == func.idSala);
+                    string Ubicacion = "";
+                    if (s != null)
+                    {
+                        Ubicacion = s.Ubicacion;
+                    }
+                    string Sala = Ubicacion.ToString();
 
                     string Linea = NombrePelicula + " en " + Sala + ". Fecha: " + FechaFuncion;
                     this.Clb_FuncionesUsuario.Items.Insert(i, Linea);
@@ -57,12 +70,26 @@ namespace TP1___GRUPO_C.Vistas
         {
             foreach (Funcion func in miCine.MostrarFunciones())
             {
-                string NombrePelicula = func.MiPelicula.Nombre.ToString();
+                Pelicula p = miCine.MostrarPeliculas().FirstOrDefault(p => p.ID == func.idPelicula);
+                string NombrePelicula = "";
+                if (p != null)
+                {
+                    NombrePelicula = p.Nombre.ToString();
+                }
+              
                 string FechaFuncion = func.Fecha.ToString();
-                string Sala = func.MiSala.Ubicacion.ToString();
-                string Linea = NombrePelicula + " en " + Sala + ". Fecha: " + FechaFuncion;
-                // -1 porque los Id arrancan en 1 y el array en la pos 0
-                this.Clb_FuncionesCine.Items.Insert(func.ID - 1, Linea);
+
+                Sala s = miCine.MostrarSalas().FirstOrDefault(s => s.ID == func.idSala);
+                string Ubicacion = "";
+                if (s != null)
+                {
+                    Ubicacion = s.Ubicacion.ToString();
+                }
+
+                string Sala = Ubicacion.ToString();
+                string Linea = func.ID+ ". "  +  NombrePelicula + " en " + Sala + ". Fecha: " + FechaFuncion;
+               
+                this.Clb_FuncionesCine.Items.Insert(this.Clb_FuncionesCine.Items.Count, Linea);
             }
         }
 
@@ -81,7 +108,7 @@ namespace TP1___GRUPO_C.Vistas
                 }
             }
             GuardarDatosUsuarioAuxiliar();
-            abrirPantallaEdicionFunciones(UsuarioAuxiliar);
+            //abrirPantallaEdicionFunciones(UsuarioAuxiliar);
         }
 
         private void Btn_SacarDeLista_Click(object sender, EventArgs e)
@@ -110,10 +137,11 @@ namespace TP1___GRUPO_C.Vistas
                 for (int i = 0; i < Clb_FuncionesUsuario.Items.Count; i++)
                 {
                     //le sumo 1 xq antes lo reste en el indice del item. (en la vista)
-                    Funcion func = miCine.ObtenerFuncionPorId(i + 1);
-                    // re crear la funcion en el front y pasarsela al back
-                    // pero generaria una nueva linea cuando la funcion es otra
-                    UsuarioAuxiliar.MisFunciones.Add(func);
+                    Funcion func = miCine.MostrarFunciones().FirstOrDefault(f => f.ID == (i + 1));
+                    if (func != null)
+                    {
+                        UsuarioAuxiliar.MisFunciones.Add(func);
+                     }                  
                 }
             }
 
@@ -127,15 +155,20 @@ namespace TP1___GRUPO_C.Vistas
             for (int i = 0; i < Clb_FuncionesUsuario.Items.Count; i++)
             {
                 List<Funcion> funciones = miCine.MostrarFunciones();
-                Funcion func = funciones.FirstOrDefault(u => u.ID == (i + 1));
+                int.TryParse(Clb_FuncionesUsuario.Items[i].ToString().Split(".")[0], out int IDFuncion);
+                
+                Funcion func = funciones.FirstOrDefault(f => f.ID == IDFuncion);
                 if (func != null)
                 {
                     UsuarioAuxiliar.MisFunciones.Add(func);
+                    miCine.agregarUsuarioFuncion(UsuarioAuxiliar.ID,func.ID);
                 }
             }
             int peticion = miCine.ModificarUsuario(UsuarioAuxiliar.ID, UsuarioAuxiliar.DNI, UsuarioAuxiliar.Nombre, UsuarioAuxiliar.Apellido, UsuarioAuxiliar.Mail, UsuarioAuxiliar.Password, UsuarioAuxiliar.FechaNacimiento, UsuarioAuxiliar.EsAdmin, UsuarioAuxiliar.IntentosFallidos, UsuarioAuxiliar.Bloqueado, UsuarioAuxiliar.Credito);
+
+           
             String mensaje = StatusCode.ObtenerMensaje(peticion);
-            if (peticion!=200)
+            if (peticion != 200)
             {
                 MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
