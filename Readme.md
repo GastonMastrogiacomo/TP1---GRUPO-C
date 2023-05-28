@@ -1,5 +1,6 @@
 ﻿Readme TP-2:
 
+-Usar base.sql a la hora de cargar la base de datos con la informacion cargada.Esta se encuentra en la carpeta ScriptDB
 -El Funcionamiento del sistema es en lineas generales el mismo (al menos desde un punto de vista visual) por lo que si 
 se necesitan consignas de navegacion leer el Readme del TP-1 que se encuentra abajo de este cuerpo de texto.
 -Tuvimos un problema con la conexion a la base de datos, no nos tomaba el valor de ConnectionStr dentro de Resources por lo que usamos un string para solucionarlo.
@@ -21,6 +22,10 @@ en un ambito real.
 -Se eliminaron todos los MessageBox del lado de la logica, se creo una clase Status Code que devuelve un codigo y
 este lo toma la vista y devuelve un mensaje.
 -Funcion y Usuario ya no tienen metodos de ABM dentro de sus clases, Cine se encarga de toda esa parte.
+-A la hora de usar el filtro, muy de vez en cuando puede ser que se produzca un error, esto creemos que es por el debugger, 
+cuando reinciamos el programa funciona correctamente.
+-Es aconsejable a la hora de probar el sistema que se creen los objetos y se hagan pruebas con ellos, 
+ya que puede haber un error en los datos que insertamos y no nos hayamos dado cuenta.
 -Se corrigieron las observaciones hechas en el TP-1.
 
 
