@@ -1,6 +1,11 @@
 ﻿Readme TP-2:
 
+IMPORTANTE!!!!!:
 -Usar base.sql a la hora de cargar la base de datos con la informacion cargada.Esta se encuentra en la carpeta ScriptDB
+-Cuando se crea la base de datos y se exporta el script , el directorio fue hecho en un disco F con un path que va a 
+tener que  ser modificado!
+
+
 -El Funcionamiento del sistema es en lineas generales el mismo (al menos desde un punto de vista visual) por lo que si 
 se necesitan consignas de navegacion leer el Readme del TP-1 que se encuentra abajo de este cuerpo de texto.
 -Tuvimos un problema con la conexion a la base de datos, no nos tomaba el valor de ConnectionStr dentro de Resources por lo que usamos un string para solucionarlo.
