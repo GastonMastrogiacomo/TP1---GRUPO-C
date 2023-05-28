@@ -24,24 +24,18 @@ namespace TP1___GRUPO_C
             pantallaPrincipal.iniciarVentanaLogin += IniciarLogin;
             pantallaPrincipal.abrirRegistro += AbrirRegistro;
             pantallaPrincipal.abrirMiPerfil += AbrirMiPerfil;
-
             pantallaPrincipal.Show();
-
         }
 
         private void IniciarLogin()
         {
-
             pantallaPrincipal.Hide();
-
             pantallaLogin = new PantallaLogin(cine);
             pantallaLogin.MdiParent = this;
             pantallaLogin.pantallaPrincipal += VolverPantallaPrincipal;
             pantallaLogin.usuarioComunLogueado += UsuarioComunLogueado;
             pantallaLogin.usuarioAdminLogueado += UsuarioAdminLogueado;
             pantallaLogin.Show();
-
-
         }
 
         private void UsuarioComunLogueado()
@@ -58,7 +52,6 @@ namespace TP1___GRUPO_C
             pantallaABMAdmin.abrirPantallaCargaFunciones += AbrirPantallaCargaFunciones;
             pantallaABMAdmin.pantallaPrincipal += VolverPantallaPrincipal;
             pantallaABMAdmin.Show();
-
         }
 
         private void AbrirRegistro()
@@ -68,7 +61,6 @@ namespace TP1___GRUPO_C
             pantallaRegistro.pantallaPrincipal += VolverPantallaPrincipal;
             pantallaPrincipal.Hide();
             pantallaRegistro.Show();
-
         }
 
         private void VolverPantallaPrincipal()
@@ -129,14 +121,12 @@ namespace TP1___GRUPO_C
         {
             pantallaABMAdmin.Show();
             pantallaCargaFunciones.Close();
-
         }
 
         private void CerrarYGuardarPantallaCargaFunciones()
         {
             pantallaABMAdmin.Show();
             pantallaCargaFunciones.Close();
-
         }
 
         private void AbrirMiPerfil()

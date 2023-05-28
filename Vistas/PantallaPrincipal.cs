@@ -29,7 +29,6 @@ namespace TP1___GRUPO_C
         private int idFuncionSeleccionada;
         private int idSalaSeleccionada;
 
-
         internal PantallaPrincipal(Cine c)
         {
             InitializeComponent();
@@ -60,7 +59,6 @@ namespace TP1___GRUPO_C
         public delegate void AbrirRegistro();
         public delegate void AbrirMiPerfil();
 
-        //REFRESH
         public void Refresh()
         {
             Btn_MiPerfil.Hide();
@@ -68,8 +66,6 @@ namespace TP1___GRUPO_C
             btnRegistrarse.Show();
             button3.Show();
             this.Input_FechaPpal.Value = DateTime.Now;
-
-
         }
 
         private void Btn_RefrescarPpal_Click(object sender, EventArgs e)
@@ -80,13 +76,13 @@ namespace TP1___GRUPO_C
             this.Input_FechaPpal.Value = DateTime.Now;
             if (cine.UsuarioActual != null)
             {
-
                 this.Label_MiCredito_Principal.Text = cine.UsuarioActual.Credito.ToString();
             }
 
         }
 
-        //MOSTRAR
+        #region Metodos Mostrar
+
         private void MostrarPeliculasEnDataGridView()
         {
 
@@ -101,8 +97,6 @@ namespace TP1___GRUPO_C
                 // Agregar una nueva fila al DataGridView con los datos de la película
                 dataGridPeliculasPpal.Rows.Add(pelicula.PeliculaToString());
             }
-
-
         }
 
         private void MostrarFuncionesEnDataGridView()
@@ -141,8 +135,9 @@ namespace TP1___GRUPO_C
                 // Agregar una nueva fila al DataGridView con los datos de la película
                 dataGridSalasPpal.Rows.Add(sala.SalaToString());
             }
-
         }
+
+        #endregion
 
         private void CargarListaUbicacion()
         {
@@ -156,7 +151,6 @@ namespace TP1___GRUPO_C
 
         }
 
-        //TABLAS DATAGRID
         private void PestañasPpal_SelectedIndexChange(object sender, EventArgs e)
         {
 
@@ -276,7 +270,6 @@ namespace TP1___GRUPO_C
             int.TryParse(Input_PrecioMinimoPpal.Text, out int PrecioMin);
             int.TryParse(Input_PrecioMaximoPpal.Text, out int PrecioMax);
 
-
             List<Funcion> funcionEncontrada = cine.BuscarFuncion(pelicula, ubicacion, fecha, PrecioMin, PrecioMax);
 
             dataGridFuncionesPpal.Rows.Clear();
@@ -290,9 +283,6 @@ namespace TP1___GRUPO_C
             {
                 MessageBox.Show("Oops! No se encontraron las funciones seleccionadas.");
             }
-
-
-
 
         }
     }

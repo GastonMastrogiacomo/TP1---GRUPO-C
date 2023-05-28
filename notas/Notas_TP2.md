@@ -44,8 +44,18 @@ TESTEAR
 
 
 FALTA
--ABM Funcion
--ABM Pelicula
+-ABM Funcion verificar y aplicar on delete cascade (o hardcodearlo)
+-ABM Pelicula verificar (este creo que estaba bien ya)
 - Hacer que el ABM se desencadene correctamente en las otras clases.
+-Eliminar ObtenerFuncionPorID
+-Ver que los filtros anden bien
 
 
+Gaston: 
+-Hice un poco de limpieza de comentarios y codigo innecesario, el ABM Funcion deberia funcionar, 
+ hay que ver si anda el on delete cascade para que elimine las peliculas y salas vinculadas por id con funcioens.
+-En caso de que no se pueda hacer es hacer un for loop que en el caso de que se elimine
+una sala o funcion, busca en las Funciones las salas y peliculas con el mismo id y llamas a los metodos eliminar.
+
+https://www.sqlshack.com/delete-cascade-and-update-cascade-in-sql-server-foreign-key/
+https://stackoverflow.com/questions/4454861/how-do-i-edit-a-table-in-order-to-enable-cascade-delete

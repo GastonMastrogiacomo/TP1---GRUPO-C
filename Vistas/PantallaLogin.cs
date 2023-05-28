@@ -56,14 +56,12 @@ namespace TP1___GRUPO_C
                     else
                     {
                         this.usuarioComunLogueado();
-
                     }
                 }
                 else
                 {
                     MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-
 
             }
             else

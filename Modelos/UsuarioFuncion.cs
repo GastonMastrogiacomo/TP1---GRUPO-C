@@ -8,12 +8,8 @@ namespace TP1___GRUPO_C.Modelos
 {
     public class UsuarioFuncion
     {
-        // ESTA ES LA CLASE QUE FUNCIONA COMO TABLA INTERMEDIA EN LA RELACION MANY TO MANY DE FUNCION-USUARIO
-
         public int idUsuario { get; set; }
         public int idFuncion { get; set; }
-
-        //Cantidad de entradas tendria que ir aca
         public int CantidadEntradasCompradas { get; set; }
 
         public UsuarioFuncion(int idUsuario, int idFuncion, int cantidadEntradas)

@@ -16,7 +16,6 @@ namespace TP1___GRUPO_C
     {
         private Cine cine;
         public volverPantallaPrincipal pantallaPrincipal;
-
         public PantallaRegistro(Cine c)
         {
             InitializeComponent();
@@ -24,7 +23,6 @@ namespace TP1___GRUPO_C
         }
 
         public delegate void volverPantallaPrincipal();
-
 
         private void button1_Click(object sender, EventArgs e)
         {
@@ -36,8 +34,6 @@ namespace TP1___GRUPO_C
             string Pass = this.textBoxPass.Text;
             DateTime FechaNacimiento = dateTimePicker1.Value.Date;
 
-
-
             int peticion = cine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, false, 0, false);
             String mensaje = StatusCode.ObtenerMensaje(peticion);
             if (peticion == 201)
@@ -45,7 +41,6 @@ namespace TP1___GRUPO_C
                 this.pantallaPrincipal();
             }
             MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
 
         }
 

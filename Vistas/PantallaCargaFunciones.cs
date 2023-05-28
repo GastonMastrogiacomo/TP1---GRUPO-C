@@ -21,8 +21,6 @@ namespace TP1___GRUPO_C.Vistas
         public CerrarYGuardarPantallaCargaFunciones cerrarYGuardarPantallaCargaFunciones;
         public AbrirPantallaEdicionFunciones abrirPantallaEdicionFunciones;
 
-
-
         public PantallaCargaFunciones(Cine cine, Usuario UsuarioAuxiliar)
         {
             InitializeComponent();
@@ -30,7 +28,6 @@ namespace TP1___GRUPO_C.Vistas
             this.UsuarioAuxiliar = UsuarioAuxiliar;
             CargarListaFuncionesUsuario();
             CargarListaFuncionesCine();
-
         }
 
         public delegate void CerrarPantallaCargaFunciones();
@@ -39,7 +36,6 @@ namespace TP1___GRUPO_C.Vistas
 
         private void CargarListaFuncionesUsuario()
         {
-
             this.Clb_FuncionesUsuario.Items.Clear();
 
             if (this.UsuarioAuxiliar.ObtenerMisFunciones().Count > 0)
@@ -64,7 +60,6 @@ namespace TP1___GRUPO_C.Vistas
                 string NombrePelicula = func.MiPelicula.Nombre.ToString();
                 string FechaFuncion = func.Fecha.ToString();
                 string Sala = func.MiSala.Ubicacion.ToString();
-
                 string Linea = NombrePelicula + " en " + Sala + ". Fecha: " + FechaFuncion;
                 // -1 porque los Id arrancan en 1 y el array en la pos 0
                 this.Clb_FuncionesCine.Items.Insert(func.ID - 1, Linea);
@@ -82,13 +77,11 @@ namespace TP1___GRUPO_C.Vistas
                     if (!Clb_FuncionesUsuario.Items.Contains(Clb_FuncionesCine.Items[i]))
                     {
                         Clb_FuncionesUsuario.Items.Add(Clb_FuncionesCine.Items[i]);
-
                     }
                 }
             }
             GuardarDatosUsuarioAuxiliar();
             abrirPantallaEdicionFunciones(UsuarioAuxiliar);
-
         }
 
         private void Btn_SacarDeLista_Click(object sender, EventArgs e)
@@ -127,13 +120,10 @@ namespace TP1___GRUPO_C.Vistas
             GuardarDatosUsuarioAuxiliar();
             Clb_FuncionesUsuario.Items.Clear();
             cerrarYGuardarPantallaCargaFunciones();
-
-
         }
 
         private void GuardarDatosUsuarioAuxiliar()
         {
-
             for (int i = 0; i < Clb_FuncionesUsuario.Items.Count; i++)
             {
                 List<Funcion> funciones = miCine.MostrarFunciones();
