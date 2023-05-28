@@ -197,6 +197,7 @@ namespace TP1___GRUPO_C
                     dataGridFuncionesPpal.Rows.Add(f.ToString());
                 }
             }
+            PestañasPpal.SelectedIndex = 2;
         }
 
         private void DataGridFuncionesPpal_CellDoubleClick(object sender, DataGridViewCellEventArgs e)

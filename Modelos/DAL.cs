@@ -650,7 +650,7 @@ namespace TP1___GRUPO_C.Modelos
 
                 command.Parameters["@id_usuario"].Value = idUsuario;
                 command.Parameters["@id_funcion"].Value = idFuncion;
-                command.Parameters["@cantidad"].Value = 0;
+                command.Parameters["@cantidad"].Value = 1;
 
                 try
                 {

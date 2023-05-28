@@ -145,7 +145,7 @@ namespace TP1___GRUPO_C.Vistas
                 }
             }
 
-            GuardarDatosUsuarioAuxiliar();
+            
             Clb_FuncionesUsuario.Items.Clear();
             cerrarYGuardarPantallaCargaFunciones();
         }

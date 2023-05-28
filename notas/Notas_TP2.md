@@ -40,13 +40,14 @@ LISTO
     -Devolver Entrada
     -ABM Pelicula
     -ABM Funcion verificar y aplicar on delete cascade
+    -Eliminar ObtenerFuncionPorID - para esto hace falta primero corregir el abm de funcion
+
 
 
 TESTEAR
 
 
 FALTA
--Eliminar ObtenerFuncionPorID - para esto hace falta primero corregir el abm de funcion
 -Ver que los filtros anden bien
 
 
