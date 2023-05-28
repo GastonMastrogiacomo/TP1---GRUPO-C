@@ -673,16 +673,25 @@ namespace TP1___GRUPO_C.Modelos
             }
         }
 
-        public int eliminarUsuarioFuncion(int idUsuario)
+        public int eliminarUsuarioFuncion(int id, bool user )
         {
+            string queryString;
+            if (user)
+            {
+                 queryString = "DELETE FROM [dbo].[UsuariosFunciones] WHERE id_usuario=@id;";
+            }
+            else
+            {
+                 queryString = "DELETE FROM [dbo].[UsuariosFunciones] WHERE id_funcion=@id;";
+
+            }
             //devuelve la cantidad de elementos modificados en la base (debería ser 1 si anduvo bien)
             //string connectionString = Properties.Resources.ConnectionStr;
-            string queryString = "DELETE FROM [dbo].[UsuariosFunciones] WHERE id_usuario=@id_usuario;";
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand command = new SqlCommand(queryString, connection);
-                command.Parameters.Add(new SqlParameter("@id_usuario", SqlDbType.Int));
-                command.Parameters["@id_usuario"].Value = idUsuario;
+                command.Parameters.Add(new SqlParameter("@id", SqlDbType.Int));
+                command.Parameters["@id"].Value = id;
 
                 try
                 {
@@ -698,6 +707,9 @@ namespace TP1___GRUPO_C.Modelos
             }
 
         }
+
+
+
 
         #endregion
 

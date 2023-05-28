@@ -60,16 +60,6 @@
             label12 = new Label();
             Input_MiSala = new Label();
             dataGridFunciones = new DataGridView();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            Fecha = new DataGridViewTextBoxColumn();
-            Cant_Clientes = new DataGridViewTextBoxColumn();
-            Costo = new DataGridViewTextBoxColumn();
-            Id_MiSala = new DataGridViewTextBoxColumn();
-            Capacidad_MiSala = new DataGridViewTextBoxColumn();
-            Id_Pelicula = new DataGridViewTextBoxColumn();
-            Nombre_Pelicula = new DataGridViewTextBoxColumn();
-            IDS_Clientes_Arr = new DataGridViewTextBoxColumn();
-            Asientos_Disponibles = new DataGridViewTextBoxColumn();
             Películas = new TabPage();
             CLB_Funciones = new CheckedListBox();
             Label_PeliculaId = new Label();
@@ -89,6 +79,12 @@
             label17 = new Label();
             label18 = new Label();
             dataGridPeliculas = new DataGridView();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
+            Descripcion = new DataGridViewTextBoxColumn();
+            Sinopsis = new DataGridViewTextBoxColumn();
+            Poster = new DataGridViewTextBoxColumn();
+            Duracion = new DataGridViewTextBoxColumn();
             Usuarios = new TabPage();
             Label_IdUsuario = new Label();
             Btn_VerFunciones = new Button();
@@ -129,12 +125,12 @@
             EsAdmin = new DataGridViewTextBoxColumn();
             LabelBienvenida = new Label();
             Btn_CerrarSesionAdmin = new Button();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn5 = new DataGridViewTextBoxColumn();
-            Descripcion = new DataGridViewTextBoxColumn();
-            Sinopsis = new DataGridViewTextBoxColumn();
-            Poster = new DataGridViewTextBoxColumn();
-            Duracion = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            Fecha = new DataGridViewTextBoxColumn();
+            Cant_Clientes = new DataGridViewTextBoxColumn();
+            Costo = new DataGridViewTextBoxColumn();
+            Id_MiSala = new DataGridViewTextBoxColumn();
+            Id_Pelicula = new DataGridViewTextBoxColumn();
             Pestañas.SuspendLayout();
             Salas.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridSalas).BeginInit();
@@ -454,73 +450,13 @@
             // 
             dataGridFunciones.AllowUserToOrderColumns = true;
             dataGridFunciones.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridFunciones.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn3, Fecha, Cant_Clientes, Costo, Id_MiSala, Capacidad_MiSala, Id_Pelicula, Nombre_Pelicula, IDS_Clientes_Arr, Asientos_Disponibles });
+            dataGridFunciones.Columns.AddRange(new DataGridViewColumn[] { dataGridViewTextBoxColumn3, Fecha, Cant_Clientes, Costo, Id_MiSala, Id_Pelicula });
             dataGridFunciones.Location = new Point(8, 126);
             dataGridFunciones.Name = "dataGridFunciones";
             dataGridFunciones.RowTemplate.Height = 25;
             dataGridFunciones.Size = new Size(770, 202);
             dataGridFunciones.TabIndex = 33;
             dataGridFunciones.CellDoubleClick += DataGridFunciones_CellDoubleClick;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.HeaderText = "ID";
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // Fecha
-            // 
-            Fecha.HeaderText = "Fecha";
-            Fecha.Name = "Fecha";
-            Fecha.ReadOnly = true;
-            // 
-            // Cant_Clientes
-            // 
-            Cant_Clientes.HeaderText = "Cant_Clientes";
-            Cant_Clientes.Name = "Cant_Clientes";
-            Cant_Clientes.ReadOnly = true;
-            // 
-            // Costo
-            // 
-            Costo.HeaderText = "Costo";
-            Costo.Name = "Costo";
-            Costo.ReadOnly = true;
-            // 
-            // Id_MiSala
-            // 
-            Id_MiSala.HeaderText = "Id_MiSala";
-            Id_MiSala.Name = "Id_MiSala";
-            Id_MiSala.ReadOnly = true;
-            // 
-            // Capacidad_MiSala
-            // 
-            Capacidad_MiSala.HeaderText = "Capacidad_MiSala";
-            Capacidad_MiSala.Name = "Capacidad_MiSala";
-            Capacidad_MiSala.ReadOnly = true;
-            // 
-            // Id_Pelicula
-            // 
-            Id_Pelicula.HeaderText = "Id_Pelicula";
-            Id_Pelicula.Name = "Id_Pelicula";
-            Id_Pelicula.ReadOnly = true;
-            // 
-            // Nombre_Pelicula
-            // 
-            Nombre_Pelicula.HeaderText = "Nombre_Pelicula";
-            Nombre_Pelicula.Name = "Nombre_Pelicula";
-            Nombre_Pelicula.ReadOnly = true;
-            // 
-            // IDS_Clientes_Arr
-            // 
-            IDS_Clientes_Arr.HeaderText = "IDS_Clientes_Arr";
-            IDS_Clientes_Arr.Name = "IDS_Clientes_Arr";
-            IDS_Clientes_Arr.ReadOnly = true;
-            // 
-            // Asientos_Disponibles
-            // 
-            Asientos_Disponibles.HeaderText = "Asientos_Disponibles";
-            Asientos_Disponibles.Name = "Asientos_Disponibles";
-            Asientos_Disponibles.ReadOnly = true;
             // 
             // Películas
             // 
@@ -707,6 +643,42 @@
             dataGridPeliculas.Size = new Size(768, 194);
             dataGridPeliculas.TabIndex = 49;
             dataGridPeliculas.CellDoubleClick += DataGridPeliculas_CellDoubleClick_2;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.HeaderText = "ID";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn5
+            // 
+            dataGridViewTextBoxColumn5.HeaderText = "Nombre";
+            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
+            dataGridViewTextBoxColumn5.ReadOnly = true;
+            // 
+            // Descripcion
+            // 
+            Descripcion.HeaderText = "Descripcion";
+            Descripcion.Name = "Descripcion";
+            Descripcion.ReadOnly = true;
+            // 
+            // Sinopsis
+            // 
+            Sinopsis.HeaderText = "Sinopsis";
+            Sinopsis.Name = "Sinopsis";
+            Sinopsis.ReadOnly = true;
+            // 
+            // Poster
+            // 
+            Poster.HeaderText = "Poster";
+            Poster.Name = "Poster";
+            Poster.ReadOnly = true;
+            // 
+            // Duracion
+            // 
+            Duracion.HeaderText = "Duracion";
+            Duracion.Name = "Duracion";
+            Duracion.ReadOnly = true;
             // 
             // Usuarios
             // 
@@ -1063,41 +1035,41 @@
             Btn_CerrarSesionAdmin.UseVisualStyleBackColor = true;
             Btn_CerrarSesionAdmin.Click += Btn_CerrarSesion;
             // 
-            // dataGridViewTextBoxColumn4
+            // dataGridViewTextBoxColumn3
             // 
-            dataGridViewTextBoxColumn4.HeaderText = "ID";
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.ReadOnly = true;
+            dataGridViewTextBoxColumn3.HeaderText = "ID";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
             // 
-            // dataGridViewTextBoxColumn5
+            // Fecha
             // 
-            dataGridViewTextBoxColumn5.HeaderText = "Nombre";
-            dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            dataGridViewTextBoxColumn5.ReadOnly = true;
+            Fecha.HeaderText = "Fecha";
+            Fecha.Name = "Fecha";
+            Fecha.ReadOnly = true;
             // 
-            // Descripcion
+            // Cant_Clientes
             // 
-            Descripcion.HeaderText = "Descripcion";
-            Descripcion.Name = "Descripcion";
-            Descripcion.ReadOnly = true;
+            Cant_Clientes.HeaderText = "Asientos_Disponibles";
+            Cant_Clientes.Name = "Cant_Clientes";
+            Cant_Clientes.ReadOnly = true;
             // 
-            // Sinopsis
+            // Costo
             // 
-            Sinopsis.HeaderText = "Sinopsis";
-            Sinopsis.Name = "Sinopsis";
-            Sinopsis.ReadOnly = true;
+            Costo.HeaderText = "Costo";
+            Costo.Name = "Costo";
+            Costo.ReadOnly = true;
             // 
-            // Poster
+            // Id_MiSala
             // 
-            Poster.HeaderText = "Poster";
-            Poster.Name = "Poster";
-            Poster.ReadOnly = true;
+            Id_MiSala.HeaderText = "Id_MiSala";
+            Id_MiSala.Name = "Id_MiSala";
+            Id_MiSala.ReadOnly = true;
             // 
-            // Duracion
+            // Id_Pelicula
             // 
-            Duracion.HeaderText = "Duracion";
-            Duracion.Name = "Duracion";
-            Duracion.ReadOnly = true;
+            Id_Pelicula.HeaderText = "Id_Pelicula";
+            Id_Pelicula.Name = "Id_Pelicula";
+            Id_Pelicula.ReadOnly = true;
             // 
             // PantallaABMAdmin
             // 
@@ -1210,17 +1182,7 @@
         private Label Label_FuncionId;
         private Label Label_PeliculaId;
         private Button Btn_EliminarFuncion;
-        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private DataGridViewTextBoxColumn Fecha;
-        private DataGridViewTextBoxColumn Cant_Clientes;
-        private DataGridViewTextBoxColumn Costo;
-        private DataGridViewTextBoxColumn Id_MiSala;
-        private DataGridViewTextBoxColumn Capacidad_MiSala;
-        private DataGridViewTextBoxColumn Id_Pelicula;
-        private DataGridViewTextBoxColumn Nombre_Pelicula;
-        private DataGridViewTextBoxColumn IDS_Clientes_Arr;
         private CheckedListBox CLB_Funciones;
-        private DataGridViewTextBoxColumn Asientos_Disponibles;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private DataGridViewTextBoxColumn DNI;
         private DataGridViewTextBoxColumn Nombre;
@@ -1241,5 +1203,11 @@
         private DataGridViewTextBoxColumn Sinopsis;
         private DataGridViewTextBoxColumn Poster;
         private DataGridViewTextBoxColumn Duracion;
+        private DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
+        private DataGridViewTextBoxColumn Fecha;
+        private DataGridViewTextBoxColumn Cant_Clientes;
+        private DataGridViewTextBoxColumn Costo;
+        private DataGridViewTextBoxColumn Id_MiSala;
+        private DataGridViewTextBoxColumn Id_Pelicula;
     }
 }

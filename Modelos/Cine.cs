@@ -42,8 +42,11 @@ namespace TP1___GRUPO_C.Model
             Salas = DB.inicializarSalas();
             Peliculas = DB.inicializarPeliculas();
             misUsuarioFuncion = DB.inicializarUsuarioFuncion();
+            vincularClases();
+        }
 
-
+        public void vincularClases()
+        {
             //SI FUESE MANY TO MANY
             foreach (UsuarioFuncion uf in misUsuarioFuncion)
             {
@@ -79,8 +82,8 @@ namespace TP1___GRUPO_C.Model
                         fun.MiSala = s;
                     }
             }
-
         }
+
 
         #region ABM Usuario
 
@@ -229,7 +232,7 @@ namespace TP1___GRUPO_C.Model
                             if (DevolverEntrada(user, uf.idFuncion, uf.CantidadEntradasCompradas) == 200)
                             {
 
-                                if (DB.eliminarUsuarioFuncion(idUsuario) >= 1)
+                                if (DB.eliminarUsuarioFuncion(idUsuario,true) >= 1)
                                 {
                                     if (DB.eliminarUsuario(idUsuario) == 1)
                                     {
@@ -455,62 +458,51 @@ namespace TP1___GRUPO_C.Model
             // Buscar la función con el ID correspondiente en la lista de funciones
             Funcion func = Funciones.FirstOrDefault(f => f.ID == IDFuncion);
 
-            if (DB.eliminarFuncion(IDFuncion) == 1)
+            if (DB.eliminarUsuarioFuncion(IDFuncion, false) == 1)
             {
-                if (func != null)
+
+
+                if (DB.eliminarFuncion(IDFuncion) == 1)
                 {
-                    // Eliminar la función de la lista de funciones de los clientes asociados
-                    for (int i = 0; i < func.Clientes.Count; i++)
+                    if (func != null)
                     {
-                        Usuario user = func.Clientes[i];
-
-                        for (int j = 0; j < user.ObtenerMisFunciones().Count; j++)
+                        // Eliminar la función de la lista de funciones de los clientes asociados
+                        for (int i = 0; i < func.Clientes.Count; i++)
                         {
-                            if (user.ObtenerMisFunciones()[j].ID == IDFuncion)
+                            Usuario user = func.Clientes[i];
+
+                            for (int j = 0; j < user.MisFunciones.Count; j++)
                             {
-                                user.MisFunciones.Remove(user.ObtenerMisFunciones()[j]);
-                                break;
+                                if (user.MisFunciones[j].ID == IDFuncion)
+                                {
+                                    user.MisFunciones.Remove(user.MisFunciones[j]);
+                                    break;
+                                }
                             }
-                        }
-                        break;
-                    }
-
-                    Pelicula peli = func.MiPelicula;
-
-                    for (int i = 0; i < peli.ObtenerMisFunciones().Count; i++)
-                    {
-                        if (peli.ObtenerMisFunciones()[i].ID == IDFuncion)
-                        {
-                            peli.MisFunciones.Remove(peli.ObtenerMisFunciones()[i]);
                             break;
                         }
+
+                      
+                        // Eliminar la función de la lista de funciones
+                        Funciones.Remove(func);
+
+                        return 200;
                     }
-
-                    Sala sala = func.MiSala;
-
-                    for (int i = 0; i < sala.ObtenerMisFunciones().Count; i++)
+                    else
                     {
-                        if (sala.ObtenerMisFunciones()[i].ID == IDFuncion)
-                        {
-                            sala.MisFunciones.Remove(sala.ObtenerMisFunciones()[i]);
-                            break;
-                        }
+                        return 404;
                     }
-
-                    // Eliminar la función de la lista de funciones
-                    Funciones.Remove(func);
-
-                    return 200;
                 }
                 else
                 {
-                    return 404;
+                    return 500;
                 }
             }
             else
             {
                 return 500;
             }
+    
 
         }
 
@@ -537,11 +529,12 @@ namespace TP1___GRUPO_C.Model
                                     if (func.CantidadClientes >= 0 && Costo > 0 && func.Clientes != null)
                                     {
 
-                                        func.MiSala.MisFunciones.Remove(func);
-                                        func.MiPelicula.MisFunciones.Remove(func);
 
                                         func.MiSala = salaElegida;
                                         func.MiPelicula = peliElegida;
+
+                                        func.MiSala.MisFunciones.Remove(func);
+                                        func.MiPelicula.MisFunciones.Remove(func);
 
                                         func.Fecha = Fecha;
                                         func.Costo = Costo;
@@ -1333,12 +1326,12 @@ namespace TP1___GRUPO_C.Model
                         Funcion userFunc = user.MisFunciones.FirstOrDefault(f => f.ID == idFuncion);
                         if (entrada.CantidadEntradasCompradas == cantidadEntradas)
                         {
-                           user.MisFunciones.Remove(userFunc);
-                           userFunc.Clientes.Remove(user);
-                           funcion.Clientes.Remove(user);
+                            user.MisFunciones.Remove(userFunc);
+                            userFunc.Clientes.Remove(user);
+                            funcion.Clientes.Remove(user);
                         }
                         else
-                        {             
+                        {
                             userFunc.CantidadClientes -= cantidadEntradas;
                             userFunc.AsientosDisponibles += cantidadEntradas;
                         }

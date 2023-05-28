@@ -235,7 +235,7 @@ namespace TP1___GRUPO_C.Vistas
 
             }
 
-            string peliId = (string)dataGridFunciones[6, e.RowIndex].Value;
+            string peliId = (string)dataGridFunciones[5, e.RowIndex].Value;
 
             if (peliId == "" || peliId == null)
             {
@@ -243,7 +243,7 @@ namespace TP1___GRUPO_C.Vistas
             }
             else
             {
-                this.Cb_Peliculas.SelectedIndex = int.Parse(dataGridFunciones[6, e.RowIndex].Value.ToString()) - 1;
+                this.Cb_Peliculas.SelectedIndex = int.Parse(dataGridFunciones[5, e.RowIndex].Value.ToString()) - 1;
 
             }
 
@@ -348,8 +348,8 @@ namespace TP1___GRUPO_C.Vistas
             int.TryParse(Label_FuncionId.Text, out int ID);
             DateTime Fecha = this.Selec_Fecha.Value;
             double.TryParse(this.Input_Costo.Text, out double Costo);
-            //@modificar esto
-            int peticion = miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, Costo, 666);
+            int.TryParse(Input_CantidadClientes.Text, out int cantidadClientes);
+            int peticion = miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, Costo, cantidadClientes);
             String mensaje = StatusCode.ObtenerMensaje(peticion);
             if (peticion == 200)
             {
