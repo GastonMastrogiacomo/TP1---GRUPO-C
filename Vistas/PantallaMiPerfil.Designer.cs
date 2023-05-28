@@ -74,6 +74,8 @@
             DateTime_MiPerfil = new DateTimePicker();
             Btn_VolverAtrasPerfil = new Button();
             Btn_DevolverEntradas = new Button();
+            Input_CantEntradas = new TextBox();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridPasadasFunciones).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridProximasFunciones).BeginInit();
             SuspendLayout();
@@ -105,16 +107,16 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(494, 93);
+            label1.Location = new Point(301, 55);
             label1.Name = "label1";
             label1.Size = new Size(69, 15);
             label1.TabIndex = 26;
-            label1.Text = "Mi Credito: ";
+            label1.Text = "Mi Cerdito: ";
             label1.UseWaitCursor = true;
             // 
             // Btn_ComprarCreditos
             // 
-            Btn_ComprarCreditos.Location = new Point(493, 162);
+            Btn_ComprarCreditos.Location = new Point(485, 124);
             Btn_ComprarCreditos.Name = "Btn_ComprarCreditos";
             Btn_ComprarCreditos.Size = new Size(127, 23);
             Btn_ComprarCreditos.TabIndex = 28;
@@ -343,16 +345,16 @@
             // Input_
             // 
             Input_.AutoSize = true;
-            Input_.Location = new Point(494, 128);
+            Input_.Location = new Point(486, 93);
             Input_.Name = "Input_";
-            Input_.Size = new Size(55, 15);
+            Input_.Size = new Size(60, 15);
             Input_.TabIndex = 50;
-            Input_.Text = "Agregar: ";
+            Input_.Text = "Comprar: ";
             Input_.UseWaitCursor = true;
             // 
             // Input_NuevoCreditoPerfil
             // 
-            Input_NuevoCreditoPerfil.Location = new Point(555, 125);
+            Input_NuevoCreditoPerfil.Location = new Point(547, 90);
             Input_NuevoCreditoPerfil.Name = "Input_NuevoCreditoPerfil";
             Input_NuevoCreditoPerfil.Size = new Size(65, 23);
             Input_NuevoCreditoPerfil.TabIndex = 59;
@@ -412,7 +414,7 @@
             // Label_MiCredito
             // 
             Label_MiCredito.AutoSize = true;
-            Label_MiCredito.Location = new Point(569, 93);
+            Label_MiCredito.Location = new Point(376, 55);
             Label_MiCredito.Name = "Label_MiCredito";
             Label_MiCredito.Size = new Size(47, 15);
             Label_MiCredito.TabIndex = 67;
@@ -451,20 +453,40 @@
             // 
             // Btn_DevolverEntradas
             // 
-            Btn_DevolverEntradas.Location = new Point(625, 197);
+            Btn_DevolverEntradas.Location = new Point(633, 124);
             Btn_DevolverEntradas.Name = "Btn_DevolverEntradas";
-            Btn_DevolverEntradas.Size = new Size(107, 23);
+            Btn_DevolverEntradas.Size = new Size(127, 23);
             Btn_DevolverEntradas.TabIndex = 71;
             Btn_DevolverEntradas.Text = "Devolver Entrada";
             Btn_DevolverEntradas.UseVisualStyleBackColor = true;
             Btn_DevolverEntradas.UseWaitCursor = true;
             Btn_DevolverEntradas.Click += Btn_DevolverEntradas_Click;
             // 
+            // Input_CantEntradas
+            // 
+            Input_CantEntradas.Location = new Point(695, 90);
+            Input_CantEntradas.Name = "Input_CantEntradas";
+            Input_CantEntradas.Size = new Size(65, 23);
+            Input_CantEntradas.TabIndex = 73;
+            Input_CantEntradas.UseWaitCursor = true;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(633, 93);
+            label2.Name = "label2";
+            label2.Size = new Size(56, 15);
+            label2.TabIndex = 72;
+            label2.Text = "Devolver:";
+            label2.UseWaitCursor = true;
+            // 
             // PantallaMiPerfil
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(Input_CantEntradas);
+            Controls.Add(label2);
             Controls.Add(Btn_DevolverEntradas);
             Controls.Add(Btn_VolverAtrasPerfil);
             Controls.Add(DateTime_MiPerfil);
@@ -553,5 +575,7 @@
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
         private Button Btn_DevolverEntradas;
+        private TextBox Input_CantEntradas;
+        private Label label2;
     }
 }

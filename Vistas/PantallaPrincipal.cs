@@ -47,8 +47,9 @@ namespace TP1___GRUPO_C
                 Label_MiCredito_Principal.Hide();
                 label8.Hide();
             }
-            else if(cine.UsuarioActual != null)
+            else if (cine.UsuarioActual != null)
             {
+
                 this.Label_MiCredito_Principal.Text = cine.UsuarioActual.Credito.ToString();
             }
 
@@ -246,12 +247,11 @@ namespace TP1___GRUPO_C
             {
                 // Realizar la compra de entradas
                 //@modificar esto
-                int peticion = cine.ComprarEntrada(cine.UsuarioActual,idFuncionSeleccionada, cantEntradas);
+                int peticion = cine.ComprarEntrada(cine.UsuarioActual, idFuncionSeleccionada, cantEntradas);
                 if (peticion == 200)
                 {
                     MostrarFuncionesEnDataGridView();
                     MessageBox.Show("Entrada comprada con exito.");
-
 
                 }
                 else
@@ -291,7 +291,7 @@ namespace TP1___GRUPO_C
                 MessageBox.Show("Oops! No se encontraron las funciones seleccionadas.");
             }
 
-            
+
 
 
         }

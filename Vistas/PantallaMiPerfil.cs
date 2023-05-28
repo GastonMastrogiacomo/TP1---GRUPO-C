@@ -82,7 +82,7 @@ namespace TP1___GRUPO_C.Vistas
                 user.MisFunciones.Add(fun);
             }
 
-            int peticion =miCine.ModificarUsuario(ID, DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, user.IntentosFallidos, user.Bloqueado, user.Credito);
+            int peticion = miCine.ModificarUsuario(ID, DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, user.IntentosFallidos, user.Bloqueado, user.Credito);
             if (peticion == 200)
             {
 
@@ -132,7 +132,8 @@ namespace TP1___GRUPO_C.Vistas
                 Label_MiCredito.Text = usuarioActual.Credito.ToString();
                 MessageBox.Show(Mensaje + " Credito cargado con exito!");
             }
-            else{
+            else
+            {
                 MessageBox.Show(Mensaje + "No se pudo cargar el credito!");
             }
 
@@ -144,6 +145,7 @@ namespace TP1___GRUPO_C.Vistas
             dataGridProximasFunciones.Rows.Clear();
 
             List<Funcion> funcionesProximas = miCine.UsuarioActual.MostrarFuncionesProximas();
+
             foreach (Funcion fun in funcionesProximas)
             {
                 this.dataGridProximasFunciones.Rows.Add(fun.ToString());
@@ -169,20 +171,28 @@ namespace TP1___GRUPO_C.Vistas
 
         private void Btn_DevolverEntradas_Click(object sender, EventArgs e)
         {
-            Usuario usuarioActual = miCine.UsuarioActual;
-            int cantidadEntradasSeleccionadas = usuarioActual.EntradasCompradas[idFuncionSeleccionada];
 
-            int peticion = miCine.DevolverEntrada(usuarioActual,idFuncionSeleccionada, cantidadEntradasSeleccionadas);
-            if (peticion ==200)
+            if (int.TryParse(this.Input_CantEntradas.Text, out int cantEntradas) && cantEntradas >= 1)
             {
-                MessageBox.Show("Devolvemos la entrada.");
-                MostrarFuncionesProximas();
+                Usuario usuarioActual = miCine.UsuarioActual;
+
+                int peticion = miCine.DevolverEntrada(usuarioActual, idFuncionSeleccionada, cantEntradas);
+                if (peticion == 200)
+                {
+                    MessageBox.Show("Devolvemos la entrada.");
+                    MostrarFuncionesProximas();
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo realizar la devolucion de entradas.");
+                }
             }
             else
             {
-                MessageBox.Show("No se pudo realizar la devolucion de entradas.");
-
+                MessageBox.Show("Ingrese una cantidad válida de entradas.");
             }
+
+
 
         }
 

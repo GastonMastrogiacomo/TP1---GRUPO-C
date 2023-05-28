@@ -23,24 +23,29 @@ pensar las relaciones y modificar algunas cosas pero la integracion es bastante 
 
 
 LISTO
-- ABM Usuario anda bien
--Iniciar Sesion anda bien
--Registrarse anda bien
--Cargar Credito anda bien
--Eliminar
--ABM internos de funcion, usuario, sala y peliculas corregido
--El refrescar de todos los metodos en la vista ABM admin no refresca a lo que tengo en la base de datos
--    public List<Pelicula> MostrarPeliculas()
-        {
-            return Peliculas.ToList();
-        }
-- Estos deberian refrescarse en base a lo que tengo en la BD
+    - ABM Usuario anda bien
+    -Iniciar Sesion anda bien
+    -Registrarse anda bien
+    -Cargar Credito anda bien
+    -Eliminar
+    -ABM internos de funcion, usuario, sala y peliculas corregido
+    -El refrescar de todos los metodos en la vista ABM admin no refresca a lo que tengo en la base de datos
+    -    public List<Pelicula> MostrarPeliculas()
+            {
+                return Peliculas.ToList();
+            }
+    - Estos deberian refrescarse en base a lo que tengo en la BD
+    -ABM Sala funciona correctamente
+    -Comprar Entrada
+    -Devolver Entrada
+
 
 TESTEAR
--ABM Sala funciona correctamente
--Devolver Entrada
+
 
 FALTA
 -ABM Funcion
 -ABM Pelicula
--Comprar Entrada
+- Hacer que el ABM se desencadene correctamente en las otras clases.
+
+

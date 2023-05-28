@@ -34,70 +34,6 @@ namespace TP1___GRUPO_C.Model
             DB = new DAL();
             inicializarAtributos();
 
-            /*
-            #region Datos Hardcodeados para pruebas
-
-            DateTime fecha = new DateTime(1986, 05, 12);
-            DateTime fecha2 = new DateTime(2050, 05, 12);
-
-            Usuario comun = new Usuario(99999999, "Pepe", "Perez", "pepe@mail.com", "123", fecha, false);
-            comun.Credito = 1000;
-            Usuarios.Add(comun);
-            Usuario admin = new Usuario(99999998, "El", "Admin", "admin@mail.com", "123", fecha, true);
-            Usuarios.Add(admin);
-
-            Sala sala1 = new Sala("Olivos", 100);
-            Salas.Add(sala1);
-            Sala sala2 = new Sala("San Isidro", 200);
-            Salas.Add(sala2);
-
-            Pelicula toyStory = new Pelicula("Toy Story", "Pelicula de juguetes.", "Juguetes", "", 120);
-            Peliculas.Add(toyStory);
-            Pelicula marioBros = new Pelicula("Mario Bros.", "It's me Mario!", "Nintendo", "", 100);
-            Peliculas.Add(marioBros);
-            Pelicula mario2 = new Pelicula("Mario 2", "It's me Mario!", "Nintendo", "", 100);
-            Peliculas.Add(mario2);
-
-            Funcion funcion1 = new Funcion(sala1, toyStory, fecha, 10);
-            Funciones.Add(funcion1);
-            toyStory.AgregarFuncion(funcion1);
-            sala1.AgregarFuncion(funcion1);
-            comun.AgregarFuncion(funcion1);
-            funcion1.AgregarCliente(comun);
-            funcion1.AsientosDisponibles -= 1;
-            funcion1.CantidadClientes += 1;
-
-            Funcion funcion2 = new Funcion(sala1, marioBros, fecha, 15);
-            Funciones.Add(funcion2);
-            marioBros.AgregarFuncion(funcion2);
-            sala1.AgregarFuncion(funcion2);
-            comun.AgregarFuncion(funcion2);
-            funcion2.AgregarCliente(comun);
-            funcion2.AsientosDisponibles -= 1;
-            funcion2.CantidadClientes += 1;
-
-
-            Funcion funcion3 = new Funcion(sala2, marioBros, fecha, 20);
-            Funciones.Add(funcion3);
-            marioBros.AgregarFuncion(funcion3);
-            sala2.AgregarFuncion(funcion3);
-
-            Funcion funcion4 = new Funcion(sala2, marioBros, fecha2, 256);
-            Funciones.Add(funcion4);
-            marioBros.AgregarFuncion(funcion4);
-            sala2.AgregarFuncion(funcion4);
-            comun.AgregarFuncion(funcion4);
-            funcion4.AgregarCliente(comun);
-            funcion4.AsientosDisponibles -= 1;
-            funcion4.CantidadClientes += 1;
-
-            Funcion funcion5 = new Funcion(sala1, mario2, fecha2, 1500);
-            Funciones.Add(funcion5);
-            mario2.AgregarFuncion(funcion5);
-            sala1.AgregarFuncion(funcion5);
-
-            #endregion
-            */
         }
 
 
@@ -107,13 +43,9 @@ namespace TP1___GRUPO_C.Model
             Usuarios = DB.inicializarUsuarios();
             Funciones = DB.inicializarFunciones();
             Salas = DB.inicializarSalas();
-            Peliculas = DB.iniicalizarPeliculas();
+            Peliculas = DB.inicializarPeliculas();
             misUsuarioFuncion = DB.inicializarUsuarioFuncion();
 
-            //SI FUESE MANY TO MANY
-            //Esto depende de como creamos la base de datos, verificar que la logica esta bien
-
-            //  Ejemplos de como tenemos que hacer las vinculaciones entre foreign keys para que se inicializen correctamente
 
             //SI FUESE MANY TO MANY
             foreach (UsuarioFuncion uf in misUsuarioFuncion)
@@ -157,7 +89,7 @@ namespace TP1___GRUPO_C.Model
         #region ABM Usuario
 
         //IMPLEMENTADO CON DB
-        public int AgregarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, int credito, bool bloqueado)
+        public int AgregarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, float credito, bool bloqueado)
         {
             bool flagDni = false;
 
@@ -619,7 +551,8 @@ namespace TP1___GRUPO_C.Model
                             if (idNuevaFuncion != -1)
                             {
                                 // Crear una nueva instancia de Funcion
-                                Funcion func = new Funcion(salaElegida, peliElegida, Fecha, Costo);
+                                //Funcion func = new Funcion(salaElegida, peliElegida, Fecha, Costo);
+                                Funcion func = new Funcion(idNuevaFuncion, Fecha, Costo, MiSalaId, MiPeliculaId, capacidad);
 
                                 // Agregar la función a la lista de funciones
                                 Funciones.Add(func);
@@ -769,7 +702,7 @@ namespace TP1___GRUPO_C.Model
                     {
                         if (sala.ObtenerMisFunciones()[i].ID == IDFuncion)
                         {
-                             sala.MisFunciones.Remove(sala.ObtenerMisFunciones()[i]);
+                            sala.MisFunciones.Remove(sala.ObtenerMisFunciones()[i]);
                             break;
                         }
                     }
@@ -1697,6 +1630,7 @@ namespace TP1___GRUPO_C.Model
 
 
                                 UsuarioActual = user;
+
                                 user.IntentosFallidos = 0;
                                 DB.modificarIntentosFallidos(user.ID, user.IntentosFallidos);
                                 return 200;
@@ -1768,7 +1702,7 @@ namespace TP1___GRUPO_C.Model
         public List<Pelicula> MostrarPeliculas()
         {
             Peliculas.Clear();
-            Peliculas = DB.iniicalizarPeliculas();
+            Peliculas = DB.inicializarPeliculas();
             return Peliculas.ToList();
         }
 
@@ -1912,10 +1846,12 @@ namespace TP1___GRUPO_C.Model
                         if (entrada.CantidadEntradasCompradas <= 0)
                         {
                             DB.devolverEntrada(idFuncion, user.ID);
+                            misUsuarioFuncion.Remove(entrada);
                         }
                         else
                         {
                             DB.devolverEntradaMayorCero(idFuncion, user.ID, entrada.CantidadEntradasCompradas);
+
                         }
 
                         DB.actualizarCreditoUsuario(user.ID, user.Credito);
@@ -1943,51 +1879,7 @@ namespace TP1___GRUPO_C.Model
 
             #endregion
 
-            /* Codigo Viejo
-            // Verificar si la función ya ha ocurrido
-            if (funcion.Fecha > DateTime.Now)
-            {
 
-                // Verificar si el usuario tiene compradas las entradas
-                if (user.EntradasCompradas.ContainsKey(idFuncion) && user.EntradasCompradas[idFuncion] >= cantidadEntradas)
-                {
-                    // Remover la función de las funciones del usuario
-                    user.MisFunciones.Remove(funcion);
-
-                    // Actualizar la cantidad de clientes de la función
-                    funcion.CantidadClientes -= cantidadEntradas;
-                    funcion.AsientosDisponibles += cantidadEntradas;
-
-                    // Eliminar al usuario como cliente de la función
-                    funcion.EliminarCliente(user.ID);
-
-                    // Actualizar las entradas compradas por el usuario
-                    user.EntradasCompradas[idFuncion] -= cantidadEntradas;
-
-                    MessageBox.Show("asientos disponibles: " + funcion.AsientosDisponibles);
-                    MessageBox.Show("cantidad clientes: " + funcion.CantidadClientes);
-
-                    // Verificar si se han devuelto todas las entradas
-                    if (user.EntradasCompradas[idFuncion] <= 0)
-                    {
-                        user.EntradasCompradas.Remove(idFuncion);
-                    }
-
-                    // Calcular el reembolso y actualizar el crédito del usuario
-                    double costoTotal = funcion.Costo * cantidadEntradas;
-                    user.Credito += costoTotal;
-                    return true;
-                }
-                else
-                {
-                    throw new InvalidOperationException("No tienes suficientes entradas compradas para devolver.");
-                }
-            }
-            else
-            {
-                throw new InvalidOperationException("No es posible devolver una entrada de una función que ya ocurrió.");
-            }
-            */
         }
 
         public int ComprarEntradaFuncionNotNull(Usuario user, int cantidadEntradas, Funcion funcion, int idFuncion)
@@ -2008,36 +1900,50 @@ namespace TP1___GRUPO_C.Model
                     if (funcion.AsientosDisponibles >= cantidadEntradas)
                     {
                         // Agregar la función a las funciones del usuario
-                        user.MisFunciones.Add(funcion);
 
-                        // Actualizar la cantidad de clientes de la función
+
+                        Funcion fun = user.MisFunciones.FirstOrDefault(f => f.ID == funcion.ID);
+
+                        
+
+
+                        // Actualizar la cantidad de clientes de la lista de funcion del cine
                         funcion.CantidadClientes += cantidadEntradas;
-
                         funcion.AsientosDisponibles -= cantidadEntradas;
 
-                        // Agregar al usuario como cliente de la función
-                        funcion.Clientes.Add(user);
+                        if (fun == null)
+                        {
+                            user.MisFunciones.Add(funcion);
+
+                        }
+                        else
+                        {
+                            // Actualizar la cantidad de clientes de la lista de funcion del cliente
+                            fun.CantidadClientes += cantidadEntradas;
+                            fun.AsientosDisponibles -= cantidadEntradas;
+                        }
 
                         // Actualizar el crédito del usuario
                         user.Credito -= costoTotal;
 
-                        if(entrada != null)
-                        {
+                        if (entrada != null)
+                        {   //Entra aca si el usuario ya tiene al menos 1 entrada para dicha funcion
                             entrada.CantidadEntradasCompradas += cantidadEntradas;
                             DB.sumarEntrada(idFuncion, user.ID, entrada.CantidadEntradasCompradas);
 
                         }
                         else
-                        {
-                            entrada = new UsuarioFuncion(user.ID, idFuncion,  cantidadEntradas);
-                            misUsuarioFuncion.Add(entrada);
+                        {   //Entra aca si el usuario nunca compro para esta funcion
 
-                            //Aca podria usar el metodo ABM agregarUsuarioFunciones, de momento lo dejo asi porque 
-                            //ese metodo crea con cantidad 0 y en este hay que asignarle una cantidad
-                            DB.cargarEntradas(idFuncion,user.ID,cantidadEntradas);
+                            // Agregar al usuario como cliente de la función
+                            funcion.Clientes.Add(user);
+                            entrada = new UsuarioFuncion(user.ID, idFuncion, 0);
+                            entrada.CantidadEntradasCompradas += cantidadEntradas;
+                            misUsuarioFuncion.Add(entrada);
+                            DB.cargarEntradas(idFuncion, user.ID, cantidadEntradas);
                         }
 
-                        DB.actualizarAsientosDisponibles(idFuncion,cantidadEntradas);
+                        DB.actualizarAsientosDisponibles(idFuncion, funcion.AsientosDisponibles);
                         DB.actualizarCreditoUsuario(user.ID, user.Credito);
 
 

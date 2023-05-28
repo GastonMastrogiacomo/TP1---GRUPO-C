@@ -123,7 +123,8 @@ namespace TP1___GRUPO_C.Vistas
             this.CLB_Funciones.Items.Clear();
             foreach (Funcion f in miCine.MostrarFunciones())
             {
-                string stringFunc = f.ID.ToString() + ", " + f.MiPelicula.Nombre + ". " + f.Fecha.ToString();
+                //string stringFunc = f.ID.ToString() + ", " + f.MiPelicula.Nombre + ". " + f.Fecha.ToString();
+                string stringFunc = f.ID.ToString() + ", "+ f.Fecha.ToString();
                 this.CLB_Funciones.Items.Add(stringFunc);
             }
         }
@@ -386,8 +387,7 @@ namespace TP1___GRUPO_C.Vistas
             {
                 RefreshFunciones();
 
-
-            }
+                }
 
 
             MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -492,7 +492,7 @@ namespace TP1___GRUPO_C.Vistas
             string Pass = this.Input_Password.Text;
             DateTime FechaNacimiento = this.Selec_FechaDeNacimiento.Value;
             bool esAdmin = this.Cb_EsAdmin.Checked;
-            int.TryParse(this.Input_Credito.Text, out int credito);
+            float.TryParse(this.Input_Credito.Text, out float credito);
 
             int peticion = miCine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, credito, false);
             String mensaje = StatusCode.ObtenerMensaje(peticion);

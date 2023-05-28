@@ -11,7 +11,7 @@ namespace TP1___GRUPO_C.Model
     {
 
         public int ID { get; set; }
-        public static int ultimoID = 0;
+        //public static int ultimoID = 0;
         public Sala MiSala { get; set; }
         public Pelicula MiPelicula { get; set; }
 
@@ -24,9 +24,9 @@ namespace TP1___GRUPO_C.Model
         public int CantidadClientes { get; set; } //CantidadEntradasCompradas
         public double Costo { get; set; }
 
-        public Funcion(DateTime fecha, double costo,int idSala, int idPelicula, int AsientosDisponibles)
+        public Funcion(int ID, DateTime fecha, double costo,int idSala, int idPelicula, int AsientosDisponibles)
         {
-            this.ID = ultimoID;
+            this.ID =ID;
             this.idSala = idSala;
             this.idPelicula = idPelicula;
             Fecha = fecha;
@@ -36,54 +36,57 @@ namespace TP1___GRUPO_C.Model
             this.AsientosDisponibles = AsientosDisponibles;
         }
 
-        public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha, double Costo)
-        {
-            ultimoID++;
-            this.ID = ultimoID;
-            this.MiSala = MiSala;
-            this.MiPelicula = MiPelicula;
-            Clientes = new List<Usuario>();
-            this.Fecha = Fecha;
-            this.CantidadClientes = 0;
-            this.Costo = Costo;
-            this.AsientosDisponibles = MiSala.Capacidad;
+        //public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha, double Costo)
+        //{
+        //    ultimoID++;
+        //    this.ID = ultimoID;
+        //    this.MiSala = MiSala;
+        //    this.MiPelicula = MiPelicula;
+        //    Clientes = new List<Usuario>();
+        //    this.Fecha = Fecha;
+        //    this.CantidadClientes = 0;
+        //    this.Costo = Costo;
+        //    this.AsientosDisponibles = MiSala.Capacidad;
 
-        }
+        //}
 
-        public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha, double Costo, int ID)
-        {
-            this.ID = ID;
-            this.MiSala = MiSala;
-            this.MiPelicula = MiPelicula;
-            Clientes = new List<Usuario>();
-            this.Fecha = Fecha;
-            this.CantidadClientes = 0;
-            this.Costo = Costo;
-            this.AsientosDisponibles = MiSala.Capacidad;
+        //public Funcion(Sala MiSala, Pelicula MiPelicula, DateTime Fecha, double Costo, int ID)
+        //{
+        //    this.ID = ID;
+        //    this.MiSala = MiSala;
+        //    this.MiPelicula = MiPelicula;
+        //    Clientes = new List<Usuario>();
+        //    this.Fecha = Fecha;
+        //    this.CantidadClientes = 0;
+        //    this.Costo = Costo;
+        //    this.AsientosDisponibles = MiSala.Capacidad;
 
-        }
+        //}
 
         public string[] ToString()
         {
 
-            if (MiSala != null && MiPelicula != null)
-            {
-                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), AsientosDisponibles.ToString() };
+            return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), AsientosDisponibles.ToString(), Costo.ToString(), idSala.ToString(), idPelicula.ToString()};
+            //if (MiSala != null && MiPelicula != null)
+            //{
+            //    return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), AsientosDisponibles.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString()};
 
-            }
-            else if (MiSala == null && MiPelicula != null)
-            {
-                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), "", "", MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString(), AsientosDisponibles.ToString() };
-            }
-            else if (MiSala != null && MiPelicula == null)
-            {
-                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), "", "", AsientosDisponibles.ToString() };
-            }
-            else
-            {
-                return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), CantidadClientes.ToString(), Costo.ToString(), "", "", "", "", AsientosDisponibles.ToString() };
+            //}
+            //else if (MiSala == null && MiPelicula != null)
+            //{
+            //    return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), AsientosDisponibles.ToString(), Costo.ToString(), "", "", MiPelicula.ID.ToString(), MiPelicula.Nombre.ToString()};
+            //}
+            //else if (MiSala != null && MiPelicula == null)
+            //{
+            //    return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), AsientosDisponibles.ToString(), Costo.ToString(), MiSala.ID.ToString(), MiSala.Capacidad.ToString(), "", "", AsientosDisponibles.ToString() };
+            //}
+            //else
+            //{
+            //    return new string[] { ID.ToString(), Fecha.ToString("dd/MM/yyyy"), AsientosDisponibles.ToString(), Costo.ToString(), "", "", "", "", AsientosDisponibles.ToString() };
 
-            }
+            //}
+
+
         }
 
 
