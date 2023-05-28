@@ -38,6 +38,8 @@ LISTO
     -ABM Sala funciona correctamente
     -Comprar Entrada
     -Devolver Entrada
+    -ABM Pelicula
+
 
 
 TESTEAR
@@ -45,9 +47,8 @@ TESTEAR
 
 FALTA
 -ABM Funcion verificar y aplicar on delete cascade (o hardcodearlo)
--ABM Pelicula verificar (este creo que estaba bien ya)
 - Hacer que el ABM se desencadene correctamente en las otras clases.
--Eliminar ObtenerFuncionPorID
+-Eliminar ObtenerFuncionPorID - para esto hace falta primero corregir el abm de funcion
 -Ver que los filtros anden bien
 
 

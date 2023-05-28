@@ -327,7 +327,7 @@ namespace TP1___GRUPO_C.Vistas
             int.TryParse(salaSelected.Split(",")[0], out int salaSelectedID);
             string peliSelected = (string)this.Cb_Peliculas.SelectedItem;
             int.TryParse(peliSelected.Split(",")[0], out int peliSelectedID);
-            int.TryParse(this.Input_Costo.Text, out int Costo);
+            float.TryParse(this.Input_Costo.Text, out float Costo);
             DateTime Fecha = this.Selec_Fecha.Value;
 
             int peticion = miCine.AgregarFuncion(salaSelectedID, peliSelectedID, Fecha, Costo);

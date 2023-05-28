@@ -415,6 +415,10 @@ namespace TP1___GRUPO_C.Model
                                 // Agregar la función a la lista de funciones de la película correspondiente
                                 peliElegida.MisFunciones.Add(func);
 
+                                func.MiPelicula = peliElegida;
+                                func.MiSala = salaElegida;
+
+
                                 return 200;
                             }
                             else
@@ -507,7 +511,7 @@ namespace TP1___GRUPO_C.Model
             {
                 return 500;
             }
-  
+
         }
 
         public int ModificarFuncion(int IDFuncion, int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo, int capacidad)
@@ -1326,10 +1330,20 @@ namespace TP1___GRUPO_C.Model
                 {
                     if (entrada.CantidadEntradasCompradas >= cantidadEntradas)
                     {
-                        user.MisFunciones.Remove(funcion);
+                        Funcion userFunc = user.MisFunciones.FirstOrDefault(f => f.ID == idFuncion);
+                        if (entrada.CantidadEntradasCompradas == cantidadEntradas)
+                        {
+                           user.MisFunciones.Remove(userFunc);
+                           userFunc.Clientes.Remove(user);
+                           funcion.Clientes.Remove(user);
+                        }
+                        else
+                        {             
+                            userFunc.CantidadClientes -= cantidadEntradas;
+                            userFunc.AsientosDisponibles += cantidadEntradas;
+                        }
                         funcion.CantidadClientes -= cantidadEntradas;
                         funcion.AsientosDisponibles += cantidadEntradas;
-                        funcion.Clientes.Remove(user);
                         entrada.CantidadEntradasCompradas -= cantidadEntradas;
 
                         double costoTotal = funcion.Costo * cantidadEntradas;
@@ -1347,7 +1361,7 @@ namespace TP1___GRUPO_C.Model
                         }
 
                         DB.actualizarCreditoUsuario(user.ID, user.Credito);
-                        DB.actualizarAsientosDisponibles(idFuncion, cantidadEntradas);
+                        DB.actualizarAsientosDisponibles(idFuncion, funcion.AsientosDisponibles);
 
 
                         return true;

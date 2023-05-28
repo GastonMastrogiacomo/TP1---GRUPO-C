@@ -203,6 +203,8 @@ namespace TP1___GRUPO_C.Vistas
             idFuncionSeleccionada = int.Parse(dataGridProximasFunciones.Rows[e.RowIndex].Cells[0].Value.ToString());
 
         }
+
+     
     }
 }
 

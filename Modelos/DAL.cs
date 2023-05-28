@@ -496,25 +496,31 @@ namespace TP1___GRUPO_C.Modelos
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     // Buscar la sala correspondiente en la base de datos
-                    string salaQuery = "SELECT * FROM Salas WHERE id = @salaId;";
+                    string salaQuery = "SELECT * FROM [dbo].[Salas] WHERE id = @salaId;";
                     SqlCommand salaCommand = new SqlCommand(salaQuery, connection);
-                    salaCommand.Parameters.AddWithValue("@salaId", MiSalaId);
+                    salaCommand.Parameters.Add(new SqlParameter("@salaId", SqlDbType.Int));
+                    salaCommand.Parameters["@salaId"].Value = MiSalaId;
+                    
                     connection.Open();
                     SqlDataReader salaReader = salaCommand.ExecuteReader();
+
                     if (!salaReader.HasRows)
                     {
+                        MessageBox.Show("No existe sala!");
                         salaReader.Close();
                         return -1; // ID de sala no encontrado
                     }
                     salaReader.Close();
 
                     // Buscar la película correspondiente en la base de datos
-                    string peliculaQuery = "SELECT * FROM Peliculas WHERE id = @peliculaId;";
+                    string peliculaQuery = "SELECT * FROM [dbo].[Peliculas] WHERE id = @peliculaId;";
                     SqlCommand peliculaCommand = new SqlCommand(peliculaQuery, connection);
-                    peliculaCommand.Parameters.AddWithValue("@peliculaId", MiPeliculaId);
+                    peliculaCommand.Parameters.Add(new SqlParameter("@peliculaId", SqlDbType.Int));
+                    peliculaCommand.Parameters["@peliculaId"].Value = MiPeliculaId;
                     SqlDataReader peliculaReader = peliculaCommand.ExecuteReader();
                     if (!peliculaReader.HasRows)
                     {
+                        MessageBox.Show("No existe pelicula!");
                         peliculaReader.Close();
                         return -1; // ID de película no encontrado
                     }
@@ -522,8 +528,8 @@ namespace TP1___GRUPO_C.Modelos
 
                     // Insertar la nueva función en la base de datos
                     int resultadoQuery;
-                    int idNuevoUsuario = -1;
-                    string queryString = "INSERT INTO Funciones (fecha,asientos_disponibles,costo,id_sala,id_pelicula) VALUES (@fecha,@asientos_disponibles,@costo,@id_sala,@id_pelicula);";
+                    int idNuevaFuncion = -1;
+                    string queryString = "INSERT INTO [dbo].[Funciones] ([fecha],[asientos_disponibles],[costo],[id_sala],[id_pelicula]) VALUES (@fecha,@asientos_disponibles,@costo,@id_sala,@id_pelicula);";
 
                     SqlCommand command = new SqlCommand(queryString, connection);
                     command.Parameters.Add(new SqlParameter("@fecha", SqlDbType.Date));
@@ -540,16 +546,16 @@ namespace TP1___GRUPO_C.Modelos
 
                     try
                     {
-                        connection.Open();
+                        //connection.Open();
                         //esta consulta NO espera un resultado para leer, es del tipo NON Query
                         resultadoQuery = command.ExecuteNonQuery();
 
                         //Ahora hago esta query para obtener el ID
-                        string ConsultaID = "SELECT MAX([ID]) FROM [dbo].[Usuarios]";
+                        string ConsultaID = "SELECT MAX([ID]) FROM [dbo].[Funciones]";
                         command = new SqlCommand(ConsultaID, connection);
                         SqlDataReader reader = command.ExecuteReader();
                         reader.Read();
-                        idNuevoUsuario = reader.GetInt32(0);
+                        idNuevaFuncion = reader.GetInt32(0);
                         reader.Close();
                     }
                     catch (Exception ex)
@@ -557,9 +563,9 @@ namespace TP1___GRUPO_C.Modelos
                         Console.WriteLine(ex.Message);
                         return -1;
                     }
-                    return idNuevoUsuario;
+                    return idNuevaFuncion;
 
-                }
+                    }
             }
 
             catch (Exception e)
