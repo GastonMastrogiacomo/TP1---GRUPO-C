@@ -242,7 +242,7 @@ namespace TP1___GRUPO_C
             {
                 // Realizar la compra de entradas
                 //@modificar esto
-                int peticion = cine.ComprarEntrada(cine.UsuarioActual, idFuncionSeleccionada, cantEntradas);
+                int peticion = cine.ComprarEntrada(idFuncionSeleccionada, cantEntradas);
                 if (peticion == 200)
                 {
                     MostrarFuncionesEnDataGridView();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using TP1___GRUPO_C.Modelos;
 
 namespace TP1___GRUPO_C.Model
 {
@@ -14,23 +15,26 @@ namespace TP1___GRUPO_C.Model
         public Pelicula MiPelicula { get; set; }
         public int idSala { get; set; }
         public int idPelicula { get; set; }
-        public List<Usuario> Clientes { get; set; }
         public DateTime Fecha { get; set; }
         public int AsientosDisponibles { get; set; }
-
+        
         // Cantidad de entradas compradas, Asientos Disponibles depende de la capacidad - este valor
         public int CantidadClientes { get; set; }
         public double Costo { get; set; }
 
-        public Funcion(int ID, DateTime fecha, double costo, int idSala, int idPelicula, int AsientosDisponibles)
+        public ICollection<Usuario> Clientes { get;} = new List<Usuario>();
+        public List<UsuarioFuncion> UserFuncion { get; set; }
+
+
+        public Funcion() { }
+
+        public Funcion( DateTime fecha, double costo, int idSala, int idPelicula, int AsientosDisponibles)
         {
-            this.ID = ID;
             this.idSala = idSala;
             this.idPelicula = idPelicula;
             Fecha = fecha;
             this.CantidadClientes = 0;
             Costo = costo;
-            Clientes = new List<Usuario>();
             this.AsientosDisponibles = AsientosDisponibles;
         }     
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TP1___GRUPO_C.Modelos;
+using Microsoft.EntityFrameworkCore;
 
 namespace TP1___GRUPO_C.Model
 {
@@ -16,14 +18,20 @@ namespace TP1___GRUPO_C.Model
         public string Password { get; set; }
         public int IntentosFallidos { get; set; }
         public bool Bloqueado { get; set; }
-        public List<Funcion> MisFunciones { get; set; }
         public double Credito { get; set; }
         public DateTime FechaNacimiento { get; set; }
         public bool EsAdmin { get; set; }
 
-        public Usuario(int ID, int DNI, string Nombre, string Apellido,string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin)
+        public ICollection<Funcion> MisFunciones { get; } = new List<Funcion>();
+        public List<UsuarioFuncion> UserFuncion { get; set; }
+
+
+
+        public Usuario() { }
+
+        public Usuario(int DNI, string Nombre, string Apellido,string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin)
         {
-            this.ID = ID;
+          
             this.DNI = DNI;
             this.Nombre = Nombre;
             this.Apellido = Apellido;
@@ -31,7 +39,6 @@ namespace TP1___GRUPO_C.Model
             this.Password = Password;
             IntentosFallidos = 0;
             Bloqueado = false;
-            MisFunciones = new List<Funcion>();
             Credito = 0;
             this.FechaNacimiento = FechaNacimiento;
             this.EsAdmin = EsAdmin;

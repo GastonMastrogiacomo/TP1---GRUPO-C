@@ -12,7 +12,7 @@ ModificarSala: De nuevo, modificar la lista de funciones aquí estaría demás.
 EliminarPelicula: IDEM EliminarSala.
 ModificarPelicula: IDEM  ModificarSala.
 cargarCredito EN DAL no SUMA crédito sino que sobreescribe, en ese caso tendrían que mandar importe+user.Credito como parámetro.
-ComprarEntrada: La vista tiene una referencia al usuario actual?! Como mucho podrá tener un ID pero no el objeto y en todo caso, sería más simple que eso lo guarde Cine al momento de loguearse en un atributo privado, luego las operaciones de compra, devolución, etc. no piden usuario porque se entiende que aplican sobre el usuario actual (que ya cine tiene guardado en UsuarioActual).
+[CORREGIDO] ComprarEntrada: La vista tiene una referencia al usuario actual?! Como mucho podrá tener un ID pero no el objeto y en todo caso, sería más simple que eso lo guarde Cine al momento de loguearse en un atributo privado, luego las operaciones de compra, devolución, etc. no piden usuario porque se entiende que aplican sobre el usuario actual (que ya cine tiene guardado en UsuarioActual).
 MostrarUsuarios: NOOO! jaja error muy grave este. La inicialización se hace SOLO UNA VEZ, luego se muestra lo que hay en memoria que debe ser lo mismo que hay en la base. OJO con esto para TP3, el LOAD en EF se hace sólo una vez. Acá era tan simple como devolver Usuarios.ToList(); nada más. APLICA PARA TODOS LOS MOSTRAR DEBAJO.
 ObtenerFuncionPorId: Más les vale que no lo usen.
 BuscarFuncion: Rebuscado je.
