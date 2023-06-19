@@ -389,8 +389,8 @@ namespace TP1___GRUPO_C.Vistas
             int.TryParse(Label_FuncionId.Text, out int ID);
             DateTime Fecha = this.Selec_Fecha.Value;
             double.TryParse(this.Input_Costo.Text, out double Costo);
-            int.TryParse(Input_CantidadClientes.Text, out int cantidadClientes);
-            int peticion = miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, Costo, cantidadClientes);
+            //int.TryParse(Input_CantidadClientes.Text, out int cantidadClientes);
+            int peticion = miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, Costo);      
             String mensaje = StatusCode.ObtenerMensaje(peticion);
             if (peticion == 200)
             {

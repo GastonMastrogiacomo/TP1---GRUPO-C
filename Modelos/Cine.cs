@@ -613,6 +613,7 @@ namespace TP1___GRUPO_C.Model
 
         public int ModificarFuncion(int IDFuncion, int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo)
         {
+            // Se elimino cantidad de clientes como parametro porque no deberia estar
             try
             {
                 Funcion func = contexto.Funciones.Where(f => f.ID == IDFuncion).FirstOrDefault();
@@ -670,19 +671,22 @@ namespace TP1___GRUPO_C.Model
 
                             contexto.Funciones.Update(func);
                             contexto.SaveChanges();
-
                             return 200;
                         }
-                    else
-                        {
-                            throw new ArgumentException("Sala o Pelicula no encontrada.");
-                        }
+
+
                     }
                     else
                     {
-                        throw new ArgumentException("Función no encontrada.");
+                        throw new ArgumentException("Sala o Pelicula no encontrada.");
                     }
+
                 }
+                else
+                {
+                    throw new ArgumentException("Función no encontrada.");
+                }
+            }
             catch (Exception ex)
             {
 
@@ -1155,71 +1159,72 @@ namespace TP1___GRUPO_C.Model
             }
         }
 
+        // CORREGIR
         public int ComprarEntradaFuncionNotNull(Usuario user, int cantidadEntradas, Funcion funcion, int idFuncion)
         {
 
             UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
 
-                double costoTotal = funcion.Costo * cantidadEntradas;
-                // Verificar si el usuario tiene suficiente crédito
-                if (user.Credito >= costoTotal)
+            double costoTotal = funcion.Costo * cantidadEntradas;
+            // Verificar si el usuario tiene suficiente crédito
+            if (user.Credito >= costoTotal)
+            {
+                // Verificar si la capacidad de la sala es suficiente
+                if (funcion.AsientosDisponibles >= cantidadEntradas)
                 {
-                    // Verificar si la capacidad de la sala es suficiente
-                    if (funcion.AsientosDisponibles >= cantidadEntradas)
+                    // Agregar la función a las funciones del usuario
+
+                    Funcion fun = user.MisFunciones.FirstOrDefault(f => f.ID == funcion.ID);
+
+                    // Actualizar la cantidad de clientes de la lista de funcion del cine
+                    funcion.CantidadClientes += cantidadEntradas;
+                    funcion.AsientosDisponibles -= cantidadEntradas;
+
+                    if (fun == null)
                     {
-                        // Agregar la función a las funciones del usuario
-
-                        Funcion fun = user.MisFunciones.FirstOrDefault(f => f.ID == funcion.ID);
-
-                        // Actualizar la cantidad de clientes de la lista de funcion del cine
-                        funcion.CantidadClientes += cantidadEntradas;
-                        funcion.AsientosDisponibles -= cantidadEntradas;
-
-                        if (fun == null)
-                        {
-                            user.MisFunciones.Add(funcion);
-                        }
-                        else
-                        {
-                            // Actualizar la cantidad de clientes de la lista de funcion del cliente
-                            fun.CantidadClientes += cantidadEntradas;
-                            fun.AsientosDisponibles -= cantidadEntradas;
-                        }
-
-                        // Actualizar el crédito del usuario
-                        user.Credito -= costoTotal;
-
-                        if (entrada != null)
-                        {   //Entra aca si el usuario ya tiene al menos 1 entrada para dicha funcion
-                            entrada.CantidadEntradasCompradas += cantidadEntradas;
-                            DB.sumarEntrada(idFuncion, user.ID, entrada.CantidadEntradasCompradas);
-                        }
-                        else
-                        {   //Entra aca si el usuario nunca compro para esta funcion
-
-                            // Agregar al usuario como cliente de la función
-                            funcion.Clientes.Add(user);
-                            entrada = new UsuarioFuncion(user.ID, idFuncion, 0);
-                            entrada.CantidadEntradasCompradas += cantidadEntradas;
-                            misUsuarioFuncion.Add(entrada);
-                            DB.cargarEntradas(idFuncion, user.ID, cantidadEntradas);
-                        }
-
-                        DB.actualizarAsientosDisponibles(idFuncion, funcion.AsientosDisponibles);
-                        DB.actualizarCreditoUsuario(user.ID, user.Credito);
-
-                        return 200;
+                        user.MisFunciones.Add(funcion);
                     }
                     else
                     {
-                        throw new InvalidOperationException("No hay suficiente capacidad en la sala.");
+                        // Actualizar la cantidad de clientes de la lista de funcion del cliente
+                        fun.CantidadClientes += cantidadEntradas;
+                        fun.AsientosDisponibles -= cantidadEntradas;
                     }
+
+                    // Actualizar el crédito del usuario
+                    user.Credito -= costoTotal;
+
+                    if (entrada != null)
+                    {   //Entra aca si el usuario ya tiene al menos 1 entrada para dicha funcion
+                        entrada.CantidadEntradasCompradas += cantidadEntradas;
+                        DB.sumarEntrada(idFuncion, user.ID, entrada.CantidadEntradasCompradas);
+                    }
+                    else
+                    {   //Entra aca si el usuario nunca compro para esta funcion
+
+                        // Agregar al usuario como cliente de la función
+                        funcion.Clientes.Add(user);
+                        entrada = new UsuarioFuncion(user.ID, idFuncion, 0);
+                        entrada.CantidadEntradasCompradas += cantidadEntradas;
+                        misUsuarioFuncion.Add(entrada);
+                        DB.cargarEntradas(idFuncion, user.ID, cantidadEntradas);
+                    }
+
+                    DB.actualizarAsientosDisponibles(idFuncion, funcion.AsientosDisponibles);
+                    DB.actualizarCreditoUsuario(user.ID, user.Credito);
+
+                    return 200;
                 }
                 else
                 {
-                    throw new InvalidOperationException("Créditos insuficientes.");
+                    throw new InvalidOperationException("No hay suficiente capacidad en la sala.");
                 }
-  
+            }
+            else
+            {
+                throw new InvalidOperationException("Créditos insuficientes.");
+            }
+
 
         }
 
@@ -1404,16 +1409,6 @@ namespace TP1___GRUPO_C.Model
             return contexto.Peliculas.ToList();
         }
 
-        public List<Funcion> obtenerFuncionesUsuario()
-        {
-            // No entiendo que hacia esto, porque si necesitas las funciones del usuario vas a Usuarios.misFunciones, me parece que no hacen falta
-        }
-
-        public List<Usuario> obtenerUsuariosFuncion()
-        {
-            // Lo mismo que el anterior
-        }
-
         //// Devuelven copias de las listas originales
         /*
 
@@ -1539,20 +1534,22 @@ namespace TP1___GRUPO_C.Model
 
             if (fecha >= DateTime.Today)
             {
-                foreach (Funcion fun in Funciones)
+                foreach (Funcion fun in contexto.Funciones)
                 {
 
                     if (fun.Fecha >= DateTime.Today)
                     {
-                        funcionesEncontradas = Funciones.Where(fun =>
+                        funcionesEncontradas = contexto.Funciones.Where(fun =>
                             (!string.IsNullOrWhiteSpace(pelicula) && fun.MiPelicula.Nombre.Contains(pelicula))
                             || (!string.IsNullOrWhiteSpace(ubicacion) && fun.MiSala.Ubicacion.Equals(ubicacion))
                             && (precioMinimo >= 0 && fun.Costo >= precioMinimo)
                             && (precioMaximo > 0 && fun.Costo <= precioMaximo)).ToList();
+
                     }
                 }
-                return funcionesEncontradas;
             }
+            return funcionesEncontradas;
+
         }
 
 
@@ -1563,7 +1560,7 @@ namespace TP1___GRUPO_C.Model
 
         #endregion
 
-        //SI NO TIENE REFERENCIAS BORRARLO
+        //Ver de borrarlo
         public int agregarUsuarioFuncion(int idUsuario, int idFuncion)
         {
             // Este metodo es innecesario, comprar entrada deberia agregar a esta tabla, ver de cambiar adonde se implementa
