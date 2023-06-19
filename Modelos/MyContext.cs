@@ -53,9 +53,30 @@ namespace TP1___GRUPO_C.Modelos
                 .WithOne(D => D.user)
                 .HasForeignKey<DNI>(D => D.idUsuario)
                 .OnDelete(DeleteBehavior.Cascade);
-            */
+           
 
 
+
+            ////DEFINICIÓN DE LA RELACIÓN ONE TO MANY USUARIO -> DOMICILIO
+
+            modelBuilder.Entity<Domicilio>()
+            .HasOne(D => D.user)
+            .WithMany(U => U.domicilios)
+            .HasForeignKey(D => D.idUsuario)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            ////DEFINICIÓN DE LA RELACIÓN MANY TO MANY USUARIO <-> PAIS
+            //usario fucnion
+            modelBuilder.Entity<Usuario>()
+                .HasMany(U => U.Nacionalidad)
+                .WithMany(P => P.users)
+                .UsingEntity<UsuarioPais>(
+                    eup => eup.HasOne(up => up.pais).WithMany(p => p.UserPais).HasForeignKey(u => u.idPais),
+                    eup => eup.HasOne(up => up.user).WithMany(u => u.UserPais).HasForeignKey(u => u.idUsuario),
+                    eup => eup.HasKey(k => new { k.idUsuario, k.idPais })
+                );
+
+             */
 
             //DEFINICIÓN DE LA RELACIÓN 
             //ONE TO MANY FUNCION -> SALAS
@@ -74,16 +95,7 @@ namespace TP1___GRUPO_C.Modelos
             .HasForeignKey(f => f.idPelicula)
             .OnDelete(DeleteBehavior.Cascade);
 
-            ////DEFINICIÓN DE LA RELACIÓN ONE TO MANY USUARIO -> DOMICILIO
-
-            //modelBuilder.Entity<Domicilio>()
-            //.HasOne(D => D.user)
-            //.WithMany(U => U.domicilios)
-            //.HasForeignKey(D => D.idUsuario)
-            //.OnDelete(DeleteBehavior.Cascade);
-
-
-            //DEFINICIÓN DE LA RELACIÓN MANY TO MANY USUARII <-> FUNCION
+            //DEFINICIÓN DE LA RELACIÓN MANY TO MANY USUARIO <-> FUNCION
             modelBuilder.Entity<Usuario>()
                 .HasMany(U => U.MisFunciones)
                 .WithMany(f => f.Clientes)
@@ -93,18 +105,6 @@ namespace TP1___GRUPO_C.Modelos
                     euf => euf.HasKey(k => new { k.idUsuario, k.idFuncion })
                 );
 
-
-
-            ////DEFINICIÓN DE LA RELACIÓN MANY TO MANY USUARIO <-> PAIS
-            ////usario fucnion
-            //modelBuilder.Entity<Usuario>()
-            //    .HasMany(U => U.Nacionalidad)
-            //    .WithMany(P => P.users)
-            //    .UsingEntity<UsuarioPais>(
-            //        eup => eup.HasOne(up => up.pais).WithMany(p => p.UserPais).HasForeignKey(u => u.idPais),
-            //        eup => eup.HasOne(up => up.user).WithMany(u => u.UserPais).HasForeignKey(u => u.idUsuario),
-            //        eup => eup.HasKey(k => new { k.idUsuario, k.idPais })
-            //    );
 
             //propiedades de los datos
             modelBuilder.Entity<Usuario>(
@@ -139,7 +139,6 @@ namespace TP1___GRUPO_C.Modelos
                {
                    usr.Property(s => s.Ubicacion).HasColumnType("varchar(50)");
                    usr.Property(s => s.Capacidad).HasColumnType("integer");
-
                });
 
             modelBuilder.Entity<Pelicula>(
@@ -150,8 +149,6 @@ namespace TP1___GRUPO_C.Modelos
                    usr.Property(p => p.Sinopsis).HasColumnType("varchar(255)");
                    usr.Property(p => p.Poster).HasColumnType("varchar(255)");
                    usr.Property(p => p.Duracion).HasColumnType("integer");
-
-
                });
 
             modelBuilder.Entity<UsuarioFuncion>(
@@ -160,7 +157,6 @@ namespace TP1___GRUPO_C.Modelos
                    uf.Property(s => s.idUsuario).HasColumnType("integer");
                    uf.Property(s => s.idFuncion).HasColumnType("integer");
                    uf.Property(s => s.CantidadEntradasCompradas).HasColumnType("integer");
-
                });
 
 
@@ -252,10 +248,12 @@ namespace TP1___GRUPO_C.Modelos
                 new { id_usuario = 10, id_funcion = 19, cantidad_entradas_compradas = 2 },
                 new { id_usuario = 10, id_funcion = 20, cantidad_entradas_compradas = 3 });
 
-
             //Ignoro, no agrego la clase Cine ni Status Code a la base de datos
             modelBuilder.Ignore<Cine>();
             modelBuilder.Ignore<StatusCode>();
+            
+            //BORRAR ESTO, de momento la dejo por si queremos revisar el codigo 
+            modelBuilder.Ignore<DAL>();
 
         }
     }

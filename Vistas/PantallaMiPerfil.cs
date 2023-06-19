@@ -58,6 +58,7 @@ namespace TP1___GRUPO_C.Vistas
 
         }
 
+        /*
         private void Btn_ModificarPerfil_Click(object sender, EventArgs e)
         {
 
@@ -101,6 +102,57 @@ namespace TP1___GRUPO_C.Vistas
             }
 
         }
+
+        */
+
+        private void Btn_ModificarPerfil_Click(object sender, EventArgs e)
+        {
+            int.TryParse(Label_IDPerfil.Text, out int ID);
+            string Nombres = this.Input_NombrePerfil.Text;
+            string Apellidos = this.Input_ApellidoPerfil.Text;
+            int.TryParse(this.Input_DNIPerfil.Text, out int DNI);
+            string Mail = this.Input_MailPerfil.Text;
+            string Pass = this.Input_PasswordPerfil.Text;
+            DateTime FechaNacimiento = this.DateTime_MiPerfil.Value;
+            bool esAdmin = false;
+            double Credito = double.Parse(this.Label_MiCredito.Text);
+
+            // Validar campos en la vista
+            if (ID == 0 || string.IsNullOrEmpty(Nombres) || string.IsNullOrEmpty(Apellidos) ||
+                DNI == 0 || string.IsNullOrEmpty(Mail) || string.IsNullOrEmpty(Pass))
+            {
+                MessageBox.Show("Por favor, complete todos los campos.", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                List<Usuario> usuarios = miCine.MostrarUsuarios();
+                Usuario user = usuarios.FirstOrDefault(u => u.ID == ID);
+
+                user.Credito = miCine.UsuarioActual.Credito;
+                foreach (Funcion fun in miCine.UsuarioActual.ObtenerMisFunciones())
+                {
+                    user.MisFunciones.Add(fun);
+                }
+
+                int peticion = miCine.ModificarUsuario(ID, DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, user.IntentosFallidos, user.Bloqueado, user.Credito);
+                if (peticion == 200)
+                {
+                    // Actualizar la visualización del nuevo usuario en los inputs
+                    Label_IDPerfil.Text = user.ID.ToString();
+                    Input_NombrePerfil.Text = user.Nombre;
+                    Input_ApellidoPerfil.Text = user.Apellido;
+                    Input_DNIPerfil.Text = user.DNI.ToString();
+                    Input_MailPerfil.Text = user.Mail;
+                    Input_PasswordPerfil.Text = user.Password;
+                    DateTime_MiPerfil.Value = user.FechaNacimiento;
+
+                    MostrarDatosUsuario();
+                }
+            }
+
+           
+        }
+
 
         //Me parece que esta mal tener el mismo metodo pero en otra clase, despues ver como llamar al de PantallaABM
         private void MostrarDatosUsuario()

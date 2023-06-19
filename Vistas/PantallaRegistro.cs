@@ -24,6 +24,8 @@ namespace TP1___GRUPO_C
 
         public delegate void volverPantallaPrincipal();
 
+        /* CAMBIE EL METODO PARA QUE HAGA LAS VALIDACIONES DE CAMPOS POR LA VISTA, SI ANDA TODO BIEN ELIMINAR ESTO
+         * 
         private void button1_Click(object sender, EventArgs e)
         {
             //registrar
@@ -41,6 +43,37 @@ namespace TP1___GRUPO_C
                 this.pantallaPrincipal();
             }
             MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+        }
+        */
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Verificar campos nulos en la vista
+            if (string.IsNullOrEmpty(textBoxNombres.Text) || string.IsNullOrEmpty(textBoxApellidos.Text) ||
+                string.IsNullOrEmpty(textBoxDNI.Text) || string.IsNullOrEmpty(textBoxMail.Text) ||
+                string.IsNullOrEmpty(textBoxPass.Text))
+            {
+                MessageBox.Show("Por favor, complete todos los campos.", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                // Registrar
+                string Nombres = this.textBoxNombres.Text;
+                string Apellidos = this.textBoxApellidos.Text;
+                int.TryParse(textBoxDNI.Text, out int DNI);
+                string Mail = this.textBoxMail.Text;
+                string Pass = this.textBoxPass.Text;
+                DateTime FechaNacimiento = dateTimePicker1.Value.Date;
+
+                int peticion = cine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, false, 0, false);
+                String mensaje = StatusCode.ObtenerMensaje(peticion);
+                if (peticion == 201)
+                {
+                    this.pantallaPrincipal();
+                }
+                MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
 
         }
 

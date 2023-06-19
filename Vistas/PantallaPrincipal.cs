@@ -242,17 +242,25 @@ namespace TP1___GRUPO_C
             {
                 // Realizar la compra de entradas
                 //@modificar esto
-                int peticion = cine.ComprarEntrada(idFuncionSeleccionada, cantEntradas);
-                if (peticion == 200)
+                if (cantEntradas > 0)
                 {
-                    MostrarFuncionesEnDataGridView();
-                    MessageBox.Show("Entrada comprada con exito.");
+                    int peticion = cine.ComprarEntrada(idFuncionSeleccionada, cantEntradas);
+                    if (peticion == 200)
+                    {
+                        MostrarFuncionesEnDataGridView();
+                        MessageBox.Show("Entrada comprada con exito.");
 
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se pudo realizar la compra de entradas.");
+                    }
                 }
                 else
                 {
-                    MessageBox.Show("No se pudo realizar la compra de entradas.");
+                    MessageBox.Show("Cantidad de entradas no puede ser menor a 1.");
                 }
+
             }
             else
             {

@@ -264,7 +264,7 @@ namespace TP1___GRUPO_C.Vistas
 
             List<Usuario> usuarios = miCine.MostrarUsuarios();
 
-           this.UsuarioAuxiliar = usuarios.FirstOrDefault(u => u.ID == int.Parse(this.Label_IdUsuario.Text));
+            this.UsuarioAuxiliar = usuarios.FirstOrDefault(u => u.ID == int.Parse(this.Label_IdUsuario.Text));
 
             this.Input_Credito.Text = dataGridUsuarios[8, e.RowIndex].Value.ToString();
             String fecha1 = dataGridUsuarios[9, e.RowIndex].Value.ToString();
@@ -275,6 +275,7 @@ namespace TP1___GRUPO_C.Vistas
         }
 
         #region ABM Sala
+        /*
         private void Btn_NuevoSala_Click(object sender, EventArgs e)
         {
             string Ubicacion = this.Input_Ubicacion.Text;
@@ -287,10 +288,38 @@ namespace TP1___GRUPO_C.Vistas
             {
                 RefreshSalas();
             }
-
             MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        */
+
+        private void Btn_NuevoSala_Click(object sender, EventArgs e)
+        {
+            string Ubicacion = this.Input_Ubicacion.Text;
+            int.TryParse(this.Input_Capacidad.Text, out int Capacidad);
+
+            if (string.IsNullOrWhiteSpace(Ubicacion))
+            {
+                MessageBox.Show("Ingrese una ubicación válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else if (Capacidad < 0)
+            {
+                MessageBox.Show("Ingrese una capacidad válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                int peticion = miCine.AgregarSala(Capacidad, Ubicacion);
+                String mensaje = StatusCode.ObtenerMensaje(peticion);
+
+                if (peticion == 200)
+                {
+                    RefreshSalas();
+                }
+
+                MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
 
         }
+
 
         private void Btn_ModificarSala_Click(object sender, EventArgs e)
         {
@@ -298,13 +327,25 @@ namespace TP1___GRUPO_C.Vistas
             string Ubicacion = this.Input_Ubicacion.Text;
             int Capacidad = int.Parse(this.Input_Capacidad.Text);
 
-            int peticion = miCine.ModificarSala(ID, Ubicacion, Capacidad);
-            String mensaje = StatusCode.ObtenerMensaje(peticion);
-            if (peticion == 200)
+            if (string.IsNullOrWhiteSpace(Ubicacion))
             {
-                RefreshSalas();
+                MessageBox.Show("Ingrese una ubicación válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else if (Capacidad <= 0)
+            {
+                MessageBox.Show("Ingrese una capacidad válida.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                int peticion = miCine.ModificarSala(ID, Ubicacion, Capacidad);
+                String mensaje = StatusCode.ObtenerMensaje(peticion);
+                if (peticion == 200)
+                {
+                    RefreshSalas();
+                }
+                MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
         }
 
         private void Btn_EliminarSala_Click(object sender, EventArgs e)
@@ -390,6 +431,8 @@ namespace TP1___GRUPO_C.Vistas
             MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        /*
+         
         private void Btn_ModificarPelicula_Click(object sender, EventArgs e)
         {
             int.TryParse(Label_PeliculaId.Text, out int ID);
@@ -421,6 +464,49 @@ namespace TP1___GRUPO_C.Vistas
 
         }
 
+        */
+
+        private void Btn_ModificarPelicula_Click(object sender, EventArgs e)
+        {
+            int.TryParse(Label_PeliculaId.Text, out int ID);
+            string nombre = this.Input_Nombre_Pelicula.Text;
+            string descripcion = this.Input_Descripcion.Text;
+            string sinopsis = this.Input_Sinopsis.Text;
+            string poster = this.Input_Poster.Text;
+            int.TryParse(this.Input_Duracion.Text, out int duracion);
+
+            List<string> funcionesSelec = new List<string>();
+
+            for (int i = 0; i < CLB_Funciones.Items.Count; i++)
+            {
+                CheckState st = CLB_Funciones.GetItemCheckState(i);
+                if (st.ToString() == "Checked")
+                {
+                    string idFunc = CLB_Funciones.Items[i].ToString().Split(",")[0];
+                    funcionesSelec.Add(idFunc);
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(descripcion) ||
+                string.IsNullOrWhiteSpace(sinopsis) || string.IsNullOrWhiteSpace(poster) || duracion <= 0)
+            {
+                MessageBox.Show("Verifique los campos ingresados.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                int peticion = miCine.ModificarPelicula(ID, nombre, descripcion, sinopsis, poster, duracion, funcionesSelec);
+                String mensaje = StatusCode.ObtenerMensaje(peticion);
+                if (peticion == 200)
+                {
+                    RefreshPeliculas();
+                }
+                MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+   
+        }
+
+        /*
+         
         private void Btn_NuevoPelicula_Click(object sender, EventArgs e)
         {
 
@@ -439,9 +525,40 @@ namespace TP1___GRUPO_C.Vistas
             MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        */
+
+        private void Btn_NuevoPelicula_Click(object sender, EventArgs e)
+        {
+            string nombre = this.Input_Nombre_Pelicula.Text;
+            string descripcion = this.Input_Descripcion.Text;
+            string sinopsis = this.Input_Sinopsis.Text;
+            string poster = this.Input_Poster.Text;
+            int.TryParse(this.Input_Duracion.Text, out int duracion);
+
+            if (string.IsNullOrWhiteSpace(nombre) || string.IsNullOrWhiteSpace(descripcion) ||
+                string.IsNullOrWhiteSpace(sinopsis) || string.IsNullOrWhiteSpace(poster) ||
+                duracion <= 0)
+            {
+                MessageBox.Show("Verifique los campos ingresados.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                int peticion = miCine.AgregarPelicula(nombre, descripcion, sinopsis, poster, duracion);
+                String mensaje = StatusCode.ObtenerMensaje(peticion);
+                if (peticion == 200)
+                {
+                    RefreshPeliculas();
+                }
+                MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+        }
+
+
         #endregion
 
         #region ABM Usuario
+        /*
         private void Btn_NuevoUsuario_Click(object sender, EventArgs e)
         {
             string Nombres = this.Input_Nombre.Text;
@@ -462,7 +579,45 @@ namespace TP1___GRUPO_C.Vistas
 
             MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        */
 
+        private void Btn_NuevoUsuario_Click(object sender, EventArgs e)
+        {
+            // Verificar campos nulos en la vista
+            if (string.IsNullOrEmpty(Input_Nombre.Text) || string.IsNullOrEmpty(Input_Apellido.Text) ||
+                string.IsNullOrEmpty(Input_DNI.Text) || string.IsNullOrEmpty(Input_Mail.Text) ||
+                string.IsNullOrEmpty(Input_Password.Text))
+            {
+                MessageBox.Show("Por favor, complete todos los campos.", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                // Todos los campos están completos, proceder con el registro
+                string Nombres = this.Input_Nombre.Text;
+                string Apellidos = this.Input_Apellido.Text;
+                int.TryParse(this.Input_DNI.Text, out int DNI);
+                string Mail = this.Input_Mail.Text;
+                string Pass = this.Input_Password.Text;
+                DateTime FechaNacimiento = this.Selec_FechaDeNacimiento.Value;
+                bool esAdmin = this.Cb_EsAdmin.Checked;
+                float.TryParse(this.Input_Credito.Text, out float credito);
+
+                int peticion = miCine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, credito, false);
+                String mensaje = StatusCode.ObtenerMensaje(peticion);
+                if (peticion == 200)
+                {
+                    RefreshUsuarios();
+                }
+
+                MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+
+        }
+
+
+
+        /*
         private void Btn_ModificarUsuario_Click(object sender, EventArgs e)
         {
             int.TryParse(Label_IdUsuario.Text, out int ID);
@@ -485,6 +640,41 @@ namespace TP1___GRUPO_C.Vistas
             }
             MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        */
+
+        private void Btn_ModificarUsuario_Click(object sender, EventArgs e)
+        {
+            int.TryParse(Label_IdUsuario.Text, out int ID);
+            string Nombres = this.Input_Nombre.Text;
+            string Apellidos = this.Input_Apellido.Text;
+            int.TryParse(this.Input_DNI.Text, out int DNI);
+            string Mail = this.Input_Mail.Text;
+            string Pass = this.Input_Password.Text;
+            DateTime FechaNacimiento = this.Selec_FechaDeNacimiento.Value;
+            bool esAdmin = this.Cb_EsAdmin.Checked;
+            int.TryParse(Input_Credito.Text, out int Credito);
+            bool Bloqueda = this.Cb_Bloqueado.Checked;
+            int.TryParse(this.Input_IntentosFallidos.Text, out int IntentosFallidos);
+
+            // Validar campos en la vista
+            if (ID == 0 || DNI == 0 || string.IsNullOrEmpty(Nombres) || string.IsNullOrEmpty(Apellidos))
+            {
+                MessageBox.Show("Por favor, complete todos los campos obligatorios.", "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else
+            {
+                int peticion = miCine.ModificarUsuario(ID, DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, IntentosFallidos, Bloqueda, Credito);
+                String mensaje = StatusCode.ObtenerMensaje(peticion);
+                if (peticion == 200)
+                {
+                    RefreshUsuarios();
+                }
+                MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+
+        }
+
 
         private void Btn_EliminarUsuario_Click(object sender, EventArgs e)
         {
