@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using TP1___GRUPO_C.Modelos;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 
 namespace TP1___GRUPO_C.Model
@@ -1081,17 +1082,12 @@ namespace TP1___GRUPO_C.Model
 
             if (usuario != null)
             {
-                if (importe > 0)
-                {
-                    usuario.Credito += importe;
-                    contexto.Usuarios.Update(usuario);
-                    contexto.SaveChanges();
-                    return 200;
-                }
-                else
-                {
-                    return 400;
-                }
+                // Si el credito es > 0 lo valida la vista
+                usuario.Credito += importe;
+                contexto.Usuarios.Update(usuario);
+                contexto.SaveChanges();
+                return 200;
+
             }
             return 500;
 
@@ -1127,7 +1123,7 @@ namespace TP1___GRUPO_C.Model
 
         }
 
-        public int ComprarEntrada(int idFuncion, int cantidadEntradas) //CORREGIDO PERO FALTA COMPRARENTRADAFUNCIONNOTNULL
+        public int ComprarEntrada(int idFuncion, int cantidadEntradas) //CORREGIDO
         {
             try
             {
@@ -1139,7 +1135,7 @@ namespace TP1___GRUPO_C.Model
 
                     if (funcion != null)
                     {
-                        ComprarEntradaFuncionNotNull(UsuarioActual, cantidadEntradas, funcion, idFuncion);
+                        ComprarEntradaFuncionNotNull(UsuarioActual, cantidadEntradas, funcion);
                         return 200;
                     }
                     else
@@ -1159,11 +1155,83 @@ namespace TP1___GRUPO_C.Model
             }
         }
 
-        // CORREGIR
-        public int ComprarEntradaFuncionNotNull(Usuario user, int cantidadEntradas, Funcion funcion, int idFuncion)
-        {
 
-            UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
+        public int ComprarEntradaFuncionNotNull(Usuario user, int cantidadEntradas, Funcion funcion)
+        {
+            UsuarioFuncion entrada = contexto.UF.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == funcion.ID);
+
+            double costoTotal = funcion.Costo * cantidadEntradas;
+            // Verificar si el usuario tiene suficiente crédito
+            if (user.Credito >= costoTotal)
+            {
+                // Verificar si la capacidad de la sala es suficiente
+                if (funcion.AsientosDisponibles >= cantidadEntradas)
+                {
+                    // Agregar la función a las funciones del usuario
+                    Funcion fun = user.MisFunciones.FirstOrDefault(f => f.ID == funcion.ID);
+
+                    // Actualizar la cantidad de clientes de la lista de funciones del cine
+                    funcion.CantidadClientes += cantidadEntradas;
+                    funcion.AsientosDisponibles -= cantidadEntradas;
+
+                    if (entrada != null)
+                    {
+                        // Entra aquí si el usuario ya tiene al menos 1 entrada para dicha función
+                        entrada.CantidadEntradasCompradas += cantidadEntradas;
+                        contexto.UF.Update(entrada);
+                    }
+                    else
+                    {
+                        // Entra aquí si el usuario nunca compró para esta función
+                        // Agregar al usuario como cliente de la función
+                        funcion.Clientes.Add(user);
+
+                        // PRESTAR ATENCION A ESTO! Puede ser que tire un error porque ahora UF tiene un objeto Usuario y Funcion, tal vez hay
+                        // que cambiar los constructores y pasarlo por aca. Tal vez se solucione con como esta hecho contexto no tengo idea ]
+                        // habria que probar
+                        entrada = new UsuarioFuncion(user.ID, funcion.ID, 0);
+                        entrada.CantidadEntradasCompradas += cantidadEntradas;
+                        contexto.UF.Add(entrada);
+                    }
+
+                    if (fun == null)
+                    {
+                        user.MisFunciones.Add(funcion);
+                    }
+                    else
+                    {
+                        // Actualizar la cantidad de clientes de la lista de funciones del cliente
+                        fun.CantidadClientes += cantidadEntradas;
+                        fun.AsientosDisponibles -= cantidadEntradas;
+                    }
+
+                    // Actualizar el crédito del usuario
+                    user.Credito -= costoTotal;
+
+                    // Se updatea funcion y usuarios para relfejar la nueva cantidad de asientos disponibles y clientes, y el credito del usuario
+                    contexto.Usuarios.Update(user);
+                    contexto.Funciones.Update(funcion);
+                    contexto.SaveChanges();
+
+                    return 200;
+                }
+                else
+                {
+                    throw new InvalidOperationException("No hay suficiente capacidad en la sala.");
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("Créditos insuficientes.");
+            }
+        }
+
+        /*
+        public int ComprarEntradaFuncionNotNull(Usuario user, int cantidadEntradas, Funcion funcion)
+        {   
+            // CAMBIE LA FIRMA DEL METODO PORQUE ES INNECESARIO PASARLE COMO PARAMETRO UNA FUNCION Y UN ID DE FUNCION
+
+            UsuarioFuncion entrada = contexto.UF.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == funcion.ID);
 
             double costoTotal = funcion.Costo * cantidadEntradas;
             // Verificar si el usuario tiene suficiente crédito
@@ -1227,13 +1295,18 @@ namespace TP1___GRUPO_C.Model
 
 
         }
+        */
 
         public int DevolverEntradasUsuario(Usuario user)
         {
             int result = 0;
-            foreach (Funcion f in user.MisFunciones)
+
+            // Filtrar las funciones del usuario que sean mayores o iguales a la fecha actual
+            List<Funcion> funcionesValidas = user.MisFunciones.Where(f => f.Fecha >= DateTime.Now).ToList();
+
+            foreach (Funcion f in funcionesValidas)
             {
-                UsuarioFuncion entrada = contexto.UF.Where(uf => uf.idUsuario == user.ID).FirstOrDefault();
+                UsuarioFuncion entrada = contexto.UF.Where(uf => uf.idUsuario == user.ID && uf.idFuncion == f.ID).FirstOrDefault();
                 if (entrada != null)
                 {
                     result = DevolverEntrada(user, f.ID, entrada.CantidadEntradasCompradas);
@@ -1243,8 +1316,10 @@ namespace TP1___GRUPO_C.Model
                     }
                 }
             }
+
             return result;
         }
+
 
         public int DevolverEntrada(Usuario user, int idFuncion, int cantidadEntradas)
         {
@@ -1269,6 +1344,55 @@ namespace TP1___GRUPO_C.Model
             }
         }
 
+        private bool DevolverEntradaFuncionNotNull(Usuario user, int idFuncion, int cantidadEntradas)
+        {
+            UsuarioFuncion entrada = contexto.UF.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
+
+            if (entrada.funcion.Fecha > DateTime.Now && entrada != null)
+            {
+
+                if (entrada.CantidadEntradasCompradas >= cantidadEntradas)
+                {
+
+                    entrada.funcion.CantidadClientes -= cantidadEntradas;
+                    entrada.funcion.AsientosDisponibles += cantidadEntradas;
+                    entrada.CantidadEntradasCompradas -= cantidadEntradas;
+                    double costoTotal = entrada.funcion.Costo * cantidadEntradas;
+                    user.Credito += costoTotal;
+
+                    if (entrada.CantidadEntradasCompradas <= 0)
+                    {
+                        contexto.UF.Remove(entrada);
+                        user.MisFunciones.Remove(entrada.funcion);
+                        entrada.funcion.Clientes.Remove(user);
+                    }
+                    else
+                    {
+                        contexto.UF.Update(entrada);
+                    }
+
+                    contexto.Usuarios.Update(user);
+                    contexto.Funciones.Update(entrada.funcion);
+                    contexto.SaveChanges();
+
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
+        /*
         private bool DevolverEntradaFuncionNotNull(Usuario user, int idFuncion, int cantidadEntradas)
         {
             Funcion funcion = Funciones.FirstOrDefault(f => f.ID == idFuncion);
@@ -1335,6 +1459,7 @@ namespace TP1___GRUPO_C.Model
             }
 
         }
+        */
 
         public int IniciarSesion(string Mail, string Password) // Aplicado
         {
@@ -1564,6 +1689,7 @@ namespace TP1___GRUPO_C.Model
         public int agregarUsuarioFuncion(int idUsuario, int idFuncion)
         {
             // Este metodo es innecesario, comprar entrada deberia agregar a esta tabla, ver de cambiar adonde se implementa
+            /* 
             if (DB.agregarUsuarioFuncion(idUsuario, idFuncion) != -1)
             {
                 return 200;
@@ -1572,6 +1698,8 @@ namespace TP1___GRUPO_C.Model
             {
                 return 500;
             }
+            */
+            return 0;
         }
         public void cerrar()
         {

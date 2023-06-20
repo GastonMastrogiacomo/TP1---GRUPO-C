@@ -177,17 +177,27 @@ namespace TP1___GRUPO_C.Vistas
             double cantidadCreditos;
             double.TryParse(Input_NuevoCreditoPerfil.Text, out cantidadCreditos);
 
-            int peticion = miCine.CargarCredito(usuarioActual.ID, cantidadCreditos);
-            String Mensaje = StatusCode.ObtenerMensaje(peticion);
-            if (peticion == 200)
+            if (cantidadCreditos > 0 )
             {
-                Label_MiCredito.Text = usuarioActual.Credito.ToString();
-                MessageBox.Show(Mensaje + " Credito cargado con exito!");
+                int peticion = miCine.CargarCredito(usuarioActual.ID, cantidadCreditos);
+                String Mensaje = StatusCode.ObtenerMensaje(peticion);
+                if (peticion == 200)
+                {
+                    Label_MiCredito.Text = usuarioActual.Credito.ToString();
+                    MessageBox.Show(Mensaje + " Credito cargado con exito!");
+                }
+                else
+                {
+                    MessageBox.Show(Mensaje + "No se pudo cargar el credito!");
+                }
             }
             else
             {
-                MessageBox.Show(Mensaje + "No se pudo cargar el credito!");
+                MessageBox.Show("Credito tiene que ser > 0!");
+
             }
+
+
 
 
         }

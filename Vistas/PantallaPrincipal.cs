@@ -241,7 +241,6 @@ namespace TP1___GRUPO_C
             if (int.TryParse(this.Input_CantEntradas.Text, out int cantEntradas))
             {
                 // Realizar la compra de entradas
-                //@modificar esto
                 if (cantEntradas > 0)
                 {
                     int peticion = cine.ComprarEntrada(idFuncionSeleccionada, cantEntradas);

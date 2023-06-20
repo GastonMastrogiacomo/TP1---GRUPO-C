@@ -63,38 +63,42 @@ CORRECCIONES PARA TP3 (LOS QUE ESTEN EN AZUL ESTAN YA CORREGIDOS):
 
      AHORA PIENSEN CÓMO LO HACEMOS CON LINQ! (recuerden que podemos concatenar varios WHERE).
 
- -[CORREGIDO SOLO COMPRAR ENTRADA, FALTA EL COMPRARENTRADANOTNULL]ComprarEntrada: La vista tiene una referencia al usuario actual?! 
-  Como mucho podrá tener un ID pero no el objeto y en todo caso, sería más simple que eso lo guarde Cine al momento de loguearse en 
-  un atributo privado, luego las operaciones de compra, devolución, etc. no piden usuario porque se entiende que aplican sobre el usuario 
-  actual (que ya cine tiene guardado en UsuarioActual).
+     -[CORREGIDO SOLO COMPRAR ENTRADA, FALTA EL COMPRARENTRADANOTNULL]ComprarEntrada: La vista tiene una referencia al usuario actual?! 
+      Como mucho podrá tener un ID pero no el objeto y en todo caso, sería más simple que eso lo guarde Cine al momento de loguearse en 
+      un atributo privado, luego las operaciones de compra, devolución, etc. no piden usuario porque se entiende que aplican sobre el usuario 
+      actual (que ya cine tiene guardado en UsuarioActual).
 
- -ComprarEntradaFuncionNotNull: La vista tiene la referencia a los objetos del sistema? NONO, cambiar, la vista tendrá que llamar a ComprarEntrada y con IDS solamente. Este método debe ser PRIVATE.
+     -ComprarEntradaFuncionNotNull: La vista tiene la referencia a los objetos del sistema? NONO, cambiar, la vista tendrá que llamar a ComprarEntrada y con IDS solamente. Este método debe ser PRIVATE.
 
- -Sigo con comprar entrada: user.MisFunciones.Add(funcion); debería ir luego de funcion.Clientes.Add(user); de lo contrario corren el riesgo de DUPLICAR el elemento en la lista.
+Este cambie el orden como dice y lo "corregi" pero la verdad que no lo entiendo, de que cambia si al usuario le agregas a su lista de funciones
+antes o despues de agregarselo a la lista de clientes de la funcion?
 
- -DevolverEntradaFuncionNotNull: cuántas query con LinQ por aquí. a ver, esta query 
-  está bien: UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion); 
-  Ahora, analicemos una de las tantas que hay: Funcion funcion = Funciones.FirstOrDefault(f => f.ID == idFuncion); MAL, directamente 
-  entrada.función me debería dar la función (claro, ustedes no guardaron las referencias a los objetos) tengan esto en cuenta para el TP3, 
-  con solo esa query alcanza, el resto lo tengo que poder sacar a través de las referencias.
+    -Sigo con comprar entrada: user.MisFunciones.Add(funcion); debería ir luego de funcion.Clientes.Add(user); de lo contrario corren el riesgo de DUPLICAR el elemento en la lista.
 
- -Sigo en devolver entrada: Volvemos al primer parcial: funcion == userFunc? Da true o false? DA TRUE, ambos apuntan al mismo objeto! Entonces buscarla de nuevo no suma, no tiene sentido. PD: Que nombre complicado  userFunc no? suena a un objeto de tipo UsuarioFuncion pero en realidad es una función... Cuidado con los nombres de las variables.
+    -DevolverEntradaFuncionNotNull: cuántas query con LinQ por aquí. a ver, esta query 
+    está bien: UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion); 
+     Ahora, analicemos una de las tantas que hay: Funcion funcion = Funciones.FirstOrDefault(f => f.ID == idFuncion); MAL, directamente 
+    entrada.función me debería dar la función (claro, ustedes no guardaron las referencias a los objetos) tengan esto en cuenta para el TP3, 
+    con solo esa query alcanza, el resto lo tengo que poder sacar a través de las referencias.
 
- -Sigo en devolver entrada: userFunc.CantidadClientes -= cantidadEntradas; Y userFunc.AsientosDisponibles += cantidadEntradas; DUPLICADO, si entra en el ELSE, esto se ejecuta DOS VECES, claramente el ELSE está demás. Un IF NO debe tener OBLIGATORIAMENTE UN ELSE.
+    -Sigo en devolver entrada: Volvemos al primer parcial: funcion == userFunc? Da true o false? DA TRUE, ambos apuntan al mismo objeto! Entonces buscarla de nuevo no suma, no tiene sentido. PD: Que nombre complicado  userFunc no? suena a un objeto de tipo UsuarioFuncion pero en realidad es una función... Cuidado con los nombres de las variables.
 
- -agregarUsuarioFuncion: No me convence mucho, esto es ComprarEntrada.
+    -Sigo en devolver entrada: userFunc.CantidadClientes -= cantidadEntradas; Y userFunc.AsientosDisponibles += cantidadEntradas; DUPLICADO, si entra en el ELSE, esto se ejecuta DOS VECES, claramente el ELSE está demás. Un IF NO debe tener OBLIGATORIAMENTE UN ELSE.
+
+    -agregarUsuarioFuncion: No me convence mucho, esto es ComprarEntrada.
 
 
  
- COSAS GRANDES QUE HAY QUE CAMBIAR:
+ COSAS CAMBIAR:
 
     - Buscar Funciones
-  - Hay que ver como cambiar devolver entrada y comprar, nos estamos complicando una locura
+    - Hay que ver como cambiar devolver entrada y comprar, nos estamos complicando una locura
 
- 
+  Andy fijate la pantalla carga de funciones trata de no usar el metodo agregarUsuarioFuncion y de utilizar Comprar y Devovler entrada sin
+  pasarle por parametro un objeto usuario, porque esta mal que la vista trabaje con eso. Ver de cambiar eso y refactorizar el codigo acorde en los metodos
+  respectivos.
 
- Se implementaron los ABM's de todo y teoricamente el MyContext esta hecho, ver que no 
- explota nada y ponerse a pulir los ABM con las correcciones
+
 
 
 
@@ -113,3 +117,16 @@ deje el codigo anterior comentado por las dudas.
 
 -Buscar funcion se corrigio pero hay algo que no entiendo y la observacion del profesor esta mal.Despues les pregunto a uds
 y sino le mando un mail
+
+20/6 Cosas Hechas:
+
+-Metodos Comprar y Devovler entrada ya estan hechos, probablemente habra que agregarle unas cosas a Comprar entrada considerando lo que menciono abajo
+,hay que probar si esto anda y ahi lo modificamos.
+
+-Cambie el metodo devolver entradas para que solo te devuelva las entradas que todavia no pasaron.
+
+-IMPORTANTE, hay que ver bien cuando vos compras una entrada que antes no  teniamos objeto Usuario y objeto Funcion en usuario funcion
+hay que ver como es con EF Core y contexto si te lo vincula bien porque creo que habria que pasarle por contexto el usuarioactual y la funcion
+entonces habria que cambiar el constructor.
+
+-Esto es necesario para el metodo devolver entrada tambien, porque en este vamos a usar uf.funcion y uf.usuario.
