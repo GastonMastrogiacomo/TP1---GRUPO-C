@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using TP1___GRUPO_C.Modelos;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-
+using Azure;
 
 namespace TP1___GRUPO_C.Model
 {
@@ -139,7 +139,8 @@ namespace TP1___GRUPO_C.Model
                     Password = Password,
                     FechaNacimiento = FechaNacimiento,
                     EsAdmin = EsAdmin,
-                    Credito = credito
+                    Credito = credito,
+
                 };
                 contexto.Usuarios.Add(otro);
                 contexto.SaveChanges();
@@ -323,9 +324,8 @@ namespace TP1___GRUPO_C.Model
         }
         */
 
-        public int EliminarUsuario(int idUsuario)
-        {
-            /*
+        /**ELiminar usuario viejo
+         * 
             Usuario user = Usuarios.FirstOrDefault(u => u.ID == idUsuario);
             UsuarioFuncion entrada = misUsuarioFuncion.FirstOrDefault(uf => uf.idUsuario == user.ID);
 
@@ -403,125 +403,126 @@ namespace TP1___GRUPO_C.Model
             }
             */
 
+        public int EliminarUsuario(int idUsuario)
+        {
+           
             Usuario user = contexto.Usuarios.Where(u => u.ID == idUsuario).FirstOrDefault();
             UsuarioFuncion entrada = contexto.UF.Where(uf => uf.idUsuario == idUsuario).FirstOrDefault();
 
-            if (user != null)
+            int response = 200;
+
+            try
             {
-                if (entrada != null)
+                if (user != null)
                 {
-                    try
+                    if (entrada != null)
                     {
                         // Se fija que todas las entradas hayan sido devueltas y procede a eliminar al usuario
-                        DevolverEntradasUsuario(user);
+                        response = DevolverEntradasUsuario(user);
                         contexto.Usuarios.Remove(user);
                         contexto.SaveChanges();
+                        return response;
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.ToString());
-                        return 500;
-                    }
-                }
-                else
-                {
-                    try
+                    else
                     {
                         // En el caso de que no tenga ninguna entrada comprada elimina al usuario directamente
                         contexto.Usuarios.Remove(user);
                         contexto.SaveChanges();
-                        return 200;
+                        return response;
+                    }
 
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine(ex.ToString());
-                        return 500;
-                    }
                 }
-                return 200;
+                else
+                {
+                    response = 500;
+                    throw new Exception("Usuario no encontrado.");
+                }
+
             }
-            else
+            catch (Exception ex)
             {
-                return 500;
+                Console.WriteLine(ex.Message);
+                return response;
             }
+        
         }
 
         #endregion
 
         #region ABM Funcion
 
+        /*Agregar funcion viejo
+           try
+           {
+               // Buscar la sala correspondiente en la lista de salas
+               Sala salaElegida = Salas.FirstOrDefault(s => s.ID == MiSalaId);
+               int capacidad = salaElegida.Capacidad;
+
+               if (salaElegida != null)
+               {
+                   // Buscar la película correspondiente en la lista de películas
+                   Pelicula peliElegida = Peliculas.FirstOrDefault(p => p.ID == MiPeliculaId);
+                   if (peliElegida != null)
+                   {
+                       // Verificar que el costo sea mayor a 0
+                       if (Costo > 0)
+                       {
+
+                           int idNuevaFuncion;
+                           idNuevaFuncion = DB.agregarFuncion(MiSalaId, MiPeliculaId, Fecha, Costo, capacidad);
+
+                           if (idNuevaFuncion != -1)
+                           {
+                               // Crear una nueva instancia de Funcion
+                               //Funcion func = new Funcion(salaElegida, peliElegida, Fecha, Costo);
+                               Funcion func = new Funcion(idNuevaFuncion, Fecha, Costo, MiSalaId, MiPeliculaId, capacidad);
+
+                               // Agregar la función a la lista de funciones
+                               Funciones.Add(func);
+
+                               // Agregar la función a la lista de funciones de la sala correspondiente
+                               salaElegida.MisFunciones.Add(func);
+
+                               // Agregar la función a la lista de funciones de la película correspondiente
+                               peliElegida.MisFunciones.Add(func);
+
+                               func.MiPelicula = peliElegida;
+                               func.MiSala = salaElegida;
+
+
+                               return 200;
+                           }
+                           else
+                           {
+                               return 500;
+                           }
+
+                       }
+                       else
+                       {
+                           throw new ArgumentException("El costo debe ser mayor a 0.");
+                       }
+                   }
+                   else
+                   {
+                       throw new ArgumentException("El ID de la pelicula es incorrecto.");
+                   }
+               }
+               else
+               {
+                   throw new ArgumentException("El ID de la sala es incorrecto");
+               }
+           }
+           catch (Exception e)
+           {
+               Console.WriteLine(e.Message);
+               return 500;
+           }
+           */
+
         public int AgregarFuncion(int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo)
         {
-            /*
-            try
-            {
-                // Buscar la sala correspondiente en la lista de salas
-                Sala salaElegida = Salas.FirstOrDefault(s => s.ID == MiSalaId);
-                int capacidad = salaElegida.Capacidad;
-
-                if (salaElegida != null)
-                {
-                    // Buscar la película correspondiente en la lista de películas
-                    Pelicula peliElegida = Peliculas.FirstOrDefault(p => p.ID == MiPeliculaId);
-                    if (peliElegida != null)
-                    {
-                        // Verificar que el costo sea mayor a 0
-                        if (Costo > 0)
-                        {
-
-                            int idNuevaFuncion;
-                            idNuevaFuncion = DB.agregarFuncion(MiSalaId, MiPeliculaId, Fecha, Costo, capacidad);
-
-                            if (idNuevaFuncion != -1)
-                            {
-                                // Crear una nueva instancia de Funcion
-                                //Funcion func = new Funcion(salaElegida, peliElegida, Fecha, Costo);
-                                Funcion func = new Funcion(idNuevaFuncion, Fecha, Costo, MiSalaId, MiPeliculaId, capacidad);
-
-                                // Agregar la función a la lista de funciones
-                                Funciones.Add(func);
-
-                                // Agregar la función a la lista de funciones de la sala correspondiente
-                                salaElegida.MisFunciones.Add(func);
-
-                                // Agregar la función a la lista de funciones de la película correspondiente
-                                peliElegida.MisFunciones.Add(func);
-
-                                func.MiPelicula = peliElegida;
-                                func.MiSala = salaElegida;
-
-
-                                return 200;
-                            }
-                            else
-                            {
-                                return 500;
-                            }
-
-                        }
-                        else
-                        {
-                            throw new ArgumentException("El costo debe ser mayor a 0.");
-                        }
-                    }
-                    else
-                    {
-                        throw new ArgumentException("El ID de la pelicula es incorrecto.");
-                    }
-                }
-                else
-                {
-                    throw new ArgumentException("El ID de la sala es incorrecto");
-                }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-                return 500;
-            }
-            */
-
+           
             try
             {
                 // Buscar la sala correspondiente en la lista de salas
@@ -582,32 +583,40 @@ namespace TP1___GRUPO_C.Model
             // Buscar la función con el ID correspondiente en la lista de funciones
             Funcion func = contexto.Funciones.Where(f => f.ID == IDFuncion).FirstOrDefault();
 
-            if (func != null)
+            try
             {
-                // Eliminar la función de la lista de funciones de todos los clientes asociados
-                foreach (Usuario user in func.Clientes)
-                {
 
-                    //Para cada Usuario en la lista de Clientes le eliminamos dicha funcion y le devolvemos el dinero
-                    if (func.Fecha >= DateTime.Now)
+                if (func != null)
+                {
+                    // Eliminar la función de la lista de funciones de todos los clientes asociados
+                    foreach (Usuario user in func.Clientes)
                     {
-                        user.Credito += func.Costo;
-                        // Esta bien esto? creeria que si pero habria que ver
-                        contexto.Usuarios.Update(user);
+
+                        //Para cada Usuario en la lista de Clientes le eliminamos dicha funcion y le devolvemos el dinero
+                        if (func.Fecha >= DateTime.Now)
+                        {
+                            user.Credito += func.Costo;
+                            contexto.Usuarios.Update(user);
+                        }
+
+                        //Habria que ver si el hecho de que borremos una funcion que ya paso esta bien, yo creeria que no pero talvez se genera problemas
+                        // a la hora de mostrar las funciones pasadas.
+                        //*A001
+                        user.MisFunciones.Remove(func);
                     }
 
-                    //Habria que ver si el hecho de que borremos una funcion que ya paso esta bien, yo creeria que no pero talvez se genera problemas
-                    // a la hora de mostrar las funciones pasadas.
-                    user.MisFunciones.Remove(func);
+                    // Eliminar la función de la lista de funciones
+                    contexto.Funciones.Remove(func);
+                    contexto.SaveChanges();
+                    return 200;
                 }
 
-                // Eliminar la función de la lista de funciones
-                contexto.Funciones.Remove(func);
-                contexto.SaveChanges();
-                return 200;
+                throw new Exception("No se encontró la función.");
+
             }
-            else
+            catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 return 404;
             }
         }
@@ -615,6 +624,7 @@ namespace TP1___GRUPO_C.Model
         public int ModificarFuncion(int IDFuncion, int MiSalaId, int MiPeliculaId, DateTime Fecha, double Costo)
         {
             // Se elimino cantidad de clientes como parametro porque no deberia estar
+            int response = 200;
             try
             {
                 Funcion func = contexto.Funciones.Where(f => f.ID == IDFuncion).FirstOrDefault();
@@ -640,27 +650,28 @@ namespace TP1___GRUPO_C.Model
                                     func.MiSala.MisFunciones.Remove(func);
                                     func.MiPelicula.MisFunciones.Remove(func);
 
-                                    func.MiSala = salaNueva;
-                                    func.MiPelicula = peliculaNueva;
-
                                     salaNueva.MisFunciones.Add(func);
                                     peliculaNueva.MisFunciones.Add(func);
 
-                                    func.Fecha = Fecha;
+                                    func.MiSala = salaNueva;
+                                    func.MiPelicula = peliculaNueva;
+                                                                                                                       func.Fecha = Fecha;
                                     func.Costo = Costo;
 
                                     contexto.Funciones.Update(func);
                                     contexto.SaveChanges();
 
-                                    return 200;
+                                    return response;
                                 }
                                 else
                                 {
+                                    response = 422;
                                     throw new ArgumentException("Faltan datos");
                                 }
                             }
                             else
                             {
+                                response = 500;
                                 throw new ArgumentException("La fecha no puede ser menor a hoy.");
                             }
                         }
@@ -672,27 +683,29 @@ namespace TP1___GRUPO_C.Model
 
                             contexto.Funciones.Update(func);
                             contexto.SaveChanges();
-                            return 200;
+                            return response;
                         }
 
 
                     }
                     else
                     {
+                        response = 500;
                         throw new ArgumentException("Sala o Pelicula no encontrada.");
                     }
 
                 }
                 else
                 {
-                    throw new ArgumentException("Función no encontrada.");
+                    response = 404;
+                    throw new Exception("Función no encontrada.");
                 }
             }
             catch (Exception ex)
             {
 
                 Console.WriteLine(ex.Message);
-                return 500;
+                return response;
             }
         }
 
@@ -723,8 +736,9 @@ namespace TP1___GRUPO_C.Model
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return 500;
             }
-            return 500;
+            
 
         }
 
@@ -732,33 +746,51 @@ namespace TP1___GRUPO_C.Model
         {
             Sala sala = contexto.Salas.Where(s => s.ID == IDSala).FirstOrDefault();
 
-            if (sala != null)
-            {
-                // VER! ESTO NO SE PORQUE ESTABA EN EL CODIGO ANTERIOR PORQUE ME PARECE QUE ES RECONTRA INNECESARIO
-                // Si uno elimina la Sala no hace falta vaciar la lista de Funciones en dicha sala porque esta ya no existe
-                // Creo que ahi tiene mas sentido con contexto.Funciones.Remove(funcionActual);
-                // Agregado, si no existe la Sala se eliminan todas las funciones que se daban ahi
+            int response = 200;
 
-                for (int i = 0; i < sala.MisFunciones.Count; i++)
+            try
+            {
+
+
+                if (sala != null)
                 {
-                    Funcion funcionActual = sala.MisFunciones[i];
+                    // VER! ESTO NO SE PORQUE ESTABA EN EL CODIGO ANTERIOR PORQUE ME PARECE QUE ES RECONTRA INNECESARIO
+                    // Si uno elimina la Sala no hace falta vaciar la lista de Funciones en dicha sala porque esta ya no existe
+                    // Creo que ahi tiene mas sentido con contexto.Funciones.Remove(funcionActual);
+                    // Agregado, si no existe la Sala se eliminan todas las funciones que se daban ahi
 
-                    // Hay que usar funcion actual en vez de remove creo
-                    EliminarFuncion(funcionActual.ID);
-                    //contexto.Funciones.Remove(funcionActual);
+                    for (int i = 0; i < sala.MisFunciones.Count; i++)
+                    {
+                        Funcion funcionActual = sala.MisFunciones[i];
 
-                    //sala.MisFunciones.Remove(funcionActual);
-                    funcionActual.MiSala = null;
+                        // Hay que usar funcion actual en vez de remove creo
+                        response = EliminarFuncion(funcionActual.ID);
+                        if (response == 200)
+                        {
+                            contexto.Funciones.Remove(funcionActual);
+                        }
+                        else
+                        {
+                            throw new Exception("Ocurrió un error al eliminar la funcion " + funcionActual.ToString());
+
+                        }
+                    }
+
+                    contexto.Salas.Remove(sala);
+                    contexto.SaveChanges();
+                    return response ;
                 }
-
-                contexto.Salas.Remove(sala);
-                contexto.SaveChanges();
-                return 200;
-            }
-            else
+                else
+                {
+                    response = 404;
+                    throw new Exception("No se encontró la sala");
+                }
+            }catch (Exception e)
             {
-                return 500;
+                Console.WriteLine(e.Message);
+                return response;
             }
+
 
             /*
             Sala sala = Salas.FirstOrDefault(s => s.ID == IDSala);
@@ -849,63 +881,64 @@ namespace TP1___GRUPO_C.Model
 
         #region ABM Pelicula
 
-        public int AgregarPelicula(string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion)
+        //Las verificaciones las hace la vista ahora
+
+        /*agregar pelicula viejo
+        // Hacemos las verificaciones correspondientes
+        if (Nombre != null && Nombre != "")
         {
-            try
-            {   //Las verificaciones las hace la vista ahora
-
-                /*
-                // Hacemos las verificaciones correspondientes
-                if (Nombre != null && Nombre != "")
+            if (Descripcion != null && Descripcion != "")
+            {
+                if (Sinopsis != null && Sinopsis != "")
                 {
-                    if (Descripcion != null && Descripcion != "")
+                    if (Poster != null && Poster != "")
                     {
-                        if (Sinopsis != null && Sinopsis != "")
+                        if (Duracion >= 0)
                         {
-                            if (Poster != null && Poster != "")
-                            {
-                                if (Duracion >= 0)
-                                {
-                                    Pelicula pelicula = new Pelicula { Nombre = Nombre, Descripcion = Descripcion, Sinopsis = Sinopsis, Poster = Poster, Duracion = Duracion };
-                                    contexto.Peliculas.Add(pelicula);
-                                    contexto.SaveChanges();
-                                    return 200;
+                            Pelicula pelicula = new Pelicula { Nombre = Nombre, Descripcion = Descripcion, Sinopsis = Sinopsis, Poster = Poster, Duracion = Duracion };
+                            contexto.Peliculas.Add(pelicula);
+                            contexto.SaveChanges();
+                            return 200;
 
-                                    //int idNuevaPelicula;
-                                    //idNuevaPelicula = DB.agregarPelicula(Nombre, Descripcion, Sinopsis, Poster, Duracion);
-                                    //if (idNuevaPelicula != -1)
-                                    //{
-                                    //    // De ser correctas creamos una nueva pelicula y la agregamos a la lista de peliculas
-                                    //    Pelicula NuevaPelicula = new Pelicula(idNuevaPelicula, Nombre, Descripcion, Sinopsis, Poster, Duracion);
-                                    //    Peliculas.Add(NuevaPelicula);
-                                    //    return 200;
-                                    //}
-                                }
-                                else
-                                {
-                                    throw new InvalidOperationException("Duracion Incorrecta");
-                                }
-                            }
-                            else
-                            {
-                                throw new InvalidOperationException("Poster Incorrecto");
-                            }
+                            //int idNuevaPelicula;
+                            //idNuevaPelicula = DB.agregarPelicula(Nombre, Descripcion, Sinopsis, Poster, Duracion);
+                            //if (idNuevaPelicula != -1)
+                            //{
+                            //    // De ser correctas creamos una nueva pelicula y la agregamos a la lista de peliculas
+                            //    Pelicula NuevaPelicula = new Pelicula(idNuevaPelicula, Nombre, Descripcion, Sinopsis, Poster, Duracion);
+                            //    Peliculas.Add(NuevaPelicula);
+                            //    return 200;
+                            //}
                         }
                         else
                         {
-                            throw new InvalidOperationException("Sinopsis Incorrecta");
+                            throw new InvalidOperationException("Duracion Incorrecta");
                         }
                     }
                     else
                     {
-                        throw new InvalidOperationException("Descripcion Incorrecta");
+                        throw new InvalidOperationException("Poster Incorrecto");
                     }
                 }
                 else
                 {
-                    throw new InvalidOperationException("Nombre Incorrecto");
+                    throw new InvalidOperationException("Sinopsis Incorrecta");
                 }
-                */
+            }
+            else
+            {
+                throw new InvalidOperationException("Descripcion Incorrecta");
+            }
+        }
+        else
+        {
+            throw new InvalidOperationException("Nombre Incorrecto");
+        }
+        */
+        public int AgregarPelicula(string Nombre, string Descripcion, string Sinopsis, string Poster, int Duracion)
+        {
+            try
+            {  
 
                 Pelicula pelicula = new Pelicula
                 {
@@ -924,8 +957,9 @@ namespace TP1___GRUPO_C.Model
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return 500;
             }
-            return 500;
+            
         }
 
         public int EliminarPelicula(int IDPelicula)
@@ -933,22 +967,38 @@ namespace TP1___GRUPO_C.Model
             // Se busca la pelicula con el id especificado
             Pelicula pelicula = contexto.Peliculas.Where(p => p.ID == IDPelicula).FirstOrDefault();
 
-            if (pelicula != null)
-            {
-                // Como ya no existe dicha pelicula, se eliminan todas las Funciones que la daban
-                for (int i = 0; i < pelicula.MisFunciones.Count; i++)
+            int response = 200;
+
+            try
+            {          
+                if (pelicula != null)
                 {
-                    Funcion funcionActual = pelicula.MisFunciones[i];
-                    EliminarFuncion(funcionActual.ID);
-                    //contexto.Funciones.Remove(funcionActual);
+                    // Como ya no existe dicha pelicula, se eliminan todas las Funciones que la daban
+                    for (int i = 0; i < pelicula.MisFunciones.Count; i++)
+                    {
+                        Funcion funcionActual = pelicula.MisFunciones[i];
+                        response = EliminarFuncion(funcionActual.ID);
+                        if(response == 200)
+                        {
+                            contexto.Funciones.Remove(funcionActual);
+                        }
+                        else
+                        {
+                            throw new Exception("Ocurrió un error al eliminar la función.");
+                        }
+                    }
+                    contexto.Peliculas.Remove(pelicula);
+                    contexto.SaveChanges();
+                    response = 204;
+                    return response;
                 }
-                contexto.Peliculas.Remove(pelicula);
-                contexto.SaveChanges();
-                return 204;
+                response = 404;
+                throw new Exception("No se encontró la pelicula");
             }
-            else
+            catch (Exception e)
             {
-                return 500;
+                Console.WriteLine (e.Message);
+                return response;
             }
 
             /*
@@ -988,6 +1038,21 @@ namespace TP1___GRUPO_C.Model
 
             Pelicula pelicula = contexto.Peliculas.Where(p => p.ID == IDPelicula).FirstOrDefault();
             List<Funcion> MisFunciones = new List<Funcion>();
+
+            //Sala sala = contexto.Salas.Where(s => s.ID == IDSala).FirstOrDefault();
+
+            //if (sala != null)
+            //{
+            //    sala.Ubicacion = Ubicacion;
+            //    sala.Capacidad = Capacidad;
+            //    contexto.Salas.Update(sala);
+            //    contexto.SaveChanges();
+            //    return 200;
+            //}
+            //else
+            //{
+            //    return 500;
+            //}
 
             if (pelicula != null)
             {
@@ -1299,7 +1364,7 @@ namespace TP1___GRUPO_C.Model
 
         public int DevolverEntradasUsuario(Usuario user)
         {
-            int result = 0;
+            int result = 200;
 
             // Filtrar las funciones del usuario que sean mayores o iguales a la fecha actual
             List<Funcion> funcionesValidas = user.MisFunciones.Where(f => f.Fecha >= DateTime.Now).ToList();
