@@ -31,3 +31,5 @@
 - descomento contexto.Funciones.Remove(funcionActual);
 
 ### ModificarPelicula()
+
+falta modificar pelicula aun
