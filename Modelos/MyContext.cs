@@ -26,7 +26,7 @@ namespace TP1___GRUPO_C.Modelos
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //connectionStr = "Data Source=DESKTOP-4S2EH6K\\SQLEXPRESS01;Initial Catalog=cine;Integrated Security=True";
-            optionsBuilder.UseSqlServer(Properties.Resources.ConnectionStr);
+            optionsBuilder.UseSqlServer(Properties.Resources.ConnectionString);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

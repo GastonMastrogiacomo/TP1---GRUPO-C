@@ -63,10 +63,10 @@ namespace TP1___GRUPO_C.Properties {
         /// <summary>
         ///   Busca una cadena traducida similar a Data Source=DESKTOP-LR8KJAR\SQLEXPRESS;Initial Catalog=Clase6_IDS;Integrated Security=True.
         /// </summary>
-        internal static string ConnectionStr
+        internal static string ConnectionString
         {
             get {
-                return ResourceManager.GetString("ConnectionStr", resourceCulture);
+                return ResourceManager.GetString("ConnectionString", resourceCulture);
             }
         }
         // @edit Andy ConnectionAndy
