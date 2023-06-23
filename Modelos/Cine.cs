@@ -29,6 +29,7 @@ namespace TP1___GRUPO_C.Model
         {
             try
             {
+                MessageBox.Show("ZARAZA CINE");
                 contexto = new MyContext();
                 //Cargo los UsuariosFuncion
                 contexto.Usuarios.Include(u => u.MisFunciones).Load();

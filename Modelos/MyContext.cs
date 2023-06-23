@@ -26,7 +26,9 @@ namespace TP1___GRUPO_C.Modelos
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //connectionStr = "Data Source=DESKTOP-4S2EH6K\\SQLEXPRESS01;Initial Catalog=cine;Integrated Security=True";
-            optionsBuilder.UseSqlServer(Properties.Resources.ConnectionString);
+            //Console.WriteLine(Properties.Resources.ConnectionString);
+            optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-88BRRQU\\SQLEXPRESS;Initial Catalog=Cine;Integrated Security=True");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -44,6 +46,10 @@ namespace TP1___GRUPO_C.Modelos
             modelBuilder.Entity<Pelicula>()
                 .ToTable("Peliculas")
                 .HasKey(p => p.ID);
+
+            //modelBuilder.Entity<UsuarioFuncion>()
+            //    .ToTable("UsuarioFuncion")
+            //    .HasKey(uf => uf.ID);
 
             /*
             //==================== RELACIONES============================
@@ -123,32 +129,32 @@ namespace TP1___GRUPO_C.Modelos
                 });
 
             modelBuilder.Entity<Funcion>(
-                usr =>
+                fun =>
                 {
-                    usr.Property(f => f.idSala).HasColumnType("integer");
-                    usr.Property(f => f.idPelicula).HasColumnType("integer");
-                    usr.Property(f => f.Fecha).HasColumnType("datetime2");
-                    usr.Property(f => f.AsientosDisponibles).HasColumnType("integer");
-                    usr.Property(f => f.CantidadClientes).HasColumnType("integer");
-                    usr.Property(f => f.Costo).HasColumnType("decimal(18,2)");
+                    fun.Property(f => f.idSala).HasColumnType("integer");
+                    fun.Property(f => f.idPelicula).HasColumnType("integer");
+                    fun.Property(f => f.Fecha).HasColumnType("datetime");
+                    fun.Property(f => f.AsientosDisponibles).HasColumnType("integer");
+                    fun.Property(f => f.CantidadClientes).HasColumnType("integer");
+                    fun.Property(f => f.Costo).HasColumnType("decimal(18,2)");
                 });
 
 
             modelBuilder.Entity<Sala>(
-               usr =>
+               sal =>
                {
-                   usr.Property(s => s.Ubicacion).HasColumnType("varchar(50)");
-                   usr.Property(s => s.Capacidad).HasColumnType("integer");
+                   sal.Property(s => s.Ubicacion).HasColumnType("varchar(50)");
+                   sal.Property(s => s.Capacidad).HasColumnType("integer");
                });
 
             modelBuilder.Entity<Pelicula>(
-               usr =>
+               pel =>
                {
-                   usr.Property(p => p.Nombre).HasColumnType("varchar(50)");
-                   usr.Property(p => p.Descripcion).HasColumnType("varchar(150)");
-                   usr.Property(p => p.Sinopsis).HasColumnType("varchar(255)");
-                   usr.Property(p => p.Poster).HasColumnType("varchar(255)");
-                   usr.Property(p => p.Duracion).HasColumnType("integer");
+                   pel.Property(p => p.Nombre).HasColumnType("varchar(50)");
+                   pel.Property(p => p.Descripcion).HasColumnType("varchar(150)");
+                   pel.Property(p => p.Sinopsis).HasColumnType("varchar(255)");
+                   pel.Property(p => p.Poster).HasColumnType("varchar(255)");
+                   pel.Property(p => p.Duracion).HasColumnType("integer");
                });
 
             modelBuilder.Entity<UsuarioFuncion>(
@@ -162,98 +168,103 @@ namespace TP1___GRUPO_C.Modelos
 
 
             //AGREGO ALGUNOS DATOS DE PRUEBA
-            modelBuilder.Entity<Funcion>().HasData(
-                new { id = 1, fecha = "2023 - 06 - 15T09:00:00.000", asientos_disponibles = 200, costo = 2000, id_sala = 1, id_pelicula = 1 },
-                new { id = 2, fecha = "2023-06-16T12:00:00.000", asientos_disponibles = 150, costo = 2500, id_sala = 1, id_pelicula = 2 },
-                new { id = 3, fecha = "2023-06-17T16:30:00.000", asientos_disponibles = 250, costo = 1500, id_sala = 2, id_pelicula = 2 },
-                new { id = 4, fecha = "2023-06-18T20:30:00.000", asientos_disponibles = 175, costo = 1000, id_sala = 2, id_pelicula = 2 },
-                new { id = 5, fecha = "2023-06-14T21:00:00.000", asientos_disponibles = 300, costo = 2200, id_sala = 2, id_pelicula = 3 },
-                new { id = 6, fecha = "2023-05-27T21:00:00.000", asientos_disponibles = 300, costo = 2200, id_sala = 2, id_pelicula = 3 },
-                new { id = 7, fecha = "2023-06-19T14:00:00.000", asientos_disponibles = 200, costo = 1800, id_sala = 3, id_pelicula = 3 },
-                new { id = 8, fecha = "2023-06-20T17:30:00.000", asientos_disponibles = 180, costo = 1500, id_sala = 3, id_pelicula = 4 },
-                new { id = 9, fecha = "2023-06-21T19:45:00.000", asientos_disponibles = 250, costo = 1200, id_sala = 4, id_pelicula = 4 },
-                new { id = 10, fecha = "2023-06-22T21:15:00.000", asientos_disponibles = 175, costo = 1000, id_sala = 4, id_pelicula = 4 },
-                new { id = 11, fecha = "2023-06-23T18:30:00.000", asientos_disponibles = 300, costo = 2000, id_sala = 1, id_pelicula = 4 },
-                new { id = 12, fecha = "2023-06-24T15:45:00.000", asientos_disponibles = 280, costo = 2200, id_sala = 1, id_pelicula = 1 },
-                new { id = 13, fecha = "2023-06-25T20:00:00.000", asientos_disponibles = 220, costo = 1900, id_sala = 2, id_pelicula = 2 },
-                new { id = 14, fecha = "2023-06-26T12:30:00.000", asientos_disponibles = 190, costo = 1700, id_sala = 2, id_pelicula = 3 },
-                new { id = 15, fecha = "2023-06-27T16:15:00.000", asientos_disponibles = 230, costo = 1400, id_sala = 3, id_pelicula = 2 },
-                new { id = 16, fecha = "2023-06-28T19:30:00.000", asientos_disponibles = 200, costo = 1200, id_sala = 3, id_pelicula = 1 },
-                new { id = 17, fecha = "2023-06-28T19:30:00.000", asientos_disponibles = 250, costo = 1000, id_sala = 4, id_pelicula = 2 },
-                new { id = 18, fecha = "2023-06-29T21:45:00.000", asientos_disponibles = 300, costo = 2200, id_sala = 4, id_pelicula = 2 },
-                new { id = 19, fecha = "2023-06-30T15:00:00.000", asientos_disponibles = 270, costo = 1900, id_sala = 1, id_pelicula = 3 },
-                new { id = 20, fecha = "2023-07-01T18:15:00.000", asientos_disponibles = 230, costo = 1700, id_sala = 1, id_pelicula = 4 },
-                new { id = 21, fecha = "2023-07-02T13:30:00.000", asientos_disponibles = 190, costo = 1400, id_sala = 2, id_pelicula = 1 });
 
             modelBuilder.Entity<Sala>().HasData(
-                new { id = 1, ubicacion = "Olivos", capacidad = 100 },
-                new { id = 2, ubicacion = "San Isidro", capacidad = 200 },
-                new { id = 3, ubicacion = "Caballito", capacidad = 500 },
-                new { id = 4, ubicacion = "Palermo", capacidad = 300 },
-                new { id = 5, ubicacion = "Recoleta", capacidad = 150 },
-                new { id = 6, ubicacion = "Belgrano", capacidad = 100 },
-                new { id = 7, ubicacion = "La Plata", capacidad = 200 },
-                new { id = 8, ubicacion = "Mar del Plata", capacidad = 150 },
-                new { id = 9, ubicacion = "Córdoba", capacidad = 120 },
-                new { id = 10, ubicacion = "Rosario", capacidad = 200 },
-                new { id = 11, ubicacion = "Mendoza", capacidad = 130 },
-                new { id = 12, ubicacion = "Tigre", capacidad = 150 },
-                new { id = 13, ubicacion = "Quilmes", capacidad = 200 },
-                new { id = 14, ubicacion = "San Miguel", capacidad = 170 },
-                new { id = 15, ubicacion = "Lomas de Zamora", capacidad = 180 },
-                new { id = 16, ubicacion = "Morón", capacidad = 200 },
-                new { id = 17, ubicacion = "Avellaneda", capacidad = 120 },
-                new { id = 18, ubicacion = "Banfield", capacidad = 110 },
-                new { id = 19, ubicacion = "E.T. el Extraterrestre", capacidad = 1 });
+              new { ID = 1, Ubicacion = "Olivos", Capacidad = 100 },
+              new { ID = 2, Ubicacion = "San Isidro", Capacidad = 200 },
+              new { ID = 3, Ubicacion = "Caballito", Capacidad = 500 },
+              new { ID = 4, Ubicacion = "Palermo", Capacidad = 300 },
+              new { ID = 5, Ubicacion = "Recoleta", Capacidad = 150 },
+              new { ID = 6, Ubicacion = "Belgrano", Capacidad = 100 },
+              new { ID = 7, Ubicacion = "La Plata", Capacidad = 200 },
+              new { ID = 8, Ubicacion = "Mar del Plata", Capacidad = 150 },
+              new { ID = 9, Ubicacion = "Córdoba", Capacidad = 120 },
+              new { ID = 10, Ubicacion = "Rosario", Capacidad = 200 },
+              new { ID = 11, Ubicacion = "Mendoza", Capacidad = 130 },
+              new { ID = 12, Ubicacion = "Tigre", Capacidad = 150 },
+              new { ID = 13, Ubicacion = "Quilmes", Capacidad = 200 },
+              new { ID = 14, Ubicacion = "San Miguel", Capacidad = 170 },
+              new { ID = 15, Ubicacion = "Lomas de Zamora", Capacidad = 180 },
+              new { ID = 16, Ubicacion = "Morón", Capacidad = 200 },
+              new { ID = 17, Ubicacion = "Avellaneda", Capacidad = 120 },
+              new { ID = 18, Ubicacion = "Banfield", Capacidad = 110 },
+              new { ID = 19, Ubicacion = "E.T. el Extraterrestre", Capacidad = 1 });
+
+            modelBuilder.Entity<Pelicula>().HasData(
+             new { ID = 1, Nombre = "Toy Story", Descripcion = "Un juguete", Sinopsis = "Uno", Poster = "", Duracion = 2 },
+             new { ID = 2, Nombre = "Toy Story 2", Descripcion = "Un juguete 2", Sinopsis = "Dos", Poster = "", Duracion = 2 },
+             new { ID = 3, Nombre = "Toy Story 3", Descripcion = "Un juguete 3", Sinopsis = "Tres", Poster = "", Duracion = 2 },
+             new { ID = 4, Nombre = "Toy Story 4", Descripcion = "Basta de la misma pelicula", Sinopsis = "Cuatro", Poster = "", Duracion = 2 });
+
+            modelBuilder.Entity<Funcion>().HasData(
+                new { ID = 1, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 200, Costo = 2000.0, idSala = 1, idPelicula = 1, CantidadClientes = 0 },
+                new { ID = 2, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 150, Costo = 2500.0, idSala = 1, idPelicula = 2, CantidadClientes = 0 },
+                new { ID = 3, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 250, Costo = 1500.0, idSala = 2, idPelicula = 2, CantidadClientes = 0 },
+                new { ID = 4, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 175, Costo = 1000.0, idSala = 2, idPelicula = 2, CantidadClientes = 0 },
+                new { ID = 5, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 300, Costo = 2200.0, idSala = 2, idPelicula = 3, CantidadClientes = 0 },
+                new { ID = 6, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 300, Costo = 2200.0, idSala = 2, idPelicula = 3, CantidadClientes = 0 },
+                new { ID = 7, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 200, Costo = 1800.0, idSala = 3, idPelicula = 3, CantidadClientes = 0 },
+                new { ID = 8, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 180, Costo = 1500.0, idSala = 3, idPelicula = 4, CantidadClientes = 0 },
+                new { ID = 9, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 250, Costo = 1200.0, idSala = 4, idPelicula = 4, CantidadClientes = 0 },
+                new { ID = 10, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 175, Costo = 1000.0, idSala = 4, idPelicula = 4, CantidadClientes = 0 },
+                new { ID = 11, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 300, Costo = 2000.0, idSala = 1, idPelicula = 4, CantidadClientes = 0 },
+                new { ID = 12, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 280, Costo = 2200.0, idSala = 1, idPelicula = 1, CantidadClientes = 0 },
+                new { ID = 13, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 220, Costo = 1900.0, idSala = 2, idPelicula = 2, CantidadClientes = 0 },
+                new { ID = 14, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 190, Costo = 1700.0, idSala = 2, idPelicula = 3, CantidadClientes = 0 },
+                new { ID = 15, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 230, Costo = 1400.0, idSala = 3, idPelicula = 2, CantidadClientes = 0 },
+                new { ID = 16, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 200, Costo = 1200.0, idSala = 3, idPelicula = 1, CantidadClientes = 0 },
+                new { ID = 17, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 250, Costo = 1000.0, idSala = 4, idPelicula = 2, CantidadClientes = 0 },
+                new { ID = 18, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 300, Costo = 2200.0, idSala = 4, idPelicula = 2, CantidadClientes = 0 },
+                new { ID = 19, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 270, Costo = 1900.0, idSala = 1, idPelicula = 3, CantidadClientes = 0 },
+                new { ID = 20, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 230, Costo = 1700.0, idSala = 1, idPelicula = 4, CantidadClientes = 0 },
+                new { ID = 21, Fecha = Convert.ToDateTime("2023-11-02 12:00:00.000"), AsientosDisponibles = 190, Costo = 1400.0, idSala = 2, idPelicula = 1, CantidadClientes = 0 });
+
 
             modelBuilder.Entity<Usuario>().HasData(
-                new { id = 1, dni = 1, nombre = "Pepe", apellido = "Perez", mail = "pepe@mail.com", password = "123", fecha_nacimiento = "1992-11-02", credito = 100, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 2, dni = 2, nombre = "El", apellido = "Admin", mail = "admin@mail.com", password = "123", fecha_nacimiento = "1990-06-08", credito = 0, es_admin = true, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 3, dni = 3, nombre = "Lucas", apellido = "Rodriguez", mail = "lucas@mail.com", password = "123", fecha_nacimiento = "1995-08-24", credito = 3000, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 4, dni = 4, nombre = "Ana", apellido = "González", mail = "ana@mail.com", password = "123", fecha_nacimiento = "1988-05-15", credito = 500, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 5, dni = 5, nombre = "María", apellido = "López", mail = "maria@mail.com", password = "123", fecha_nacimiento = "1993-09-30", credito = 200, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 6, dni = 6, nombre = "Luis", apellido = "Fernández", mail = "luis@mail.com", password = "123", fecha_nacimiento = "1994-12-10", credito = 800, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 7, dni = 7, nombre = "Laura", apellido = "Martínez", mail = "laura@mail.com", password = "123", fecha_nacimiento = "1991-07-18", credito = 1500, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 8, dni = 8, nombre = "Carlos", apellido = "Gómez", mail = "carlos@mail.com", password = "123", fecha_nacimiento = "1996-03-25", credito = 1200, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 9, dni = 9, nombre = "Ana", apellido = "Rodríguez", mail = "ana.rodriguez@mail.com", password = "123", fecha_nacimiento = "1989-09-12", credito = 2500, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 10, dni = 10, nombre = "Marcelo", apellido = "López", mail = "marcelo@mail.com", password = "123", fecha_nacimiento = "1997-11-28", credito = 300, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 11, dni = 11, nombre = "Julia", apellido = "Torres", mail = "julia@mail.com", password = "123", fecha_nacimiento = "1993-02-04", credito = 1800, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 12, dni = 12, nombre = "Mariano", apellido = "García", mail = "mariano@mail.com", password = "123", fecha_nacimiento = "1995-06-22", credito = 5000, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 13, dni = 13, nombre = "Gabriela", apellido = "López", mail = "gabriela@mail.com", password = "123", fecha_nacimiento = "1990-10-08", credito = 700, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 14, dni = 14, nombre = "Federico", apellido = "Pérez", mail = "federico@mail.com", password = "123", fecha_nacimiento = "1994-04-16", credito = 1000, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 15, dni = 15, nombre = "Carolina", apellido = "Fernández", mail = "carolina@mail.com", password = "123", fecha_nacimiento = "1991-08-14", credito = 250, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 16, dni = 16, nombre = "Luciana", apellido = "González", mail = "luciana@mail.com", password = "123", fecha_nacimiento = "1988-12-30", credito = 3500, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 17, dni = 17, nombre = "Martín", apellido = "Martínez", mail = "martin@mail.com", password = "123", fecha_nacimiento = "1997-03-17", credito = 900, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 18, dni = 18, nombre = "Paula", apellido = "Gómez", mail = "paula@mail.com", password = "123", fecha_nacimiento = "1992-09-24", credito = 2000, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 19, dni = 19, nombre = "Diego", apellido = "Rodríguez", mail = "diego.rodriguez@mail.com", password = "123", fecha_nacimiento = "1996-01-11", credito = 3000, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 20, dni = 20, nombre = "Sofía", apellido = "López", mail = "sofia@mail.com", password = "123", fecha_nacimiento = "1993-05-28", credito = 600, es_admin = false, bloqueado = false, intentos_fallidos = 0 },
-                new { id = 21, dni = 21, nombre = "Agustín", apellido = "Torres", mail = "agustin@mail.com", password = "123", fecha_nacimiento = "1989-11-01", credito = 1400, es_admin = false, bloqueado = false, intentos_fallidos = 0 });
+                new { ID = 1, DNI = 1, Nombre = "Pepe", Apellido = "Perez", Mail = "pepe@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1992-11-02 12:00:00.000"), Credito = 100.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 2, DNI = 2, Nombre = "El", Apellido = "Admin", Mail = "admin@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1990-06-08 12:00:00.000"), Credito = 0.0, EsAdmin = true, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 3, DNI = 3, Nombre = "Lucas", Apellido = "Rodriguez", Mail = "lucas@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1995-08-24 12:00:00.000"), Credito = 3000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 4, DNI = 4, Nombre = "Ana", Apellido = "González", Mail = "ana@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1988-05-15 12:00:00.000"), Credito = 500.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 5, DNI = 5, Nombre = "María", Apellido = "López", Mail = "maria@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1993-09-30 12:00:00.000"), Credito = 200.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 6, DNI = 6, Nombre = "Luis", Apellido = "Fernández", Mail = "luis@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1994-12-10 12:00:00.000"), Credito = 800.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 7, DNI = 7, Nombre = "Laura", Apellido = "Martínez", Mail = "laura@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1991-07-18 12:00:00.000"), Credito = 1500.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 8, DNI = 8, Nombre = "Carlos", Apellido = "Gómez", Mail = "carlos@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1996-03-25 12:00:00.000"), Credito = 1200.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 9, DNI = 9, Nombre = "Ana", Apellido = "Rodríguez", Mail = "ana.rodriguez@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1989-09-12 12:00:00.000"), Credito = 2500.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 10, DNI = 10, Nombre = "Marcelo", Apellido = "López", Mail = "marcelo@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1997-11-28 12:00:00.000"), Credito = 300.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 11, DNI = 11, Nombre = "Julia", Apellido = "Torres", Mail = "julia@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1993-02-04 12:00:00.000"), Credito = 1800.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 12, DNI = 12, Nombre = "Mariano", Apellido = "García", Mail = "mariano@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1995-06-22 12:00:00.000"), Credito = 5000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 13, DNI = 13, Nombre = "Gabriela", Apellido = "López", Mail = "gabriela@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1990-10-08 12:00:00.000"), Credito = 700.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 14, DNI = 14, Nombre = "Federico", Apellido = "Pérez", Mail = "federico@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1994-04-16 12:00:00.000"), Credito = 1000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 15, DNI = 15, Nombre = "Carolina", Apellido = "Fernández", Mail = "carolina@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1991-08-14 12:00:00.000"), Credito = 250.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 16, DNI = 16, Nombre = "Luciana", Apellido = "González", Mail = "luciana@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1988-12-30 12:00:00.000"), Credito = 3500.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 17, DNI = 17, Nombre = "Martín", Apellido = "Martínez", Mail = "martin@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1997-03-17 12:00:00.000"), Credito = 900.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 18, DNI = 18, Nombre = "Paula", Apellido = "Gómez", Mail = "paula@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1992-09-24 12:00:00.000"), Credito = 2000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 19, DNI = 19, Nombre = "Diego", Apellido = "Rodríguez", Mail = "diego.rodriguez@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1996-01-11 12:00:00.000"), Credito = 3000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 20, DNI = 20, Nombre = "Sofía", Apellido = "López", Mail = "sofia@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1993-05-28 12:00:00.000"), Credito = 600.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 21, DNI = 21, Nombre = "Agustín", Apellido = "Torres", Mail = "agustin@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1989-11-01 12:00:00.000"), Credito = 1400.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 });
 
             modelBuilder.Entity<UsuarioFuncion>().HasData(
-                new { id_usuario = 1, id_funcion = 1, cantidad_entradas_compradas = 1 },
-                new { id_usuario = 1, id_funcion = 2, cantidad_entradas_compradas = 4 },
-                new { id_usuario = 1, id_funcion = 3, cantidad_entradas_compradas = 1 },
-                new { id_usuario = 3, id_funcion = 4, cantidad_entradas_compradas = 3 },
-                new { id_usuario = 3, id_funcion = 5, cantidad_entradas_compradas = 2 },
-                new { id_usuario = 4, id_funcion = 9, cantidad_entradas_compradas = 2 },
-                new { id_usuario = 4, id_funcion = 10, cantidad_entradas_compradas = 4 },
-                new { id_usuario = 4, id_funcion = 11, cantidad_entradas_compradas = 2 },
-                new { id_usuario = 6, id_funcion = 12, cantidad_entradas_compradas = 3 },
-                new { id_usuario = 6, id_funcion = 13, cantidad_entradas_compradas = 1 },
-                new { id_usuario = 6, id_funcion = 14, cantidad_entradas_compradas = 4 },
-                new { id_usuario = 8, id_funcion = 15, cantidad_entradas_compradas = 2 },
-                new { id_usuario = 8, id_funcion = 16, cantidad_entradas_compradas = 3 },
-                new { id_usuario = 8, id_funcion = 17, cantidad_entradas_compradas = 1 },
-                new { id_usuario = 10, id_funcion = 18, cantidad_entradas_compradas = 4 },
-                new { id_usuario = 10, id_funcion = 19, cantidad_entradas_compradas = 2 },
-                new { id_usuario = 10, id_funcion = 20, cantidad_entradas_compradas = 3 });
+                new { idUsuario = 1, idFuncion = 1, CantidadEntradasCompradas = 1 },
+                new { idUsuario = 1, idFuncion = 2, CantidadEntradasCompradas = 4 },
+                new { idUsuario = 1, idFuncion = 3, CantidadEntradasCompradas = 1 },
+                new { idUsuario = 3, idFuncion = 4, CantidadEntradasCompradas = 3 },
+                new { idUsuario = 3, idFuncion = 5, CantidadEntradasCompradas = 2 },
+                new { idUsuario = 4, idFuncion = 9, CantidadEntradasCompradas = 2 },
+                new { idUsuario = 4, idFuncion = 10, CantidadEntradasCompradas = 4 },
+                new { idUsuario = 4, idFuncion = 11, CantidadEntradasCompradas = 2 },
+                new { idUsuario = 6, idFuncion = 12, CantidadEntradasCompradas = 3 },
+                new { idUsuario = 6, idFuncion = 13, CantidadEntradasCompradas = 1 },
+                new { idUsuario = 6, idFuncion = 14, CantidadEntradasCompradas = 4 },
+                new { idUsuario = 8, idFuncion = 15, CantidadEntradasCompradas = 2 },
+                new { idUsuario = 8, idFuncion = 16, CantidadEntradasCompradas = 3 },
+                new { idUsuario = 8, idFuncion = 17, CantidadEntradasCompradas = 1 },
+                new { idUsuario = 10, idFuncion = 18, CantidadEntradasCompradas = 4 },
+                new { idUsuario = 10, idFuncion = 19, CantidadEntradasCompradas = 2 },
+                new { idUsuario = 10, idFuncion = 20, CantidadEntradasCompradas = 3 });
 
             //Ignoro, no agrego la clase Cine ni Status Code a la base de datos
             modelBuilder.Ignore<Cine>();
             modelBuilder.Ignore<StatusCode>();
-            
-            //BORRAR ESTO, de momento la dejo por si queremos revisar el codigo 
-            modelBuilder.Ignore<DAL>();
 
         }
     }

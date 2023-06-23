@@ -26,7 +26,7 @@ namespace TP1___GRUPO_C.Vistas
             InitializeComponent();
             miCine = cine;
             this.UsuarioAuxiliar = UsuarioAuxiliar;
-            CargarListaFuncionesUsuario();
+            //CargarListaFuncionesUsuario();
             CargarListaFuncionesCine();
         }
 
@@ -34,37 +34,37 @@ namespace TP1___GRUPO_C.Vistas
         public delegate void CerrarYGuardarPantallaCargaFunciones();
         //public delegate void AbrirPantallaEdicionFunciones(Usuario UsuarioAuxiliar);
 
-        private void CargarListaFuncionesUsuario()
-        {
-            this.Clb_FuncionesUsuario.Items.Clear();
+        //private void CargarListaFuncionesUsuario()
+        //{
+        //    this.Clb_FuncionesUsuario.Items.Clear();
 
-            if (this.UsuarioAuxiliar.MisFunciones.Count > 0)
-            {
-                for (int i = 0; i < this.UsuarioAuxiliar.MisFunciones.Count; i++)
-                {
-                    Funcion func = this.UsuarioAuxiliar.MisFunciones[i];
-                    Pelicula p = miCine.MostrarPeliculas().FirstOrDefault(p => p.ID == func.idPelicula);
-                    string NombrePelicula = "";
-                    if (p != null)
-                    {
-                        NombrePelicula = p.Nombre.ToString();
-                    }
+        //    if (this.UsuarioAuxiliar.MisFunciones.Count > 0)
+        //    {
+        //        for (int i = 0; i < this.UsuarioAuxiliar.MisFunciones.Count; i++)
+        //        {
+        //            Funcion func = |this.UsuarioAuxiliar.MisFunciones[i];
+        //            Pelicula p = miCine.MostrarPeliculas().FirstOrDefault(p => p.ID == func.idPelicula);
+        //            string NombrePelicula = "";
+        //            if (p != null)
+        //            {
+        //                NombrePelicula = p.Nombre.ToString();
+        //            }
                   
-                    string FechaFuncion = func.Fecha.ToString();
+        //            string FechaFuncion = func.Fecha.ToString();
 
-                    Sala s = miCine.MostrarSalas().FirstOrDefault(s => s.ID == func.idSala);
-                    string Ubicacion = "";
-                    if (s != null)
-                    {
-                        Ubicacion = s.Ubicacion;
-                    }
-                    string Sala = Ubicacion.ToString();
+        //            Sala s = miCine.MostrarSalas().FirstOrDefault(s => s.ID == func.idSala);
+        //            string Ubicacion = "";
+        //            if (s != null)
+        //            {
+        //                Ubicacion = s.Ubicacion;
+        //            }
+        //            string Sala = Ubicacion.ToString();
 
-                    string Linea = NombrePelicula + " en " + Sala + ". Fecha: " + FechaFuncion;
-                    this.Clb_FuncionesUsuario.Items.Insert(i, Linea);
-                }
-            }
-        }
+        //            string Linea = NombrePelicula + " en " + Sala + ". Fecha: " + FechaFuncion;
+        //            this.Clb_FuncionesUsuario.Items.Insert(i, Linea);
+        //        }
+        //    }
+        //}
 
         private void CargarListaFuncionesCine()
         {

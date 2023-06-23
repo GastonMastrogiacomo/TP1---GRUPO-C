@@ -36,10 +36,10 @@ namespace TP1___GRUPO_C
             this.Input_FechaPpal.Value = DateTime.Now;
             Btn_MiPerfil.Hide();
             Btn_CerrarSesion.Hide();
-            MostrarPeliculasEnDataGridView();
-            MostrarSalasEnDataGridView();
-            MostrarFuncionesEnDataGridView();
-            CargarListaUbicacion();
+            //MostrarPeliculasEnDataGridView();
+            //MostrarSalasEnDataGridView();
+            //MostrarFuncionesEnDataGridView();
+            //CargarListaUbicacion();
 
             if (cine.UsuarioActual == null)
             {
