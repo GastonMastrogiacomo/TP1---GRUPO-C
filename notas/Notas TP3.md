@@ -89,14 +89,7 @@ antes o despues de agregarselo a la lista de clientes de la funcion?
 
 
  
- COSAS CAMBIAR:
 
-    - Buscar Funciones
-    - Hay que ver como cambiar devolver entrada y comprar, nos estamos complicando una locura
-
-  Andy fijate la pantalla carga de funciones trata de no usar el metodo agregarUsuarioFuncion y de utilizar Comprar y Devovler entrada sin
-  pasarle por parametro un objeto usuario, porque esta mal que la vista trabaje con eso. Ver de cambiar eso y refactorizar el codigo acorde en los metodos
-  respectivos.
 
 
 
@@ -131,10 +124,6 @@ entonces habria que cambiar el constructor.
 
 -Esto es necesario para el metodo devolver entrada tambien, porque en este vamos a usar uf.funcion y uf.usuario.
 
-ANDY: 
-PANTALLA ABM ADMIN LINEA 211
-
-
 Pruebas 22/6:
 
 ABM COMPLETO!
@@ -160,3 +149,17 @@ ABM COMPLETO!
 - Cargar Credito Bien
 - Comprar entradas Bien (Si tenemos tiempo ver lo de pasar por parametros Objetos en vez de ID)
 - Devolver entradas Bien
+
+23/06
+
+- PANTALLA ABM ADMIN LINEA 211 -> LISTO
+
+
+ COSAS CAMBIAR:
+
+    - Buscar Funciones
+    - Hay que ver como cambiar devolver entrada y comprar, nos estamos complicando una locura
+
+  Andy fijate la pantalla carga de funciones trata de no usar el metodo agregarUsuarioFuncion y de utilizar Comprar y Devovler entrada sin
+  pasarle por parametro un objeto usuario, porque esta mal que la vista trabaje con eso. Ver de cambiar eso y refactorizar el codigo acorde en los metodos
+  respectivos.

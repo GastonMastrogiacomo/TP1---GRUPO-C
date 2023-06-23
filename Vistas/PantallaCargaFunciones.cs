@@ -19,52 +19,57 @@ namespace TP1___GRUPO_C.Vistas
         private Usuario UsuarioAuxiliar;
         public CerrarPantallaCargaFunciones cerrarPantallaCargaFunciones;
         public CerrarYGuardarPantallaCargaFunciones cerrarYGuardarPantallaCargaFunciones;
-        //public AbrirPantallaEdicionFunciones abrirPantallaEdicionFunciones;
+        public AbrirPantallaEdicionFunciones abrirPantallaEdicionFunciones;
 
         public PantallaCargaFunciones(Cine cine, Usuario UsuarioAuxiliar)
         {
             InitializeComponent();
             miCine = cine;
             this.UsuarioAuxiliar = UsuarioAuxiliar;
-            //CargarListaFuncionesUsuario();
+            CargarListaFuncionesUsuario();
             CargarListaFuncionesCine();
         }
 
         public delegate void CerrarPantallaCargaFunciones();
         public delegate void CerrarYGuardarPantallaCargaFunciones();
-        //public delegate void AbrirPantallaEdicionFunciones(Usuario UsuarioAuxiliar);
+        public delegate void AbrirPantallaEdicionFunciones(Usuario UsuarioAuxiliar);
 
-        //private void CargarListaFuncionesUsuario()
-        //{
-        //    this.Clb_FuncionesUsuario.Items.Clear();
+        private void CargarListaFuncionesUsuario()
+        {
+            //this.Clb_FuncionesUsuario.Items.Clear();
 
-        //    if (this.UsuarioAuxiliar.MisFunciones.Count > 0)
-        //    {
-        //        for (int i = 0; i < this.UsuarioAuxiliar.MisFunciones.Count; i++)
-        //        {
-        //            Funcion func = |this.UsuarioAuxiliar.MisFunciones[i];
-        //            Pelicula p = miCine.MostrarPeliculas().FirstOrDefault(p => p.ID == func.idPelicula);
-        //            string NombrePelicula = "";
-        //            if (p != null)
-        //            {
-        //                NombrePelicula = p.Nombre.ToString();
-        //            }
-                  
-        //            string FechaFuncion = func.Fecha.ToString();
+            //if (this.UsuarioAuxiliar != null)
+            //{
 
-        //            Sala s = miCine.MostrarSalas().FirstOrDefault(s => s.ID == func.idSala);
-        //            string Ubicacion = "";
-        //            if (s != null)
-        //            {
-        //                Ubicacion = s.Ubicacion;
-        //            }
-        //            string Sala = Ubicacion.ToString();
+            //    if (this.UsuarioAuxiliar.MisFunciones.Count > 0)
+            //    {
+            //        for (int i = 0; i < this.UsuarioAuxiliar.MisFunciones.Count; i++)
+            //        {
+            //            //Funcion func = this.UsuarioAuxiliar.MisFunciones[i];
+            //            Funcion func = this.UsuarioAuxiliar.MisFunciones.Select();
+            //            Pelicula p = miCine.MostrarPeliculas().FirstOrDefault(p => p.ID == func.idPelicula);
+            //            string NombrePelicula = "";
+            //            if (p != null)
+            //            {
+            //                NombrePelicula = p.Nombre.ToString();
+            //            }
 
-        //            string Linea = NombrePelicula + " en " + Sala + ". Fecha: " + FechaFuncion;
-        //            this.Clb_FuncionesUsuario.Items.Insert(i, Linea);
-        //        }
-        //    }
-        //}
+            //            string FechaFuncion = func.Fecha.ToString();
+
+            //            Sala s = miCine.MostrarSalas().FirstOrDefault(s => s.ID == func.idSala);
+            //            string Ubicacion = "";
+            //            if (s != null)
+            //            {
+            //                Ubicacion = s.Ubicacion;
+            //            }
+            //            string Sala = Ubicacion.ToString();
+
+            //            string Linea = NombrePelicula + " en " + Sala + ". Fecha: " + FechaFuncion;
+            //            this.Clb_FuncionesUsuario.Items.Insert(i, Linea);
+            //        }
+            //    }
+            //}
+        }
 
         private void CargarListaFuncionesCine()
         {
@@ -76,7 +81,7 @@ namespace TP1___GRUPO_C.Vistas
                 {
                     NombrePelicula = p.Nombre.ToString();
                 }
-              
+
                 string FechaFuncion = func.Fecha.ToString();
 
                 Sala s = miCine.MostrarSalas().FirstOrDefault(s => s.ID == func.idSala);
@@ -87,8 +92,8 @@ namespace TP1___GRUPO_C.Vistas
                 }
 
                 string Sala = Ubicacion.ToString();
-                string Linea = func.ID+ ". "  +  NombrePelicula + " en " + Sala + ". Fecha: " + FechaFuncion;
-               
+                string Linea = func.ID + ". " + NombrePelicula + " en " + Sala + ". Fecha: " + FechaFuncion;
+
                 this.Clb_FuncionesCine.Items.Insert(this.Clb_FuncionesCine.Items.Count, Linea);
             }
         }
@@ -141,11 +146,11 @@ namespace TP1___GRUPO_C.Vistas
                     if (func != null)
                     {
                         UsuarioAuxiliar.MisFunciones.Add(func);
-                     }                  
+                    }
                 }
             }
 
-            
+
             Clb_FuncionesUsuario.Items.Clear();
             cerrarYGuardarPantallaCargaFunciones();
         }
@@ -156,17 +161,17 @@ namespace TP1___GRUPO_C.Vistas
             {
                 List<Funcion> funciones = miCine.MostrarFunciones();
                 int.TryParse(Clb_FuncionesUsuario.Items[i].ToString().Split(".")[0], out int IDFuncion);
-                
+
                 Funcion func = funciones.FirstOrDefault(f => f.ID == IDFuncion);
                 if (func != null)
                 {
                     UsuarioAuxiliar.MisFunciones.Add(func);
-                    miCine.agregarUsuarioFuncion(UsuarioAuxiliar.ID,func.ID);
+                    miCine.agregarUsuarioFuncion(UsuarioAuxiliar.ID, func.ID);
                 }
             }
             int peticion = miCine.ModificarUsuario(UsuarioAuxiliar.ID, UsuarioAuxiliar.DNI, UsuarioAuxiliar.Nombre, UsuarioAuxiliar.Apellido, UsuarioAuxiliar.Mail, UsuarioAuxiliar.Password, UsuarioAuxiliar.FechaNacimiento, UsuarioAuxiliar.EsAdmin, UsuarioAuxiliar.IntentosFallidos, UsuarioAuxiliar.Bloqueado, UsuarioAuxiliar.Credito);
 
-           
+
             String mensaje = StatusCode.ObtenerMensaje(peticion);
             if (peticion != 200)
             {

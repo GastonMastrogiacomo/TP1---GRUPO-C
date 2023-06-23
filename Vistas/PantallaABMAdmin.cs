@@ -200,24 +200,23 @@ namespace TP1___GRUPO_C.Vistas
             this.Input_Poster.Text = dataGridPeliculas[4, e.RowIndex].Value.ToString();
             this.Input_Duracion.Text = dataGridPeliculas[5, e.RowIndex].Value.ToString();
 
-            //string idfunciones = datagridpeliculas[6, e.rowindex].value.tostring();
-
             List<Pelicula> peliculas = miCine.MostrarPeliculas();
             this.PeliculaAuxiliar = peliculas.FirstOrDefault(p => p.ID == int.Parse(Label_PeliculaId.Text));
 
-            List<Funcion> funcionesPeli = this.PeliculaAuxiliar.MisFunciones;
+            if (this.PeliculaAuxiliar != null)
 
+                for (int i = 0; i < CLB_Funciones.Items.Count; i++)
+                {
 
-            //lo primero que me aparece es el id
-            //necesito verificar que Ids tengo cargados guardar las posiciones en una lista X
-            //tildar las posiciones que macheen al ID de la funcion que estoy recorriendo.
+                    string[] funcionesData = CLB_Funciones.Items[i].ToString().Split(",");
+                    string currentIdFuncion = funcionesData[0];
 
-            //foreach (Funcion func in funcionesPeli)
-            //{
-            //    ///*CLB_Funciones*/.SetItemChecked(this.CLB_Funciones.Items.Count)
-            //    CLB_Funciones.SetItemChecked(func.ID - 1, true);
-            //}
-
+                    Funcion funcionDePeli = this.PeliculaAuxiliar.MisFunciones.FirstOrDefault(f => f.ID == int.Parse(currentIdFuncion));
+                    if (funcionDePeli != null)
+                    {
+                        CLB_Funciones.SetItemChecked(i, true);
+                    }
+                }
         }
 
         private void DataGridFunciones_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -396,7 +395,7 @@ namespace TP1___GRUPO_C.Vistas
             DateTime Fecha = this.Selec_Fecha.Value;
             double.TryParse(this.Input_Costo.Text, out double Costo);
             //int.TryParse(Input_CantidadClientes.Text, out int cantidadClientes);
-            int peticion = miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, Costo);      
+            int peticion = miCine.ModificarFuncion(ID, salaSelectedID, peliSelectedID, Fecha, Costo);
             String mensaje = StatusCode.ObtenerMensaje(peticion);
             if (peticion == 200)
             {
@@ -438,7 +437,7 @@ namespace TP1___GRUPO_C.Vistas
         }
 
         /*
-         
+
         private void Btn_ModificarPelicula_Click(object sender, EventArgs e)
         {
             int.TryParse(Label_PeliculaId.Text, out int ID);
@@ -508,11 +507,11 @@ namespace TP1___GRUPO_C.Vistas
                 }
                 MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-   
+
         }
 
         /*
-         
+
         private void Btn_NuevoPelicula_Click(object sender, EventArgs e)
         {
 
