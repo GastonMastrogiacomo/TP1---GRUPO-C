@@ -26,7 +26,7 @@ namespace TP1___GRUPO_C.Modelos
                 case 403:
                     return "Por favor, inicie session";
                 case 404:
-                    return "No se pudo encontrar la informacion solicita";
+                    return "No se pudo encontrar la informacion solicitada";
                 case 422:
                     return "Complete todos los campos";
                 case 423:

@@ -130,3 +130,33 @@ hay que ver como es con EF Core y contexto si te lo vincula bien porque creo que
 entonces habria que cambiar el constructor.
 
 -Esto es necesario para el metodo devolver entrada tambien, porque en este vamos a usar uf.funcion y uf.usuario.
+
+ANDY: 
+PANTALLA ABM ADMIN LINEA 211
+
+
+Pruebas 22/6:
+
+ABM COMPLETO!
+- Agregar Usuario Bien
+- Modificar Usuario Bien
+- Eliminar Usuario Bien
+
+- Iniciar Sesion Bien
+- Registrarse Bien
+
+- Agregar Sala Bien
+- Modificar Sala Bien
+- Eliminar Sala Bien
+
+- Agregar Pelicula Bien
+- Modificar Pelicula Bien
+- Eliminar Pelicula Bien
+
+- Agregar Funcion Bien
+- Modificar Funcion Bien
+- Eliminar Funcion Bien
+
+- Cargar Credito Bien
+- Comprar entradas Bien (Si tenemos tiempo ver lo de pasar por parametros Objetos en vez de ID)
+- Devolver entradas Bien

@@ -207,10 +207,16 @@ namespace TP1___GRUPO_C.Vistas
 
             List<Funcion> funcionesPeli = this.PeliculaAuxiliar.MisFunciones;
 
-            foreach (Funcion func in funcionesPeli)
-            {
-                CLB_Funciones.SetItemChecked(func.ID - 1, true);
-            }
+
+            //lo primero que me aparece es el id
+            //necesito verificar que Ids tengo cargados guardar las posiciones en una lista X
+            //tildar las posiciones que macheen al ID de la funcion que estoy recorriendo.
+
+            //foreach (Funcion func in funcionesPeli)
+            //{
+            //    ///*CLB_Funciones*/.SetItemChecked(this.CLB_Funciones.Items.Count)
+            //    CLB_Funciones.SetItemChecked(func.ID - 1, true);
+            //}
 
         }
 

@@ -28,11 +28,15 @@ namespace TP1___GRUPO_C.Modelos
             //connectionStr = "Data Source=DESKTOP-4S2EH6K\\SQLEXPRESS01;Initial Catalog=cine;Integrated Security=True";
             //Console.WriteLine(Properties.Resources.ConnectionString);
             optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-88BRRQU\\SQLEXPRESS;Initial Catalog=Cine;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
- 
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-88BRRQU\\SQLEXPRESS;Initial Catalog=Cine;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True;");
+            //Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True;
+            //Trusted Connection y Trust Server Certificate se agregaron por un tema de permisos que no nos dejaba escribir en la base de datos
+            // MultipleActiveResultSet = Se permite la lectura de mas de una conexion en simultaneo. Al tener esto apagado no se nos permitia actualizar 
+            // los intentos fallidos del usuario y luego guardar la actualizacion en la base de datos.
+
         }
 
- 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //nombre de la tabla
