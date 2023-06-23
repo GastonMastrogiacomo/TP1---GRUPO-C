@@ -98,22 +98,6 @@ namespace TP1___GRUPO_C
             pantallaCargaFunciones.MdiParent = this;
             pantallaCargaFunciones.cerrarPantallaCargaFunciones += CerrarPantallaCargaFunciones;
             pantallaCargaFunciones.cerrarYGuardarPantallaCargaFunciones += CerrarYGuardarPantallaCargaFunciones;
-            //pantallaCargaFunciones.abrirPantallaEdicionFunciones += AbrirPantallaEdicionFunciones;
-            pantallaCargaFunciones.Show();
-        }
-
-        private void AbrirPantallaEdicionFunciones(Usuario UsuarioAuxiliar)
-        {
-            pantallaCargaFunciones.Hide();
-            pantallaEdicionFunciones = new PantallaEdicionFunciones(cine, UsuarioAuxiliar);
-            pantallaEdicionFunciones.MdiParent = this;
-            pantallaEdicionFunciones.cerrarYGuardarPantallaEdicionFunciones += CerrarPantallaEdicionFunciones;
-            pantallaEdicionFunciones.Show();
-        }
-
-        private void CerrarPantallaEdicionFunciones()
-        {
-            pantallaEdicionFunciones.Close();
             pantallaCargaFunciones.Show();
         }
 

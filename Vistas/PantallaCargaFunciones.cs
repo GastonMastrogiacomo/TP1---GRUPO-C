@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Azure;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -128,17 +129,13 @@ namespace TP1___GRUPO_C.Vistas
 
             RadioButton seleccionado = FL_FuncionesDisponiblesAdmin.Controls
                         .OfType<RadioButton>()
-                        .FirstOrDefault(r => r.Checked);
-
+                       .FirstOrDefault(r => r.Checked);
             try
             {
 
                 if (seleccionado != null)
                 {
                     int.TryParse(seleccionado.Text.ToString().Split(".")[0], out int IDFuncion);
-
-                    
-                   
 
                     int cantidadEntradas = 1;
                     if (TB_CantidadEntradasFuncionUsuario.Text != "")
@@ -166,19 +163,46 @@ namespace TP1___GRUPO_C.Vistas
             }
         }
 
-
         private void Btn_SacarDeLista_Click(object sender, EventArgs e)
         {
             RadioButton seleccionado = FL_FuncionesUsuarioAdmin.Controls
                          .OfType<RadioButton>()
                          .FirstOrDefault(r => r.Checked);
+            int response = 0;
+
+            try
+            {
+
+                if (seleccionado != null)
+                {
+                    int.TryParse(seleccionado.Text.ToString().Split(".")[0], out int IDFuncion);
+
+                    int cantidadEntradas = 1;
+                    if (TB_CantidadEntradasFuncionUsuario.Text != "")
+                    {
+                        int.TryParse(TB_CantidadEntradasFuncionUsuario.Text, out cantidadEntradas);
+                    }
+
+                    response = miCine.DevolverEntrada(UsuarioAuxiliar.ID, IDFuncion, cantidadEntradas);
+                    if (response != 200) throw new Exception("Error en la devolucion de entradas");
+
+                    FL_FuncionesUsuarioAdmin.Controls.Remove(seleccionado);
+
+                }
+
+                GuardarDatosUsuarioAuxiliar();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                MessageBox.Show("Oops no se pudo realizar la compra de entradas...");
+            }
             if (seleccionado != null)
             {
                 FL_FuncionesUsuarioAdmin.Controls.Remove(seleccionado);
             }
 
         }
-
 
         private void Btn_SalirCargarLista_Click(object sender, EventArgs e)
         {
@@ -209,31 +233,8 @@ namespace TP1___GRUPO_C.Vistas
 
         private void GuardarDatosUsuarioAuxiliar()
         {
-            for (int i = 0; i < FL_FuncionesUsuarioAdmin.Controls.Count; i++)
-            {
-                List<Funcion> funciones = miCine.MostrarFunciones();
-                int.TryParse(FL_FuncionesUsuarioAdmin.Controls[i].ToString().Split(".")[0], out int IDFuncion);
 
-                Funcion func = funciones.FirstOrDefault(f => f.ID == IDFuncion);
-                if (func != null)
-                {
-                    UsuarioAuxiliar.MisFunciones.Add(func);
-                    miCine.agregarUsuarioFuncion(UsuarioAuxiliar.ID, func.ID);
-                    //miCine.ComprarEntradaFuncionNotNull(UsuarioAuxiliar.ID,cam)
-                }
-            }
-            int peticion = miCine.ModificarUsuario(UsuarioAuxiliar.ID, UsuarioAuxiliar.DNI, UsuarioAuxiliar.Nombre, UsuarioAuxiliar.Apellido, UsuarioAuxiliar.Mail, UsuarioAuxiliar.Password, UsuarioAuxiliar.FechaNacimiento, UsuarioAuxiliar.EsAdmin, UsuarioAuxiliar.IntentosFallidos, UsuarioAuxiliar.Bloqueado, UsuarioAuxiliar.Credito);
-
-
-            String mensaje = StatusCode.ObtenerMensaje(peticion);
-            if (peticion != 200)
-            {
-                MessageBox.Show(mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            else
-            {
-                MessageBox.Show("Se actualizaron correctamente las funciones de " + UsuarioAuxiliar.Nombre);
-            }
+            MessageBox.Show("Se actualizaron correctamente las funciones de " + UsuarioAuxiliar.Nombre);
         }
 
         private void label3_Click(object sender, EventArgs e)

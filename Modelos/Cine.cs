@@ -752,7 +752,7 @@ namespace TP1___GRUPO_C.Model
                 UsuarioFuncion entrada = contexto.UF.Where(uf => uf.idUsuario == user.ID && uf.idFuncion == f.ID).FirstOrDefault();
                 if (entrada != null)
                 {
-                    result = DevolverEntrada(user, f.ID, entrada.CantidadEntradasCompradas);
+                    result = DevolverEntrada(user.ID, f.ID, entrada.CantidadEntradasCompradas);
                     if (result == 500)
                     {
                         return result;
@@ -762,7 +762,7 @@ namespace TP1___GRUPO_C.Model
             return result;
         }
 
-        public int DevolverEntrada(Usuario user, int idFuncion, int cantidadEntradas)
+        public int DevolverEntrada(int idUser, int idFuncion, int cantidadEntradas)
         {
             try
             {
@@ -770,7 +770,7 @@ namespace TP1___GRUPO_C.Model
 
                 if (funcion != null)
                 {
-                    DevolverEntradaFuncionNotNull(user, idFuncion, cantidadEntradas);
+                    DevolverEntradaFuncionNotNull(idUser, idFuncion, cantidadEntradas);
                     return 200;
                 }
                 else
@@ -785,9 +785,9 @@ namespace TP1___GRUPO_C.Model
             }
         }
 
-        private bool DevolverEntradaFuncionNotNull(Usuario user, int idFuncion, int cantidadEntradas)
+        private bool DevolverEntradaFuncionNotNull(int idUser, int idFuncion, int cantidadEntradas)
         {
-            UsuarioFuncion entrada = contexto.UF.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == idFuncion);
+            UsuarioFuncion entrada = contexto.UF.FirstOrDefault(uf => uf.idUsuario == idUser && uf.idFuncion == idFuncion);
 
             if (entrada.funcion.Fecha > DateTime.Now && entrada != null)
             {
@@ -799,20 +799,20 @@ namespace TP1___GRUPO_C.Model
                     entrada.funcion.AsientosDisponibles += cantidadEntradas;
                     entrada.CantidadEntradasCompradas -= cantidadEntradas;
                     double costoTotal = entrada.funcion.Costo * cantidadEntradas;
-                    user.Credito += costoTotal;
+                    entrada.usuario.Credito += costoTotal;
 
                     if (entrada.CantidadEntradasCompradas <= 0)
                     {
                         contexto.UF.Remove(entrada);
-                        user.MisFunciones.Remove(entrada.funcion);
-                        entrada.funcion.Clientes.Remove(user);
+                        entrada.usuario.MisFunciones.Remove(entrada.funcion);
+                        entrada.funcion.Clientes.Remove(entrada.usuario);
                     }
                     else
                     {
                         contexto.UF.Update(entrada);
                     }
 
-                    contexto.Usuarios.Update(user);
+                    contexto.Usuarios.Update(entrada.usuario);
                     contexto.Funciones.Update(entrada.funcion);
                     contexto.SaveChanges();
 
@@ -1028,23 +1028,6 @@ namespace TP1___GRUPO_C.Model
         }
 
         #endregion
-
-        //Ver de borrarlo
-        public int agregarUsuarioFuncion(int idUsuario, int idFuncion)
-        {
-            // Este metodo es innecesario, comprar entrada deberia agregar a esta tabla, ver de cambiar adonde se implementa
-            /* 
-            if (DB.agregarUsuarioFuncion(idUsuario, idFuncion) != -1)
-            {
-                return 200;
-            }
-            else
-            {
-                return 500;
-            }
-            */
-            return 0;
-        }
 
         public void cerrar()
         {

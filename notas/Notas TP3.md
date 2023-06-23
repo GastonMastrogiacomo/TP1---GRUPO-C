@@ -162,4 +162,4 @@ ABM COMPLETO!
 
   Andy fijate la pantalla carga de funciones trata de no usar el metodo agregarUsuarioFuncion y de utilizar Comprar y Devovler entrada sin
   pasarle por parametro un objeto usuario, porque esta mal que la vista trabaje con eso. Ver de cambiar eso y refactorizar el codigo acorde en los metodos
-  respectivos.
+  respectivos. --> LISTO ESTO

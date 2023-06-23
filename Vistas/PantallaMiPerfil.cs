@@ -238,7 +238,7 @@ namespace TP1___GRUPO_C.Vistas
             {
                 Usuario usuarioActual = miCine.UsuarioActual;
 
-                int peticion = miCine.DevolverEntrada(usuarioActual, idFuncionSeleccionada, cantEntradas);
+                int peticion = miCine.DevolverEntrada(usuarioActual.ID, idFuncionSeleccionada, cantEntradas);
                 if (peticion == 200)
                 {
                     MessageBox.Show("Devolvemos la entrada.");
