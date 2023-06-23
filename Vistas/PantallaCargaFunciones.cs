@@ -26,6 +26,7 @@ namespace TP1___GRUPO_C.Vistas
             InitializeComponent();
             miCine = cine;
             this.UsuarioAuxiliar = UsuarioAuxiliar;
+            this.Label_CreditoUsuarioCargaFuncion.Text = UsuarioAuxiliar.Credito.ToString();
             CargarListaFuncionesUsuario();
             CargarListaFuncionesCine();
         }
@@ -36,7 +37,7 @@ namespace TP1___GRUPO_C.Vistas
 
         private void CargarListaFuncionesUsuario()
         {
-            this.Clb_FuncionesUsuario.Items.Clear();
+            this.FL_FuncionesUsuarioAdmin.Controls.Clear();
 
             if (this.UsuarioAuxiliar != null)
             {
@@ -61,81 +62,136 @@ namespace TP1___GRUPO_C.Vistas
                         ubicacion = s.Ubicacion.ToString();
                     }
 
-                    string Linea = nombrePelicula + " en " + ubicacion + ". Fecha: " + fecha;
-                    this.Clb_FuncionesUsuario.Items.Insert(i, Linea);
+                    string Linea = FuncionesUsuario[i].ID + ". " + nombrePelicula + " en " + ubicacion + ". Fecha: " + fecha;
+                    RadioButton rb = new RadioButton();
+                    rb.Text = Linea;
+                    rb.Width = (TextRenderer.MeasureText(rb.Text, rb.Font)).Width + 20;
+                    this.FL_FuncionesUsuarioAdmin.Controls.Add(rb);
                 }
             }
         }
 
         private void CargarListaFuncionesCine()
         {
+            this.FL_FuncionesDisponiblesAdmin.Controls.Clear();
+
             foreach (Funcion func in miCine.MostrarFunciones())
             {
-                Pelicula p = miCine.MostrarPeliculas().FirstOrDefault(p => p.ID == func.idPelicula);
-                string NombrePelicula = "";
-                if (p != null)
+                if (func.Fecha >= DateTime.Now)
                 {
-                    NombrePelicula = p.Nombre.ToString();
+                    Pelicula p = miCine.MostrarPeliculas().FirstOrDefault(p => p.ID == func.idPelicula);
+                    string NombrePelicula = "";
+                    if (p != null)
+                    {
+                        NombrePelicula = p.Nombre.ToString();
+                    }
+
+                    string FechaFuncion = func.Fecha.ToString();
+
+                    Sala s = miCine.MostrarSalas().FirstOrDefault(s => s.ID == func.idSala);
+                    string Ubicacion = "";
+                    if (s != null)
+                    {
+                        Ubicacion = s.Ubicacion.ToString();
+                    }
+
+                    string Sala = Ubicacion.ToString();
+                    string Linea = func.ID + ". " + NombrePelicula + " en " + Sala + ". Fecha: " + FechaFuncion;
+
+                    RadioButton rb = new RadioButton();
+                    rb.Text = Linea;
+                    rb.Width = TextRenderer.MeasureText(rb.Text, rb.Font).Width + 20;
+                    rb.Click += new EventHandler(this.radioButtonClickPrice);
+
+                    this.FL_FuncionesDisponiblesAdmin.Controls.Add(rb);
+
                 }
+            }
+        }
 
-                string FechaFuncion = func.Fecha.ToString();
+        private void radioButtonClickPrice(object sender, EventArgs e)
+        {
+            RadioButton rb = (RadioButton)sender;
+            int.TryParse(rb.Text.Split(".")[0], out int IDFuncion);
+            Funcion fun = miCine.MostrarFunciones().FirstOrDefault(f => f.ID == IDFuncion);
+            if (fun != null)
+            {
+                this.Label_CostoUnitarioFuncion.Text = fun.Costo.ToString();
 
-                Sala s = miCine.MostrarSalas().FirstOrDefault(s => s.ID == func.idSala);
-                string Ubicacion = "";
-                if (s != null)
-                {
-                    Ubicacion = s.Ubicacion.ToString();
-                }
-
-                string Sala = Ubicacion.ToString();
-                string Linea = func.ID + ". " + NombrePelicula + " en " + Sala + ". Fecha: " + FechaFuncion;
-
-                this.Clb_FuncionesCine.Items.Insert(this.Clb_FuncionesCine.Items.Count, Linea);
             }
         }
 
         private void Btn_AgregarALista_Click(object sender, EventArgs e)
         {
 
-            for (int i = 0; i < Clb_FuncionesCine.Items.Count; i++)
+            int response = 0;
+
+            RadioButton seleccionado = FL_FuncionesDisponiblesAdmin.Controls
+                        .OfType<RadioButton>()
+                        .FirstOrDefault(r => r.Checked);
+
+            try
             {
-                CheckState st = Clb_FuncionesCine.GetItemCheckState(i);
-                if (st.ToString() == "Checked")
+
+                if (seleccionado != null)
                 {
-                    if (!Clb_FuncionesUsuario.Items.Contains(Clb_FuncionesCine.Items[i]))
+                    int.TryParse(seleccionado.Text.ToString().Split(".")[0], out int IDFuncion);
+
+                    
+                   
+
+                    int cantidadEntradas = 1;
+                    if (TB_CantidadEntradasFuncionUsuario.Text != "")
                     {
-                        Clb_FuncionesUsuario.Items.Add(Clb_FuncionesCine.Items[i]);
+                        int.TryParse(TB_CantidadEntradasFuncionUsuario.Text, out cantidadEntradas);
+                    }
+
+                    response = miCine.ComprarEntradaFuncionNotNull(UsuarioAuxiliar.ID, cantidadEntradas, IDFuncion);
+                    if (response != 200) throw new Exception("Error en la compra de entradas");
+
+                    if (!FL_FuncionesUsuarioAdmin.Controls.Contains(seleccionado))
+                    {
+                        seleccionado.Checked = false;
+                        FL_FuncionesUsuarioAdmin.Controls.Add(seleccionado);
+                        CargarListaFuncionesCine();
                     }
                 }
+
+                GuardarDatosUsuarioAuxiliar();
             }
-            GuardarDatosUsuarioAuxiliar();
-            //abrirPantallaEdicionFunciones(UsuarioAuxiliar);
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                MessageBox.Show("Oops no se pudo realizar la compra de entradas...");
+            }
         }
+
 
         private void Btn_SacarDeLista_Click(object sender, EventArgs e)
         {
-            for (int i = 0; i < Clb_FuncionesUsuario.Items.Count; i++)
+            RadioButton seleccionado = FL_FuncionesUsuarioAdmin.Controls
+                         .OfType<RadioButton>()
+                         .FirstOrDefault(r => r.Checked);
+            if (seleccionado != null)
             {
-                CheckState st = Clb_FuncionesUsuario.GetItemCheckState(i);
-                if (st.ToString() == "Checked")
-                {
-                    Clb_FuncionesUsuario.Items.RemoveAt(i);
-                }
+                FL_FuncionesUsuarioAdmin.Controls.Remove(seleccionado);
             }
+
         }
+
 
         private void Btn_SalirCargarLista_Click(object sender, EventArgs e)
         {
-            Clb_FuncionesUsuario.Items.Clear();
+            FL_FuncionesUsuarioAdmin.Controls.Clear();
             cerrarPantallaCargaFunciones();
         }
 
         private void Btn_GuardarYSalir_Click(object sender, EventArgs e)
         {
-
-            if (Clb_FuncionesUsuario.Items.Count > 0)
+            //TODO modificar esto asi se guardan las funciones del usuario seleccionadas
+            if (FL_FuncionesUsuarioAdmin.Controls.Count > 0)
             {
-                for (int i = 0; i < Clb_FuncionesUsuario.Items.Count; i++)
+                for (int i = 0; i < FL_FuncionesUsuarioAdmin.Controls.Count; i++)
                 {
                     //le sumo 1 xq antes lo reste en el indice del item. (en la vista)
                     Funcion func = miCine.MostrarFunciones().FirstOrDefault(f => f.ID == (i + 1));
@@ -147,22 +203,23 @@ namespace TP1___GRUPO_C.Vistas
             }
 
 
-            Clb_FuncionesUsuario.Items.Clear();
+            FL_FuncionesUsuarioAdmin.Controls.Clear();
             cerrarYGuardarPantallaCargaFunciones();
         }
 
         private void GuardarDatosUsuarioAuxiliar()
         {
-            for (int i = 0; i < Clb_FuncionesUsuario.Items.Count; i++)
+            for (int i = 0; i < FL_FuncionesUsuarioAdmin.Controls.Count; i++)
             {
                 List<Funcion> funciones = miCine.MostrarFunciones();
-                int.TryParse(Clb_FuncionesUsuario.Items[i].ToString().Split(".")[0], out int IDFuncion);
+                int.TryParse(FL_FuncionesUsuarioAdmin.Controls[i].ToString().Split(".")[0], out int IDFuncion);
 
                 Funcion func = funciones.FirstOrDefault(f => f.ID == IDFuncion);
                 if (func != null)
                 {
                     UsuarioAuxiliar.MisFunciones.Add(func);
                     miCine.agregarUsuarioFuncion(UsuarioAuxiliar.ID, func.ID);
+                    //miCine.ComprarEntradaFuncionNotNull(UsuarioAuxiliar.ID,cam)
                 }
             }
             int peticion = miCine.ModificarUsuario(UsuarioAuxiliar.ID, UsuarioAuxiliar.DNI, UsuarioAuxiliar.Nombre, UsuarioAuxiliar.Apellido, UsuarioAuxiliar.Mail, UsuarioAuxiliar.Password, UsuarioAuxiliar.FechaNacimiento, UsuarioAuxiliar.EsAdmin, UsuarioAuxiliar.IntentosFallidos, UsuarioAuxiliar.Bloqueado, UsuarioAuxiliar.Credito);
@@ -179,6 +236,18 @@ namespace TP1___GRUPO_C.Vistas
             }
         }
 
+        private void label3_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+        private void FL_FuncionesDisponiblesAdmin_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

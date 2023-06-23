@@ -565,7 +565,7 @@ namespace TP1___GRUPO_C.Model
 
                     if (funcion != null && funcion.Fecha > DateTime.Now)
                     {
-                        ComprarEntradaFuncionNotNull(UsuarioActual, cantidadEntradas, funcion);
+                        ComprarEntradaFuncionNotNull(UsuarioActual.ID, cantidadEntradas, funcion.ID);
                         return 200;
                     }
                     else
@@ -585,10 +585,10 @@ namespace TP1___GRUPO_C.Model
             }
         }
 
-        public int ComprarEntradaFuncionNotNull(Usuario user, int cantidadEntradas, Funcion funcion)
+        public int ComprarEntradaFuncionNotNull(int userId, int cantidadEntradas, int funcionId)
         {
             //NO ES NECESARIO PASAR EL OBJETO COMPLET, CON PASAR SOLO EL ID ESTA OK 
-            UsuarioFuncion entrada = contexto.UF.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == funcion.ID);
+            UsuarioFuncion entrada = contexto.UF.FirstOrDefault(uf => uf.idUsuario == userId && uf.idFuncion == funcionId);
 
             try
             {
@@ -616,24 +616,33 @@ namespace TP1___GRUPO_C.Model
                 }
                 else
                 {
-                    Funcion fun = contexto.Funciones.FirstOrDefault(f => f.ID == funcion.ID);
+                    Funcion fun = contexto.Funciones.FirstOrDefault(f => f.ID == funcionId);
                     if (fun != null)
                     {
-                        Usuario usr = contexto.Usuarios.FirstOrDefault(u => u.ID == user.ID);
+                        Usuario usr = contexto.Usuarios.FirstOrDefault(u => u.ID == userId);
                         if (usr != null)
                         {
 
-                            fun.CantidadClientes += cantidadEntradas;
-                            fun.AsientosDisponibles -= cantidadEntradas;
-                            contexto.Funciones.Update(fun);
-
-                            usr.Credito -= fun.Costo * cantidadEntradas;
-                            usr.MisFunciones.Add(funcion);
-                            contexto.Usuarios.Update(usr);
+                            if (usr.Credito >= (fun.Costo * cantidadEntradas))
+                            {
 
 
-                            entrada = new UsuarioFuncion(usr.ID, fun.ID, cantidadEntradas);
-                            contexto.UF.Add(entrada);
+                                fun.CantidadClientes += cantidadEntradas;
+                                fun.AsientosDisponibles -= cantidadEntradas;
+                                contexto.Funciones.Update(fun);
+
+                                usr.Credito -= fun.Costo * cantidadEntradas;
+                                usr.MisFunciones.Add(fun);
+                                contexto.Usuarios.Update(usr);
+
+
+                                entrada = new UsuarioFuncion(usr.ID, fun.ID, cantidadEntradas);
+                                contexto.UF.Add(entrada);
+                            }
+                            else
+                            {
+                                throw new InvalidOperationException("Saldo insuficiente");
+                            }
                         }
                         else
                         {
@@ -985,27 +994,28 @@ namespace TP1___GRUPO_C.Model
         }
         */
 
- 
+
         public List<Funcion> BuscarFuncion(string pelicula, string ubicacion, DateTime fecha, int precioMinimo, int precioMaximo)
         {
+
             List<Funcion> funcionesEncontradas = new List<Funcion>();
 
             if (fecha >= DateTime.Today)
             {
 
                 funcionesEncontradas = contexto.Funciones.Where(fun =>
-                    fun.Fecha >= DateTime.Today &&
-                    (
-                        !string.IsNullOrWhiteSpace(pelicula) || fun.MiPelicula.Nombre.Contains(pelicula)
-                   ||
-                        !string.IsNullOrWhiteSpace(ubicacion) || fun.MiSala.Ubicacion.Equals(ubicacion)
-                    )
-                    && (precioMinimo >= 0 && fun.Costo >= precioMinimo)
-                    && (precioMaximo >= 0 && fun.Costo <= precioMaximo)
+                   fun.Fecha == fecha &&
 
-                    ).ToList();
+                     string.IsNullOrWhiteSpace(pelicula) || fun.MiPelicula.Nombre.Contains(pelicula)
+                  &&
+                       string.IsNullOrWhiteSpace(ubicacion) || fun.MiSala.Ubicacion.Equals(ubicacion)
 
-                //no sea nulo o espacio (pelicula) &&
+                   && (precioMinimo == 0 || fun.Costo >= precioMinimo)
+                   && (precioMaximo == 0 || fun.Costo <= precioMaximo)
+
+                   ).ToList();
+
+
             }
             return funcionesEncontradas;
 

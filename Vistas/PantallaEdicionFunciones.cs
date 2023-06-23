@@ -89,7 +89,7 @@ namespace TP1___GRUPO_C.Vistas
                         if (CantEntradas != null)
                         {
                             this.Label_Credito.Text = usuarioAuxiliar.Credito.ToString();
-                            miCine.ComprarEntradaFuncionNotNull(usuarioAuxiliar, int.Parse(CantEntradas.Value.ToString()), func);
+                            miCine.ComprarEntradaFuncionNotNull(usuarioAuxiliar.ID, int.Parse(CantEntradas.Value.ToString()), func.ID);
                             // CAMBIE LA FIRMA DEL METODO PORQUE ES INNECESARIO PASARLE COMO PARAMETRO UNA FUNCION Y UN ID DE FUNCION
                             // le saque el func.ID
                         }

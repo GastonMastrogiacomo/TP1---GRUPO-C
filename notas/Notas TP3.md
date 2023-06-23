@@ -153,7 +153,7 @@ ABM COMPLETO!
 23/06
 
 - PANTALLA ABM ADMIN LINEA 211 -> LISTO
-
+- CargarListaFuncionesUsuario -> LISTO
 
  COSAS CAMBIAR:
 
