@@ -28,8 +28,11 @@ namespace TP1___GRUPO_C.Modelos
             //connectionStr = "Data Source=DESKTOP-4S2EH6K\\SQLEXPRESS01;Initial Catalog=cine;Integrated Security=True";
             //Console.WriteLine(Properties.Resources.ConnectionString);
             optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-88BRRQU\\SQLEXPRESS;Initial Catalog=Cine;Integrated Security=True");
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-88BRRQU\\SQLEXPRESS;Initial Catalog=Cine;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;");
+ 
         }
+
+ 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //nombre de la tabla
@@ -123,8 +126,8 @@ namespace TP1___GRUPO_C.Modelos
                     usr.Property(u => u.Password).HasColumnType("varchar(50)");
                     usr.Property(u => u.IntentosFallidos).HasColumnType("int");
                     usr.Property(u => u.Bloqueado).HasColumnType("bit");
-                    usr.Property(u => u.Credito).HasColumnType("decimal");
-                    usr.Property(u => u.FechaNacimiento).HasColumnType("datetime2");
+                    usr.Property(u => u.Credito).HasColumnType("decimal(18,2)");
+                    usr.Property(u => u.FechaNacimiento).HasColumnType("datetime");
                     usr.Property(u => u.EsAdmin).HasColumnType("bit");
                 });
 
@@ -221,27 +224,27 @@ namespace TP1___GRUPO_C.Modelos
 
 
             modelBuilder.Entity<Usuario>().HasData(
-                new { ID = 1, DNI = 1, Nombre = "Pepe", Apellido = "Perez", Mail = "pepe@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1992-11-02 12:00:00.000"), Credito = 100.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 2, DNI = 2, Nombre = "El", Apellido = "Admin", Mail = "admin@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1990-06-08 12:00:00.000"), Credito = 0.0, EsAdmin = true, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 3, DNI = 3, Nombre = "Lucas", Apellido = "Rodriguez", Mail = "lucas@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1995-08-24 12:00:00.000"), Credito = 3000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 4, DNI = 4, Nombre = "Ana", Apellido = "González", Mail = "ana@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1988-05-15 12:00:00.000"), Credito = 500.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 5, DNI = 5, Nombre = "María", Apellido = "López", Mail = "maria@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1993-09-30 12:00:00.000"), Credito = 200.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 6, DNI = 6, Nombre = "Luis", Apellido = "Fernández", Mail = "luis@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1994-12-10 12:00:00.000"), Credito = 800.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 7, DNI = 7, Nombre = "Laura", Apellido = "Martínez", Mail = "laura@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1991-07-18 12:00:00.000"), Credito = 1500.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 8, DNI = 8, Nombre = "Carlos", Apellido = "Gómez", Mail = "carlos@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1996-03-25 12:00:00.000"), Credito = 1200.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 9, DNI = 9, Nombre = "Ana", Apellido = "Rodríguez", Mail = "ana.rodriguez@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1989-09-12 12:00:00.000"), Credito = 2500.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 10, DNI = 10, Nombre = "Marcelo", Apellido = "López", Mail = "marcelo@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1997-11-28 12:00:00.000"), Credito = 300.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 11, DNI = 11, Nombre = "Julia", Apellido = "Torres", Mail = "julia@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1993-02-04 12:00:00.000"), Credito = 1800.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 12, DNI = 12, Nombre = "Mariano", Apellido = "García", Mail = "mariano@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1995-06-22 12:00:00.000"), Credito = 5000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 13, DNI = 13, Nombre = "Gabriela", Apellido = "López", Mail = "gabriela@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1990-10-08 12:00:00.000"), Credito = 700.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 14, DNI = 14, Nombre = "Federico", Apellido = "Pérez", Mail = "federico@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1994-04-16 12:00:00.000"), Credito = 1000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 15, DNI = 15, Nombre = "Carolina", Apellido = "Fernández", Mail = "carolina@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1991-08-14 12:00:00.000"), Credito = 250.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 16, DNI = 16, Nombre = "Luciana", Apellido = "González", Mail = "luciana@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1988-12-30 12:00:00.000"), Credito = 3500.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 17, DNI = 17, Nombre = "Martín", Apellido = "Martínez", Mail = "martin@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1997-03-17 12:00:00.000"), Credito = 900.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 18, DNI = 18, Nombre = "Paula", Apellido = "Gómez", Mail = "paula@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1992-09-24 12:00:00.000"), Credito = 2000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 19, DNI = 19, Nombre = "Diego", Apellido = "Rodríguez", Mail = "diego.rodriguez@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1996-01-11 12:00:00.000"), Credito = 3000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 20, DNI = 20, Nombre = "Sofía", Apellido = "López", Mail = "sofia@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1993-05-28 12:00:00.000"), Credito = 600.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
-                new { ID = 21, DNI = 21, Nombre = "Agustín", Apellido = "Torres", Mail = "agustin@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1989-11-01 12:00:00.000"), Credito = 1400.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 });
+                new { ID = 1, DNI = 1111111, Nombre = "Pepe", Apellido = "Perez", Mail = "pepe@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1992-11-02 12:00:00.000"), Credito = 100.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 2, DNI = 2222222, Nombre = "El", Apellido = "Admin", Mail = "admin@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1990-06-08 12:00:00.000"), Credito = 0.0, EsAdmin = true, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 3, DNI = 3333333, Nombre = "Lucas", Apellido = "Rodriguez", Mail = "lucas@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1995-08-24 12:00:00.000"), Credito = 3000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 4, DNI = 4444444, Nombre = "Ana", Apellido = "González", Mail = "ana@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1988-05-15 12:00:00.000"), Credito = 500.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 5, DNI = 5555555, Nombre = "María", Apellido = "López", Mail = "maria@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1993-09-30 12:00:00.000"), Credito = 200.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 6, DNI = 666666, Nombre = "Luis", Apellido = "Fernández", Mail = "luis@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1994-12-10 12:00:00.000"), Credito = 800.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 7, DNI = 77777777, Nombre = "Laura", Apellido = "Martínez", Mail = "laura@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1991-07-18 12:00:00.000"), Credito = 1500.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 8, DNI = 88888888, Nombre = "Carlos", Apellido = "Gómez", Mail = "carlos@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1996-03-25 12:00:00.000"), Credito = 1200.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 9, DNI = 999999, Nombre = "Ana", Apellido = "Rodríguez", Mail = "ana.rodriguez@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1989-09-12 12:00:00.000"), Credito = 2500.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 10, DNI = 1000000, Nombre = "Marcelo", Apellido = "López", Mail = "marcelo@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1997-11-28 12:00:00.000"), Credito = 300.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 11, DNI = 1112111, Nombre = "Julia", Apellido = "Torres", Mail = "julia@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1993-02-04 12:00:00.000"), Credito = 1800.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 12, DNI = 12321312, Nombre = "Mariano", Apellido = "García", Mail = "mariano@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1995-06-22 12:00:00.000"), Credito = 5000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 13, DNI = 312312312, Nombre = "Gabriela", Apellido = "López", Mail = "gabriela@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1990-10-08 12:00:00.000"), Credito = 700.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 14, DNI = 3123123, Nombre = "Federico", Apellido = "Pérez", Mail = "federico@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1994-04-16 12:00:00.000"), Credito = 1000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 15, DNI = 312312, Nombre = "Carolina", Apellido = "Fernández", Mail = "carolina@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1991-08-14 12:00:00.000"), Credito = 250.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 16, DNI = 2141241, Nombre = "Luciana", Apellido = "González", Mail = "luciana@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1988-12-30 12:00:00.000"), Credito = 3500.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 17, DNI = 321312, Nombre = "Martín", Apellido = "Martínez", Mail = "martin@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1997-03-17 12:00:00.000"), Credito = 900.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 18, DNI = 412123, Nombre = "Paula", Apellido = "Gómez", Mail = "paula@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1992-09-24 12:00:00.000"), Credito = 2000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 19, DNI = 421321, Nombre = "Diego", Apellido = "Rodríguez", Mail = "diego.rodriguez@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1996-01-11 12:00:00.000"), Credito = 3000.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 20, DNI = 421412, Nombre = "Sofía", Apellido = "López", Mail = "sofia@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1993-05-28 12:00:00.000"), Credito = 600.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 },
+                new { ID = 21, DNI = 412412, Nombre = "Agustín", Apellido = "Torres", Mail = "agustin@mail.com", Password = "123", FechaNacimiento = Convert.ToDateTime("1989-11-01 12:00:00.000"), Credito = 1400.0, EsAdmin = false, Bloqueado = false, IntentosFallidos = 0 });
 
             modelBuilder.Entity<UsuarioFuncion>().HasData(
                 new { idUsuario = 1, idFuncion = 1, CantidadEntradasCompradas = 1 },
