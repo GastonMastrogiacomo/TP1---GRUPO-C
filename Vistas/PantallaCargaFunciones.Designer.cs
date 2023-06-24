@@ -31,7 +31,6 @@
             Btn_SacarDeLista = new Button();
             Btn_AgregarALista = new Button();
             Btn_SalirCargarLista = new Button();
-            Btn_GuardarYSalir = new Button();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
@@ -74,16 +73,6 @@
             Btn_SalirCargarLista.UseVisualStyleBackColor = true;
             Btn_SalirCargarLista.Click += Btn_SalirCargarLista_Click;
             // 
-            // Btn_GuardarYSalir
-            // 
-            Btn_GuardarYSalir.Location = new Point(27, 29);
-            Btn_GuardarYSalir.Name = "Btn_GuardarYSalir";
-            Btn_GuardarYSalir.Size = new Size(102, 23);
-            Btn_GuardarYSalir.TabIndex = 7;
-            Btn_GuardarYSalir.Text = "Guardar y Salir";
-            Btn_GuardarYSalir.UseVisualStyleBackColor = true;
-            Btn_GuardarYSalir.Click += Btn_GuardarYSalir_Click;
-            // 
             // label1
             // 
             label1.AutoSize = true;
@@ -105,7 +94,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(176, 37);
+            label3.Location = new Point(27, 37);
             label3.Name = "label3";
             label3.Size = new Size(101, 15);
             label3.TabIndex = 12;
@@ -124,7 +113,7 @@
             // Label_CreditoUsuarioCargaFuncion
             // 
             Label_CreditoUsuarioCargaFuncion.AutoSize = true;
-            Label_CreditoUsuarioCargaFuncion.Location = new Point(289, 37);
+            Label_CreditoUsuarioCargaFuncion.Location = new Point(134, 37);
             Label_CreditoUsuarioCargaFuncion.Name = "Label_CreditoUsuarioCargaFuncion";
             Label_CreditoUsuarioCargaFuncion.Size = new Size(47, 15);
             Label_CreditoUsuarioCargaFuncion.TabIndex = 14;
@@ -188,7 +177,6 @@
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(Btn_GuardarYSalir);
             Controls.Add(Btn_SalirCargarLista);
             Controls.Add(Btn_AgregarALista);
             Controls.Add(Btn_SacarDeLista);
@@ -204,7 +192,6 @@
         private Button Btn_SacarDeLista;
         private Button Btn_AgregarALista;
         private Button Btn_SalirCargarLista;
-        private Button Btn_GuardarYSalir;
         private CheckedListBox Clb_FuncionesCine;
         private Label label1;
         private Label label2;

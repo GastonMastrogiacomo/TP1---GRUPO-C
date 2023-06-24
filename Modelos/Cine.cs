@@ -43,7 +43,6 @@ namespace TP1___GRUPO_C.Model
             }
         }
 
-
         #region ABM Usuario
         public int AgregarUsuario(int DNI, string Nombre, string Apellido, string Mail, string Password, DateTime FechaNacimiento, bool EsAdmin, float credito, bool bloqueado)
         {
@@ -242,7 +241,6 @@ namespace TP1___GRUPO_C.Model
                             contexto.Usuarios.Update(user);
                         }
 
-                        //Habria que ver si el hecho de que borremos una funcion que ya paso esta bien, yo creeria que no pero talvez se genera problemas
                         // a la hora de mostrar las funciones pasadas.
                         //*A001
                         user.MisFunciones.Remove(func);
@@ -669,77 +667,6 @@ namespace TP1___GRUPO_C.Model
 
         }
 
-        /*
-         *  SEGUNDA FORMA DE HACERLO
-         *  
-        public int ComprarEntradaFuncionNotNull(Usuario user, int cantidadEntradas, Funcion funcion)
-        {
-            UsuarioFuncion entrada = contexto.UF.FirstOrDefault(uf => uf.idUsuario == user.ID && uf.idFuncion == funcion.ID);
-
-            double costoTotal = funcion.Costo * cantidadEntradas;
-            // Verificar si el usuario tiene suficiente crédito
-            if (user.Credito >= costoTotal)
-            {
-                // Verificar si la capacidad de la sala es suficiente
-                if (funcion.AsientosDisponibles >= cantidadEntradas)
-                {
-                    // Agregar la función a las funciones del usuario
-                    Funcion fun = user.MisFunciones.FirstOrDefault(f => f.ID == funcion.ID);
-
-                    // Actualizar la cantidad de clientes de la lista de funciones del cine
-                    funcion.CantidadClientes += cantidadEntradas;
-                    funcion.AsientosDisponibles -= cantidadEntradas;
-
-                    if (entrada != null)
-                    {
-                        // Entra aquí si el usuario ya tiene al menos 1 entrada para dicha función
-                        entrada.CantidadEntradasCompradas += cantidadEntradas;
-                        contexto.UF.Update(entrada);
-                    }
-                    else
-                    {
-                        // Entra aquí si el usuario nunca compró para esta función
-                        // Agregar al usuario como cliente de la función
-                        funcion.Clientes.Add(user);
-
-                        entrada = new UsuarioFuncion(user.ID, funcion.ID, cantidadEntradas);
-
-                        contexto.UF.Add(entrada);
-                    }
-
-                    if (fun == null)
-                    {
-                        user.MisFunciones.Add(funcion);
-                    }
-                    else
-                    {
-                        // Actualizar la cantidad de clientes de la lista de funciones del cliente
-                        fun.CantidadClientes += cantidadEntradas;
-                        fun.AsientosDisponibles -= cantidadEntradas;
-                    }
-
-                    // Actualizar el crédito del usuario
-                    user.Credito -= costoTotal;
-
-                    // Se updatea funcion y usuarios para relfejar la nueva cantidad de asientos disponibles y clientes, y el credito del usuario
-                    contexto.Usuarios.Update(user);
-                    contexto.Funciones.Update(funcion);
-                    contexto.SaveChanges();
-
-                    return 200;
-                }
-                else
-                {
-                    throw new InvalidOperationException("No hay suficiente capacidad en la sala.");
-                }
-            }
-            else
-            {
-                throw new InvalidOperationException("Créditos insuficientes.");
-            }
-        }
-        */
-
         public int DevolverEntradasUsuario(Usuario user)
         {
             int result = 200;
@@ -857,7 +784,6 @@ namespace TP1___GRUPO_C.Model
                             {
                                 user.IntentosFallidos += 1;
                                 contexto.Usuarios.Update(user);
-                                // Ver si no es excesivo guardar aca, ya que te lo guarda si se bloquea o si metes la pass correcta
                                 contexto.SaveChanges();
                                 return 401;
                             }
@@ -906,121 +832,20 @@ namespace TP1___GRUPO_C.Model
             return contexto.Peliculas.ToList();
         }
 
-        //// Devuelven copias de las listas originales
-
-
-        /*
-        public List<Funcion> BuscarFuncion(string pelicula, string ubicacion, DateTime fecha, int precioMinimo, int precioMaximo)
-        {
-            List<Funcion> funcionesEncontradas = new List<Funcion>();
-
-            if (fecha >= DateTime.Today)
-            {
-                foreach (Funcion fun in Funciones)
-                {
-                    bool cumpleRequisitos = true;
-
-                    if (fun.Fecha >= DateTime.Today)
-                    {
-                        // Verifico que si el input no esta en vacio entonces el valor tiene que ser igual o similar al de la pelicula;
-                        if (!string.IsNullOrWhiteSpace(pelicula))
-                        {
-                            Regex regularEx = new Regex(pelicula, RegexOptions.IgnoreCase);
-
-                            if (!regularEx.IsMatch(fun.MiPelicula.Nombre))
-                            {
-                                cumpleRequisitos = false;
-                            }
-                        }
-                        else
-                        {
-                            cumpleRequisitos = cumpleRequisitos && (fun.MiPelicula.Nombre != null);
-                        }
-
-                        // Lo mismo con ubicacion
-                        // IsNullOrEmpty(ubicacion) --> devuelve true si no encuenrta valor en el campo
-                        // si esto es false entonces es porque tengo un valor
-
-                        if (!string.IsNullOrWhiteSpace(ubicacion))
-                        {
-                            // yo quiero que esto sea igual para no modificar el flag
-                            if (fun.MiSala.Ubicacion != ubicacion)
-                            {
-                                cumpleRequisitos = false;
-                            }
-                        }
-                        else
-                        {
-                            cumpleRequisitos = cumpleRequisitos && (fun.MiSala.Ubicacion != null);
-                        }
-
-                        //todas las funciones que superen el minimo
-                        if (precioMinimo >= 0)
-                        {
-                            if (fun.Costo < precioMinimo)
-                            {
-                                cumpleRequisitos = false;
-                            }
-                        }
-                        else
-                        {
-                            cumpleRequisitos = cumpleRequisitos && (fun.Costo >= 0);
-                        }
-
-                        if (precioMaximo > 0)
-                        {
-                            if (fun.Costo > precioMaximo)
-                            {
-                                cumpleRequisitos = false;
-                            }
-                        }
-                        else
-                        {
-                            cumpleRequisitos = cumpleRequisitos && (fun.Costo <= 0);
-                        }
-                    }
-                    else
-                    {
-                        cumpleRequisitos = false;
-                    }
-
-                    if (cumpleRequisitos)
-                    {
-                        funcionesEncontradas.Add(fun);
-                    }
-                }
-            }
-            return funcionesEncontradas;
-        }
-        */
-
-
         public List<Funcion> BuscarFuncion(string pelicula, string ubicacion, DateTime fecha, int precioMinimo, int precioMaximo)
         {
 
             List<Funcion> funcionesEncontradas = new List<Funcion>();
 
-            if (fecha >= DateTime.Today)
-            {
+            funcionesEncontradas = contexto.Funciones
+                .Where(fun=>(fun.Fecha >= fecha))
+                .Where(fun => (string.IsNullOrWhiteSpace(pelicula) || fun.MiPelicula.Nombre.Contains(pelicula)) && (string.IsNullOrWhiteSpace(ubicacion) || fun.MiSala.Ubicacion.Equals(ubicacion)))
+                .Where(fun=>(precioMinimo == 0 || fun.Costo >= precioMinimo))
+                .Where(fun => (precioMaximo == 0 || fun.Costo <= precioMaximo)).ToList();
 
-                funcionesEncontradas = contexto.Funciones.Where(fun =>
-                   fun.Fecha == fecha &&
-
-                     string.IsNullOrWhiteSpace(pelicula) || fun.MiPelicula.Nombre.Contains(pelicula)
-                  &&
-                       string.IsNullOrWhiteSpace(ubicacion) || fun.MiSala.Ubicacion.Equals(ubicacion)
-
-                   && (precioMinimo == 0 || fun.Costo >= precioMinimo)
-                   && (precioMaximo == 0 || fun.Costo <= precioMaximo)
-
-                   ).ToList();
-
-
-            }
             return funcionesEncontradas;
 
         }
-
 
         public bool esAdmin()
         {

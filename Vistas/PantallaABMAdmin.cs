@@ -436,40 +436,6 @@ namespace TP1___GRUPO_C.Vistas
             MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        /*
-
-        private void Btn_ModificarPelicula_Click(object sender, EventArgs e)
-        {
-            int.TryParse(Label_PeliculaId.Text, out int ID);
-            string nombre = this.Input_Nombre_Pelicula.Text;
-            string descripcion = this.Input_Descripcion.Text;
-            string sinopsis = this.Input_Sinopsis.Text;
-            string poster = this.Input_Poster.Text;
-            int.TryParse(this.Input_Duracion.Text, out int duracion);
-
-            List<string> funcionesSelec = new List<string>();
-
-            for (int i = 0; i < CLB_Funciones.Items.Count; i++)
-            {
-                CheckState st = CLB_Funciones.GetItemCheckState(i);
-                if (st.ToString() == "Checked")
-                {
-                    string idFunc = CLB_Funciones.Items[i].ToString().Split(",")[0];
-                    funcionesSelec.Add(idFunc);
-                }
-            }
-            int peticion = miCine.ModificarPelicula(ID, nombre, descripcion, sinopsis, poster, duracion, funcionesSelec);
-            String mensaje = StatusCode.ObtenerMensaje(peticion);
-            if (peticion == 200)
-            {
-                RefreshPeliculas();
-            }
-
-            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-        }
-
-        */
 
         private void Btn_ModificarPelicula_Click(object sender, EventArgs e)
         {
@@ -510,27 +476,6 @@ namespace TP1___GRUPO_C.Vistas
 
         }
 
-        /*
-
-        private void Btn_NuevoPelicula_Click(object sender, EventArgs e)
-        {
-
-            string nombre = this.Input_Nombre_Pelicula.Text;
-            string descripcion = this.Input_Descripcion.Text;
-            string sinopsis = this.Input_Sinopsis.Text;
-            string poster = this.Input_Poster.Text;
-            int.TryParse(this.Input_Duracion.Text, out int duracion);
-
-            int peticion = miCine.AgregarPelicula(nombre, descripcion, sinopsis, poster, duracion);
-            String mensaje = StatusCode.ObtenerMensaje(peticion);
-            if (peticion == 200)
-            {
-                RefreshPeliculas();
-            }
-            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-
-        */
 
         private void Btn_NuevoPelicula_Click(object sender, EventArgs e)
         {
@@ -563,28 +508,6 @@ namespace TP1___GRUPO_C.Vistas
         #endregion
 
         #region ABM Usuario
-        /*
-        private void Btn_NuevoUsuario_Click(object sender, EventArgs e)
-        {
-            string Nombres = this.Input_Nombre.Text;
-            string Apellidos = this.Input_Apellido.Text;
-            int.TryParse(this.Input_DNI.Text, out int DNI);
-            string Mail = this.Input_Mail.Text;
-            string Pass = this.Input_Password.Text;
-            DateTime FechaNacimiento = this.Selec_FechaDeNacimiento.Value;
-            bool esAdmin = this.Cb_EsAdmin.Checked;
-            float.TryParse(this.Input_Credito.Text, out float credito);
-
-            int peticion = miCine.AgregarUsuario(DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, credito, false);
-            String mensaje = StatusCode.ObtenerMensaje(peticion);
-            if (peticion == 200)
-            {
-                RefreshUsuarios();
-            }
-
-            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        */
 
         private void Btn_NuevoUsuario_Click(object sender, EventArgs e)
         {
@@ -619,33 +542,6 @@ namespace TP1___GRUPO_C.Vistas
 
 
         }
-
-
-
-        /*
-        private void Btn_ModificarUsuario_Click(object sender, EventArgs e)
-        {
-            int.TryParse(Label_IdUsuario.Text, out int ID);
-            string Nombres = this.Input_Nombre.Text;
-            string Apellidos = this.Input_Apellido.Text;
-            int.TryParse(this.Input_DNI.Text, out int DNI);
-            string Mail = this.Input_Mail.Text;
-            string Pass = this.Input_Password.Text;
-            DateTime FechaNacimiento = this.Selec_FechaDeNacimiento.Value;
-            bool esAdmin = this.Cb_EsAdmin.Checked;
-            int.TryParse(Input_Credito.Text, out int Credito);
-            bool Bloqueda = this.Cb_Bloqueado.Checked;
-            int.TryParse(this.Input_IntentosFallidos.Text, out int IntentosFallidos);
-
-            int peticion = miCine.ModificarUsuario(ID, DNI, Nombres, Apellidos, Mail, Pass, FechaNacimiento, esAdmin, IntentosFallidos, Bloqueda, Credito);
-            String mensaje = StatusCode.ObtenerMensaje(peticion);
-            if (peticion == 200)
-            {
-                RefreshUsuarios();
-            }
-            MessageBox.Show(mensaje, "Alerta", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        */
 
         private void Btn_ModificarUsuario_Click(object sender, EventArgs e)
         {

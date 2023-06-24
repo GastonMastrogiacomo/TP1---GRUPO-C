@@ -54,45 +54,7 @@ namespace TP1___GRUPO_C.Modelos
                 .ToTable("Peliculas")
                 .HasKey(p => p.ID);
 
-            //modelBuilder.Entity<UsuarioFuncion>()
-            //    .ToTable("UsuarioFuncion")
-            //    .HasKey(uf => uf.ID);
-
-            /*
-            //==================== RELACIONES============================
-            //DEFINICIÓN DE LA RELACIÓN ONE TO ONE USUARIO -> DNI
-            modelBuilder.Entity<Usuario>()
-                .HasOne(U => U.dni)
-                .WithOne(D => D.user)
-                .HasForeignKey<DNI>(D => D.idUsuario)
-                .OnDelete(DeleteBehavior.Cascade);
            
-
-
-
-            ////DEFINICIÓN DE LA RELACIÓN ONE TO MANY USUARIO -> DOMICILIO
-
-            modelBuilder.Entity<Domicilio>()
-            .HasOne(D => D.user)
-            .WithMany(U => U.domicilios)
-            .HasForeignKey(D => D.idUsuario)
-            .OnDelete(DeleteBehavior.Cascade);
-
-            ////DEFINICIÓN DE LA RELACIÓN MANY TO MANY USUARIO <-> PAIS
-            //usario fucnion
-            modelBuilder.Entity<Usuario>()
-                .HasMany(U => U.Nacionalidad)
-                .WithMany(P => P.users)
-                .UsingEntity<UsuarioPais>(
-                    eup => eup.HasOne(up => up.pais).WithMany(p => p.UserPais).HasForeignKey(u => u.idPais),
-                    eup => eup.HasOne(up => up.user).WithMany(u => u.UserPais).HasForeignKey(u => u.idUsuario),
-                    eup => eup.HasKey(k => new { k.idUsuario, k.idPais })
-                );
-
-             */
-
-            //DEFINICIÓN DE LA RELACIÓN 
-            //ONE TO MANY FUNCION -> SALAS
 
             modelBuilder.Entity<Funcion>()
             .HasOne(f => f.MiSala)

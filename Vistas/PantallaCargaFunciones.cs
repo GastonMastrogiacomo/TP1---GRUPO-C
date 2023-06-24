@@ -102,7 +102,7 @@ namespace TP1___GRUPO_C.Vistas
                     RadioButton rb = new RadioButton();
                     rb.Text = Linea;
                     rb.Width = TextRenderer.MeasureText(rb.Text, rb.Font).Width + 20;
-                    rb.Click += new EventHandler(this.radioButtonClickPrice);
+                    rb.Click += new EventHandler(this.RadioButtonClickPrice);
 
                     this.FL_FuncionesDisponiblesAdmin.Controls.Add(rb);
 
@@ -110,7 +110,7 @@ namespace TP1___GRUPO_C.Vistas
             }
         }
 
-        private void radioButtonClickPrice(object sender, EventArgs e)
+        private void RadioButtonClickPrice(object sender, EventArgs e)
         {
             RadioButton rb = (RadioButton)sender;
             int.TryParse(rb.Text.Split(".")[0], out int IDFuncion);
@@ -146,6 +146,9 @@ namespace TP1___GRUPO_C.Vistas
                     response = miCine.ComprarEntradaFuncionNotNull(UsuarioAuxiliar.ID, cantidadEntradas, IDFuncion);
                     if (response != 200) throw new Exception("Error en la compra de entradas");
 
+                    this.Label_CreditoUsuarioCargaFuncion.Text = UsuarioAuxiliar.Credito.ToString();
+
+
                     if (!FL_FuncionesUsuarioAdmin.Controls.Contains(seleccionado))
                     {
                         seleccionado.Checked = false;
@@ -154,7 +157,6 @@ namespace TP1___GRUPO_C.Vistas
                     }
                 }
 
-                GuardarDatosUsuarioAuxiliar();
             }
             catch (Exception ex)
             {
@@ -186,11 +188,11 @@ namespace TP1___GRUPO_C.Vistas
                     response = miCine.DevolverEntrada(UsuarioAuxiliar.ID, IDFuncion, cantidadEntradas);
                     if (response != 200) throw new Exception("Error en la devolucion de entradas");
 
+                    this.Label_CreditoUsuarioCargaFuncion.Text = UsuarioAuxiliar.Credito.ToString();
                     FL_FuncionesUsuarioAdmin.Controls.Remove(seleccionado);
 
                 }
 
-                GuardarDatosUsuarioAuxiliar();
             }
             catch (Exception ex)
             {
@@ -209,34 +211,6 @@ namespace TP1___GRUPO_C.Vistas
             FL_FuncionesUsuarioAdmin.Controls.Clear();
             cerrarPantallaCargaFunciones();
         }
-
-        private void Btn_GuardarYSalir_Click(object sender, EventArgs e)
-        {
-            //TODO modificar esto asi se guardan las funciones del usuario seleccionadas
-            if (FL_FuncionesUsuarioAdmin.Controls.Count > 0)
-            {
-                for (int i = 0; i < FL_FuncionesUsuarioAdmin.Controls.Count; i++)
-                {
-                    //le sumo 1 xq antes lo reste en el indice del item. (en la vista)
-                    Funcion func = miCine.MostrarFunciones().FirstOrDefault(f => f.ID == (i + 1));
-                    if (func != null)
-                    {
-                        UsuarioAuxiliar.MisFunciones.Add(func);
-                    }
-                }
-            }
-
-
-            FL_FuncionesUsuarioAdmin.Controls.Clear();
-            cerrarYGuardarPantallaCargaFunciones();
-        }
-
-        private void GuardarDatosUsuarioAuxiliar()
-        {
-
-            MessageBox.Show("Se actualizaron correctamente las funciones de " + UsuarioAuxiliar.Nombre);
-        }
-
         private void label3_Click(object sender, EventArgs e)
         {
 
