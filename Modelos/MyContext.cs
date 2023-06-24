@@ -28,7 +28,7 @@ namespace TP1___GRUPO_C.Modelos
             //connectionStr = "Data Source=DESKTOP-4S2EH6K\\SQLEXPRESS01;Initial Catalog=cine;Integrated Security=True";
             //Console.WriteLine(Properties.Resources.ConnectionString);
             optionsBuilder.EnableSensitiveDataLogging();
-            optionsBuilder.UseSqlServer("Data Source=DESKTOP-88BRRQU\\SQLEXPRESS;Initial Catalog=Cine;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True;");
+            optionsBuilder.UseSqlServer("Data Source=DESKTOP-4S2EH6K\\SQLEXPRESS01;Initial Catalog=cine;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True;");
             //Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True;
             //Trusted Connection y Trust Server Certificate se agregaron por un tema de permisos que no nos dejaba escribir en la base de datos
             // MultipleActiveResultSet = Se permite la lectura de mas de una conexion en simultaneo. Al tener esto apagado no se nos permitia actualizar 
@@ -166,27 +166,27 @@ namespace TP1___GRUPO_C.Modelos
              new { ID = 4, Nombre = "Toy Story 4", Descripcion = "Basta de la misma pelicula", Sinopsis = "Cuatro", Poster = "", Duracion = 2 });
 
             modelBuilder.Entity<Funcion>().HasData(
-                new { ID = 1, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 200, Costo = 2000.0, idSala = 1, idPelicula = 1, CantidadClientes = 0 },
-                new { ID = 2, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 150, Costo = 2500.0, idSala = 1, idPelicula = 2, CantidadClientes = 0 },
-                new { ID = 3, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 250, Costo = 1500.0, idSala = 2, idPelicula = 2, CantidadClientes = 0 },
-                new { ID = 4, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 175, Costo = 1000.0, idSala = 2, idPelicula = 2, CantidadClientes = 0 },
-                new { ID = 5, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 300, Costo = 2200.0, idSala = 2, idPelicula = 3, CantidadClientes = 0 },
-                new { ID = 6, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 300, Costo = 2200.0, idSala = 2, idPelicula = 3, CantidadClientes = 0 },
-                new { ID = 7, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 200, Costo = 1800.0, idSala = 3, idPelicula = 3, CantidadClientes = 0 },
-                new { ID = 8, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 180, Costo = 1500.0, idSala = 3, idPelicula = 4, CantidadClientes = 0 },
-                new { ID = 9, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 250, Costo = 1200.0, idSala = 4, idPelicula = 4, CantidadClientes = 0 },
-                new { ID = 10, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 175, Costo = 1000.0, idSala = 4, idPelicula = 4, CantidadClientes = 0 },
-                new { ID = 11, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 300, Costo = 2000.0, idSala = 1, idPelicula = 4, CantidadClientes = 0 },
-                new { ID = 12, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 280, Costo = 2200.0, idSala = 1, idPelicula = 1, CantidadClientes = 0 },
-                new { ID = 13, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 220, Costo = 1900.0, idSala = 2, idPelicula = 2, CantidadClientes = 0 },
-                new { ID = 14, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 190, Costo = 1700.0, idSala = 2, idPelicula = 3, CantidadClientes = 0 },
-                new { ID = 15, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 230, Costo = 1400.0, idSala = 3, idPelicula = 2, CantidadClientes = 0 },
-                new { ID = 16, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 200, Costo = 1200.0, idSala = 3, idPelicula = 1, CantidadClientes = 0 },
-                new { ID = 17, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 250, Costo = 1000.0, idSala = 4, idPelicula = 2, CantidadClientes = 0 },
-                new { ID = 18, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 300, Costo = 2200.0, idSala = 4, idPelicula = 2, CantidadClientes = 0 },
-                new { ID = 19, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 270, Costo = 1900.0, idSala = 1, idPelicula = 3, CantidadClientes = 0 },
-                new { ID = 20, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 230, Costo = 1700.0, idSala = 1, idPelicula = 4, CantidadClientes = 0 },
-                new { ID = 21, Fecha = Convert.ToDateTime("2023-11-02 12:00:00.000"), AsientosDisponibles = 190, Costo = 1400.0, idSala = 2, idPelicula = 1, CantidadClientes = 0 });
+                 new { ID = 1, Fecha = Convert.ToDateTime("1992-10-02 12:00:00.000"), AsientosDisponibles = 200, Costo = 2000.0, idSala = 1, idPelicula = 1, CantidadClientes = 0 },
+                 new { ID = 2, Fecha = Convert.ToDateTime("1990-09-02 12:00:00.000"), AsientosDisponibles = 150, Costo = 2500.0, idSala = 1, idPelicula = 2, CantidadClientes = 0 },
+                 new { ID = 3, Fecha = Convert.ToDateTime("1995-08-02 12:00:00.000"), AsientosDisponibles = 250, Costo = 1500.0, idSala = 2, idPelicula = 2, CantidadClientes = 0 },
+                 new { ID = 4, Fecha = Convert.ToDateTime("1997-11-03 12:00:00.000"), AsientosDisponibles = 175, Costo = 1000.0, idSala = 2, idPelicula = 2, CantidadClientes = 0 },
+                 new { ID = 5, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 300, Costo = 2200.0, idSala = 2, idPelicula = 3, CantidadClientes = 0 },
+                 new { ID = 6, Fecha = Convert.ToDateTime("1992-06-02 12:00:00.000"), AsientosDisponibles = 300, Costo = 2200.0, idSala = 2, idPelicula = 3, CantidadClientes = 0 },
+                 new { ID = 7, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 200, Costo = 1800.0, idSala = 3, idPelicula = 3, CantidadClientes = 0 },
+                 new { ID = 8, Fecha = Convert.ToDateTime("2023-7-23 12:00:00.000"), AsientosDisponibles = 180, Costo = 1500.0, idSala = 3, idPelicula = 4, CantidadClientes = 0 },
+                 new { ID = 9, Fecha = Convert.ToDateTime("2023-7-16 12:00:00.000"), AsientosDisponibles = 250, Costo = 1200.0, idSala = 4, idPelicula = 4, CantidadClientes = 0 },
+                 new { ID = 10, Fecha = Convert.ToDateTime("1992-11-02 12:00:00.000"), AsientosDisponibles = 175, Costo = 1000.0, idSala = 4, idPelicula = 4, CantidadClientes = 0 },
+                 new { ID = 11, Fecha = Convert.ToDateTime("2023-01-03 12:00:00.000"), AsientosDisponibles = 300, Costo = 2000.0, idSala = 1, idPelicula = 4, CantidadClientes = 0 },
+                 new { ID = 12, Fecha = Convert.ToDateTime("2023-02-04 12:00:00.000"), AsientosDisponibles = 280, Costo = 2200.0, idSala = 1, idPelicula = 1, CantidadClientes = 0 },
+                 new { ID = 13, Fecha = Convert.ToDateTime("2023-03-02 12:00:00.000"), AsientosDisponibles = 220, Costo = 1900.0, idSala = 2, idPelicula = 2, CantidadClientes = 0 },
+                 new { ID = 14, Fecha = Convert.ToDateTime("2023-04-02 12:00:00.000"), AsientosDisponibles = 190, Costo = 1700.0, idSala = 2, idPelicula = 3, CantidadClientes = 0 },
+                 new { ID = 15, Fecha = Convert.ToDateTime("2023-05-02 12:00:00.000"), AsientosDisponibles = 230, Costo = 1400.0, idSala = 3, idPelicula = 2, CantidadClientes = 0 },
+                 new { ID = 16, Fecha = Convert.ToDateTime("2023-06-02 12:00:00.000"), AsientosDisponibles = 200, Costo = 1200.0, idSala = 3, idPelicula = 1, CantidadClientes = 0 },
+                 new { ID = 17, Fecha = Convert.ToDateTime("2023-07-02 12:00:00.000"), AsientosDisponibles = 250, Costo = 1000.0, idSala = 4, idPelicula = 2, CantidadClientes = 0 },
+                 new { ID = 18, Fecha = Convert.ToDateTime("2023-08-02 12:00:00.000"), AsientosDisponibles = 300, Costo = 2200.0, idSala = 4, idPelicula = 2, CantidadClientes = 0 },
+                 new { ID = 19, Fecha = Convert.ToDateTime("2023-09-02 12:00:00.000"), AsientosDisponibles = 270, Costo = 1900.0, idSala = 1, idPelicula = 3, CantidadClientes = 0 },
+                 new { ID = 20, Fecha = Convert.ToDateTime("2023-10-02 12:00:00.000"), AsientosDisponibles = 230, Costo = 1700.0, idSala = 1, idPelicula = 4, CantidadClientes = 0 },
+                 new { ID = 21, Fecha = Convert.ToDateTime("2023-11-02 12:00:00.000"), AsientosDisponibles = 190, Costo = 1400.0, idSala = 2, idPelicula = 1, CantidadClientes = 0 });
 
 
             modelBuilder.Entity<Usuario>().HasData(

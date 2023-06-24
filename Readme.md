@@ -1,37 +1,52 @@
-﻿Readme TP-2:
+﻿
+Readme TP-3:
 
-IMPORTANTE!!!!!:
--Usar base.sql a la hora de cargar la base de datos con la informacion cargada.Esta se encuentra en la carpeta ScriptDB
--Cuando se crea la base de datos y se exporta el script , el directorio fue hecho en un disco F con un path que va a 
-tener que  ser modificado!
+- No nos esta dejando realizar la conexion reemplazando el valor de ConnectionStr en properties, por lo que tenemos que usar
+optionsBuilder.UseSqlServer y pasarle el path de la conexion de esta forma. Ejemplo:
+optionsBuilder.UseSqlServer("Data Source=DESKTOP-4S2EH6K\\SQLEXPRESS01;Initial Catalog=cine;Integrated Security=True;Trusted_Connection=True;TrustServerCertificate=True;MultipleActiveResultSets=True;");
+
+- EL sistema es esencialmente el mismo en todo lo respecto a funcionalidad, solo que ahora esta en EFCore y usamos LINQ.
+- Se hicieron mejoras con respecto a la validacion de datos (ahora se hacen por la vista)
+- Se agregaron MultipleActiveResultSet Trusted Connection y Trust Server Certificate como solucion a varios errores que estabamos teniendo
+  (lo sacamos de stackOverflow puede ser que haya una mejor forma de la cual no nos percatamos)
+- Se realizaron las correcciones y cambios pedidos en el TP2
 
 
--El Funcionamiento del sistema es en lineas generales el mismo (al menos desde un punto de vista visual) por lo que si 
-se necesitan consignas de navegacion leer el Readme del TP-1 que se encuentra abajo de este cuerpo de texto.
--Tuvimos un problema con la conexion a la base de datos, no nos tomaba el valor de ConnectionStr dentro de Resources por lo que usamos un string para solucionarlo.
--Se integro la base de datos para todos los procedimientos, cuando hay algun tipo de ABM se hace una modificacion tanto en memoria como en base de datos.
--Al compilar, el sistema busca todos los datos guardados en la base de datos y va poblando los objetos con estos datos,luego
-va creando las relaciones y haciendo las conecciones (Funcion se le agrega el objeto pelicula y sala, etc.)
--Ya no es necesario utilizar el checkbox de si es admin o no, si uno quiere modificar esto o ejecuta una query desde el SSMS o utiliza el ABM de los Admin.
--Se elimino el diccionario usado para ver la cantidad de entradas que tiene un usuario para cada funcion, ahora se utiliza
-UsuariosFunciones como tabla intermedia que guarda este dato.
--Cantidad de clientes lo utilizamos para ver cuantas entradas se compraron, este dato luego se lo pasa a asientos disponibles
-que es el resto de capacidad de sala y cantidad de clientes.Mantenemos estas dos propiedades al mismo tiempo para mas visibilidad pero no es estrictamente necesario.
--Cuando uno devuelve una entrada, ahora puede especificar cuantas quiere (antes te devolvia todas) si la cantidad devuelta
-es igual a la cantidad total entonces se elimina la funcion de la lista de funciones del Usuario.
--Las Tablas estan vinculadas correctamente, cuando uno elimina una Sala o Pelicula se eliminan todas las Funciones que se daban
-en dicha sala o que pasaban dicha pelicula.Tambien esto afecta la tabla UsuariosFunciones.
--Eliminar Sala y Pelicula no devuelven el costo al usuario ya que es algo que solo puede hacer el admin y no deberia suceder 
-en un ambito real.
--Buscar Funcion ahora es opcional completar los campos.
--Se eliminaron todos los MessageBox del lado de la logica, se creo una clase Status Code que devuelve un codigo y
-este lo toma la vista y devuelve un mensaje.
--Funcion y Usuario ya no tienen metodos de ABM dentro de sus clases, Cine se encarga de toda esa parte.
--A la hora de usar el filtro, muy de vez en cuando puede ser que se produzca un error, esto creemos que es por el debugger, 
-cuando reinciamos el programa funciona correctamente.
--Es aconsejable a la hora de probar el sistema que se creen los objetos y se hagan pruebas con ellos, 
-ya que puede haber un error en los datos que insertamos y no nos hayamos dado cuenta.
--Se corrigieron las observaciones hechas en el TP-1.
+
+Readme TP-2:
+
+	IMPORTANTE!!!!!:
+	-Usar base.sql a la hora de cargar la base de datos con la informacion cargada.Esta se encuentra en la carpeta ScriptDB
+	-Cuando se crea la base de datos y se exporta el script , el directorio fue hecho en un disco F con un path que va a 
+	tener que  ser modificado!
+
+
+	-El Funcionamiento del sistema es en lineas generales el mismo (al menos desde un punto de vista visual) por lo que si 
+	se necesitan consignas de navegacion leer el Readme del TP-1 que se encuentra abajo de este cuerpo de texto.
+	-Tuvimos un problema con la conexion a la base de datos, no nos tomaba el valor de ConnectionStr dentro de Resources por lo que usamos un string para solucionarlo.
+	-Se integro la base de datos para todos los procedimientos, cuando hay algun tipo de ABM se hace una modificacion tanto en memoria como en base de datos.
+	-Al compilar, el sistema busca todos los datos guardados en la base de datos y va poblando los objetos con estos datos,luego
+	va creando las relaciones y haciendo las conecciones (Funcion se le agrega el objeto pelicula y sala, etc.)
+	-Ya no es necesario utilizar el checkbox de si es admin o no, si uno quiere modificar esto o ejecuta una query desde el SSMS o utiliza el ABM de los Admin.
+	-Se elimino el diccionario usado para ver la cantidad de entradas que tiene un usuario para cada funcion, ahora se utiliza
+	UsuariosFunciones como tabla intermedia que guarda este dato.
+	-Cantidad de clientes lo utilizamos para ver cuantas entradas se compraron, este dato luego se lo pasa a asientos disponibles
+	que es el resto de capacidad de sala y cantidad de clientes.Mantenemos estas dos propiedades al mismo tiempo para mas visibilidad pero no es estrictamente necesario.
+	-Cuando uno devuelve una entrada, ahora puede especificar cuantas quiere (antes te devolvia todas) si la cantidad devuelta
+	es igual a la cantidad total entonces se elimina la funcion de la lista de funciones del Usuario.
+	-Las Tablas estan vinculadas correctamente, cuando uno elimina una Sala o Pelicula se eliminan todas las Funciones que se daban
+	en dicha sala o que pasaban dicha pelicula.Tambien esto afecta la tabla UsuariosFunciones.
+	-Eliminar Sala y Pelicula no devuelven el costo al usuario ya que es algo que solo puede hacer el admin y no deberia suceder 
+	en un ambito real.
+	-Buscar Funcion ahora es opcional completar los campos.
+	-Se eliminaron todos los MessageBox del lado de la logica, se creo una clase Status Code que devuelve un codigo y
+	este lo toma la vista y devuelve un mensaje.
+	-Funcion y Usuario ya no tienen metodos de ABM dentro de sus clases, Cine se encarga de toda esa parte.
+	-A la hora de usar el filtro, muy de vez en cuando puede ser que se produzca un error, esto creemos que es por el debugger, 
+	cuando reinciamos el programa funciona correctamente.
+	-Es aconsejable a la hora de probar el sistema que se creen los objetos y se hagan pruebas con ellos, 
+	ya que puede haber un error en los datos que insertamos y no nos hayamos dado cuenta.
+	-Se corrigieron las observaciones hechas en el TP-1.
 
 
 
